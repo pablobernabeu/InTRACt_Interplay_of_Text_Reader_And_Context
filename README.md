@@ -1,4 +1,4 @@
-# InTRACt: In-app Text Reading And Comprehension Technology
+# InTRACt: Interplay of Text, Reader And Context in children’s digital reading comprehension
 
 *Work in progress — this repository contains an ongoing literature review and a preregistration document that are being actively developed.*
 
