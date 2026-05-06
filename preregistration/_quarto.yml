@@ -1,0 +1,4 @@
+project:
+  render:
+    - preregistration.qmd
+  post-render: _rename-output.R

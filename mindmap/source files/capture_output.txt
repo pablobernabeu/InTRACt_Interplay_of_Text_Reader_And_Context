@@ -1,0 +1,2 @@
+﻿Bounding box: {"x":348,"y":314.84375,"height":602.296875,"width":904}
+Saved: C:\Users\pablob\OneDrive - Nexus365\Documents\GitHub\InTRACt\mindmap\mindmap.png

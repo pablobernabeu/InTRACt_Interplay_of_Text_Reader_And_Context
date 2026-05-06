@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Interactive Study Mind Map</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #ffffff;
+        text-align: center;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      .mindmap-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        padding: 1rem;
+        gap: 0;
+        position: relative;
+        width: fit-content;
+      }
+      .left-column {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem; /* Vertical spacing between stacked groups */
+        align-items: center;
+      }
+      .right-column {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        width: fit-content;
+        position: relative;
+        padding: 0.5rem;
+        border-radius: 0.75rem;
+        margin: 0;
+      }
+
+      .group-reader {
+        background-color: rgba(37, 99, 235, 0.06);
+        border: 1.5px solid rgba(37, 99, 235, 0.12);
+      }
+
+      .group-text {
+        background-color: rgba(30, 64, 175, 0.06);
+        border: 1.5px solid rgba(30, 64, 175, 0.12);
+      }
+
+      .group-outcomes {
+        background-color: rgba(249, 115, 22, 0.06);
+        border: 1.5px solid rgba(249, 115, 22, 0.12);
+      }
+
+      .node {
+        background-color: white;
+        border: 1.5px solid #cbd5e1;
+        border-radius: 0.5rem;
+        padding: 0.5rem 2rem;
+        text-align: center;
+        box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.06);
+        width: 400px;
+        margin: 0 auto;
+        box-sizing: border-box;
+      }
+      .node-title {
+        font-weight: 600;
+        color: #1e293b;
+        font-size: 0.9375rem;
+      }
+      .node-subtitle {
+        font-size: 0.8125rem;
+        color: #5a6d83;
+        line-height: 1.3;
+        margin-top: 0.1rem;
+      }
+
+      .node:not(.title-node) {
+        width: 350px !important;
+        padding: 0.4rem 1.5rem;
+        margin: 0 auto;
+        box-sizing: border-box;
+      }
+
+      .title-node {
+        background-color: #2563eb;
+        color: white;
+        padding: 0.5rem 2rem !important;
+        border-color: #1d4ed8;
+        width: 400px !important;
+        border-width: 0;
+      }
+
+      /* Right-side (Outcomes) boxes */
+      .right-column .node {
+        width: 380px !important;
+      }
+      .right-column .node:not(.title-node) {
+        width: 320px !important;
+      }
+
+      .title-node .node-title {
+        color: white;
+        font-size: 1.0625rem;
+      }
+      .title-node .node-subtitle {
+        color: rgba(255,255,255,0.7);
+        font-size: 0.75rem;
+        font-weight: 400;
+        margin-top: 0.05rem;
+      }
+
+      .title-node-orange {
+        background-color: #f97316;
+        border-color: #ea580c;
+      }
+
+      .title-node-dark {
+        background-color: #0f1d5e;
+        border-color: #1e3a8a;
+      }
+
+      .title-node-mid {
+        background-color: #2c52a0;
+        border-color: #1e3a80;
+      }
+
+      /* Longitudinal Progression: cross-cutting banner overlapping both groups */
+      .longitudinal-banner {
+        width: 400px !important;
+        border-radius: 2rem !important;
+        border: 1.5px dashed rgba(255,255,255,0.5) !important;
+        padding: 0.45rem 2rem !important;
+        letter-spacing: 0.03em;
+        position: relative;
+        z-index: 5;
+        margin: -0.35rem auto !important;
+        box-shadow: 0 0 0 3px rgba(44, 82, 160, 0.1);
+        opacity: 1;
+      }
+
+      /* Connector between columns */
+      .connector-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        align-self: center;
+        margin-left: 0.375rem;
+      }
+    </style>
+  </head>
+  <body style="display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 1rem; margin: 0;">
+    <div class="mindmap-container">
+      <div class="left-column">
+        <!-- Top Group: Reader and Context -->
+        <div class="group group-reader">
+          <!-- Arrow removed -->
+          <div
+            class="node title-node"
+            data-title="Reader and Context (Knowledge Proxies)"
+            data-subtitle="Individual and family differences"
+          >
+            <div class="node-title">Reader and Context</div>
+            <div class="node-subtitle">Individual and family differences</div>
+          </div>
+          <div
+            class="node"
+            data-title="Linguistic Resources"
+            data-subtitle="Child's vocabulary and language environment"
+          >
+            <div class="node-title">Linguistic Resources</div>
+            <div class="node-subtitle">
+              Child's vocabulary and language environment
+            </div>
+          </div>
+          <div
+            class="node"
+            data-title="Sociocultural Context"
+            data-subtitle="Parent's age and joint engagement in games"
+          >
+            <div class="node-title">Sociocultural Context</div>
+            <div class="node-subtitle">
+              Parent's age and joint engagement in games
+            </div>
+          </div>
+          <div
+            class="node"
+            data-title="Developmental Status"
+            data-subtitle="Child's age"
+          >
+            <div class="node-title">Developmental Status</div>
+            <div class="node-subtitle">Child's age</div>
+          </div>
+        </div>
+
+        <!-- Cross-cutting temporal dimension -->
+        <div
+          class="node title-node title-node-mid longitudinal-banner"
+          style="margin: 0 auto;"
+        >
+          <div class="node-title">Longitudinal Progression</div>
+          <div class="node-subtitle" style="color: rgba(255,255,255,0.85); font-size: 0.75rem;">Cross-cutting temporal dimension</div>
+        </div>
+
+        <!-- Bottom Group: Text Features -->
+        <div class="group group-text">
+          <!-- Arrow removed -->
+          <div
+            class="node title-node title-node-dark"
+            data-title="Text Features"
+            data-subtitle="Linguistic properties"
+          >
+            <div class="node-title">Text Features</div>
+            <div class="node-subtitle">Linguistic properties of the text</div>
+          </div>
+          <div
+            class="node"
+            data-title="Lexical–Distributional Properties"
+            data-subtitle="Frequency, concreteness and lexical diversity"
+          >
+            <div class="node-title">Lexical–Distributional Properties</div>
+            <div class="node-subtitle">Frequency, concreteness and lexical diversity</div>
+          </div>
+          <div
+            class="node"
+            data-title="Syntactic and Discourse Properties"
+            data-subtitle="Semantic coherence and syntactic complexity"
+          >
+            <div class="node-title">Syntactic and Discourse Properties</div>
+            <div class="node-subtitle">
+              Semantic coherence and syntactic complexity
+            </div>
+          </div>
+          <div
+            class="node"
+            data-title="Affective Properties"
+            data-subtitle="Sentiment score"
+          >
+            <div class="node-title">Affective Properties</div>
+            <div class="node-subtitle">Sentiment score</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Connector: curly brace from predictor groups to outcomes -->
+      <div class="connector-wrap">
+        <svg width="56" height="340" viewBox="0 0 56 340" fill="none">
+          <defs>
+            <marker id="arr" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+              <polygon points="0 0, 7 2.5, 0 5" fill="#94a3b8" />
+            </marker>
+          </defs>
+          <!-- Upper arm from Reader & Context -->
+          <path d="M 2,80 Q 22,80 22,140 Q 22,165 28,170" stroke="#94a3b8" stroke-width="1.6" fill="none" />
+          <!-- Lower arm from Text Features -->
+          <path d="M 2,260 Q 22,260 22,200 Q 22,175 28,170" stroke="#94a3b8" stroke-width="1.6" fill="none" />
+          <!-- Tip arrow -->
+          <line x1="28" y1="170" x2="48" y2="170" stroke="#94a3b8" stroke-width="1.6" marker-end="url(#arr)" />
+        </svg>
+      </div>
+
+      <div class="right-column">
+        <!-- Right Group: Outcomes -->
+        <div class="group group-outcomes">
+          <div
+            class="node title-node title-node-orange"
+            data-title="Comprehension Outcomes"
+            data-subtitle="Multi-componential approach"
+          >
+            <div class="node-title">Comprehension Outcomes</div>
+            <div class="node-subtitle">Multi-componential approach</div>
+          </div>
+          <div
+            class="node"
+            data-title="Processing Efficiency"
+            data-subtitle="Reading time per word (online measure)"
+          >
+            <div class="node-title">Processing Efficiency</div>
+            <div class="node-subtitle">Reading time per word (online measure)</div>
+          </div>
+          <div
+            class="node"
+            data-title="Perceived Difficulty"
+            data-subtitle="Ease/difficulty rating (self-report)"
+          >
+            <div class="node-title">Perceived Difficulty</div>
+            <div class="node-subtitle">Ease/difficulty rating (self-report)</div>
+          </div>
+          <div
+            class="node"
+            data-title="Situation Model Construction"
+            data-subtitle="Non-verbal story sequencing (proxy task)"
+          >
+            <div class="node-title">Situation Model Construction</div>
+            <div class="node-subtitle">Non-verbal story sequencing (proxy task)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
