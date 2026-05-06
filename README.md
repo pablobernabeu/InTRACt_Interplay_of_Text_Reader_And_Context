@@ -8,7 +8,7 @@
 
 How does the language in a story shape how quickly and how well a child understands it? And does it matter whether the child is 7 or 10 years old, or whether the story is read aloud by an app?
 
-InTRACt is a preregistered study that analyses large-scale behavioural data from children aged 7–10 who read AI-generated storybooks through *Let's Story*, a feature of the *Applaydu* edutainment app (Gameloft / Ferrero International). By combining computational linguistics with Bayesian statistical modelling, the study investigates how measurable properties of text — word frequency, syntactic complexity, semantic coherence — predict children's reading behaviour in the wild, across more than 19 languages and 40 countries.
+InTRACt is a preregistered study that analyses large-scale behavioural data from children aged 7–10 who read AI-generated storybooks through *Let's Story*, a feature of the *Applaydu* edutainment app (Gameloft / Ferrero International). By combining computational psycholinguistics with Bayesian statistical modelling, the study investigates how measurable properties of text — word frequency, syntactic complexity, semantic coherence — predict children's reading behaviour in the wild, across more than 19 languages and 40 countries.
 
 The project is hosted at the **[Department of Education, University of Oxford](https://www.education.ox.ac.uk/)** and is embedded within the **[Learning in Families through Technology (LIFT)](https://www.education.ox.ac.uk/project/lift-learning-in-families-through-technology/)** project, which investigates how digital technologies shape learning within families. It is funded by **Kinder** and the **John Fell Fund** (University of Oxford).
 
