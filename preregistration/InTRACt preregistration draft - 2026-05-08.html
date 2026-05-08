@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Multimodal Text Reading Comprehension: Preregistration</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="preregistration_files/libs/clipboard/clipboard.min.js"></script>
+<script src="preregistration_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="preregistration_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="preregistration_files/libs/quarto-html/popper.min.js"></script>
+<script src="preregistration_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="preregistration_files/libs/quarto-html/anchor.min.js"></script>
+<link href="preregistration_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="preregistration_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="preregistration_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="preregistration_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="preregistration_files/libs/bootstrap/bootstrap-efbb37e9afcc02144ebbc7afd12a776f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">1</span> Background</a>
+  <ul class="collapse">
+  <li><a href="#text-level-predictors-of-reading-comprehension" id="toc-text-level-predictors-of-reading-comprehension" class="nav-link" data-scroll-target="#text-level-predictors-of-reading-comprehension"><span class="header-section-number">1.1</span> Text-Level Predictors of Reading Comprehension</a></li>
+  <li><a href="#computational-modelling-of-reading-with-neural-language-models" id="toc-computational-modelling-of-reading-with-neural-language-models" class="nav-link" data-scroll-target="#computational-modelling-of-reading-with-neural-language-models"><span class="header-section-number">1.2</span> Computational Modelling of Reading With Neural Language Models</a></li>
+  <li><a href="#app-based-data-in-reading-research" id="toc-app-based-data-in-reading-research" class="nav-link" data-scroll-target="#app-based-data-in-reading-research"><span class="header-section-number">1.3</span> App-Based Data in Reading Research</a></li>
+  </ul></li>
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods"><span class="header-section-number">2</span> Methods</a>
+  <ul class="collapse">
+  <li><a href="#participants" id="toc-participants" class="nav-link" data-scroll-target="#participants"><span class="header-section-number">2.1</span> Participants</a></li>
+  <li><a href="#materials" id="toc-materials" class="nav-link" data-scroll-target="#materials"><span class="header-section-number">2.2</span> Materials</a></li>
+  <li><a href="#procedure" id="toc-procedure" class="nav-link" data-scroll-target="#procedure"><span class="header-section-number">2.3</span> Procedure</a></li>
+  <li><a href="#measures" id="toc-measures" class="nav-link" data-scroll-target="#measures"><span class="header-section-number">2.4</span> Measures</a></li>
+  <li><a href="#analytic-plan" id="toc-analytic-plan" class="nav-link" data-scroll-target="#analytic-plan"><span class="header-section-number">2.5</span> Analytic Plan</a>
+  <ul class="collapse">
+  <li><a href="#dimension-reduction-via-principal-component-analysis" id="toc-dimension-reduction-via-principal-component-analysis" class="nav-link" data-scroll-target="#dimension-reduction-via-principal-component-analysis"><span class="header-section-number">2.5.1</span> Dimension Reduction via Principal Component Analysis</a></li>
+  <li><a href="#confirmatory-models" id="toc-confirmatory-models" class="nav-link" data-scroll-target="#confirmatory-models"><span class="header-section-number">2.5.2</span> Confirmatory Models</a></li>
+  <li><a href="#convergence-and-multicollinearity" id="toc-convergence-and-multicollinearity" class="nav-link" data-scroll-target="#convergence-and-multicollinearity"><span class="header-section-number">2.5.3</span> Convergence and Multicollinearity</a></li>
+  <li><a href="#model-comparison" id="toc-model-comparison" class="nav-link" data-scroll-target="#model-comparison"><span class="header-section-number">2.5.4</span> Model Comparison</a></li>
+  <li><a href="#minimum-effect-size-and-rope-calibration" id="toc-minimum-effect-size-and-rope-calibration" class="nav-link" data-scroll-target="#minimum-effect-size-and-rope-calibration"><span class="header-section-number">2.5.5</span> Minimum Effect Size and ROPE Calibration</a></li>
+  <li><a href="#sensitivity-analyses" id="toc-sensitivity-analyses" class="nav-link" data-scroll-target="#sensitivity-analyses"><span class="header-section-number">2.5.6</span> Sensitivity Analyses</a></li>
+  <li><a href="#supplementary-frequentist-models" id="toc-supplementary-frequentist-models" class="nav-link" data-scroll-target="#supplementary-frequentist-models"><span class="header-section-number">2.5.7</span> Supplementary Frequentist Models</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#hypotheses" id="toc-hypotheses" class="nav-link" data-scroll-target="#hypotheses"><span class="header-section-number">3</span> Hypotheses</a>
+  <ul class="collapse">
+  <li><a href="#exploratory-analyses" id="toc-exploratory-analyses" class="nav-link" data-scroll-target="#exploratory-analyses"><span class="header-section-number">3.1</span> Exploratory Analyses</a></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">4</span> References</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="preregistration.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Multimodal Text Reading Comprehension: Preregistration</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="background" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Background</h1>
+<section id="text-level-predictors-of-reading-comprehension" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="text-level-predictors-of-reading-comprehension"><span class="header-section-number">1.1</span> Text-Level Predictors of Reading Comprehension</h2>
+<p>A longstanding tradition in computational psycholinguistics has sought to explain reading comprehension in terms of measurable text and reader variables. Rather than relying on end-to-end neural models, this body of work identifies specific linguistic features — operating at the lexical, syntactic and discourse levels — that predict how readers engage with and understand text.</p>
+<p>At the lexical level, word frequency stands out as one of the most robust predictors of reading behaviour. High-frequency words are recognised faster and fixated for shorter durations than low-frequency words, a pattern replicated across dozens of eye-tracking studies and remarkably consistent across languages and orthographies <span class="citation" data-cites="meziereUsingEyetrackingMeasures2023 normanEffectsContextualDiversity2025">(e.g., <a href="#ref-meziereUsingEyetrackingMeasures2023" role="doc-biblioref">Mézière et al., 2023</a>; <a href="#ref-normanEffectsContextualDiversity2025" role="doc-biblioref">Norman et al., 2025</a>)</span>. In children, frequency effects tend to be larger than in adults, reflecting the less automatised nature of early lexical access <span class="citation" data-cites="hsiaoSemanticDiversityFrequency2018">(<a href="#ref-hsiaoSemanticDiversityFrequency2018" role="doc-biblioref">Hsiao &amp; Nation, 2018</a>)</span>. Frequency norms derived from subtitle corpora (e.g., the Subtitle Lexical Frequencies [SUBTLEX] databases), including SUBTLEX-UK for British English <span class="citation" data-cites="vanheuvenSubtlexUKNewImproved2014">(<a href="#ref-vanheuvenSubtlexUKNewImproved2014" role="doc-biblioref">van Heuven et al., 2014</a>)</span>, have become standard tools for operationalising this variable, offering estimates that closely approximate everyday language exposure across multiple languages <span class="citation" data-cites="brysbaertWordPrevalenceNorms2019">(<a href="#ref-brysbaertWordPrevalenceNorms2019" role="doc-biblioref">Brysbaert et al., 2019</a>)</span>. More recently, resources such as the Children and Young People’s Books Lexicon (CYP-LEX) — derived from over 1,200 books read by children and young people in the United Kingdom — offer a more ecologically valid frequency baseline for studies of developing readers, capturing the vocabulary children actually encounter in their reading environment <span class="citation" data-cites="korochkinaChildrenYoungPeoples2024">(<a href="#ref-korochkinaChildrenYoungPeoples2024" role="doc-biblioref">Korochkina et al., 2024</a>)</span>. A related lexical property, word concreteness, also shapes comprehension: concrete, highly imageable words (e.g., <em>apple</em>, <em>river</em>) are processed more quickly and remembered better than abstract words (e.g., <em>justice</em>, <em>theory</em>) <span class="citation" data-cites="magnaboscoEyeSemanticsStudy2024">(<a href="#ref-magnaboscoEyeSemanticsStudy2024" role="doc-biblioref">Magnabosco &amp; Hauk, 2024</a>)</span>. This concreteness advantage, often attributed to dual-coding accounts in which concrete words activate both verbal and imagistic representations <span class="citation" data-cites="bernabeuLanguageSensorimotorSimulation2022 kaupInterplayModalAmodal2025">(<a href="#ref-bernabeuLanguageSensorimotorSimulation2022" role="doc-biblioref">Bernabeu, 2022</a>; <a href="#ref-kaupInterplayModalAmodal2025" role="doc-biblioref">Kaup et al., 2025</a>)</span>, is especially pronounced in younger readers and second-language learners, who rely more heavily on grounded, sensory representations to construct situation models from text — bridging gaps in background knowledge through the ease with which words evoke mental imagery <span class="citation" data-cites="murakiDevelopmentAbstractWord2025">(<a href="#ref-murakiDevelopmentAbstractWord2025" role="doc-biblioref">Muraki et al., 2025</a>)</span>. Consistent with this, <span class="citation" data-cites="pickrenContributionTextCharacteristics2022">Pickren et al. (<a href="#ref-pickrenContributionTextCharacteristics2022" role="doc-biblioref">2022</a>)</span> demonstrated that text characteristics including word emotionality and concreteness predict significant unique variance in reading performance among elementary school children, above and beyond traditional readability metrics. A third lexical variable, the diversity of vocabulary within a text — operationalised through indices such as the type/token ratio (TTR) or the Measure of Textual Lexical Diversity (MTLD) — modulates reading difficulty in a manner that depends on the reader’s own vocabulary knowledge <span class="citation" data-cites="fredrickLexicalDiversitySyntactic2025">(<a href="#ref-fredrickLexicalDiversitySyntactic2025" role="doc-biblioref">Fredrick &amp; Craven, 2025</a>)</span>. For skilled adults, moderate lexical diversity may sustain engagement through varied and precise word choice; for less proficient readers, including children, high diversity can overwhelm decoding resources and impair comprehension <span class="citation" data-cites="vandenboschRoleLinguisticDiversity2019 cainReadingComprehensionVocabulary2014">(<a href="#ref-cainReadingComprehensionVocabulary2014" role="doc-biblioref">Cain &amp; Oakhill, 2014</a>; <a href="#ref-vandenboschRoleLinguisticDiversity2019" role="doc-biblioref">Van Den Bosch et al., 2019</a>)</span>.</p>
+<p>At the syntactic level, sentence structure exerts its own demands on the reader. Measures such as mean dependency distance (the average linear distance between syntactically related words), the number of embedded clauses and subordination ratios all capture aspects of structural complexity that predict reading difficulty <span class="citation" data-cites="nielsenSyntacticComprehensionSeparate2025">(<a href="#ref-nielsenSyntacticComprehensionSeparate2025" role="doc-biblioref">Nielsen et al., 2025</a>)</span>. Longer dependency distances, in particular, impose greater working memory demands, as readers must maintain information across intervening material before resolving a syntactic relationship. Because children’s working memory capacity is still developing, they are disproportionately affected by syntactic complexity — including the processing burden imposed by long-distance dependencies and complex noun phrase structures — relative to adults <span class="citation" data-cites="delageSyntaxWorkingMemory2019 cuiRoleExecutiveFunctions2024 changInfluencesExecutiveFunction2020">(<a href="#ref-changInfluencesExecutiveFunction2020" role="doc-biblioref">Chang, 2020</a>; <a href="#ref-cuiRoleExecutiveFunctions2024" role="doc-biblioref">Cui et al., 2024</a>; <a href="#ref-delageSyntaxWorkingMemory2019" role="doc-biblioref">Delage &amp; Frauenfelder, 2019</a>)</span>, a developmental asymmetry that is central to several of the hypotheses we test in this study. Converging evidence comes from <span class="citation" data-cites="marjokorpiGrammaticalUnderstandingPredicts2025">Marjokorpi &amp; van Rijt (<a href="#ref-marjokorpiGrammaticalUnderstandingPredicts2025" role="doc-biblioref">2025</a>)</span>, who found that explicit grammatical understanding was a robust predictor of reading comprehension in secondary-school students even after controlling for socioeconomic background, writing ability, and other literacy-related factors — underscoring that sensitivity to syntactic structure continues to underlie comprehension development well into adolescence.</p>
+<p>Beyond words and sentences, the coherence of a text — the degree to which successive ideas are logically and semantically connected — plays a critical role in comprehension. Computational measures of coherence, including latent semantic analysis (LSA)-based sentence-to-sentence similarity, co-reference overlap and connective density, index the ease with which readers can integrate information across a passage <span class="citation" data-cites="crossleyToolAutomaticAnalysis2019">(<a href="#ref-crossleyToolAutomaticAnalysis2019" role="doc-biblioref">Crossley et al., 2019</a>)</span>. Highly coherent texts reduce the inferential burden and are generally associated with better comprehension, particularly for readers with lower prior knowledge <span class="citation" data-cites="hattanExpandingScienceReading2024">(<a href="#ref-hattanExpandingScienceReading2024" role="doc-biblioref">Hattan &amp; Kendeou, 2024</a>)</span>. Complementing these deeper semantic relations are surface-level cohesion signals: explicit connectives such as <em>because</em>, <em>however</em> and <em>therefore</em> that mark the logical structure of a text. Automated tools such as Coh-Metrix <span class="citation" data-cites="graesserCohmetrixMeasuresText2014">(<a href="#ref-graesserCohmetrixMeasuresText2014" role="doc-biblioref">Graesser et al., 2014</a>)</span> now make it possible to compute a comprehensive suite of coherence and cohesion indices, enabling large-scale analyses of text difficulty that would be impractical to conduct by hand <span class="citation" data-cites="crossleyDevelopingLinguisticConstructs2025">(<a href="#ref-crossleyDevelopingLinguisticConstructs2025" role="doc-biblioref">Crossley, 2025</a>)</span>.</p>
+<p>These individual variables have also been combined into composite indices of text difficulty. Classical readability formulae (e.g., Flesch–Kincaid, Dale–Chall) aggregate surface features such as word length and sentence length into single scores, and although they are limited in linguistic sophistication, they remain widely used in educational and applied contexts <span class="citation" data-cites="crossleyAssessingReadabilityFormulas2023 wangUtilizingMachineLearning2024">(<a href="#ref-crossleyAssessingReadabilityFormulas2023" role="doc-biblioref">Crossley et al., 2023</a>; <a href="#ref-wangUtilizingMachineLearning2024" role="doc-biblioref">Wang et al., 2024</a>)</span>. More recent multi-dimensional frameworks integrate frequency, concreteness, syntactic complexity and coherence into richer characterisations of what makes a text difficult and for whom, moving beyond simple heuristics toward discourse-level representations <span class="citation" data-cites="crossleyAssessingReadabilityFormulas2023 goldmanReadingComplexImplications2024 wangUtilizingMachineLearning2024 liExploringSyntacticComplexity2025 crossleyDevelopingLinguisticConstructs2025">(<a href="#ref-crossleyAssessingReadabilityFormulas2023" role="doc-biblioref">Crossley et al., 2023</a>; <a href="#ref-crossleyDevelopingLinguisticConstructs2025" role="doc-biblioref">Crossley, 2025</a>; <a href="#ref-goldmanReadingComplexImplications2024" role="doc-biblioref">Goldman, 2024</a>; <a href="#ref-liExploringSyntacticComplexity2025" role="doc-biblioref">Li et al., 2025</a>; <a href="#ref-wangUtilizingMachineLearning2024" role="doc-biblioref">Wang et al., 2024</a>)</span>.</p>
+<p>Taken together, this body of research establishes that reading comprehension is jointly shaped by a constellation of text-level variables operating across multiple linguistic levels <span class="citation" data-cites="nationChildrensReadingDifficulties2019 duffEstimatesIndividualDifferences2020">(<a href="#ref-duffEstimatesIndividualDifferences2020" role="doc-biblioref">Duff &amp; Brydon, 2020</a>; <a href="#ref-nationChildrensReadingDifficulties2019" role="doc-biblioref">Nation, 2019</a>)</span>. These variables predict reading behaviour — including reading time, fixation patterns and comprehension accuracy — in both children and adults, though with developmental differences in magnitude and direction. The present study builds on this tradition by incorporating these established predictors as fixed effects in our analytic models (see Analytic Plan), while also examining how they interact with child age as a proxy for developing linguistic and cognitive capacity. We turn next to a more recent line of work that complements these feature-based approaches with neural language models.</p>
+</section>
+<section id="computational-modelling-of-reading-with-neural-language-models" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="computational-modelling-of-reading-with-neural-language-models"><span class="header-section-number">1.2</span> Computational Modelling of Reading With Neural Language Models</h2>
+<p>While the text-level features reviewed above offer interpretable, theory-driven predictors of reading behaviour, a parallel line of research has begun to ask whether the representations learned by neural language models can capture the same reading phenomena — and potentially go beyond what hand-crafted features achieve. This approach treats the internal states of large language models (LLMs) as proxies for the representations that the human language system constructs during reading, and evaluates their fit to behavioural and neural data.</p>
+<p>In adults, evidence for this approach has accumulated rapidly. <span class="citation" data-cites="hahnModelingTaskEffects2023">Hahn &amp; Keller (<a href="#ref-hahnModelingTaskEffects2023" role="doc-biblioref">2023</a>)</span> introduced a neural attention model that adapts its processing to task demands, replicating adult eye-movement patterns (fixation durations, skip rates) across different reading goals within a single architecture — providing evidence that task-specific reading strategies can be modelled as optimal attentional adaptations rather than requiring separate mechanisms. <span class="citation" data-cites="hosseiniArtificialNeuralNetwork2024">Hosseini et al. (<a href="#ref-hosseiniArtificialNeuralNetwork2024" role="doc-biblioref">2024</a>)</span> demonstrated that GPT-2–style language models trained on a developmentally plausible corpus (~100M words) could predict adult functional magnetic resonance imaging (fMRI) responses to sentences with near-maximal fidelity, with performance saturating after moderate training data. Together, these findings suggest that adult reading is largely driven by core linguistic mechanisms — word predictability, sequential dependency processing — that current LLMs can capture with surprising accuracy.</p>
+<p>Extending this work to child readers presents both opportunities and challenges. <span class="citation" data-cites="monaghanLiteracyEarlyLanguage2023">Monaghan (<a href="#ref-monaghanLiteracyEarlyLanguage2023" role="doc-biblioref">2023</a>)</span> reviews how computational models originally developed for adult word reading have been adapted to simulate literacy acquisition in children, tracing the developing connections between orthography, phonology and semantics across languages. Empirical work has begun to complement these simulations with large-scale behavioural data. <span class="citation" data-cites="sortkaerBothSidesStory2021">Sortkær et al. (<a href="#ref-sortkaerBothSidesStory2021" role="doc-biblioref">2021</a>)</span>, for instance, analysed logs from approximately 48,000 Danish schoolchildren using a reading app (BookBites) and found a moderate positive correlation (<em>r</em> ≈ 0.4) between app-derived reading speed and standardised reading test scores — indicating that computational metrics extracted from naturalistic digital reading can meaningfully index developing literacy. More recently, interactive eye-tracking benchmarks such as EyeBench and OneStop have provided large-scale datasets linking gaze patterns to reading comprehension, opening the door to models that predict individual comprehension from rich behavioural signals.</p>
+<p>Systematic reviews of the applied landscape further contextualise these developments. <span class="citation" data-cites="bootonImpactMobileApplication2023">Booton et al. (<a href="#ref-bootonImpactMobileApplication2023" role="doc-biblioref">2023</a>)</span> found that among e-book app features, in-built narration (read-aloud) substantially improves pre-readers’ story comprehension and vocabulary, whereas unrelated interactive “game” elements provide no measurable benefit. <span class="citation" data-cites="chuangSystematicReviewEffectiveness2023">Chuang &amp; Jamiat (<a href="#ref-chuangSystematicReviewEffectiveness2023" role="doc-biblioref">2023</a>)</span> reached a similar conclusion after reviewing 50 studies of interactive children’s books: supportive multimedia features (animations, contextual glossaries) enhance emergent literacy, while distracting game elements can actively impede reading outcomes. These findings highlight that the medium through which children encounter text matters — a consideration that is central to the present study’s design.</p>
+<p>In sum, neural language models offer a powerful complement to the traditional text-feature approach: where hand-crafted variables capture well-understood sources of variation, LLM-derived measures may capture subtler distributional and contextual regularities <span class="citation" data-cites="seidenbergImpactLanguageExperience2018">(<a href="#ref-seidenbergImpactLanguageExperience2018" role="doc-biblioref">Seidenberg &amp; MacDonald, 2018</a>)</span>. However, for child readers, the evidence base is thinner, and many of the traditional text-level variables (frequency, coherence, syntactic complexity) may still be the most informative predictors. Our study is positioned at this intersection, using both established linguistic features and model-derived metrics to predict children’s reading behaviour across the 7–10 age range. <a href="#tbl-adults-children" class="quarto-xref">Table&nbsp;1</a> summarises the key studies from both traditions that inform our hypotheses.</p>
+<div id="tbl-adults-children" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[22,18,60]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-adults-children-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Representative computational-reading studies by age group
+</figcaption>
+<div aria-describedby="tbl-adults-children-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 18%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Study</strong></th>
+<th><strong>Readers</strong></th>
+<th><strong>Method and key findings</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="citation" data-cites="berzakOneStop360ParticipantEnglish2025">Berzak et al. (<a href="#ref-berzakOneStop360ParticipantEnglish2025" role="doc-biblioref">2025</a>)</span></td>
+<td>Adults (<em>N</em> = 360, eye-tracking)</td>
+<td>OneStop dataset; eye-tracking with comprehension questions. Links gaze to comprehension across reading regimes; no effect sizes reported.</td>
+</tr>
+<tr class="even">
+<td><span class="citation" data-cites="guReadingComprehensionL12025">Gu et al. (<a href="#ref-guReadingComprehensionL12025" role="doc-biblioref">2025</a>)</span></td>
+<td>Adults L1 vs.&nbsp;L2 (<em>N</em> ≈ 40, electroencephalography [EEG]/fMRI)</td>
+<td>GPT-2 embeddings aligned with neural data during reading. Strong model–brain alignment (<em>r</em> ≈ .50); L2 readers 20% slower with comparable accuracy.</td>
+</tr>
+<tr class="odd">
+<td><span class="citation" data-cites="hahnModelingTaskEffects2023">Hahn &amp; Keller (<a href="#ref-hahnModelingTaskEffects2023" role="doc-biblioref">2023</a>)</span></td>
+<td>Adults (<em>N</em> ≈ 20, eye-tracking)</td>
+<td>NEAT model (recurrent neural network [RNN] with attention) vs.&nbsp;human reading tasks. Predicted fixation patterns across tasks; task-specific differences (<em>d</em> ≈ 1.2) accounted for by optimal attention allocation.</td>
+</tr>
+<tr class="even">
+<td><span class="citation" data-cites="hosseiniArtificialNeuralNetwork2024">Hosseini et al. (<a href="#ref-hosseiniArtificialNeuralNetwork2024" role="doc-biblioref">2024</a>)</span></td>
+<td>Adults (<em>N</em> ≈ 20, fMRI)</td>
+<td>GPT-2 LLM (100M words) vs.&nbsp;brain responses. Model fully captured cortical responses; performance saturated at ~100M words.</td>
+</tr>
+<tr class="odd">
+<td><span class="citation" data-cites="monaghanLiteracyEarlyLanguage2023">Monaghan (<a href="#ref-monaghanLiteracyEarlyLanguage2023" role="doc-biblioref">2023</a>)</span></td>
+<td>Children (review)</td>
+<td>Narrative review of computational literacy models. Adult word-reading models extend to child literacy; vocabulary growth and reading exposure interact across languages.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="app-based-data-in-reading-research" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="app-based-data-in-reading-research"><span class="header-section-number">1.3</span> App-Based Data in Reading Research</h2>
+<p>Despite the rich data that digital reading platforms can provide <span class="citation" data-cites="altamuraHowDigitalReading2025 furenesComparisonChildrensReading2021">(<a href="#ref-altamuraHowDigitalReading2025" role="doc-biblioref">Altamura et al., 2025</a>; <a href="#ref-furenesComparisonChildrensReading2021" role="doc-biblioref">Furenes et al., 2021</a>)</span>, remarkably few computational studies have exploited app-generated behavioural logs as a window into reading processes. The work that does exist falls broadly into two categories, which differ in their origins and scientific utility.</p>
+<p>The first category comprises research and educational apps — platforms designed with learning objectives and, often, data collection in mind. <span class="citation" data-cites="sortkaerBothSidesStory2021">Sortkær et al. (<a href="#ref-sortkaerBothSidesStory2021" role="doc-biblioref">2021</a>)</span> exemplifies this approach: by analysing reading logs from BookBites, a classroom-deployed app, they demonstrated that passively recorded reading speed correlated meaningfully with standardised reading ability. Such studies establish the principle that app logs can reflect underlying cognitive processes, but they typically operate within controlled educational settings and with relatively constrained populations.</p>
+<p>The second category — commercial ‘edutainment’ apps — is far less explored in the academic literature, despite its vastly larger user base. These apps combine entertainment with incidental learning goals, and their data are generated under naturalistic, unconstrained conditions. A case in point is <em>Let’s Story</em>, an artificial intelligence (AI)-powered digital storytelling feature embedded within <em>Applaydu</em> — an edutainment app developed by Gameloft and Ferrero International — which enables families to co-create storybooks using Microsoft’s generative AI tools across 19 languages and passively records each child’s reading time and in-app quiz performance <span class="citation" data-cites="ratnerDidRobotWrite2025">(<a href="#ref-ratnerDidRobotWrite2025" role="doc-biblioref">Ratner et al., 2025</a>)</span>. Children select from a menu of story elements (plot, setting, character and theme), and the app generates a unique narrative that is then read aloud by an AI narrator in the family’s chosen language. To our knowledge, no previous study has yet analysed data from Applaydu or any comparable commercial edutainment platform at scale through the lens of computational psycholinguistics. The existing literature on reading apps instead consists primarily of reviews and small-scale experiments examining specific app features. <span class="citation" data-cites="bootonImpactMobileApplication2023">Booton et al. (<a href="#ref-bootonImpactMobileApplication2023" role="doc-biblioref">2023</a>)</span>, for example, systematically reviewed 11 studies and found that read-aloud narration aided comprehension, while extra interactive games did not. More broadly, content analyses of commercially available educational apps have raised persistent concerns about instructional quality. <span class="citation" data-cites="furlongFindingNeedleHaystack2025">Furlong et al. (<a href="#ref-furlongFindingNeedleHaystack2025" role="doc-biblioref">2025</a>)</span> found that the majority of phonics apps on the Australian Google Play and Apple stores failed to meet basic pedagogical criteria, with expert reviewers recommending only 27.5% of 309 apps appraised. <span class="citation" data-cites="chatzopoulosEvaluationGooglePlay2023">Chatzopoulos et al. (<a href="#ref-chatzopoulosEvaluationGooglePlay2023" role="doc-biblioref">2023</a>)</span> reached convergent conclusions through a rubric-based evaluation of 50 Google Play educational apps, finding that educational content was systematically the weakest dimension and that consumer star ratings showed poor correspondence with expert quality scores — a limitation that applies directly to the Applaydu platform examined in the present study.</p>
+<p>This gap between the commercial availability of reading-app data and its scientific use is notable. <a href="#tbl-app-data" class="quarto-xref">Table&nbsp;2</a> summarises the small number of relevant studies, along with their sample contexts and key findings.</p>
+<div id="tbl-app-data" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[22,23,55]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-app-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Selected studies on app-based reading data
+</figcaption>
+<div aria-describedby="tbl-app-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 23%">
+<col style="width: 55%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Study</strong></th>
+<th><strong>App type and sample</strong></th>
+<th><strong>Data, focus, and key findings</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="citation" data-cites="bootonImpactMobileApplication2023">Booton et al. (<a href="#ref-bootonImpactMobileApplication2023" role="doc-biblioref">2023</a>)</span></td>
+<td>Educational e-books; children 3–11 yrs (11 studies)</td>
+<td>App features: narration, augmented reality (AR), prompts, hotspots. Narration improved comprehension for pre-readers; AR boosted L2 vocabulary; hotspots showed no benefit.</td>
+</tr>
+<tr class="even">
+<td><span class="citation" data-cites="chatzopoulosEvaluationGooglePlay2023">Chatzopoulos et al. (<a href="#ref-chatzopoulosEvaluationGooglePlay2023" role="doc-biblioref">2023</a>)</span></td>
+<td>General educational, Google Play; <em>N</em> = 50 apps</td>
+<td>Rubric-based quality appraisal. Educational content was the weakest dimension; consumer ratings showed poor correspondence with expert scores.</td>
+</tr>
+<tr class="odd">
+<td><span class="citation" data-cites="chuangSystematicReviewEffectiveness2023">Chuang &amp; Jamiat (<a href="#ref-chuangSystematicReviewEffectiveness2023" role="doc-biblioref">2023</a>)</span></td>
+<td>Edutainment/educational; 3–8 yr olds (50 studies)</td>
+<td>Interactive book features. Multimedia enhancements yielded medium-to-large literacy gains; unrelated game features harmed focus.</td>
+</tr>
+<tr class="even">
+<td><span class="citation" data-cites="furlongFindingNeedleHaystack2025">Furlong et al. (<a href="#ref-furlongFindingNeedleHaystack2025" role="doc-biblioref">2025</a>)</span></td>
+<td>Commercial phonics apps; <em>N</em> = 309</td>
+<td>Content analysis of app quality. Majority lacked structured pedagogy; only ~27% met expert criteria; consumer ratings uncorrelated with expert evaluations.</td>
+</tr>
+<tr class="odd">
+<td><span class="citation" data-cites="sortkaerBothSidesStory2021">Sortkær et al. (<a href="#ref-sortkaerBothSidesStory2021" role="doc-biblioref">2021</a>)</span></td>
+<td>Educational (BookBites); children <em>N</em> ≈ 48,000, grades 3–6</td>
+<td>App reading time vs.&nbsp;standardised test scores. Reading speed correlated with ability (<em>r</em> = .39–.48); models predicted 16–18% of variance in progress.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>The present project addresses this gap directly. By analysing large-scale multilingual behavioural logs from the <em>Let’s Story</em> feature of Applaydu, we aim to test whether the text-level variables identified in the laboratory-based literature — frequency, lexical diversity, syntactic complexity, coherence — predict children’s reading behaviour in the wild, and how their effects are moderated by child age and the availability of narration support.</p>
+</section>
+</section>
+<section id="methods" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Methods</h1>
+<section id="participants" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="participants"><span class="header-section-number">2.1</span> Participants</h2>
+<p>The study sample consists of data from the <em>Let’s Story</em> feature of <em>Applaydu</em>, a commercially deployed edutainment app developed by Gameloft and Ferrero International that offers a range of activities targeting different skills. <em>Let’s Story</em> is one such activity, enabling families to co-create AI-generated storybooks using Microsoft’s generative AI tools across more than 40 countries and 19 languages. In the first six months following its launch in late 2024, <em>Let’s Story</em> facilitated over 2.4 million story sessions and generated more than 50,000 stories <span class="citation" data-cites="ratnerDidRobotWrite2025">(<a href="#ref-ratnerDidRobotWrite2025" role="doc-biblioref">Ratner et al., 2025</a>)</span>. We will include all children (ages 7–10) who meet the inclusion criteria below [exact <em>N</em> to be determined after data extraction] <span class="citation" data-cites="babayigitVocabularyLimitationsUndermine2022 lervagVocabularyKnowledgeCritical2010">(<a href="#ref-babayigitVocabularyLimitationsUndermine2022" role="doc-biblioref">Babayiğit et al., 2022</a>; <a href="#ref-lervagVocabularyKnowledgeCritical2010" role="doc-biblioref">Lervåg &amp; Aukrust, 2010</a>)</span>. All data are anonymised and collected passively, with no additional experimental manipulation. Children will be included if (a) parental consent was registered in-app, (b) they were between 7 and 10 years of age as reported at registration, and (c) they completed at least 5 distinct story sessions. Sessions will be excluded if reading times fall below 2 seconds per page or exceed 5 minutes per page (indicating skipping or abandonment), if accounts are identified as duplicates via device fingerprinting, or if sessions were flagged by the app as incomplete (e.g., due to an app crash).</p>
+</section>
+<section id="materials" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="materials"><span class="header-section-number">2.2</span> Materials</h2>
+<p>The reading materials consist of short narrative passages (200–400 words each) drawn from the <em>Let’s Story</em> library within the <em>Applaydu</em> app. These stories vary in vocabulary, syntax and coherence, providing natural variation in the text-level features of interest.</p>
+<p>For each story, we will compute a broad suite of computational text features, organised into four theoretically motivated families. <em>Lexical-distributional features</em> include lexical diversity (MTLD, type/token ratio, lexical density), log-transformed word frequency (SUBTLEXus; Corpus of Contemporary American English [COCA]), age of acquisition (Kuperman norms), and psycholinguistic norms for concreteness and imageability. <em>Syntactic-structural features</em> include mean dependency distance, clause count per sentence, subordination ratio, mean sentence length, and noun phrase (NP) complexity indices (determiners and dependents per NP). <em>Semantic and discourse-coherence features</em> include sentence-to-sentence cosine similarity (derived from contextualised word embeddings), co-reference overlap, connective density (additive, causal, temporal, and adversative connectives), and argument overlap. <em>Affective and pragmatic features</em> include sentiment valence, emotional arousal, and cognitive/social word-category counts. This feature set will be reduced to a smaller number of principal components prior to model fitting (see Analytic Plan, step 1).</p>
+<p>The <em>Let’s Story</em> feature of Applaydu records several behavioural variables for each reading session: reading time (in seconds) per page and per story, self-report scores (e.g., star ratings or in-app quiz correctness), interaction events (clicks, page flips, hint usage), and session metadata (language, reported child age, date/time). Where available, the app also records whether narration (audio read-aloud) was enabled for a given session.</p>
+</section>
+<section id="procedure" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="procedure"><span class="header-section-number">2.3</span> Procedure</h2>
+<p>Reading occurs under naturalistic, unconstrained conditions (“in the wild”). We will restrict the analysis to first-time readings of each story (excluding repeated readings) and require a minimum of 5 distinct stories per child. Data extraction will preserve the chronological order of sessions but exclude all personally identifying information. To reduce the influence of extreme outliers, reading time values will be winsorised at the 1st and 99th percentiles within each language group.</p>
+</section>
+<section id="measures" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="measures"><span class="header-section-number">2.4</span> Measures</h2>
+<p>The primary outcome is reading time per word, computed as total story reading time divided by word count. Because in-app quiz scores vary across languages in format and difficulty, reading time serves as the main outcome, with quiz-derived comprehension accuracy treated as a secondary measure.</p>
+<p>The predictor variables fall into two categories. Text features comprise the four families of computational indices described in Materials; these will be reduced to principal component scores before entering any model (see Analytic Plan, step 1). Reader features include child age (continuous, 7–10 years) and, where available, narration condition (enabled or not).</p>
+<p>The resulting dataset has a multilevel structure. At Level 1, observations correspond to individual story-reading instances (one child reading one story). At Level 2, observations are nested within children. At Level 3, children are nested within languages. Text-feature principal component (PC) scores will be grand-mean centred after computation; child age will be centred at the sample mean. Dichotomous variables (narration present/absent) will be effect-coded (±0.5).</p>
+<p><a href="#fig-mindmap" class="quarto-xref">Figure&nbsp;1</a> provides a schematic overview of the study’s conceptual framework, showing the relationships between reader and context variables, text features, and comprehension outcomes.</p>
+<div id="fig-mindmap" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mindmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../mindmap/mindmap.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mindmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Conceptual framework of the study. Reader and context variables (linguistic resources, sociocultural context, and developmental status) and text features (lexical-distributional, syntactic and discourse, and affective properties) jointly predict comprehension outcomes (processing efficiency, perceived difficulty, and situation model construction), with longitudinal progression as a cross-cutting temporal dimension.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="analytic-plan" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="analytic-plan"><span class="header-section-number">2.5</span> Analytic Plan</h2>
+<p>All confirmatory analyses will use Bayesian hierarchical models fitted with the <code>brms</code> package <span class="citation" data-cites="burknerBrmsPackageBayesian2017">(<a href="#ref-burknerBrmsPackageBayesian2017" role="doc-biblioref">Bürkner, 2017</a>)</span>, which implements full Bayesian inference via Hamiltonian Monte Carlo (No-U-Turn Sampler). We adopt this framework in preference to null-hypothesis significance testing because our scientific questions concern the <em>magnitude</em> and <em>direction</em> of effects rather than their mere existence, the expected sample size confers effectively unlimited frequentist power that renders <em>p</em>-value thresholds uninformative, and a single unified framework avoids the family-wise error inflation that arises from conditional multi-stage testing. For all fixed-effect coefficients on standardised predictors we will use weakly informative Student’s <em>t</em> priors with <span class="math inline">\(\nu\)</span> = 3, <span class="math inline">\(\mu\)</span> = 0, and <span class="math inline">\(\sigma\)</span> = 2.5; the same half-Student’s <em>t</em> specification applies to residual and random-effect standard deviations; random-effect correlation matrices receive LKJ(<span class="math inline">\(\eta\)</span> = 2) priors. These choices are regularising but assign substantial probability mass to effect sizes consistent with the existing literature on text-feature effects on reading.</p>
+<p>For each pre-registered hypothesis we will report, unconditionally and regardless of outcome, the posterior mean and 95% highest-density interval (HDI) for the relevant parameter; the posterior probability that the parameter falls in the predicted direction, P(<span class="math inline">\(\beta\)</span> &lt; 0) or P(<span class="math inline">\(\beta\)</span> &gt; 0) as specified per hypothesis; and the proportion of the posterior that lies within a region of practical equivalence (ROPE) defined as <span class="math inline">\(|\beta| &lt; 0.05\)</span> on the standardised scale — the threshold below which we consider an effect too small to be educationally meaningful. If more than 95% of the posterior lies within the ROPE we conclude practical equivalence; if less than 5% lies within the ROPE we conclude the effect is practically meaningful. All five confirmatory hypotheses are evaluated under this framework simultaneously and unconditionally, with no first-stage filter. Four chains of 4,000 iterations each (2,000 warm-up) will be run, with <span class="math inline">\(\hat{R}\)</span> &lt; 1.01 and effective sample size &gt; 1,000 per parameter as convergence diagnostics.</p>
+<section id="dimension-reduction-via-principal-component-analysis" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="dimension-reduction-via-principal-component-analysis"><span class="header-section-number">2.5.1</span> Dimension Reduction via Principal Component Analysis</h3>
+<p>Before fitting any mixed-effects model, we will reduce the full set of text-level features to a smaller number of stable, interpretable components using PCA, following the approach of <span class="citation" data-cites="crossleyDevelopingLinguisticConstructs2025">Crossley (<a href="#ref-crossleyDevelopingLinguisticConstructs2025" role="doc-biblioref">2025</a>)</span>. PCA is chosen over exploratory factor analysis because the goal is dimension reduction of observed stimulus properties rather than estimation of unobserved latent causes: there is no theoretical basis for claiming that a latent factor <em>causes</em> MTLD, dependency distance and connective density to co-vary, and treating them as reflective indicators of a latent construct would misrepresent the nature of computational linguistic indices <span class="citation" data-cites="crossleyDevelopingLinguisticConstructs2025">(<a href="#ref-crossleyDevelopingLinguisticConstructs2025" role="doc-biblioref">Crossley, 2025</a>)</span>.</p>
+<p>Prior to PCA, variables will pass through several pre-screening stages. Variables with more than 20% missing values in any language, near-zero variance (SD &lt; 0.01 after within-language standardisation), or excessive zero inflation (more than 20% zero counts) will be excluded. Variables showing absolute skewness or excess kurtosis greater than 3 will also be removed <span class="citation" data-cites="crossleyDevelopingLinguisticConstructs2025">(<a href="#ref-crossleyDevelopingLinguisticConstructs2025" role="doc-biblioref">Crossley, 2025</a>)</span>. Where two variables correlate at <span class="math inline">\(r\)</span> &gt; .90, we will retain the variable with stronger theoretical motivation, better cross-linguistic availability, lower missingness, or clearer interpretability. Crucially, this selection will not consult the variable’s correlation with the outcome, to prevent outcome information from leaking into feature construction.</p>
+<p>All retained variables will be <span class="math inline">\(z\)</span>-scored within language before PCA, removing between-language scale differences while preserving within-language variation. The primary analysis pools all language-standardised variables into a single PCA conducted in R using the <code>psych</code> package <span class="citation" data-cites="revelleRPackagePsych2023">(<a href="#ref-revelleRPackagePsych2023" role="doc-biblioref">Revelle, 2023</a>)</span>, after verifying the Kaiser–Meyer–Olkin (KMO) measure of sampling adequacy (individual KMO &gt; .50; overall KMO &gt; .60) and Bartlett’s test of sphericity. We use oblique rotation (promax, <span class="math inline">\(\kappa\)</span> = 4) rather than varimax, because linguistic features are naturally correlated and an orthogonality assumption is theoretically unjustified <span class="citation" data-cites="biberVariationSpeechWriting1988 crossleyDevelopingLinguisticConstructs2025">(<a href="#ref-biberVariationSpeechWriting1988" role="doc-biblioref">Biber, 1988</a>; <a href="#ref-crossleyDevelopingLinguisticConstructs2025" role="doc-biblioref">Crossley, 2025</a>)</span>. Components will be retained based on three jointly applied criteria: parallel analysis <span class="citation" data-cites="hornRationaleTestNumber1965">(<a href="#ref-hornRationaleTestNumber1965" role="doc-biblioref">Horn, 1965</a>)</span>, which retains components whose eigenvalues exceed the 95th percentile from 10,000 matched random data structures; scree-plot inspection; and interpretability, with a component accepted only if the pattern matrix admits a coherent reading-theoretic interpretation. Variables with absolute pattern loadings below .30 will not be attributed to any component. Weighted regression factor scores for each retained component will then be computed per story and will serve as text-level predictors in the confirmatory models below. The full pattern matrix (all loadings ≥ .15), component-score intercorrelations, proportion of variance per component, and per-variable KMO values will be reported in a supplementary table, with each component named based on its highest-loading variables and theoretical interpretation.</p>
+</section>
+<section id="confirmatory-models" class="level3" data-number="2.5.2">
+<h3 data-number="2.5.2" class="anchored" data-anchor-id="confirmatory-models"><span class="header-section-number">2.5.2</span> Confirmatory Models</h3>
+<p>The primary outcome model predicts log-transformed reading time per word — log transformation normalises the positively skewed distribution, with posterior predictive fit verified via <code>pp_check</code> plots — from the retained text-feature PC scores, child age, narration condition, and three pre-registered critical interactions: the syntactic-structural component (SyntaxPC) × ChildAge, the semantic/coherence component (CoherencePC) × ChildAge, and Narration × ChildAge. The random-effects structure follows a maximal justified specification, with random intercepts for Child and Language and random slopes for the key PC components within Child (e.g., <code>(1 + SyntaxPC + CoherencePC | Child)</code>). Observations with standardised residuals exceeding ±3 <em>SD</em> based on posterior predictive draws will be flagged and removed, with both the full-data and trimmed models reported.</p>
+<p>A second confirmatory model predicts comprehension accuracy derived from in-app quiz responses. If accuracy data are binary (correct/incorrect per question), we will use a Bernoulli model with a logit link; if they are continuous (e.g., proportion correct per story), we will use a Beta regression. The fixed-effects and random-effects structure mirrors the reading-time model.</p>
+</section>
+<section id="convergence-and-multicollinearity" class="level3" data-number="2.5.3">
+<h3 data-number="2.5.3" class="anchored" data-anchor-id="convergence-and-multicollinearity"><span class="header-section-number">2.5.3</span> Convergence and Multicollinearity</h3>
+<p>A random intercept for <em>Language</em> will be included in all models to account for between-language variability and enable partial pooling. If the maximal random-effects structure fails to converge — assessed via <span class="math inline">\(\hat{R}\)</span> and divergent transition diagnostics — we will simplify by removing the random slope with the smallest posterior variance and iterating until convergence is achieved, reporting all simplification steps. Residual multicollinearity among the retained PC scores will be assessed using variance inflation factors (VIF) on the design matrix after the dimension-reduction step; if any VIF exceeds 5, the component with the lowest theoretical relevance for the confirmatory hypotheses will be removed.</p>
+</section>
+<section id="model-comparison" class="level3" data-number="2.5.4">
+<h3 data-number="2.5.4" class="anchored" data-anchor-id="model-comparison"><span class="header-section-number">2.5.4</span> Model Comparison</h3>
+<p>We will compare nested models — the full model against a version excluding each interaction of interest — using leave-one-out cross-validation (LOO-CV; <code>loo</code> package), reporting the expected log pointwise predictive density difference (ELPD<span class="math inline">\(_\text{LOO}\)</span>) and its standard error. LOO-CV is preferred over likelihood-ratio tests because it requires no asymptotic approximations and is well-calibrated within the Bayesian framework adopted here.</p>
+</section>
+<section id="minimum-effect-size-and-rope-calibration" class="level3" data-number="2.5.5">
+<h3 data-number="2.5.5" class="anchored" data-anchor-id="minimum-effect-size-and-rope-calibration"><span class="header-section-number">2.5.5</span> Minimum Effect Size and ROPE Calibration</h3>
+<p>Given the very large expected sample (2.5M+ sessions), the posterior will be highly concentrated regardless of prior, making the practical significance of effects the key inferential question. ROPE bounds are informed by standardised effect sizes from the closest available prior studies: <span class="citation" data-cites="sortkaerBothSidesStory2021">Sortkær et al. (<a href="#ref-sortkaerBothSidesStory2021" role="doc-biblioref">2021</a>)</span> reported <span class="math inline">\(r\)</span> ≈ .39–.48 for reading-speed effects, and syntactic complexity effects on children’s reading times in eye-tracking studies are typically in the range <span class="math inline">\(d\)</span> = 0.2–0.5. A standardised <span class="math inline">\(\beta\)</span> of 0.05 is therefore conservatively below the range of effects the existing literature considers educationally meaningful. Sensitivity analyses varying the ROPE bound to ±0.03 and ±0.10 will assess the robustness of practical-equivalence conclusions.</p>
+</section>
+<section id="sensitivity-analyses" class="level3" data-number="2.5.6">
+<h3 data-number="2.5.6" class="anchored" data-anchor-id="sensitivity-analyses"><span class="header-section-number">2.5.6</span> Sensitivity Analyses</h3>
+<p>Six pre-registered sensitivity analyses will assess the robustness of the main findings. The primary models will first be re-fitted without the outlier exclusion criteria to establish whether winsorisation and residual trimming drive any substantive conclusions. They will then be restricted to the five largest language groups to evaluate cross-linguistic generalisability independently of less-represented languages. A third analysis will recode child age as a categorical variable (7, 8, 9, or 10 years) to test whether the linear-age assumption is adequate. A fourth will vary the ROPE bounds to ±0.03 and ±0.10 as described above. In a fifth analysis, the confirmatory models will be re-estimated using sparse PCA scores — obtained via the R package <code>sparsepca</code>, with sparsity regularisation selected by cross-validation — to assess whether structurally simpler components with fewer non-zero loadings alter the substantive pattern of results. Finally, language-specific PCAs will replace the pooled solution, with one PCA fitted per language, to test whether the cross-lingual feature space adequately represents within-language variation.</p>
+</section>
+<section id="supplementary-frequentist-models" class="level3" data-number="2.5.7">
+<h3 data-number="2.5.7" class="anchored" data-anchor-id="supplementary-frequentist-models"><span class="header-section-number">2.5.7</span> Supplementary Frequentist Models</h3>
+<p>To facilitate comparison with prior literature and to assist readers unfamiliar with Bayesian inference, fixed-effect point estimates, standard errors, and confidence intervals from a maximum-likelihood linear mixed model (LMM; fitted with <code>lme4</code>/<code>lmerTest</code>, identical random-effects structure) will be reported in a supplementary table. These results are descriptive only and carry no confirmatory weight; all hypothesis evaluation is conducted solely via the Bayesian framework described above.</p>
+</section>
+</section>
+</section>
+<section id="hypotheses" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Hypotheses</h1>
+<p>Our hypotheses are directional and each maps onto a specific fixed-effect or interaction term in the confirmatory models described above. Following the PCA procedure described in the Analytic Plan (see Dimension Reduction via Principal Component Analysis), hypotheses about text-level features are stated in terms of the PC component families expected to carry the relevant variance. The syntactic-structural component is referred to as SyntaxPC; the semantic/coherence component as CoherencePC; and the lexical-distributional component as LexDistPC. Because exact component names will be assigned post-hoc from the pattern matrix, each directional prediction is conditional on a component with the expected feature profile emerging from the PCA; if a relevant component does not emerge, the corresponding hypothesis will be reported as untestable.</p>
+<p>First, we predict that text-level features predict reading time: stories scoring higher on syntactic and lexical difficulty — with longer dependency distances, less frequent words, higher lexical diversity and lower coherence — should be associated with longer reading times per word. We expect main effects of SyntaxPC and LexDistPC in the direction of longer reading times, and a main effect of CoherencePC in the direction of shorter reading times.</p>
+<p>Second, we predict that syntactic complexity effects are moderated by child age <span class="citation" data-cites="delageSyntaxWorkingMemory2019 roque-gutierrezWorkingMemoryTraining2023">(<a href="#ref-delageSyntaxWorkingMemory2019" role="doc-biblioref">Delage &amp; Frauenfelder, 2019</a>; <a href="#ref-roque-gutierrezWorkingMemoryTraining2023" role="doc-biblioref">Roque-Gutierrez &amp; Ibbotson, 2023</a>)</span>. Because younger children’s working memory capacity is less developed, texts with longer syntactic dependencies should slow their reading more steeply than for older children. We expect a negative SyntaxPC × ChildAge interaction on reading time (i.e., the slowing effect of the syntactic-structural component diminishes with age).</p>
+<p>Third, we predict that discourse coherence benefits younger children more than older children. Higher coherence reduces the inferential burden on the reader <span class="citation" data-cites="crossleyToolAutomaticAnalysis2019 graesserCohmetrixMeasuresText2014">(<a href="#ref-crossleyToolAutomaticAnalysis2019" role="doc-biblioref">Crossley et al., 2019</a>; <a href="#ref-graesserCohmetrixMeasuresText2014" role="doc-biblioref">Graesser et al., 2014</a>)</span>, and this support should be especially valuable for younger children who have less background knowledge and weaker inference-generation skills. We expect a negative CoherencePC × ChildAge interaction on reading time (i.e., the facilitative effect of the semantic/coherence component is larger for younger children).</p>
+<p>Fourth, we predict that narration benefits younger children more than older children. The read-aloud narration feature, when enabled, should yield a larger improvement in reading speed for younger children, who are still developing decoding fluency, than for older children. We test the Narration × ChildAge interaction accordingly.</p>
+<p>Fifth, we predict that app-derived reading time correlates with comprehension. Average reading speed, as a proxy for fluency, should relate positively to comprehension accuracy — consistent with the findings of <span class="citation" data-cites="sortkaerBothSidesStory2021">Sortkær et al. (<a href="#ref-sortkaerBothSidesStory2021" role="doc-biblioref">2021</a>)</span>. We will test this by predicting quiz-derived comprehension accuracy from mean reading rate.</p>
+<p>Each hypothesis will be evaluated through the corresponding mixed-model term using the Bayesian inference criteria described in the Analytic Plan (posterior mean, 95% HDI, directional posterior probability, and ROPE analysis). All five hypotheses are evaluated under the same inferential framework, applied unconditionally and simultaneously.</p>
+<section id="exploratory-analyses" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="exploratory-analyses"><span class="header-section-number">3.1</span> Exploratory Analyses</h2>
+<p>Beyond the confirmatory tests above, we plan several analyses that are explicitly designated as exploratory and will be reported separately.</p>
+<p>We will examine whether the magnitude of text-feature effects on children’s reading varies systematically across the 19 languages represented in the <em>Let’s Story</em> dataset. This could be addressed through language-stratified models or through meta-regression with typological features (e.g., orthographic depth) as moderators — an approach that may reveal whether the relationships between, say, syntactic complexity and reading time are consistent across typologically diverse languages or are modulated by language-specific properties.</p>
+<p>For interactions showing a directional posterior probability &gt; 0.95 in the confirmatory models, we will probe the pattern of results using simple slopes analysis at ±1 <em>SD</em> of the moderator variable. In the Bayesian framework this involves computing marginal posterior distributions at specified covariate values using <code>emmeans</code> or <code>marginaleffects</code>, providing posterior means and HDIs at each level of the moderator.</p>
+<p>Should eye-tracking data become available for a subset of participants, we will model fixation durations and regression rates as additional outcome variables using the same predictor structure as the confirmatory models. Finally, we will explore whether text complexity features show non-linear (quadratic) relationships with reading time, which would suggest diminishing or accelerating effects at extreme levels of complexity.</p>
+<p>All exploratory results will be clearly labelled as such in the manuscript, and we will not draw confirmatory conclusions from these analyses.</p>
+<div style="page-break-after: always;"></div>
+</section>
+</section>
+<section id="references" class="level1 unnumbered" data-number="4">
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">4 References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-altamuraHowDigitalReading2025" class="csl-entry" role="listitem">
+Altamura, L., Vargas, C., Naumann, J., &amp; Salmerón, L. (2025). How digital reading habits shape reading motivation and comprehension over time: <span>Longitudinal</span> associations in primary school. <em>Developmental Psychology</em>. <a href="https://doi.org/10.1037/dev0002094">https://doi.org/10.1037/dev0002094</a>
+</div>
+<div id="ref-babayigitVocabularyLimitationsUndermine2022" class="csl-entry" role="listitem">
+Babayiğit, S., Hitch, G. J., Kandru-Pothineni, S., Clarke, A., &amp; Warmington, M. (2022). Vocabulary limitations undermine bilingual children’s reading comprehension despite bilingual cognitive strengths. <em>Reading and Writing</em>, <em>35</em>(7), 1651–1673. <a href="https://doi.org/10.1007/s11145-021-10240-8">https://doi.org/10.1007/s11145-021-10240-8</a>
+</div>
+<div id="ref-bernabeuLanguageSensorimotorSimulation2022" class="csl-entry" role="listitem">
+Bernabeu, P. (2022). <em>Language and sensorimotor simulation in conceptual processing: <span>Multilevel</span> analysis and statistical power</em> [PhD thesis, Lancaster University]. <a href="https://doi.org/10.17635/LANCASTER/THESIS/1795">https://doi.org/10.17635/LANCASTER/THESIS/1795</a>
+</div>
+<div id="ref-berzakOneStop360ParticipantEnglish2025" class="csl-entry" role="listitem">
+Berzak, Y., Malmaud, J., Shubi, O., Meiri, Y., Lion, E., &amp; Levy, R. (2025). <span>OneStop</span>: <span>A</span> 360-<span>Participant English Eye Tracking Dataset</span> with <span>Different Reading Regimes</span>. <em>Scientific Data</em>, <em>12</em>(1), 1995. <a href="https://doi.org/10.1038/s41597-025-06272-2">https://doi.org/10.1038/s41597-025-06272-2</a>
+</div>
+<div id="ref-biberVariationSpeechWriting1988" class="csl-entry" role="listitem">
+Biber, D. (1988). <em>Variation across speech and writing</em> (1st ed.). Cambridge University Press. <a href="https://doi.org/10.1017/CBO9780511621024">https://doi.org/10.1017/CBO9780511621024</a>
+</div>
+<div id="ref-bootonImpactMobileApplication2023" class="csl-entry" role="listitem">
+Booton, S. A., Hodgkiss, A., &amp; Murphy, V. A. (2023). The impact of mobile application features on children’s language and literacy learning: A systematic review. <em>Computer Assisted Language Learning</em>, <em>36</em>(3), 400–429. <a href="https://doi.org/10.1080/09588221.2021.1930057">https://doi.org/10.1080/09588221.2021.1930057</a>
+</div>
+<div id="ref-brysbaertWordPrevalenceNorms2019" class="csl-entry" role="listitem">
+Brysbaert, M., Mandera, P., McCormick, S. F., &amp; Keuleers, E. (2019). Word prevalence norms for 62,000 <span>English</span> lemmas. <em>Behavior Research Methods</em>, <em>51</em>(2), 467–479. <a href="https://doi.org/10.3758/s13428-018-1077-9">https://doi.org/10.3758/s13428-018-1077-9</a>
+</div>
+<div id="ref-burknerBrmsPackageBayesian2017" class="csl-entry" role="listitem">
+Bürkner, P.-C. (2017). Brms: <span>An R</span> package for <span>Bayesian</span> multilevel models using <span>Stan</span>. <em>Journal of Statistical Software</em>, <em>80</em>, 1–28. <a href="https://doi.org/10.18637/jss.v080.i01">https://doi.org/10.18637/jss.v080.i01</a>
+</div>
+<div id="ref-cainReadingComprehensionVocabulary2014" class="csl-entry" role="listitem">
+Cain, K., &amp; Oakhill, J. (2014). Reading comprehension and vocabulary: <span>Is</span> vocabulary more important for some aspects of comprehension? <em>L’Année Psychologique</em>, <em>114</em>(4), 647–662. <a href="https://doi.org/10.3917/anpsy.144.0647">https://doi.org/10.3917/anpsy.144.0647</a>
+</div>
+<div id="ref-changInfluencesExecutiveFunction2020" class="csl-entry" role="listitem">
+Chang, I. (2020). Influences of executive function, language comprehension, and fluency on young children’s reading comprehension. <em>Journal of Early Childhood Research</em>, <em>18</em>(1), 44–57. <a href="https://doi.org/10.1177/1476718X19875768">https://doi.org/10.1177/1476718X19875768</a>
+</div>
+<div id="ref-chatzopoulosEvaluationGooglePlay2023" class="csl-entry" role="listitem">
+Chatzopoulos, A., Karaflis, A., Kalogiannakis, M., Tzerachoglou, A., Cheirchanteri, G., Sfyroera, E., &amp; Sklavounou, E.-O. (2023). Evaluation of <span>Google Play</span> educational apps for early childhood education. <em>Advances in Mobile Learning Educational Research</em>, <em>3</em>(2), 770–778. <a href="https://doi.org/10.25082/AMLER.2023.02.004">https://doi.org/10.25082/AMLER.2023.02.004</a>
+</div>
+<div id="ref-chuangSystematicReviewEffectiveness2023" class="csl-entry" role="listitem">
+Chuang, C., &amp; Jamiat, N. (2023). A systematic review on the effectiveness of children’s interactive reading applications for promoting their emergent literacy in the multimedia context. <em>Contemporary Educational Technology</em>, <em>15</em>(2), ep412. <a href="https://doi.org/10.30935/cedtech/12941">https://doi.org/10.30935/cedtech/12941</a>
+</div>
+<div id="ref-crossleyDevelopingLinguisticConstructs2025" class="csl-entry" role="listitem">
+Crossley, S. A. (2025). Developing linguistic constructs of text readability using natural language processing. <em>Scientific Studies of Reading</em>, <em>29</em>(2), 138–160. <a href="https://doi.org/10.1080/10888438.2024.2422365">https://doi.org/10.1080/10888438.2024.2422365</a>
+</div>
+<div id="ref-crossleyToolAutomaticAnalysis2019" class="csl-entry" role="listitem">
+Crossley, S. A., Kyle, K., &amp; Dascalu, M. (2019). The <span>Tool</span> for the <span>Automatic Analysis</span> of <span>Cohesion</span> 2.0: <span>Integrating</span> semantic similarity and text overlap. <em>Behavior Research Methods</em>, <em>51</em>(1), 14–27. <a href="https://doi.org/10.3758/s13428-018-1142-4">https://doi.org/10.3758/s13428-018-1142-4</a>
+</div>
+<div id="ref-crossleyAssessingReadabilityFormulas2023" class="csl-entry" role="listitem">
+Crossley, S. A., Skalicky, S., Berger, C., &amp; Heidari, A. (2023). Assessing readability formulas in the wild. In M. Dascalu, P. Marti, &amp; F. Pozzi (Eds.), <em>Polyphonic <span>Construction</span> of <span>Smart Learning Ecosystems</span></em> (pp. 91–101). Springer Nature. <a href="https://doi.org/10.1007/978-981-19-5240-1_6">https://doi.org/10.1007/978-981-19-5240-1_6</a>
+</div>
+<div id="ref-cuiRoleExecutiveFunctions2024" class="csl-entry" role="listitem">
+Cui, N., Wang, Y., Luo, J., &amp; Wu, Y. (2024). The role of executive functions in 9‐ to 12‐year‐old children’s sentence processing: <span>An</span> eye‐movement study. <em>Journal of Research in Reading</em>, <em>47</em>(2), 201–219. <a href="https://doi.org/10.1111/1467-9817.12449">https://doi.org/10.1111/1467-9817.12449</a>
+</div>
+<div id="ref-delageSyntaxWorkingMemory2019" class="csl-entry" role="listitem">
+Delage, H., &amp; Frauenfelder, U. H. (2019). Syntax and working memory in typically-developing children: <span>Focus</span> on syntactic complexity. <em>Language, Interaction and Acquisition</em>, <em>10</em>(2), 141–176. <a href="https://doi.org/10.1075/lia.18013.del">https://doi.org/10.1075/lia.18013.del</a>
+</div>
+<div id="ref-duffEstimatesIndividualDifferences2020" class="csl-entry" role="listitem">
+Duff, D., &amp; Brydon, M. (2020). Estimates of individual differences in vocabulary size in <span>English</span>: How many words are needed to <span>“close the vocabulary gap”</span>? <em>Journal of Research in Reading</em>, <em>43</em>(4), 454–481. <a href="https://doi.org/10.1111/1467-9817.12322">https://doi.org/10.1111/1467-9817.12322</a>
+</div>
+<div id="ref-fredrickLexicalDiversitySyntactic2025" class="csl-entry" role="listitem">
+Fredrick, D. R., &amp; Craven, L. (2025). Lexical diversity, syntactic complexity, and readability: A corpus-based analysis of <span>ChatGPT</span> and <span>L2</span> student essays. <em>Frontiers in Education</em>, <em>10</em>. <a href="https://doi.org/10.3389/feduc.2025.1616935">https://doi.org/10.3389/feduc.2025.1616935</a>
+</div>
+<div id="ref-furenesComparisonChildrensReading2021" class="csl-entry" role="listitem">
+Furenes, M. I., Kucirkova, N., &amp; Bus, A. G. (2021). A comparison of children’s reading on paper versus screen: A meta-analysis. <em>Review of Educational Research</em>, <em>91</em>(4), 483–517. <a href="https://doi.org/10.3102/0034654321998074">https://doi.org/10.3102/0034654321998074</a>
+</div>
+<div id="ref-furlongFindingNeedleHaystack2025" class="csl-entry" role="listitem">
+Furlong, L., Serry, T., Erickson, S., Lefort, M., Gath, M., &amp; Morris, M. (2025). Finding the needle in the haystack: A quality appraisal of mobile applications for foundational literacy skills. <em>Early Childhood Education Journal</em>. <a href="https://doi.org/10.1007/s10643-025-02066-8">https://doi.org/10.1007/s10643-025-02066-8</a>
+</div>
+<div id="ref-goldmanReadingComplexImplications2024" class="csl-entry" role="listitem">
+Goldman, S. R. (2024). Reading is complex: <span>Implications</span> for research and practice. <em>Educational Psychologist</em>, <em>59</em>(4), 315–325. <a href="https://doi.org/10.1080/00461520.2024.2418062">https://doi.org/10.1080/00461520.2024.2418062</a>
+</div>
+<div id="ref-graesserCohmetrixMeasuresText2014" class="csl-entry" role="listitem">
+Graesser, A. C., McNamara, D. S., Cai, Z., Conley, M., Li, H., &amp; Pennebaker, J. (2014). Coh-metrix measures text characteristics at multiple levels of language and discourse. <em>The Elementary School Journal</em>, <em>115</em>(2), 210–229. <a href="https://doi.org/10.1086/678293">https://doi.org/10.1086/678293</a>
+</div>
+<div id="ref-guReadingComprehensionL12025" class="csl-entry" role="listitem">
+Gu, C., Nastase, S. A., Zada, Z., &amp; Li, P. (2025). Reading comprehension in <span>L1</span> and <span>L2</span> readers: Neurocomputational mechanisms revealed through large language models. <em>Npj Science of Learning</em>, <em>10</em>(1), 46. <a href="https://doi.org/10.1038/s41539-025-00337-y">https://doi.org/10.1038/s41539-025-00337-y</a>
+</div>
+<div id="ref-hahnModelingTaskEffects2023" class="csl-entry" role="listitem">
+Hahn, M., &amp; Keller, F. (2023). Modeling task effects in human reading with neural network-based attention. <em>Cognition</em>, <em>230</em>, 105289. <a href="https://doi.org/10.1016/j.cognition.2022.105289">https://doi.org/10.1016/j.cognition.2022.105289</a>
+</div>
+<div id="ref-hattanExpandingScienceReading2024" class="csl-entry" role="listitem">
+Hattan, C., &amp; Kendeou, P. (2024). Expanding the science of reading: <span>Contributions</span> from educational psychology. <em>Educational Psychologist</em>, <em>59</em>(4), 217–232. <a href="https://doi.org/10.1080/00461520.2024.2418048">https://doi.org/10.1080/00461520.2024.2418048</a>
+</div>
+<div id="ref-hornRationaleTestNumber1965" class="csl-entry" role="listitem">
+Horn, J. L. (1965). A rationale and test for the number of factors in factor analysis. <em>Psychometrika</em>, <em>30</em>(2), 179–185. <a href="https://doi.org/10.1007/BF02289447">https://doi.org/10.1007/BF02289447</a>
+</div>
+<div id="ref-hosseiniArtificialNeuralNetwork2024" class="csl-entry" role="listitem">
+Hosseini, E. A., Schrimpf, M., Zhang, Y., Bowman, S., Zaslavsky, N., &amp; Fedorenko, E. (2024). Artificial neural network language models predict human brain responses to language even after a developmentally realistic amount of training. <em>Neurobiology of Language</em>, <em>5</em>(1), 43–63. <a href="https://doi.org/10.1162/nol_a_00137">https://doi.org/10.1162/nol_a_00137</a>
+</div>
+<div id="ref-hsiaoSemanticDiversityFrequency2018" class="csl-entry" role="listitem">
+Hsiao, Y., &amp; Nation, K. (2018). Semantic diversity, frequency and the development of lexical quality in children’s word reading. <em>Journal of Memory and Language</em>, <em>103</em>, 114–126. <a href="https://doi.org/10.1016/j.jml.2018.08.005">https://doi.org/10.1016/j.jml.2018.08.005</a>
+</div>
+<div id="ref-kaupInterplayModalAmodal2025" class="csl-entry" role="listitem">
+Kaup, B., Günther, F., &amp; Dudschig, C. (2025). The interplay of modal and amodal processes in language comprehension at the word level and beyond. In <em>Psychology of <span>Learning</span> and <span>Motivation</span></em>. Academic Press. <a href="https://doi.org/10.1016/bs.plm.2025.08.001">https://doi.org/10.1016/bs.plm.2025.08.001</a>
+</div>
+<div id="ref-korochkinaChildrenYoungPeoples2024" class="csl-entry" role="listitem">
+Korochkina, M., Marelli, M., Brysbaert, M., &amp; Rastle, K. (2024). The <span>Children</span> and <span>Young People</span>’s <span>Books Lexicon</span> (<span>CYP-LEX</span>): <span>A</span> large-scale lexical database of books read by children and young people in the <span>United Kingdom</span>. <em>Quarterly Journal of Experimental Psychology</em>, <em>77</em>(12), 2418–2438. <a href="https://doi.org/10.1177/17470218241229694">https://doi.org/10.1177/17470218241229694</a>
+</div>
+<div id="ref-lervagVocabularyKnowledgeCritical2010" class="csl-entry" role="listitem">
+Lervåg, A., &amp; Aukrust, V. G. (2010). Vocabulary knowledge is a critical determinant of the difference in reading comprehension growth between first and second language learners. <em>Journal of Child Psychology and Psychiatry</em>, <em>51</em>(5), 612–620. <a href="https://doi.org/10.1111/j.1469-7610.2009.02185.x">https://doi.org/10.1111/j.1469-7610.2009.02185.x</a>
+</div>
+<div id="ref-liExploringSyntacticComplexity2025" class="csl-entry" role="listitem">
+Li, C., Wang, X., &amp; Qian, L. (2025). Exploring syntactic complexity and text readability in an <span>ELT</span> textbook series for <span>Chinese English</span> majors. <em>Sage Open</em>, <em>15</em>(1), 21582440251323619. <a href="https://doi.org/10.1177/21582440251323619">https://doi.org/10.1177/21582440251323619</a>
+</div>
+<div id="ref-magnaboscoEyeSemanticsStudy2024" class="csl-entry" role="listitem">
+Magnabosco, F., &amp; Hauk, O. (2024). An eye on semantics: A study on the influence of concreteness and predictability on early fixation durations. <em>Language, Cognition and Neuroscience</em>, <em>39</em>(3), 302–316. <a href="https://doi.org/10.1080/23273798.2023.2274558">https://doi.org/10.1080/23273798.2023.2274558</a>
+</div>
+<div id="ref-marjokorpiGrammaticalUnderstandingPredicts2025" class="csl-entry" role="listitem">
+Marjokorpi, J., &amp; van Rijt, J. (2025). Grammatical understanding predicts reading comprehension in secondary-level students: Insights from a <span>Finnish</span> national survey. <em>Language and Education</em>, <em>39</em>(4), 924–943. <a href="https://doi.org/10.1080/09500782.2024.2376280">https://doi.org/10.1080/09500782.2024.2376280</a>
+</div>
+<div id="ref-meziereUsingEyetrackingMeasures2023" class="csl-entry" role="listitem">
+Mézière, D. C., Yu, L., Reichle, E. D., von der Malsburg, T., &amp; McArthur, G. (2023). Using eye-tracking measures to predict reading comprehension. <em>Reading Research Quarterly</em>, <em>58</em>(3), 425–449. <a href="https://doi.org/10.1002/rrq.498">https://doi.org/10.1002/rrq.498</a>
+</div>
+<div id="ref-monaghanLiteracyEarlyLanguage2023" class="csl-entry" role="listitem">
+Monaghan, P. (2023). Literacy and early language development: <span>Insights</span> from computational modelling. <em>Journal of Child Language</em>, <em>50</em>(6), 1394–1410. <a href="https://doi.org/10.1017/S0305000923000193">https://doi.org/10.1017/S0305000923000193</a>
+</div>
+<div id="ref-murakiDevelopmentAbstractWord2025" class="csl-entry" role="listitem">
+Muraki, E. J., Reggin, L. D., Feddema, C. Y., &amp; Pexman, P. M. (2025). The development of abstract word meanings. <em>Journal of Child Language</em>, <em>52</em>(1), 195–207. <a href="https://doi.org/10.1017/S0305000923000569">https://doi.org/10.1017/S0305000923000569</a>
+</div>
+<div id="ref-nationChildrensReadingDifficulties2019" class="csl-entry" role="listitem">
+Nation, K. (2019). Children’s reading difficulties, language, and reflections on the simple view of reading. <em>Australian Journal of Learning Difficulties</em>, <em>24</em>(1), 47–73. <a href="https://doi.org/10.1080/19404158.2019.1609272">https://doi.org/10.1080/19404158.2019.1609272</a>
+</div>
+<div id="ref-nielsenSyntacticComprehensionSeparate2025" class="csl-entry" role="listitem">
+Nielsen, J. L., Christensen, R. V., &amp; Poulsen, M. (2025). Syntactic comprehension—a separate source of individual variance in middle‐school children’s reading comprehension. <em>Reading Research Quarterly</em>, <em>60</em>(2), e70003. <a href="https://doi.org/10.1002/rrq.70003">https://doi.org/10.1002/rrq.70003</a>
+</div>
+<div id="ref-normanEffectsContextualDiversity2025" class="csl-entry" role="listitem">
+Norman, R., Taylor, J. S. H., &amp; Rodd, J. M. (2025). The effects of contextual diversity on lexical processing: <span>A</span> scoping review. <em>Psychonomic Bulletin &amp; Review</em>, <em>32</em>(6), 2763–2806. <a href="https://doi.org/10.3758/s13423-025-02761-y">https://doi.org/10.3758/s13423-025-02761-y</a>
+</div>
+<div id="ref-pickrenContributionTextCharacteristics2022" class="csl-entry" role="listitem">
+Pickren, S. E., Stacy, M., Tufo, S. N. D., Spencer, M., &amp; Cutting, L. E. (2022). The contribution of text characteristics to reading comprehension: Investigating the influence of text emotionality. <em>Reading Research Quarterly</em>, <em>57</em>(2), 649–667. <a href="https://doi.org/10.1002/rrq.431">https://doi.org/10.1002/rrq.431</a>
+</div>
+<div id="ref-ratnerDidRobotWrite2025" class="csl-entry" role="listitem">
+Ratner, S., Ong, C., Mathers, S., &amp; Murphy, V. A. (2025). <span>“<span>Did</span> a robot write that?”</span>: <span class="nocase">AI-generated</span> digital storybooks. <em>ELT Journal</em>, ccaf034. <a href="https://doi.org/10.1093/elt/ccaf034">https://doi.org/10.1093/elt/ccaf034</a>
+</div>
+<div id="ref-revelleRPackagePsych2023" class="csl-entry" role="listitem">
+Revelle, W. (2023). <em>Psych: <span>Procedures</span> for psychological, psychometric, and personality research</em> [Manual]. Northwestern University. <a href="https://CRAN.R-project.org/package=psych">https://CRAN.R-project.org/package=psych</a>
+</div>
+<div id="ref-roque-gutierrezWorkingMemoryTraining2023" class="csl-entry" role="listitem">
+Roque-Gutierrez, E., &amp; Ibbotson, P. (2023). Working memory training improves children’s syntactic ability but not vice versa: <span>A</span> randomized control trial. <em>Journal of Experimental Child Psychology</em>, <em>227</em>, 105593. <a href="https://doi.org/10.1016/j.jecp.2022.105593">https://doi.org/10.1016/j.jecp.2022.105593</a>
+</div>
+<div id="ref-seidenbergImpactLanguageExperience2018" class="csl-entry" role="listitem">
+Seidenberg, M. S., &amp; MacDonald, M. C. (2018). The impact of language experience on language and reading: A statistical learning approach. <em>Topics in Language Disorders</em>, <em>38</em>(1), 66–83. <a href="https://doi.org/10.1097/TLD.0000000000000144">https://doi.org/10.1097/TLD.0000000000000144</a>
+</div>
+<div id="ref-sortkaerBothSidesStory2021" class="csl-entry" role="listitem">
+Sortkær, B., Smith, E., Reimer, D., Oehmcke, S., &amp; Andersen, I. G. (2021). Both sides of the story: Comparing student-level data on reading performance from administrative registers to application generated data from a reading app. <em>EPJ Data Science</em>, <em>10</em>(1), 44. <a href="https://doi.org/10.1140/epjds/s13688-021-00300-y">https://doi.org/10.1140/epjds/s13688-021-00300-y</a>
+</div>
+<div id="ref-vandenboschRoleLinguisticDiversity2019" class="csl-entry" role="listitem">
+Van Den Bosch, L. J., Segers, E., &amp; Verhoeven, L. (2019). The role of linguistic diversity in the prediction of early reading comprehension: A quantile regression approach. <em>Scientific Studies of Reading</em>, <em>23</em>(3), 203–219. <a href="https://doi.org/10.1080/10888438.2018.1509864">https://doi.org/10.1080/10888438.2018.1509864</a>
+</div>
+<div id="ref-vanheuvenSubtlexUKNewImproved2014" class="csl-entry" role="listitem">
+van Heuven, W. J. B., Mandera, P., Keuleers, E., &amp; Brysbaert, M. (2014). Subtlex-<span>UK</span>: A new and improved word frequency database for <span>British English</span>. <em>Quarterly Journal of Experimental Psychology</em>, <em>67</em>(6), 1176–1190. <a href="https://doi.org/10.1080/17470218.2013.850521">https://doi.org/10.1080/17470218.2013.850521</a>
+</div>
+<div id="ref-wangUtilizingMachineLearning2024" class="csl-entry" role="listitem">
+Wang, Z., Liu, M., &amp; Liu, K. (2024). Utilizing machine learning techniques for classifying translated and non-translated corporate annual reports. <em>Applied Artificial Intelligence</em>, <em>38</em>(1), 2340393. <a href="https://doi.org/10.1080/08839514.2024.2340393">https://doi.org/10.1080/08839514.2024.2340393</a>
+</div>
+</div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
