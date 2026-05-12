@@ -1,5 +1,5 @@
 ---
-title: "Multimodal Text Reading Comprehension: Preregistration"
+title: "Interplay of Text, Reader And Context (InTRACt) in children’s digital reading comprehension: Preregistration"
 format:
   pdf:
     documentclass: article
@@ -23,12 +23,20 @@ format:
         \setlength{\aboverulesep}{4pt}
         \setlength{\belowrulesep}{4pt}
         \renewcommand{\arraystretch}{1.6}
+        \usepackage{tocloft}
+        \setlength{\cftbeforetoctitleskip}{-20pt}
   html:
     toc: true
     number-sections: true
 bibliography: "InTRACt references.bib"
 csl: apa7.csl
 ---
+
+# Abstract {.unnumbered}
+
+Children's reading comprehension involves the interplay of three dimensions: the text (its lexical, syntactic, and discourse characteristics), the reader (age, developing cognitive capacity), and the reading context (the digital medium, the availability of supportive features such as narration, and the child's linguistic environment). Despite substantial laboratory-based progress in characterising each dimension in isolation, their joint influence under naturalistic conditions — and how it changes across the 7–10 age range — is poorly understood. The present preregistration describes the InTRACt study, which addresses this gap by analysing large-scale behavioural logs from *Let's Story*, an AI-powered storytelling feature of the *Applaydu* edutainment app deployed across more than 40 countries and 19 languages. Reading time per word and in-app quiz accuracy are the primary and secondary outcomes, respectively. For each story, a broad suite of computational text features will be extracted and reduced to principal components before model entry. Reader age is treated as a continuous moderator of text-feature effects, capturing the developmental trajectory of sensitivity to linguistic complexity. Contextual factors — in particular, whether AI read-aloud narration was enabled — are examined as a further moderator, expected to benefit younger, less fluent readers most. All confirmatory analyses use Bayesian multilevel models with random effects for child and language. Five hypotheses are pre-registered: that syntactic and lexical complexity slow reading while discourse coherence accelerates it; that syntactic complexity effects diminish with age as working memory capacity develops; that coherence benefits are largest for younger readers with weaker inference skills; that narration advantages are greatest for younger children still acquiring decoding fluency; and that reading speed correlates positively with comprehension accuracy.
+
+{{< pagebreak >}}
 
 # Background
 
