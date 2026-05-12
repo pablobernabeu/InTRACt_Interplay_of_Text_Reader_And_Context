@@ -200,7 +200,7 @@ We will examine whether the magnitude of text-feature effects on children's read
 
 For interactions showing a directional posterior probability > 0.95 in the confirmatory models, we will probe the pattern of results using simple slopes analysis at ±1 *SD* of the moderator variable. In the Bayesian framework this involves computing marginal posterior distributions at specified covariate values using `emmeans` or `marginaleffects`, providing posterior means and HDIs at each level of the moderator.
 
-Should eye-tracking data become available for a subset of participants, we will model fixation durations and regression rates as additional outcome variables using the same predictor structure as the confirmatory models. Finally, we will explore whether text complexity features show non-linear (quadratic) relationships with reading time, which would suggest diminishing or accelerating effects at extreme levels of complexity.
+Finally, we will explore whether text complexity features show non-linear (quadratic) relationships with reading time, which would suggest diminishing or accelerating effects at extreme levels of complexity.
 
 All exploratory results will be clearly labelled as such in the manuscript, and we will not draw confirmatory conclusions from these analyses.
 
