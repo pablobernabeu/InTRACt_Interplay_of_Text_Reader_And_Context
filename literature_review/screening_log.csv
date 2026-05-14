@@ -1,2 +1,1 @@
-index, title, authors, year, journal, abstract, keywords, sample_size, inclusion
-1,testing,testing,testing,,testing,"testing 1, testing 2, testing 3",testing,testing
+record_id,citation_key,search_input,title,authors,year,doi,abstract,keywords,ta_screener,ta_date,ta_decision,ta_exclusion_reason,ta_notes,sample_size,population_child,population_age_range,using_digital_or_app,outcome_reading_time,outcome_comprehension,predictors_text_features,predictors_neural_lm,moderator_age_or_development,age_related_direction,effect_size,moderator_narration_or_multimedia,multilevel_or_hierarchical,multilingual_or_cross_lingual,reviewer_conclusions
