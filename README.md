@@ -54,7 +54,7 @@ All confirmatory analyses use Bayesian hierarchical models, a framework suited t
 
 ## Repository contents
 
-The `preregistration/` folder contains the preregistration document in Quarto source format alongside rendered HTML drafts and the associated reference library. The `mindmap/` folder contains the conceptual framework figure and its source files.
+The `preregistration/` folder contains the preregistration document in Quarto source format alongside rendered HTML drafts and the associated reference library. The `mindmap/` folder contains the conceptual framework figure and its source files. The `literature_review/` folder holds a CSV screening log for the systematic literature review.
 
 ---
 
