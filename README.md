@@ -54,11 +54,17 @@ All confirmatory analyses use Bayesian hierarchical models, a framework suited t
 
 ## Repository contents
 
-The `preregistration/` folder contains the preregistration document in Quarto source format alongside rendered HTML drafts and the associated reference library. The `mindmap/` folder contains the conceptual framework figure and its source files.
+This workspace currently includes three active project areas:
+
+- `preregistration/`: Quarto source for the preregistration, rendered HTML drafts, bibliography, and supporting assets.
+- `mindmap/`: Conceptual framework figure and source files.
+- `private_InTRACt_literature_review/`: Literature-review and extraction workflow project (batching, automated extraction collation, correction validation/application, and PRISMA utilities).
+
+For correction operations in the literature-review workflow, use the root correction sheet at `private_InTRACt_literature_review/batches/corrections.csv` as the single source of truth.
 
 ---
 
 ## Contact
 
-Questions and comments are welcome via the [issue tracker](../../issues).
+Questions and comments are welcome via the [issue tracker](issues).
 
