@@ -1,0 +1,80 @@
+# Auto-renders the preregistration (preregistration/preregistration.qmd) on every
+# push to main and on pull requests to main. The rendered, date-stamped drafts
+# (produced by the project's _rename-output.R post-render script) are uploaded as
+# downloadable build artifacts on each run; nothing is committed back to the repo.
+#
+# To instead COMMIT the dated drafts back to the branch, replace the
+# "Upload rendered drafts" step with a git commit/push step and set
+# `permissions: contents: write`. To publish the HTML to GitHub Pages, swap the
+# upload step for actions/upload-pages-artifact + actions/deploy-pages.
+
+name: Render preregistration
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'preregistration/**'
+      - 'mindmap/mindmap.png'
+      - '.github/workflows/render-preregistration.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'preregistration/**'
+      - 'mindmap/mindmap.png'
+      - '.github/workflows/render-preregistration.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: render-preregistration-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  render:
+    name: Render PDF + HTML
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install Times New Roman (msttcorefonts)
+        run: |
+          set -euo pipefail
+          echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" \
+            | sudo debconf-set-selections
+          sudo apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+            ttf-mscorefonts-installer fontconfig
+          sudo fc-cache -f
+          fc-list | grep -i "Times New Roman" \
+            || { echo "ERROR: Times New Roman was not installed"; exit 1; }
+
+      - name: Set up R (for the _rename-output.R post-render script)
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: release
+          use-public-rspm: true
+
+      - name: Set up Quarto and TinyTeX
+        uses: quarto-dev/quarto-actions/setup@v2
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tinytex: true
+
+      - name: Render preregistration (PDF + HTML)
+        working-directory: preregistration
+        run: quarto render
+
+      - name: Upload rendered drafts
+        uses: actions/upload-artifact@v4
+        with:
+          name: preregistration-drafts
+          path: |
+            preregistration/InTRACt preregistration draft - *.pdf
+            preregistration/InTRACt preregistration draft - *.html
+          if-no-files-found: error
+          retention-days: 90
