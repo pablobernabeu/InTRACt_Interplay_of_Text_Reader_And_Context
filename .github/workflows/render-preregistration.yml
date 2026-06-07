@@ -1,12 +1,13 @@
-# Auto-renders the preregistration (preregistration/preregistration.qmd) on every
-# push to main and on pull requests to main. The rendered, date-stamped drafts
-# (produced by the project's _rename-output.R post-render script) are uploaded as
-# downloadable build artifacts on each run; nothing is committed back to the repo.
+# Auto-renders the preregistration (preregistration/preregistration.qmd) to two
+# standalone files - a self-contained HTML and a PDF, date-stamped by the
+# project's _rename-output.R post-render script - and commits them into the
+# preregistration/ folder.
 #
-# To instead COMMIT the dated drafts back to the branch, replace the
-# "Upload rendered drafts" step with a git commit/push step and set
-# `permissions: contents: write`. To publish the HTML to GitHub Pages, swap the
-# upload step for actions/upload-pages-artifact + actions/deploy-pages.
+# Runs on every push to main and on manual dispatch (these commit the rendered
+# files back). Pull requests to main render the document as a build check only,
+# without committing. The rendered .html/.pdf are excluded from the trigger
+# paths and the auto-commit carries [skip ci], so the auto-commit never
+# re-triggers the workflow.
 
 name: Render preregistration
 
@@ -15,18 +16,22 @@ on:
     branches: [main]
     paths:
       - 'preregistration/**'
+      - '!preregistration/*.html'
+      - '!preregistration/*.pdf'
       - 'mindmap/mindmap.png'
       - '.github/workflows/render-preregistration.yml'
   pull_request:
     branches: [main]
     paths:
       - 'preregistration/**'
+      - '!preregistration/*.html'
+      - '!preregistration/*.pdf'
       - 'mindmap/mindmap.png'
       - '.github/workflows/render-preregistration.yml'
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: render-preregistration-${{ github.ref }}
@@ -65,16 +70,21 @@ jobs:
         with:
           tinytex: true
 
-      - name: Render preregistration (PDF + HTML)
+      - name: Render preregistration (PDF + self-contained HTML)
         working-directory: preregistration
         run: quarto render
 
-      - name: Upload rendered drafts
-        uses: actions/upload-artifact@v4
-        with:
-          name: preregistration-drafts
-          path: |
-            preregistration/InTRACt preregistration draft - *.pdf
-            preregistration/InTRACt preregistration draft - *.html
-          if-no-files-found: error
-          retention-days: 90
+      - name: Commit rendered drafts to preregistration/
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "preregistration/InTRACt preregistration draft - "*.pdf \
+                  "preregistration/InTRACt preregistration draft - "*.html
+          if git diff --cached --quiet; then
+            echo "No rendered changes to commit."
+          else
+            git commit -m "Auto-render preregistration drafts [skip ci]"
+            git push origin "HEAD:${{ github.ref_name }}"
+          fi
