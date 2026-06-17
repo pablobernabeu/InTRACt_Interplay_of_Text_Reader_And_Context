@@ -1,0 +1,27 @@
+%% Conceptual framework for the InTRACt preregistration (Figure 1).
+%% Edit this file, then regenerate the PNG (see README.md):
+%%   npx mmdc -i mindmap.mmd -o ../mindmap.png -c mermaid-config.json -p puppeteer-config.json -b white -s 3
+
+flowchart LR
+
+  RC["<b><span style='color:#2563eb'>Reader and Context</span></b><br><span style='font-size:0.8em;color:#475569'>Individual and family differences</span><br><br><span style='font-size:0.86em;color:#334155'>Linguistic resources<br>Sociocultural context<br>Developmental status</span>"]
+
+  LP["<b>Longitudinal Progression</b><br><span style='font-size:0.8em;color:#dbe4ff'>Cross-cutting temporal dimension</span>"]
+
+  TF["<b><span style='color:#0f1d5e'>Text Features</span></b><br><span style='font-size:0.8em;color:#475569'>Linguistic properties of the text</span><br><br><span style='font-size:0.86em;color:#334155'>Lexical–distributional<br>Syntactic and discourse<br>Affective</span>"]
+
+  CO["<b><span style='color:#ea580c'>Comprehension Outcomes</span></b><br><span style='font-size:0.8em;color:#475569'>Multi-componential approach</span><br><br><span style='font-size:0.86em;color:#334155'>Processing efficiency<br>Perceived difficulty<br>Situation model construction</span>"]
+
+  RC ==> CO
+  TF ==> CO
+  LP ~~~ CO
+
+  classDef rc fill:#eef3ff,stroke:#93b4fb,color:#1e293b
+  classDef tf fill:#eef1fb,stroke:#9aa9d6,color:#1e293b
+  classDef co fill:#fff5ec,stroke:#fdba74,color:#1e293b
+  classDef lp fill:#2c52a0,stroke:#1e3a80,color:#ffffff
+
+  class RC rc
+  class TF tf
+  class CO co
+  class LP lp
