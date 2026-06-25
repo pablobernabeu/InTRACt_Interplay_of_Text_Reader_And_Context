@@ -1,17 +1,13 @@
 {
-  "name": "source-files",
+  "name": "intract-figure",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Renders the InTRACt conceptual-framework figure (Figure 1) from mindmap.svg to mindmap.png",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "render": "node render_svg.js mindmap.svg ../mindmap.png 3"
   },
-  "keywords": [],
-  "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "@mermaid-js/mermaid-cli": "^11.15.0",
     "puppeteer": "^24.40.0"
   }
 }

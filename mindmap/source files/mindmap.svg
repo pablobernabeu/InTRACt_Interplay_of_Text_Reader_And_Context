@@ -1,0 +1,95 @@
+<svg width="1000" height="484" viewBox="0 0 1000 484" xmlns="http://www.w3.org/2000/svg" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.10"/>
+    </filter>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7.5" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#3a4861"/>
+    </marker>
+    <style>
+      text { fill:#334155; }
+      .t-title { font-size:20px; font-weight:700; }
+      .fam { font-size:14.5px; font-weight:700; fill:#1f2937; }
+      .idx { font-size:11.5px; fill:#64748b; }
+      .muted { font-size:12px; fill:#64748b; }
+      .badge { font-size:12px; font-weight:700; fill:#ffffff; }
+      .tag { font-size:10px; font-weight:700; letter-spacing:1.5px; }
+      .legend { font-size:11.5px; fill:#64748b; }
+    </style>
+  </defs>
+
+  <!-- Figure title -->
+  <text x="36" y="34" font-size="16.5" font-weight="700" fill="#334155">Interplay of Text, Reader and Context (InTRACt)</text>
+  <text x="36" y="54" class="muted">A conceptual framework for children&#8217;s digital reading comprehension</text>
+
+  <!-- ============ HYPOTHESES KEY (top-right) ============ -->
+  <rect x="664" y="74" width="300" height="92" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" filter="url(#cardShadow)"/>
+  <text x="686" y="104" font-size="15" font-weight="700" fill="#334155">Preregistered hypotheses</text>
+  <g><rect x="686" y="120" width="30" height="20" rx="9" fill="#2b3a55"/><text x="701" y="134" text-anchor="middle" class="badge">H1</text></g>
+  <text x="726" y="134" font-size="12" fill="#475569">Text difficulty predicts reading time</text>
+  <g><rect x="686" y="148" width="30" height="20" rx="9" fill="#2b3a55"/><text x="701" y="162" text-anchor="middle" class="badge">H2</text></g>
+  <text x="726" y="162" font-size="12" fill="#475569">Reading speeds up as experience accumulates</text>
+
+  <!-- ============ TEXT FEATURES CARD (TEXT) ============ -->
+  <rect x="36" y="82" width="330" height="276" rx="16" fill="#eef4fb" stroke="#bcd2ee" stroke-width="1.5" filter="url(#cardShadow)"/>
+  <text x="60" y="118" class="t-title" fill="#1c4f87">Text features</text>
+  <text x="342" y="106" text-anchor="end" class="tag" fill="#7da6d6">TEXT</text>
+  <text x="61" y="138" class="muted">computed per story</text>
+
+  <rect x="60" y="154" width="4" height="26" rx="2" fill="#2a6fb5"/>
+  <text x="80" y="171" class="fam">Lexical&#8211;distributional</text>
+  <text x="80" y="188" class="idx">frequency &#183; predictability &#183; diversity &#183; concreteness</text>
+
+  <rect x="60" y="196" width="4" height="26" rx="2" fill="#2a6fb5"/>
+  <text x="80" y="213" class="fam">Syntactic&#8211;structural</text>
+  <text x="80" y="230" class="idx">dependency distance &#183; subordination &#183; sentence length</text>
+
+  <rect x="60" y="238" width="4" height="26" rx="2" fill="#2a6fb5"/>
+  <text x="80" y="255" class="fam">Discourse&#8211;coherence</text>
+  <text x="80" y="272" class="idx">sentence similarity &#183; referential overlap &#183; connectives</text>
+
+  <rect x="60" y="280" width="4" height="26" rx="2" fill="#2a6fb5"/>
+  <text x="80" y="297" class="fam">Affective</text>
+  <text x="80" y="314" class="idx">valence &#183; arousal</text>
+
+  <line x1="60" y1="330" x2="342" y2="330" stroke="#d4e2f4" stroke-width="1.2"/>
+  <text x="60" y="348" font-size="11.5" font-style="italic" fill="#1c4f87">&#8594; PCA: LexDistPC &#183; SyntaxPC &#183; CoherencePC</text>
+
+  <!-- ============ READING EXPERIENCE CARD (READER) ============ -->
+  <rect x="36" y="374" width="330" height="80" rx="16" fill="#eaf6ee" stroke="#9fd3b4" stroke-width="1.5" filter="url(#cardShadow)"/>
+  <text x="60" y="408" class="t-title" fill="#2f7d4f" font-size="18">Reading experience</text>
+  <text x="342" y="398" text-anchor="end" class="tag" fill="#74b78f">READER</text>
+  <text x="61" y="430" class="muted">within child &#183; accumulated over sessions</text>
+
+  <!-- ============ OUTCOME CARD (reading time per word) ============ -->
+  <rect x="700" y="238" width="250" height="142" rx="16" fill="#fdf4e9" stroke="#f1d3a7" stroke-width="1.5" filter="url(#cardShadow)"/>
+  <text x="825" y="293" text-anchor="middle" font-size="21" font-weight="700" fill="#b06a1c">Reading time</text>
+  <text x="825" y="319" text-anchor="middle" font-size="21" font-weight="700" fill="#b06a1c">per word</text>
+  <text x="825" y="344" text-anchor="middle" class="muted">the study outcome</text>
+  <text x="825" y="363" text-anchor="middle" font-size="11" fill="#94a3b8">reading effort / efficiency</text>
+
+  <!-- ============ PREDICTOR ARROWS (solid: predicts reading time) ============ -->
+  <!-- H1: text features -> reading time -->
+  <line x1="366" y1="248" x2="696" y2="296" stroke="#3a4861" stroke-width="3.2" marker-end="url(#arrow)"/>
+  <!-- H2: reading experience -> reading time -->
+  <line x1="366" y1="414" x2="696" y2="340" stroke="#3a4861" stroke-width="3.2" marker-end="url(#arrow)"/>
+
+  <!-- H1 direction key (above the text arrow) -->
+  <text x="520" y="232" text-anchor="middle" font-size="11" fill="#64748b">&#8593; syntax &#183; &#8593; lexical difficulty &#8594; slower</text>
+  <text x="520" y="248" text-anchor="middle" font-size="11" fill="#64748b">&#8595; coherence &#8594; faster</text>
+
+  <!-- H1 / H2 badges -->
+  <g><rect x="505" y="296" width="30" height="20" rx="9" fill="#2b3a55"/><text x="520" y="310" text-anchor="middle" class="badge">H1</text></g>
+  <g><rect x="505" y="372" width="30" height="20" rx="9" fill="#2b3a55"/><text x="520" y="386" text-anchor="middle" class="badge">H2</text></g>
+
+  <!-- ============ CONTEXT (language grouping) ============ -->
+  <rect x="664" y="404" width="300" height="46" rx="14" fill="#e9f4f1" stroke="#b2d8cf" stroke-width="1.4"/>
+  <text x="686" y="424" font-size="13" font-weight="700" fill="#1c6b5f">Language environment</text>
+  <text x="942" y="421" text-anchor="end" class="tag" fill="#79b8ab">CONTEXT</text>
+  <text x="686" y="440" font-size="11" fill="#5f8a72">19 languages &#183; multilingual grouping (random effect)</text>
+
+  <!-- ============ LEGEND / multilevel note ============ -->
+  <line x1="36" y1="468" x2="72" y2="468" stroke="#3a4861" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="80" y="472" class="legend">predicts reading time per word (H1, H2)</text>
+  <text x="392" y="472" class="legend" font-style="italic">Stories nested within children within languages (random effects for child and language)</text>
+</svg>
