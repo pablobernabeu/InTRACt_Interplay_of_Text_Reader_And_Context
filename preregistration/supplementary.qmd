@@ -19,7 +19,7 @@ format:
   html:
     toc: true
 bibliography: "InTRACt references.bib"
-csl: nature.csl
+csl: apa7.csl
 ---
 
 # S1. The theory object

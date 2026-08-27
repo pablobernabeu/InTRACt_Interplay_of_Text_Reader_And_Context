@@ -1,8 +1,9 @@
 # InTRACt Stage 1 Registered Report
 
 `preregistration.qmd` is the protocol. `supplementary.qmd` is the supplementary material.
-Both render to PDF and HTML with Quarto and cite `InTRACt references.bib` in Nature style
-through `nature.csl`.
+Both render to PDF and HTML with Quarto and cite `InTRACt references.bib` in APA 7 style
+through `apa7.csl`. `nature.csl` is kept alongside it for the numbered-superscript variant
+Nature Human Behaviour uses at Stage 2.
 
 ```bash
 quarto render preregistration.qmd
