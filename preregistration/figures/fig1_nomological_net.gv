@@ -1,0 +1,36 @@
+digraph nomological_net {
+  graph [rankdir=LR, bgcolor="transparent", fontname="Helvetica", fontsize=11, pad="0.2", nodesep="0.3", ranksep="0.45"];
+  node [fontname="Helvetica", fontsize=11, shape=box, style="rounded,filled", color="#33567A", fillcolor="#F2F6F9", fontcolor="#12283A", penwidth=1.1, margin="0.16,0.1"];
+  edge [fontname="Helvetica", fontsize=10, color="#7B909F", fontcolor="#0F6E6E", arrowsize=0.7];
+  "c_lexical_accessibility" [label="Lexical\naccessibility of a\ntext", fillcolor="#E4F1F1", color="#1E7B7B"];
+  "c_structural_integration_load" [label="Grammatical\nintegration load\nimposed by a text", fillcolor="#E4F1F1", color="#1E7B7B"];
+  "c_referential_continuity" [label="Referential\ncontinuity across\na text", fillcolor="#E4F1F1", color="#1E7B7B"];
+  "c_decoding_automaticity" [label="Automaticity of\nprint-to-sound\nmapping in the\nreader", fillcolor="#E4F1F1", color="#1E7B7B"];
+  "c_verbal_working_memory" [label="Verbal working\nmemory of the\nreader", fillcolor="#E4F1F1", color="#1E7B7B"];
+  "c_inferential_resource" [label="Readiness to\nsupply an unstated\nconnection", fillcolor="#E4F1F1", color="#1E7B7B"];
+  "c_spoken_rendition" [label="Availability of a\nspoken rendition\nalongside the text", fillcolor="#E4F1F1", color="#1E7B7B"];
+  "c_accumulated_reading" [label="Reading\naccumulated within\nthe app", fillcolor="#E4F1F1", color="#1E7B7B"];
+  "c_processing_effort" [label="Effort expended\nwhile reading a\ntext", fillcolor="#E4F1F1", color="#1E7B7B"];
+  "c_experienced_difficulty" [label="Difficulty the\nchild reports\nhaving met", fillcolor="#E4F1F1", color="#1E7B7B"];
+  "c_text_provenance" [label="How a text came to\nhave the\nproperties it has", fillcolor="#E4F1F1", color="#1E7B7B"];
+  "c_situation_model" [label="Quality of the\nmental model built\nfrom a text", fillcolor="#E4F1F1", color="#1E7B7B"];
+  "c_lexical_accessibility" -> "c_processing_effort" [label="decreases"];
+  "c_structural_integration_load" -> "c_processing_effort" [label="increases"];
+  "c_referential_continuity" -> "c_processing_effort" [label="decreases"];
+  "c_decoding_automaticity" -> "c_processing_effort" [label="decreases"];
+  "c_accumulated_reading" -> "c_decoding_automaticity" [label="causes"];
+  "c_verbal_working_memory" -> "c_processing_effort" [label="moderates"];
+  "c_inferential_resource" -> "c_processing_effort" [label="moderates"];
+  "c_spoken_rendition" -> "c_processing_effort" [label="moderates"];
+  "c_processing_effort" -> "c_experienced_difficulty" [label="causes"];
+  "c_lexical_accessibility" -> "c_situation_model" [label="increases"];
+  "c_structural_integration_load" -> "c_situation_model" [label="decreases"];
+  "c_referential_continuity" -> "c_situation_model" [label="increases"];
+  "c_decoding_automaticity" -> "c_situation_model" [label="increases"];
+  "c_spoken_rendition" -> "c_situation_model" [label="increases"];
+  "c_text_provenance" -> "c_lexical_accessibility" [label="causes"];
+  "c_text_provenance" -> "c_structural_integration_load" [label="causes"];
+  "c_text_provenance" -> "c_referential_continuity" [label="causes"];
+  "c_decoding_automaticity" -> "c_text_provenance" [label="causes"];
+}
+

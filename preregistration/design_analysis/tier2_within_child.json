@@ -1,0 +1,21 @@
+{
+  "name": "intract_tier2_within_child",
+  "seed": 20260829,
+  "units": { "subject": { "n": 1000 }, "item": { "n": 250, "per_subject": 5 } },
+  "predictors": [
+    { "name": "LexPC", "varies_by": "item", "mean": 0, "sd": 1 },
+    { "name": "SynPC", "varies_by": "item", "mean": 0, "sd": 1 },
+    { "name": "CohPC", "varies_by": "item", "mean": 0, "sd": 1 }
+  ],
+  "factors": [
+    { "name": "session_order", "levels": ["s1", "s2", "s3", "s4", "s5"],
+      "contrasts": { "accum": [-0.632, -0.316, 0, 0.316, 0.632] },
+      "vary_within": ["subject"] }
+  ],
+  "fixed": {
+    "intercept": 0,
+    "coefficients": { "LexPC": 0.05, "SynPC": 0.05, "CohPC": -0.05, "accum": -0.05 }
+  },
+  "random": { "subject": { "intercept_sd": 0.45 }, "item": { "intercept_sd": 0.30 } },
+  "response": { "family": "gaussian", "name": "z_log_time_per_word", "sigma": 0.84, "round": 6 }
+}

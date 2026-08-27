@@ -1,0 +1,22 @@
+{
+  "name": "intract_tier1_narration",
+  "seed": 20260827,
+  "units": { "subject": { "n": 3000 }, "item": { "n": 250, "per_subject": 1 } },
+  "predictors": [
+    { "name": "LexPC", "varies_by": "item", "mean": 0, "sd": 1 },
+    { "name": "CohPC", "varies_by": "item", "mean": 0, "sd": 1 }
+  ],
+  "factors": [
+    { "name": "narration", "levels": ["off", "on"],
+      "contrasts": { "narr": [-0.5, 0.5] }, "between": "subject" }
+  ],
+  "fixed": {
+    "intercept": 0,
+    "coefficients": {
+      "LexPC": 0.05, "CohPC": -0.05, "narr": 0.05,
+      "LexPC:narr": 0.05, "CohPC:narr": 0.01
+    }
+  },
+  "random": { "subject": { "intercept_sd": 0.45 }, "item": { "intercept_sd": 0.30 } },
+  "response": { "family": "gaussian", "name": "z_log_time_per_word", "sigma": 0.84, "round": 6 }
+}
