@@ -42,6 +42,7 @@ The precision analysis, built on portable design specifications rather than on p
 | `tier1_reported_difficulty.json` | Tier 1, the ordinal model of the child's own difficulty rating. |
 | `tier2_within_child.json` | Tier 2, accumulated reading within a child. |
 | `run_design_analysis.R` | Sweeps the number of distinct texts and, separately, readings per text, and solves each curve for the number needed to reach a determinate verdict nine times in ten. |
+| `summarise_ordinal.R` | Pools the cached ordinal grid points, attempts the 0.90 solve, and projects the requirement from the fitted width scaling where the target lies beyond the simulated range. |
 | `run_ordinal_analysis.R` | The same question for the ordinal outcome behind Hypothesis 5. The general routine fits a linear mixed model, which would answer a different question about a three-category response, so pilotr still generates the data and `ordinal::clmm` fits the cumulative logit the protocol specifies. |
 
 ```bash
@@ -79,6 +80,7 @@ point at the column width the journal renders at.
 | `scopus_gap_sizes.csv`, `scopus_topic_trends.csv` | The counts. |
 | `scopus_search_record.md` | The dated record: every query verbatim, the field tag, the year limit and the package version. |
 | `scopus_gap_intersections.png`, `scopus_topic_trends.png` | Figure 1 of the manuscript, and a supplementary figure. |
+| `evidence_notes.md` | The justification record for the protocol's less obvious choices: why the two age-band interactions are two-sided, where the plausibility bounds come from, why the resource plan changed. Every claim carries the DOI it rests on. |
 
 ```bash
 Rscript --no-save --no-restore literature/scopus_gap_analysis.R
@@ -86,6 +88,17 @@ Rscript --no-save --no-restore literature/scopus_gap_analysis.R
 
 Not `--vanilla`: the Scopus API key is read from `~/.Renviron`. Only count queries are issued,
 one request per cell, so the cost is a few dozen requests and nothing is downloaded.
+
+## Bibliography maintenance
+
+`InTRACt references.bib` began as a Zotero export but is now repo-maintained. Two things in it
+would not survive a fresh export. About thirty entries were added directly, with metadata
+fetched from Crossref, and every mid-title capitalised word across all entries carries a
+protective brace, because pandoc's BibTeX reader sentence-cases English titles at ingestion
+and lowercases any unprotected capital: before the fix, "British English", "United States"
+and "Just and Carpenter" all rendered mangled, in every earlier draft and under the previous
+citation style too. Before re-exporting from Zotero, import the added entries there by DOI
+and re-apply the protection, or keep treating this file as the source of truth.
 
 ## Packages
 

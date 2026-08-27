@@ -17,7 +17,7 @@ $maturity
 [1] "developing"
 
 $aggregate_score
-[1] 90.2
+[1] 90.9
 
 $gate
 [1] "pass"
@@ -74,7 +74,7 @@ $items[[3]]$status
 [1] "pass"
 
 $items[[3]]$score
-[1] 0.665
+[1] 0.68
 
 $items[[3]]$weight
 [1] 0.1
@@ -214,7 +214,7 @@ $items[[10]]$status
 [1] "pass"
 
 $items[[10]]$score
-[1] 0.6
+[1] 0.7
 
 $items[[10]]$weight
 [1] 0.06
@@ -273,7 +273,7 @@ $items[[12]]$citation
 1                pred_h1_lexical interval        0.7               0.7
 2                 pred_h1_syntax interval        0.7               0.7
 3              pred_h1_coherence interval        0.7               0.8
-4          pred_h2_syntax_by_age interval        0.7               0.7
+4          pred_h2_syntax_by_age interval        0.7               0.8
 5       pred_h3_coherence_by_age interval        0.7               0.8
 6  pred_h4_narration_selectivity interval        0.7               0.8
 7    pred_h5_reported_difficulty interval        0.7               0.8

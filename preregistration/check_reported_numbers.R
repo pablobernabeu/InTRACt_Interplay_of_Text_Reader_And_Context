@@ -43,6 +43,26 @@ for (spec in list(
 }
 
 writeLines("")
+writeLines("== ordinal precision projection ==")
+ord_path <- file.path("design_analysis", "minimum_texts_ordinal.csv")
+if (file.exists(ord_path)) {
+  mo <- utils::read.csv(ord_path, stringsAsFactors = FALSE)
+  expect("target not reached within the simulated range",
+         all(is.na(mo$value)) == grepl("not reached within the 1,600 texts simulated", qmd, fixed = TRUE),
+         if (all(is.na(mo$value))) "refused, as quoted" else "solved, but the text claims refusal")
+  pr <- range(mo$projected_texts)
+  expect("projected generated-text range",
+         has(sprintf("%s to %s generated texts", fmt(pr[1]), fmt(pr[2]))),
+         sprintf("%s to %s", fmt(pr[1]), fmt(pr[2])))
+  qr <- range(mo$projected_qualifying_texts)
+  expect("projected qualifying-text range",
+         has(sprintf("%s to %s carrying at least five ratings", fmt(qr[1]), fmt(qr[2]))),
+         sprintf("%s to %s", fmt(qr[1]), fmt(qr[2])))
+} else {
+  writeLines("  minimum_texts_ordinal.csv absent; skipped")
+}
+
+writeLines("")
 writeLines("== literature sizing ==")
 gp <- utils::read.csv("literature/scopus_gap_sizes.csv", stringsAsFactors = FALSE)
 for (lab in gp$label) {
