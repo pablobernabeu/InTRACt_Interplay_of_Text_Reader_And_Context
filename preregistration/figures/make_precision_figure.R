@@ -82,7 +82,7 @@ curve_panel <- function(d, x_lab, subtitle, log_x = TRUE) {
          subtitle = subtitle, colour = NULL, fill = NULL,
          linetype = NULL, shape = NULL) +
     theme_depictr(base_size = BASE_SIZE) +
-    theme(legend.position = "bottom", legend.box = "vertical",
+    theme(legend.position = "bottom", legend.box = "horizontal",
           legend.margin = margin(t = 0, b = 0))
   if (log_x) p <- p + scale_x_log10() else p
   p
@@ -103,7 +103,11 @@ pa <- curve_panel(dev_texts, "Distinct texts (log scale)",
 pb <- curve_panel(dev_read, "Readings per text (log scale)",
                   "250 distinct texts throughout")
 
-fig <- arrange_plots(pa, pb, ncol = 2, nrow = 1, guides = "collect")
+# arrange_plots collects the guides into the patchwork's own theme, which would
+# otherwise park them to the right of the panels. One horizontal strip along the
+# bottom returns that width to the data.
+fig <- arrange_plots(pa, pb, ncol = 2, nrow = 1, guides = "collect") &
+  theme(legend.position = "bottom", legend.box = "horizontal")
 
 # A figure destined for print is checked rather than eyeballed. The composed
 # figure is saved 11 inches wide, so each panel is drawn at 13.97 cm and will be
@@ -118,8 +122,11 @@ if (nrow(failed)) {
   print(failed)
 }
 
-save_plot(file.path(OUT, "fig_precision.png"), fig, width = 11, height = 5.2, dpi = 300)
-save_plot(file.path(OUT, "fig_precision.pdf"), fig, width = 11, height = 5.2)
+# The manuscript embeds the PDF, where the type stays selectable text; the PNG
+# serves the repository preview. cairo_pdf embeds the fonts.
+save_plot(file.path(OUT, "fig_precision.png"), fig, width = 11, height = 5, dpi = 300)
+save_plot(file.path(OUT, "fig_precision.pdf"), fig, width = 11, height = 5,
+          device = grDevices::cairo_pdf)
 
 # The narration and within-child curves go in the supplement, where they are read
 # against the design effect for an unbalanced narration flag.
@@ -128,7 +135,10 @@ t2   <- prep(res[res$model == "within_child", ], "children", "within child")
 sup <- arrange_plots(
   curve_panel(narr, "Distinct texts (log scale)", "Narration model"),
   curve_panel(t2, "Children in tier 2 (log scale)", "Within-child model, five readings each"),
-  ncol = 2, nrow = 1, guides = "collect")
-save_plot(file.path(OUT, "fig_precision_supplement.png"), sup, width = 11, height = 5.2, dpi = 300)
+  ncol = 2, nrow = 1, guides = "collect") &
+  theme(legend.position = "bottom", legend.box = "horizontal")
+save_plot(file.path(OUT, "fig_precision_supplement.png"), sup, width = 11, height = 5, dpi = 300)
+save_plot(file.path(OUT, "fig_precision_supplement.pdf"), sup, width = 11, height = 5,
+          device = grDevices::cairo_pdf)
 
-writeLines("wrote figures/fig_precision.{png,pdf} and figures/fig_precision_supplement.png")
+writeLines("wrote figures/fig_precision{,_supplement}.{png,pdf}")

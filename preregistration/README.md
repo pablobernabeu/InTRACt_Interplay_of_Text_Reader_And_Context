@@ -24,8 +24,7 @@ confirmatory predictions, held as one machine-checkable file.
 | `build_theory.R` | Validates it, scores it against the rigour checklist, screens the constructs for redundancy and derives the graph's testable implications. Writes `tf_check.txt`, `tf_severity.csv`, `tf_redundancy.csv`. |
 | `report_theory.R` | A short console summary of the same. |
 | `check_manuscript_claims.R` | Prints every number the manuscript quotes about the theory beside the number the object actually yields, and fails if a prediction names a proposition or a rival that does not exist. |
-| `make_figure1.R` | Emits the nomological net as Graphviz source and SVG. |
-| `render_figure1.R` | Renders that to the PNG and PDF the manuscript includes. |
+| `make_figure1.R` | Emits the nomological net from the theory object, restyles the layout without touching its content (a hard assertion compares the node and edge sets), and renders the SVG, PDF and PNG the manuscript includes. |
 
 Editing a hypothesis in the manuscript without editing it here will make `tf_check` fail,
 which is the point. The object currently scores 90.9 out of 100 with no blocking failure,
@@ -65,9 +64,9 @@ and every analysis script is run against it first.
 
 | File | What it is |
 |---|---|
-| `fig1_nomological_net.{gv,svg,png,pdf}` | Figure 2 of the manuscript, generated from the theory object. |
+| `fig1_nomological_net.{gv,svg,png,pdf}` | Figure 2 of the manuscript, generated from the theory object. The `_styled.gv` beside it is the restyled layout actually rendered. |
 | `make_precision_figure.R` | Builds Figure 3 from `design_analysis/precision_sweep.csv`, and the supplementary narration and within-child panels. |
-| `fig_precision.{png,pdf}` | Figure 3. |
+| `fig_precision.{png,pdf}`, `fig_precision_supplement.{png,pdf}` | Figure 3 and the supplementary panels. The manuscript embeds the PDFs, so figure text stays selectable. |
 
 `make_precision_figure.R` runs `depictr::check_figure()` before saving, which checks colour
 separation for a reader who cannot distinguish two of the hues and refuses text below six
@@ -80,7 +79,8 @@ point at the column width the journal renders at.
 | `scopus_gap_analysis.R` | Sizes three concept sets and every intersection of them on Scopus, and compares publication trends over 2018 to 2026. |
 | `scopus_gap_sizes.csv`, `scopus_topic_trends.csv` | The counts. |
 | `scopus_search_record.md` | The dated record: every query verbatim, the field tag, the year limit and the package version. |
-| `scopus_gap_intersections.png`, `scopus_topic_trends.png` | Figure 1 of the manuscript, and a supplementary figure. |
+| `scopus_gap_intersections.{png,pdf}`, `scopus_topic_trends.{png,pdf}` | Figure 1 of the manuscript, and a supplementary figure. |
+| `replot_scopus_figures.R` | Redraws both figures from the archived CSVs, issuing no API request, so presentation can change without touching the recorded counts. |
 | `evidence_notes.md` | The justification record for the protocol's less obvious choices: why the two age-band interactions are two-sided, where the plausibility bounds come from, why the resource plan changed. Every claim carries the DOI it rests on. |
 
 ```bash
