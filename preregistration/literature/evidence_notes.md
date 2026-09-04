@@ -68,7 +68,11 @@ the other way.
 
 - The selective-decoding account has the mechanism evidence: a partial read-aloud
   accommodation helped poor decoders while a pacing-only control did nothing (Giusto and
-  Ehri 2019, doi:10.1177/0022219418789377); the benefit concentrates in poor decoding with
+  Ehri 2019, doi:10.1177/0022219418789377; full text checked 2026-09-04: 82 third-graders,
+  28 poor decoders assigned 9/10/9 to read-aloud, pacing-only and standard conditions;
+  poor decoders scored 36.3 vs 28.2 vs 28.2 on the Gates-MacGinitie, Bonferroni RA > P = S,
+  d = 1.53 read-aloud vs standard and -0.03 pacing vs standard; average decoders gained
+  nothing, d = -0.02, and pacing alone d = -0.39); the benefit concentrates in poor decoding with
   intact language (Keelor et al. 2023, doi:10.1007/s11881-023-00281-9); the time saved falls
   on first encounters with orthographically novel words and is gone by the second
   (Valentini et al. 2024, doi:10.1002/rrq.522).
@@ -87,17 +91,76 @@ the other way.
 ## Why the plausibility bounds are 10 and 400 words per minute
 
 - The only published precedent stating such a rule with its yield: Ripoll Salceda, Tapia
-  Montesinos and Aguado Alonso (2020, doi:10.1016/j.psicod.2020.01.002) deleted silent rates
-  above 400 wpm as exceeding adult capability and indicating skipped text, removing 313 of
-  19,237 cases (1.6 per cent). Their pooled child norms also anchor the lower bound: the
-  slowest group mean in the literature is about 30 wpm (Spanish grade 1, silent), so a floor
-  of 10 wpm excludes only sessions left open.
+  Montesinos and Aguado Alonso (2020, doi:10.1016/j.psicod.2020.01.002; English edition
+  doi:10.1016/j.psicoe.2020.01.001; full text checked 2026-09-04) deleted silent rates above
+  400 wpm as exceeding adult capability and indicating skipped text, citing Rayner, Schotter,
+  Masson, Potter and Treiman (2016, doi:10.1177/1529100615623267) for the ceiling, and
+  removed 313 cases from tests assessing 19,237 participants (1.6 per cent); the rule bit on
+  silent measures only. Their pooled child norms also anchor the lower bound, with a caveat
+  the manuscript now states: the slowest pooled mean is 30.48 wpm (grade 1, silent, K = 2,
+  CI 9.56 to 51.4), but the normal range they propose for that grade (mean +/- median SD,
+  their Table 5) is 8 to 53 wpm, and 41 to 117 for grade 2, so a floor of 10 wpm can touch
+  the slowest first-grade silent readers and is a pure "session left open" criterion only
+  from second grade.
 - Context norms: Hasbrouck and Tindal's compiled oral-fluency norms (2017, ERIC ED594994);
   silent comprehension-based rates rising from about 115 wpm in grade 2 (Hiebert, Samuels
   and Rasinski 2012, doi:10.1080/19388071.2010.531887), with the 2011 replication finding
   substantially lower rates than 1960 (Spichtig et al. 2016, doi:10.1002/rrq.137). Adult
   silent rates across languages fall roughly in 181 to 285 wpm, which motivated 160 wpm as a
   conservative ceiling on any narration rate in H4's non-binding-audio subset.
+
+## Per-language resource coverage behind Supplementary Table 3 (checked 2026-09-04)
+
+The ten languages of the structural sample are Dutch, English, French, German, Greek, Italian,
+Korean, Polish, Portuguese and Spanish. Each coverage claim was checked against the resource's own
+page or record on 2026-09-04; corrections were carried into the table the same day.
+
+- subs2vec: all ten present in the 55-language list (github.com/jvparidon/subs2vec).
+- SUBTLEX family: peer-reviewed for US (doi:10.3758/BRM.41.4.977), NL (10.3758/BRM.42.3.643),
+  FR (10.1017/S014271640707035X), DE (10.1027/1618-3169/a000123), GR (10.3389/fpsyg.2010.00218),
+  PL (10.3758/s13428-014-0489-4), PT (10.1080/17470218.2014.964271), ESP (Cuetos et al. 2011,
+  Psicologica 32, 133-143). SUBTLEX-IT (Crepaldi et al. 2015) is a conference release with data on
+  OSF (lrlac.sissa.it). No subtitle-based Korean norm; nearest is KoFREN (LREC-COLING 2024,
+  spontaneous speech).
+- Age of acquisition, Luniewska et al. 2016 Table 4 (25 languages) and 2019 (adds seven: American
+  English, Czech, Scottish Gaelic, Lebanese Arabic, Malay, Persian, Western Armenian): of the ten,
+  Dutch, English, German, Greek, Italian, Polish and Spanish are covered; French, Portuguese and
+  Korean are in neither paper. The earlier "nine of ten" was wrong.
+- Goldfish: 1000mb models exist for all ten (huggingface.co/goldfish-models/<lang>_1000mb); the
+  "full" tier exists only for languages under 1 GB, so 1000mb is the largest tier here. Repo is
+  github.com/tylerachang/goldfish.
+- Concreteness, rated: English 40,000 (10.3758/s13428-013-0403-5); Dutch 30,000
+  (10.1016/j.actpsy.2014.04.010); German 2,654 nouns (Lahl et al. 2009, 10.3758/BRM.41.1.13) and
+  1,000 (Kanske & Kotz 2010, 10.3758/BRM.42.4.987); French 1,659 (10.3758/s13428-018-1014-y);
+  Spanish 1,400 (Guasch et al. 2016, 10.3758/s13428-015-0684-y; inclusion of concreteness confirmed
+  at title level only); Italian 1,121 (Montefinese et al. 2014, 10.3758/s13428-013-0405-3) and 417
+  (Della Rosa et al. 2010, 10.3758/BRM.42.4.1042); Polish 4,905 (Imbir 2016,
+  10.3389/fpsyg.2016.01081); Portuguese 3,800 (Soares et al. 2017, 10.3758/s13428-016-0767-4).
+  Greek: 348 affective words rated for abstraction, imageability and familiarity (Vaiouli, Panteli
+  & Panayiotou 2021, Current Psychology). Korean: 450 emotion nouns rated for valence, arousal and
+  concreteness (Hong, Nam & Lee 2016, Korean Journal of Cognitive Science 27(3), 377-406, KCI
+  ART002149809); Lee & Shin 2023 (10.3389/fpsyg.2023.1188909) assigned concreteness from English
+  translations and is excluded by the no-translation rule. So eight languages have usable norms.
+- Stanza performance page (v1.5.1, UD 2.12, end-to-end from raw text): Dutch Alpino 88.67, Greek
+  GDT 88.87, Korean Kaist 85.50, Polish PDB 91.73 (LFG 95.20 is not the default), Portuguese Bosque
+  87.75, English EWT 86.77 / GUM 88.24, French GSD 91.28 / Sequoia 91.57, German GSD 81.80 / HDT
+  93.56, Italian ISDT 91.61, Spanish AnCora 91.30 / GSD 89.57; the combined default models for
+  English, French, German, Italian and Spanish are not scored on the page. The ACL demo paper
+  (Table 2, UD 2.5) scores only EWT 83.59, French GSD 89.05 and AnCora 90.01 among the ten.
+- UDPipe 2 (UD 2.17 models, version 251125, raw-text LAS): Alpino 92.25, EWT 89.91, French GSD
+  91.21, German GSD 84.36, HDT 96.04, GDT 91.38, ISDT 93.10, Kaist 86.97, PDB 92.76, Bosque 89.84,
+  AnCora 92.07: higher than Stanza on every matched treebank except French GSD (level), on a later
+  test set, so indicative only.
+- MEmoLon Table 8: about 2.0 M entries for each of the ten. Rated valence and arousal: Greek 1,034
+  translated ANEW words rated by 105 native raters (Palogiannidi et al. 2016, LREC L16-1458; the
+  407K lexicon is the automatic expansion) and Vaiouli et al. 2021 (348); Korean Park & Min 2005
+  (434), Rhee & Ko 2013 (267), Hong et al. 2016 (450), summarised in Lee et al. 2022 (CogSci,
+  escholarship 20s0r7c1). The earlier "Korean has none" was wrong; the sets are small.
+- BGE-M3: 100+ languages, 8,192-token input. multilingual-e5-large-instruct: the 100 XLM-R
+  languages, 512-token limit.
+
+Unverified after this check: "broad native age-of-acquisition sets exist at scale for English,
+Dutch and Polish only" (Spanish, Alonso et al. 2015, 7,039 words, may qualify).
 
 ## Why Hypothesis 5 treats the rating as a measure under test
 

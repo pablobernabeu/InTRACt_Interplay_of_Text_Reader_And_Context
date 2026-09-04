@@ -3,7 +3,14 @@
 `preregistration.qmd` is the protocol. `supplementary.qmd` is the supplementary material.
 Both render to PDF and HTML with Quarto and cite `InTRACt references.bib` in APA 7 style
 through `apa7.csl`. `nature.csl` is kept alongside it for the numbered-superscript variant
-Nature Human Behaviour uses at Stage 2.
+Nature Human Behaviour uses at Stage 2. The protocol follows the journal's Stage 1 template
+section by section (`journal.json` records the limits and the date they were read), so the
+hypotheses sit inside the Introduction with no subheadings, the Design Table is Table 1 with
+the template's five columns, and there is no Discussion or Conclusion. The supplement labels its
+display items through Quarto's `crossref` options, so a caption there must not repeat the
+"Supplementary Table" prefix by hand. `title.tex` is a Quarto title partial that prints the
+numbered affiliations and the corresponding author's email from the YAML author block, which
+Quarto's stock PDF template drops. `cover_letter.md` is the Stage 1 cover letter.
 
 ```bash
 quarto render preregistration.qmd
@@ -29,7 +36,9 @@ confirmatory predictions, held as one machine-checkable file.
 Editing a hypothesis in the manuscript without editing it here will make `tf_check` fail,
 which is the point. The object currently scores 90.9 out of 100 with no blocking failure,
 and its causal graph is acyclic, which is what lets `tf_implications()` derive the thirty
-independence claims that four of the outcome-neutral quality checks test.
+independence claims, three of which the fourth outcome-neutral quality check tests. The checks
+enforce counts, scores and derivation links, not the wording of each prediction, so a change to a
+hypothesis's rule in the manuscript still has to be copied into the prediction statement by hand.
 
 ## design_analysis/
 
@@ -43,6 +52,7 @@ The precision analysis, built on portable design specifications rather than on p
 | `tier2_within_child.json` | Tier 2, accumulated reading within a child. |
 | `run_design_analysis.R` | Sweeps the number of distinct texts and, separately, readings per text, and solves each curve for the number needed to reach a determinate verdict nine times in ten. |
 | `summarise_ordinal.R` | Pools the cached ordinal grid points, attempts the 0.90 solve, and projects the requirement from the fitted width scaling where the target lies beyond the simulated range. |
+| `solve_at_095.R` | Re-solves the cached curves at 0.95 assurance, the floor Nature Human Behaviour names for frequentist plans, without re-simulating anything. Writes `minimum_texts_095.csv`; the protocol registers 0.90 and reports these figures beside it. |
 | `run_ordinal_analysis.R` | The same question for the ordinal outcome behind Hypothesis 5. The general routine fits a linear mixed model, which would answer a different question about a three-category response, so pilotr still generates the data and `ordinal::clmm` fits the cumulative logit the protocol specifies. |
 
 ```bash
@@ -68,9 +78,9 @@ and every analysis script is run against it first.
 | `make_precision_figure.R` | Builds Figure 3 from `design_analysis/precision_sweep.csv`, and the supplementary narration and within-child panels. |
 | `fig_precision.{png,pdf}`, `fig_precision_supplement.{png,pdf}` | Figure 3 and the supplementary panels. The manuscript embeds the PDFs, so figure text stays selectable. |
 
-`make_precision_figure.R` runs `depictr::check_figure()` before saving, which checks colour
-separation for a reader who cannot distinguish two of the hues and refuses text below six
-point at the column width the journal renders at.
+`make_precision_figure.R` runs `depictr::check_figure()` on every panel of both figures before
+saving and stops on a failure, so a panel with text below six point at the column width the
+journal renders at, or with hues a colour-blind reader cannot separate, is never written.
 
 ## literature/
 
@@ -80,7 +90,7 @@ point at the column width the journal renders at.
 | `scopus_gap_sizes.csv`, `scopus_topic_trends.csv` | The counts. |
 | `scopus_search_record.md` | The dated record: every query verbatim, the field tag, the year limit and the package version. |
 | `scopus_gap_intersections.{png,pdf}`, `scopus_topic_trends.{png,pdf}` | Figure 1 of the manuscript, and a supplementary figure. |
-| `replot_scopus_figures.R` | Redraws both figures from the archived CSVs, issuing no API request, so presentation can change without touching the recorded counts. |
+| `replot_scopus_figures.R` | Redraws both figures from the archived CSVs, issuing no API request, so presentation can change without touching the recorded counts. Strips the in-image title, subtitle and footnote (the captions carry them), gives the three trend series short names, and runs `depictr::check_figure()` on each figure before saving. |
 | `evidence_notes.md` | The justification record for the protocol's less obvious choices: why the two age-band interactions are two-sided, where the plausibility bounds come from, why the resource plan changed. Every claim carries the DOI it rests on. |
 
 ```bash
@@ -89,6 +99,17 @@ Rscript --no-save --no-restore literature/scopus_gap_analysis.R
 
 Not `--vanilla`: the Scopus API key is read from `~/.Renviron`. Only count queries are issued,
 one request per cell, so the cost is a few dozen requests and nothing is downloaded.
+
+## count_script/
+
+| File | What it is |
+|---|---|
+| `lets_story_summary.py` | The integrity check supplied to the data controller on 7 August 2026 (script version 2026-08-05), standard library only. Reads nineteen categorical columns and treats reading time only as a column whose usability is checked, in bands ten times wider than one another, never crossed with any other field. Writes the summary data set and the manifest page. |
+| `HOW_TO_RUN.md` | The instruction sheet sent with it. |
+
+Its output on the 35-row sample is deposited with the sample, not here, and Supplementary
+Section S8 tabulates it. Re-running the script on the sample reproduces that output line for
+line (checked 4 September 2026).
 
 ## Bibliography maintenance
 
@@ -115,5 +136,8 @@ The session-level extract is not in this repository and is not in the research t
 possession. It is held by the data controller and is released only on written confirmation of
 in-principle acceptance, under the sequestration arrangement the manuscript describes. What
 this repository does hold is the protocol, the theory object, the design specifications, the
-literature sizing, the provider-computed aggregate counts and the file manifest, none of which
-contains a record of any individual.
+literature sizing and the count script. The provider-computed aggregate counts and the file manifest, which contain no
+record of any individual, are deposited on receipt at the repository the Data availability
+statement names. The 35-row structural sample that Supplementary Section S8
+reports carries real reading times and is likewise not in the repository; it is deposited for
+peer review under embargo, as the Data availability statement says.

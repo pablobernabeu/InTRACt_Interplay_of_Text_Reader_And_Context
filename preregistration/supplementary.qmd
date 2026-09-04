@@ -8,16 +8,22 @@ format:
     fontsize: 11pt
     mainfont: "Times New Roman"
     number-sections: false
-    toc: true
+    toc: false
     include-in-header:
       text: |
         \usepackage{caption}
         \captionsetup[table]{labelfont=bf,textfont=it,labelsep=newline,justification=raggedright,singlelinecheck=false,skip=4pt}
+        \captionsetup[figure]{labelfont=bf,labelsep=newline,justification=raggedright,singlelinecheck=false,skip=4pt}
         \usepackage{booktabs}
         \usepackage{pdflscape}
         \renewcommand{\arraystretch}{1.4}
   html:
-    toc: true
+    toc: false
+crossref:
+  fig-title: "Supplementary Figure"
+  fig-prefix: "Supplementary Figure"
+  tbl-title: "Supplementary Table"
+  tbl-prefix: "Supplementary Table"
 bibliography: "InTRACt references.bib"
 csl: apa7.csl
 ---
@@ -26,7 +32,7 @@ csl: apa7.csl
 
 The constructs, causal claims, auxiliary assumptions, rival accounts and predictions behind this protocol are held in a single machine-readable file, `theory/intract.theory.yaml`, which the theoryforge package reads and checks [@bernabeuTheoryforge2026]. Figure 2 of the main text is emitted from that file, so the diagram cannot disagree with the hypotheses. Running `theory/build_theory.R` reproduces everything in this section.
 
-The object registers twelve constructs, each with a definition, its intended measurement and its boundary conditions. Eighteen propositions link them, each carrying the mechanism it claims and not only a direction. Fifteen of the eighteen are directed edges of the causal graph, and the other three are moderation claims. Six auxiliary assumptions are recorded as entries in their own right, five of them corresponding to questions put to the data controller and listed in Table 2 of the main text. Six rival accounts are registered, and seven of the ten predictions are marked diagnostic against one of them.
+The object registers twelve constructs, each with a definition, its intended measurement and its boundary conditions. Eighteen propositions link them, each stating its mechanism as well as its direction. Fifteen of the eighteen are directed edges of the causal graph, and the other three are moderation claims. Six auxiliary assumptions are recorded as entries in their own right, five of them corresponding to questions put to the data controller and listed in Table 2 of the main text. Six rival accounts are registered, and seven of the ten predictions are marked diagnostic against one of them.
 
 The rigour checklist scores the object at 90.9 out of 100 with no blocking failure, and every item passes. On falsifiability and precision, at least one prediction forbids an observation, all ten predictions are interval predictions, and their mean severity clears the threshold. On construct quality, every construct carries a definition, a measurement and boundary conditions, no pair exceeds the lexical redundancy screen (largest observed similarity 0.14), and the theory's scope is stated. On structure, every proposition states a mechanism, at least one relation is causal, auxiliary assumptions are fewer than propositions with none added defensively in response to a prediction, and every prediction is reachable from a proposition in the graph. Finally, at least one prediction discriminates between registered alternatives, and a formal-model reference points at the design specification used for the precision analysis.
 
@@ -42,13 +48,13 @@ The Introduction summarises the evidence that motivates the feature set and the 
 
 | **Study** | **Sample and design** | **Method and key findings** |
 |---|---|---|
-| @pickrenContributionTextCharacteristics2022 | Children (*N* = 158, ages 8;8 to 11;2); multilevel logistic models | Word frequency, concreteness, deep cohesion and lexical arousal each predicted passage comprehension after decoding and language comprehension were controlled. |
+| @pickrenContributionTextCharacteristics2022 | Children (*N* = 158, ages 8;8 to 11;2); multilevel logistic models | Word frequency, pronoun density, concreteness and deep cohesion each predicted passage comprehension after decoding and language comprehension were controlled, and lexical arousal predicted it beyond those. |
 | @aparicioComprehensionPerformancesExplanatory2022 | Children (*N* = 1,229, grades 2 to 9); multivariate regression | Text and sentence characteristics predicted comprehension, but the direction and size of each effect varied by question type. |
 | @ludewigVocabularyTextCoverage2023 | Children (*N* = 924, grade 4); non-linear regression | Estimated lexical text coverage predicted comprehension non-linearly, rising more steeply above roughly 56 per cent coverage. |
 | @yuyangniePredictingReadingComprehension2022 | Elementary school students; feature-based prediction model | Sentence complexity, lexical surprisal and rare-word features improved prediction of item-level comprehension scores over a baseline. |
 | @wasitokiranaSentenceProcessingIndonesianEnglish2025 | Bilingual children (*N* = 44, 22 with language impairment); eye-tracking | Syntactic complexity impaired comprehension accuracy and slowed recall, disproportionately for children with language impairment. |
 
-: Supplementary Table 1. Studies modelling children's reading computationally from text features {#tbl-computational-reading tbl-colwidths="[22,25,53]"}
+: Studies modelling children's reading computationally from text features {#tbl-computational-reading tbl-colwidths="[22,25,53]"}
 
 ```{=latex}
 \endgroup
@@ -62,7 +68,7 @@ The Introduction summarises the evidence that motivates the feature set and the 
 
 | **Study** | **Platform and sample** | **Data, focus and key findings** |
 |---|---|---|
-| @sortkaerBothSidesStory2021 | Educational app (BookBites); children *N* ≈ 48,000, grades 3 to 6 | App reading time against standardised test scores. Reading speed correlated with ability (*r* = .39 to .48); models predicted 16 to 18 per cent of variance in progress. |
+| @sortkaerBothSidesStory2021 | Educational app (BookBites); 10,903 students in grades 0 to 9 contributing 215,521 reading sessions, with test-score comparisons for users in grades 3, 5 and 7 | App reading time against standardised test scores. Reading speed correlated with ability (*r* = .39 to .48); models predicted 16 to 18 per cent of variance in progress. |
 | Gissel and Andersen [-@gisselClusterrandomizedTrialMeasuring2021] | Digital text-to-speech tool; *N* = 1,013 children, 47 classrooms, grade 2 | Cluster-randomised trial against an active phonics control. No difference in decoding, but the digital tool improved comprehension, which is the outcome most sensitive to text-level scaffolding. |
 | @toppingImplementationFidelityComputerised2018 | Computerised book-reading assessment; *N* = 852,295 students, 3,243 schools | Quiz-based comprehension checks linked to a computerised adaptive test. Higher quiz engagement went with higher achievement, but the engagement measure itself was of limited reliability. |
 | @bulutEvaluatingGroupDifferences2023 | Online reading assessment; multi-country sample of fourth graders (ePIRLS 2016) | Explanatory item response modelling of item format, text complexity and cognitive complexity. Item properties and student characteristics interacted to predict online comprehension. |
@@ -70,7 +76,7 @@ The Introduction summarises the evidence that motivates the feature set and the 
 | Tüchler and Cain [-@tuchlerEffectsMediumText2026] | Digital against print medium; *N* = 120 children, grades 4 to 6 | Generalised linear mixed models of medium and text structure. Comprehension was lower in the digital condition after word recognition and vocabulary were controlled, a screen-inferiority effect relevant to interpreting any digital-only dataset. |
 | Beigman Klebanov and Hoang [-@beigmanklebanovStealthAssessmentReading2026] | App-embedded stealth assessment (Relay Reader) | Machine-learning models using text and oral-reading features predicted passage comprehension with over 80 per cent precision, showing that unobtrusive in-app comprehension prediction is feasible. |
 
-: Supplementary Table 2. Digital and app-based reading studies informing the present design {#tbl-app-data tbl-colwidths="[22,26,52]"}
+: Digital and app-based reading studies informing the present design {#tbl-app-data tbl-colwidths="[22,26,52]"}
 
 ```{=latex}
 \endgroup
@@ -78,11 +84,13 @@ The Introduction summarises the evidence that motivates the feature set and the 
 
 # S3. Language resources for the text features
 
-A multilingual design faces a measurement problem that a monolingual one does not, and it is not solved anywhere in the literature. Concreteness taken from a 40,000-item English rating study, a 350,000-lemma German regression, a 1,400-item Spanish rating study and a 77-language embedding prediction are four different measurements wearing one label. If a resource is chosen language by language on the grounds of local quality, then the method of measurement is perfectly confounded with the language, and standardising within language removes the difference in location and scale but not the difference in construct. There are two clean responses: use one uniformly produced resource everywhere, accepting lower absolute quality for higher comparability, or use native norms and treat every cross-language comparison as descriptive. This protocol takes the first, because language enters the confirmatory models as a grouping factor with varying slopes, and those slopes have to mean the same thing in every language. The native-norm sensitivity analysis and the per-language correlation between the two measures are specified in the main text. That correlation is the quantity that tells a reader how much the choice mattered.
+A multilingual design faces a measurement problem that a monolingual one does not. Concreteness taken from a 40,000-item English rating study, a 350,000-lemma German regression, a 1,400-item Spanish rating study and a 77-language embedding prediction are four different measurements wearing one label. If a resource is chosen language by language on the grounds of local quality, then the method of measurement is perfectly confounded with the language, and standardising within language removes the difference in location and scale but not the difference in construct. There are two clean responses: use one uniformly produced resource everywhere, accepting lower absolute quality for higher comparability, or use native norms and treat every cross-language comparison as descriptive. We take the first, because language enters the confirmatory models as a grouping factor with varying slopes, and those slopes have to mean the same thing in every language. The native-norm sensitivity analysis and the per-language correlation between the two measures are specified in the main text. That correlation is the quantity that tells a reader how much the choice mattered.
 
 Two consequences of that rule revise what an earlier version of this protocol assumed. The `wordfreq` package is not used as the primary frequency source: its data are a frozen snapshot of usage to about 2021, its maintainer discontinued it in September 2024 to avoid ingesting post-2022 web text contaminated by generated language, and its wordlists for Korean and Greek are built from fewer sources than the rest. The non-English editions of the NRC Valence, Arousal and Dominance lexicon are not used at all: they are machine translations of the English norms made in 2022, not ratings collected in the target languages, and their licence is non-commercial.
 
-@tbl-resources gives the primary resource for each feature family, the sensitivity resource, and the coverage across the ten languages the structural sample showed. Where the export turns out to carry more languages, the same rules are applied to them and the table is extended to cover them.
+A subtitle corpus indexes adult exposure, and the register mismatch for developing readers is a limitation that no available uniform resource removes. A recent demonstration that frequency estimates from a large-language-model corpus prompted for child-directed text fit young German readers better than child-book norms did [@schepensCanLargeLanguage2025] sharpens that point without changing the choice: a generated corpus is neither frozen nor documented in the way a subtitle pipeline is, and the same study notes that such corpora show atypical linguistic patterns. We therefore keep subs2vec as the primary resource. Wherever a native child-register norm exists for a language, we will report the per-language correlation between the primary frequency estimate and that norm, so that the cost of the adult register is visible in the language where it can be measured.
+
+@tbl-resources gives the primary resource for each feature family, the sensitivity resource, and the coverage across the ten languages the structural sample showed. Those ten languages are Dutch, English, French, German, Greek, Italian, Korean, Polish, Portuguese and Spanish, and every per-language claim in the table refers to that list. Where the export turns out to carry more languages, the same rules are applied to them and the table is extended to cover them.
 
 ```{=latex}
 \begingroup\small
@@ -90,53 +98,55 @@ Two consequences of that rule revise what an earlier version of this protocol as
 
 | **Feature family** | **Primary, uniform across languages** | **Sensitivity, native where it exists** | **Coverage of the ten sampled languages** |
 |---|---|---|---|
-| Word frequency | subs2vec, one OpenSubtitles pipeline applied identically to 55 languages [@vanparidonSubs2vecWordEmbeddings2021] | The SUBTLEX family, native and peer-reviewed per language | All ten for the primary. Native norms exist for nine; Korean has none. |
-| Age of acquisition | The cross-linguistic norms of Łuniewska and colleagues, an identical 299-word item set rated on an identical scale in 32 languages [@luniewskaRatingsAgeAcquisition2016; @luniewskaCrosslinguisticRatingsAge2019] | Broad native norm sets, which exist at scale for English, Dutch and Polish only | Nine of ten for the anchor set; Korean appears in neither paper. Because 299 words is thin for a text-level mean, age of acquisition is not an anchor for the lexical component and contributes only where a broad native set exists. |
-| Surprisal | Goldfish, an identical 125-million-parameter architecture trained on byte-premium-scaled equal-sized data for each language [@chuangGoldfishMonolingualLanguage2026] | mGPT, as a single multilingual model rather than one model per language | All ten at the 1 GB tier. This is the one feature for which a comparable multilingual resource exists by construction. |
+| Word frequency | subs2vec, one OpenSubtitles pipeline applied identically to 55 languages [@vanparidonSubs2vecWordEmbeddings2021] | The SUBTLEX family, native per language | All ten for the primary. Native norms exist for nine, eight of them peer-reviewed and the Italian one a conference release; Korean has no subtitle-based norm. |
+| Age of acquisition | The cross-linguistic norms of Łuniewska and colleagues, an identical 299-word item set rated on an identical scale in 32 languages [@luniewskaRatingsAgeAcquisition2016; @luniewskaCrosslinguisticRatingsAge2019] | Broad native norm sets, which exist at scale for English, Dutch and Polish only | Seven of ten for the anchor set. French, Portuguese and Korean appear in neither paper. Because 299 words is thin for a text-level mean, age of acquisition is not an anchor for the lexical component and contributes only where a broad native set exists. |
+| Surprisal | Goldfish, an identical 125-million-parameter architecture trained on byte-premium-scaled equal-sized data for each language [@changGoldfishMonolingualLanguage2026] | mGPT, as a single multilingual model rather than one model per language | All ten at the 1 GB tier. This is the one feature for which a comparable multilingual resource exists by construction. |
 | Word length, lexical density, lexical diversity | Computed from the text directly, so no norm is involved | Not applicable | All ten. |
-| Concreteness | Native human ratings only; no value is predicted or projected | Not applicable, since the native norm is the only acceptable measure | Nine of ten, at between roughly 1,400 and 40,000 items [@brysbaertConcretenessRatings402014]. Korean has no indexed equivalent, so concreteness is not computed for Korean and Korean does not contribute to any concreteness analysis. |
-| Dependency distance and clause structure | Stanza, whose per-language labelled attachment scores are published and range from 85.5 to 95.2 across these ten [@qiStanzaPythonNatural2020] | UDPipe 2, whose current models track a later Universal Dependencies release and score higher on all ten | All ten in both. Both parsers are run, and the per-language correlation between the two dependency-distance estimates is reported with the feature-pipeline validation. A language in which they disagree materially is flagged and its grammatical component is not used. |
-| Adjacent-sentence similarity | BGE-M3, peer-reviewed, over 100 languages, and able to take a whole passage as input [@chenM3EmbeddingMultiLinguality2024] | multilingual-E5-large-instruct, identified by checkpoint, since no DOI is registered | All ten in both. LaBSE is not used: it is optimised for retrieving translation pairs rather than for semantic similarity within a language. |
+| Concreteness | Native human ratings only; no value is predicted or projected | Not applicable, since the native norm is the only acceptable measure | Eight of ten, at between roughly 1,100 and 40,000 items [@brysbaertConcretenessRatings402014]. Greek and Korean have only small rated sets, of 348 and 450 words, embedded in affective norms, which cannot meet the 80 per cent coverage rule, so concreteness is not computed for either language and neither contributes to any concreteness analysis. |
+| Dependency distance and clause structure | Stanza [@qiStanzaPythonNatural2020], whose labelled attachment scores on its performance page, for single-treebank models at version 1.5.1 on Universal Dependencies 2.12, range across these ten languages from 81.8 on German GSD to 93.6 on German HDT, with Korean the lowest language at 85.5 | UDPipe 2, whose current models track a later Universal Dependencies release and, on their own later test sets, score higher on nine of the ten matched treebanks and level on French GSD | All ten in both. Both parsers will be run, and the per-language correlation between the two dependency-distance estimates will be reported with the feature-pipeline validation. A language in which they disagree materially is flagged and its grammatical component is not used. |
+| Adjacent-sentence similarity | BGE-M3, peer-reviewed, over 100 languages, and able to take a whole passage as input [@chenM3EmbeddingMultiLinguality2024] | multilingual-E5-large-instruct, identified by checkpoint, since no DOI is registered | All ten in both. LaBSE is not used: it is optimised for retrieving translation pairs rather than for semantic similarity within a language [@fengLanguageagnosticBERTSentence2022]. |
 | Referential overlap, connective density | Computed from the parse and from language-specific connective inventories compiled for this study and deposited with it | Not applicable | All ten, with the inventory for each language checked by a native speaker before use. |
-| Valence and arousal | MEmoLon, induced for 91 languages from a single procedure, at roughly two million entries per language [@buechelLearningEvaluatingEmotion2020] | Native rated norms, which exist for nine of the ten | All ten for the primary; Korean has no native norms, so only the primary is available there. |
+| Valence and arousal | MEmoLon, induced for 91 languages from a single procedure, at about two million entries for each of these ten [@buechelLearningEvaluatingEmotion2020] | Native rated norms, which exist for all ten, though the Korean sets hold 267 to 450 words and the Greek sets 348 to 1,034 | All ten for the primary. The Korean and Greek rated sets are small, so the sensitivity analysis in those languages is subject to the 80 per cent coverage rule. |
 
-: Supplementary Table 3. Resources for the text features, the uniform primary and the native sensitivity {#tbl-resources tbl-colwidths="[17,26,22,35]"}
+: Resources for the text features, the uniform primary and the native sensitivity {#tbl-resources tbl-colwidths="[17,26,22,35]"}
 
 ```{=latex}
 \endgroup
 ```
 
-Korean is the weak point, and we record it here in advance. Of the seven norm-based feature families, Korean lacks a subtitle frequency norm, any coverage in the cross-linguistic age-of-acquisition set, any indexed concreteness or imageability norms, and any native valence and arousal norms. What it does have is a uniform frequency estimate, a Goldfish model, both parsers, induced affect and a lexical decision megastudy of 30,930 words. Korean therefore contributes to the lexical and grammatical components and to the affective predictors through the uniform resources, and contributes to no analysis that requires a native norm. A search of Crossref is a poor instrument for Korean-language psycholinguistics, so before the features are frozen a Korean-reading collaborator will search the Korea Citation Index and RISS directly, and any norm set found there will be added to the sensitivity analysis with the addition recorded as a deviation from this protocol. Greek is the next weakest: it has no native concreteness set for Standard Modern Greek, no CHILDES collection, and an affective lexicon of a different character from the rated norms available elsewhere.
+Korean has the fewest resources of the ten languages, and we record the consequences here in advance. Of the seven norm-based feature families, Korean lacks a subtitle frequency norm and any coverage in the cross-linguistic age-of-acquisition set, and its rated concreteness and valence and arousal norms are sets of 267 to 450 words published in Korean-language journals, too small to meet the 80 per cent coverage rule. What it does have is a uniform frequency estimate, a Goldfish model, both parsers, induced affect and a lexical decision megastudy of 30,930 words [@yiKoreanLexiconProject2017]. Korean therefore contributes to the lexical and grammatical components and to the affective predictors through the uniform resources, and contributes to no analysis that requires a native norm. A search of Crossref is a poor instrument for Korean-language psycholinguistics, so before the features are frozen a Korean-reading collaborator will search the Korea Citation Index and RISS directly, and any larger norm set found there will be added to the sensitivity analysis with the addition recorded as a deviation from this protocol. Greek is the next weakest. Its rated concreteness and affect sets are likewise small, 348 words in one and 1,034 translated items in another, and it has no CHILDES collection. French and Portuguese are otherwise well resourced but absent from both age-of-acquisition papers, so age of acquisition contributes for them only through the broad native sets, where those exist.
 
-Every tool is recorded by name, version and, where the tool is a model, by the exact checkpoint. Several of the tools named here have no registered DOI, which is normal for research software distributed through model repositories. Those are identified by checkpoint instead, and the identifiers are deposited with the feature-extraction code.
+Every tool will be recorded by name, version and, where the tool is a model, by the exact checkpoint. Several of the tools named here have no registered DOI, which is normal for research software distributed through model repositories. Those are identified by checkpoint instead, and the identifiers are deposited with the feature-extraction code.
 
 # S4. The literature sizing
 
-The claim in the Introduction that this study sits in an empty intersection is a count, and the queries behind it are reproduced verbatim in `literature/scopus_search_record.md`, together with the date of the search and the package version. Only count queries were issued, one request per cell, so nothing was downloaded and no record set was assembled. @fig-trends shows how the surrounding topics have moved over the window.
+The Scopus count reported in the Introduction is reproduced verbatim here: the queries behind it are recorded in `literature/scopus_search_record.md`, together with the date of the search and the package version. Only count queries were issued, one request per cell, so nothing was downloaded and no record set was assembled. @fig-trends shows how the surrounding topics have moved over the window.
 
-![Supplementary Figure 1. Publication trend, 2018 to 2026, for children's reading comprehension in combination with narration, with reading apps and e-books, and with machine-generated text, as a percentage of the reference set. Machine-generated text does not appear in this literature at all before 2024.](literature/scopus_topic_trends.pdf){#fig-trends width=90%}
+![Publication trend, 2018 to 2026, for children's reading comprehension in combination with narration, with reading apps and e-books, and with machine-generated text, as a percentage of the reference set. Machine-generated text does not appear in this literature at all before 2024.](literature/scopus_topic_trends.pdf){#fig-trends width=90%}
 
 # S5. The design analysis in full
 
-The precision analysis simulated the planned crossed structure from the portable design specifications deposited in `design_analysis/`, and `design_analysis/run_design_analysis.R` reproduces it [@bernabeuPilotr2026]. Full results for every grid point, including the Monte Carlo standard error and Wilson bounds on each decision probability and the counts of converged, singular and warning fits, are in `design_analysis/precision_sweep.csv`. @fig-precision-sup shows the narration and within-child curves that the main text summarises.
+The precision analysis simulated data from the portable design specifications deposited in `design_analysis/`, and `design_analysis/run_design_analysis.R` reproduces it [@bernabeuPilotr2026]. The simulated tier-1 model contained the three components, the age band, the two age-band interactions and a text intercept, and was fitted by maximum likelihood with lme4. The narration model contained the lexical and continuity components, the narration flag and their interactions with it, and a text intercept. The tier-2 model added a child intercept and a single accumulated-reading trend. None of the simulated models carried the reading-level adjustment, the covariates, the language, country and app-version intercepts, the language-varying slopes, the distributional sub-model or the review-derived priors that the registered models carry, and the main text states what follows from that. The pooled grid is in `design_analysis/precision_sweep.csv`. The per-sweep files under `design_analysis/sweeps/` add, for each grid point, the Monte Carlo standard error on each decision probability, the number of fits attempted and the counts of converged, singular and warning fits. The texts and narration sweeps used 200 replicates per grid point, and the readings, null and tier-2 sweeps used 120. @fig-precision-sup shows the narration and within-child curves that the main text summarises.
 
-![Supplementary Figure 2. Precision for the narration contrast (left) and the within-child accumulated-reading term (right). The narration curve is drawn for a balanced contrast and has to be read against the design effect for the observed narration prevalence, which is given in the main text.](figures/fig_precision_supplement.pdf){#fig-precision-sup width=100%}
+![Precision for the narration contrast (a) and the within-child accumulated-reading term (b). Points are the probability of a determinate verdict for an effect of 0.10 standard deviations, over 200 simulation replicates per grid point in a and 120 in b, with twelve readings per text in a and five readings per child in b; shaded bands are 95 per cent Wilson score intervals on each probability, and the dashed line marks the 0.90 target. The narration curve is drawn for a balanced contrast and has to be read against the design effect for the observed narration prevalence, which is given in the main text.](figures/fig_precision_supplement.pdf){#fig-precision-sup width=100%}
 
-The ordinal outcome behind Hypothesis 5 is handled by a separate script, `design_analysis/run_ordinal_analysis.R`, because a cumulative logit cannot be fitted by the routine the timing models use and treating a three-category rating as continuous would answer a different question. The script keeps the same design specification and the same seed discipline, generates the rating from it, retains each reading with the 30 per cent availability the structural sample showed, applies the protocol's five-rater floor inside every replicate, and fits the model the protocol specifies with `ordinal::clmm`.
+Nature Human Behaviour names 0.95 as the a priori power floor for frequentist plans. We register 0.90 for this estimation design, for the reasons given in the main text, and `design_analysis/solve_at_095.R` re-solves the same archived curves at 0.95 without re-simulating anything, writing `minimum_texts_095.csv`. At that target the requirements are 926 distinct texts for lexical difficulty (95 per cent interval 794 to 1,069), 812 for grammatical load (723 to 906), 784 for referential continuity (696 to 877), 1,510 for the grammatical-load interaction with the age band (1,349 to 1,680), 1,506 for the narration interaction (1,349 to 1,672) and 681 children in tier 2 for the within-child term (543 to 834). The continuity interaction did not reach 0.95 within the 1,600 texts simulated.
 
-The result is the most demanding requirement in the design. At 200, 400, 800 and 1,600 generated texts, with twelve readings each, the 95 per cent interval on a coefficient whose true value is 0.10 log odds has a mean width of 0.44, 0.30, 0.21 and 0.15, and the probability of a determinate verdict never rises above 0.29. The target of 0.90 is therefore not reached within the range simulated, and no crossing is quoted from it. What the grid does establish is the scaling: the fitted exponents of interval width on the number of texts are between -0.51 and -0.53 against a theoretical -0.5, and on that law the requirement projects to roughly 8,000 to 8,700 generated texts, which is about 2,300 to 2,500 texts carrying at least five ratings. Set against the 738 texts the same coefficient needs on reading time, the rating demands an order of magnitude more, which is what a three-category response observed for 30 per cent of readings costs. Both quantities depend on the rating's availability across the full window and on how heavily texts are reused, which the provider-computed counts will supply, and the simulation is re-run at the observed values before any outcome model is fitted. `design_analysis/summarise_ordinal.R` pools the cached grid points and reproduces every number in this paragraph.
+The ordinal outcome behind Hypothesis 5 is handled by a separate script, `design_analysis/run_ordinal_analysis.R`, because a cumulative logit cannot be fitted by the routine the timing models use and treating a three-category rating as continuous would answer a different question. The script keeps the same design specification and the same seed discipline, generates the rating from it, retains each reading with the 30 per cent availability the structural sample showed, applies the protocol's five-rater floor inside every replicate, and fits a cumulative-logit counterpart of the registered model with `ordinal::clmm`, carrying the three components, the age band and a text intercept. The region of practical equivalence is applied symmetrically on the log-odds scale as a half-width of log(1.05), which is the region the main text registers. The ordinal sweep used 60 replicates per grid point, and fits whose standard errors were unusable were discarded, leaving 46, 52, 56 and 59 fits at 200, 400, 800 and 1,600 texts.
+
+The result is the most demanding requirement in the design. At 200, 400, 800 and 1,600 generated texts, with twelve readings each, the 95 per cent interval on a coefficient whose true value is 0.10 log odds has a mean width of 0.44, 0.30, 0.21 and 0.15, and the probability of a determinate verdict never rises above 0.29. The target of 0.90 is therefore not reached within the range simulated, and no crossing is quoted from it. What the grid does establish is the scaling: the fitted exponents of interval width on the number of texts are between -0.51 and -0.53 against a theoretical -0.5, and on that law the requirement projects to roughly 8,000 to 8,700 generated texts, which is about 2,300 to 2,500 texts carrying at least five ratings. Set against the 738 texts the same coefficient needs on reading time, the rating demands an order of magnitude more, which is what a three-category response observed for 30 per cent of readings costs. Both quantities depend on the rating's availability across the full window and on how heavily texts are reused, which the provider-computed counts will supply. The simulation will be re-run at the observed values before any outcome model is fitted. `design_analysis/summarise_ordinal.R` pools the cached grid points and reproduces every number in this paragraph.
 
 # S6. Deriving the priors from the systematic review
 
-Priors for the confirmatory main effects come from the systematic review accompanying this project, through the pipeline whose freeze-and-run discipline is stated under Priors in the main text. This section records what the main text does not: the mapping from the review's extracted effects to this protocol's coefficients, the conversion order, and the pooling and de-duplication rules. The mapping is one-to-many and is fixed as follows. LexicalDifficulty pools the review's word-frequency, lexical-coverage, other-lexical and lexical-diversity effects on reading, sign-harmonised so that frequency and coverage are flipped to a difficulty direction while age of acquisition, word length and surprisal keep their sign. GrammaticalLoad pools syntactic-complexity and sentence-length effects. ReferentialContinuity pools coherence effects, with discourse-structure rows informing the secondary narrativity predictor instead. Valence and arousal pool the text-emotionality rows separately where the extraction distinguishes them.
+Priors for the confirmatory main effects and for the secondary text predictors come from the systematic review accompanying this project, through the pipeline whose freeze-and-run discipline is stated under Priors in the main text. This section records what the main text does not: the mapping from the review's extracted effects to this protocol's coefficients, the conversion order, and the pooling and de-duplication rules. The mapping is one-to-many and is fixed as follows. LexicalDifficulty pools the review's word-frequency, lexical-coverage, other-lexical and lexical-diversity effects on reading, sign-harmonised so that frequency and coverage are flipped to a difficulty direction while age of acquisition, word length and surprisal keep their sign. GrammaticalLoad pools syntactic-complexity and sentence-length effects. ReferentialContinuity pools coherence effects, with discourse-structure rows informing the secondary narrativity predictor instead. Valence and arousal pool the text-emotionality rows separately where the extraction distinguishes them.
 
-Estimates are put on a common scale in a fixed order of preference. A standardised beta or a correlation goes through Fisher's *z*. A *d* or *g* converts to *r* using the effective sample size, and an odds ratio converts to *d* and then to *r*. Where no effect size is reported but a test statistic is, *r* is recovered from *t* and its degrees of freedom and signed by the reported direction. Unstandardised coefficients without convertible scale information are not pooled and are listed in an exclusion appendix, as are rows whose direction the extraction could not resolve. Pooling is a random-effects meta-analysis within each combination of coefficient and outcome class, with one estimate per paper per relation, so that labelled subgroups of a single paper are never treated as independent. Where a meta-analysis in the corpus subsumes three or more of the corpus's own primary studies, the pooled row is preferred and the overlapping primaries dropped; otherwise the primaries are used and the pooled row dropped, and the alternative is reported as a sensitivity analysis.
+Estimates will be put on a common scale in a fixed order of preference. A standardised beta or a correlation goes through Fisher's *z*. A *d* or *g* converts to *r* using the effective sample size, and an odds ratio converts to *d* and then to *r*. Where no effect size is reported but a test statistic is, *r* is recovered from *t* and its degrees of freedom and signed by the reported direction. Unstandardised coefficients without convertible scale information will not be pooled and will be listed in an exclusion appendix, as will rows whose direction the extraction could not resolve. Pooling will be a random-effects meta-analysis within each combination of coefficient and outcome class, with one estimate per paper per relation, so that labelled subgroups of a single paper are never treated as independent. Where a meta-analysis in the corpus subsumes three or more of the corpus's own primary studies, the pooled row will be preferred and the overlapping primaries dropped. Otherwise the primaries will be used and the pooled row dropped, and the alternative will be reported as a sensitivity analysis.
 
-The prior is then Student's $t(3, \hat\mu, \sigma)$ with $\hat\mu$ the pooled estimate on the model's scale and $\sigma = 2\sqrt{\mathrm{SE}(\hat\mu)^2 + \hat\tau^2}$, floored at 0.10. The heavy tails let the data override a misplaced centre. The complete prior table, the forest plots, the conversion arithmetic and the list of excluded rows will accompany the Stage 2 report, and the pipeline's output is timestamped and deposited before the extract is transferred.
+The prior is then Student's $t(3, \hat\mu, \sigma)$ with $\hat\mu$ the pooled estimate on the model's scale and $\sigma = 2\sqrt{\mathrm{SE}(\hat\mu)^2 + \hat\tau^2}$, floored at 0.10. The heavy tails let the data override a misplaced centre. The complete prior table, the forest plots, the conversion arithmetic and the list of excluded rows will accompany the Stage 2 report, and the pipeline's output is timestamped and deposited before the extract is transferred. The same output records, for each component, whether the pooled estimate on the model's scale falls below 0.10 standard deviations, which is the comparison the main text's precision thresholds depend on.
 
-# S7. Data-access certification
+# S7. Data-access certification and activation record
 
-The text below was sent to the data controller on 7 August 2026 and is reproduced as it stands. The bracketed fields are completed and the document signed before this protocol is submitted. If any of them is still open at submission, we state that here.
+We sent the text below to the data controller on 7 August 2026, and it is reproduced as it stands. The bracketed fields will be completed and the document signed before this protocol is submitted. [At submission: "The certification was signed on DATE and every field is completed above." / "The following fields remained open at submission: ...".]
 
 > Gameloft confirms that, as of [date]:
 >
@@ -146,12 +156,72 @@ The text below was sent to the data controller on 7 August 2026 and is reproduce
 > 4. Material shared with the team to date: a 35-row sample and the data dictionary, shared on 27 July 2026 to confirm the structure of the table; the story texts; and the counts and file record described above.
 > 5. No analysis relating story text to reading time has been conducted by Gameloft or reported to the team.
 >
-> Owner: [name, role]  
-> Deputy: [name, role]  
+> Owner: [name, role]\
+> Deputy: [name, role]\
 > Signed: [name, role, date]
 
-Two points arise from clause 4. The 35-row sample carries real reading times, and the main text discloses it directly. The story texts are named here because the editorial office confirmed in advance that stimulus materials may be received before submission, for the reasons given under Data provenance in the main text.
+Clause 4 needs three glosses. The 35-row sample carries real reading times, and the main text discloses it directly and reports it in Section S8. The summary of that sample, which we computed with the count script on 6 August 2026, is covered by the sample deposit and is listed under Pilot data in the main text. The story texts are named here because the editorial office confirmed in advance that stimulus materials may be received before submission, for the reasons given under Data provenance in the main text.
 
 The accompanying record referred to in clause 1 is the manifest described in the main text, deposited with this protocol. Any row removed from the held extract between the build and the transfer is recorded by the data controller, as the Ethics statement sets out, and its effect on the counts will be reported at Stage 2.
+
+This section is also where any written confirmation activating a contingent hypothesis would be reproduced. At submission, none of the activation conditions had been confirmed in writing by the data controller: item-level comprehension responses with a recoverable question type for C1; item-level responses together with accounts observed with and without narration, the latter read from the provider-computed counts, for C2 and C3; and fixed human-authored classic texts for C4. No contingent hypothesis is therefore activated. Should a condition be confirmed after submission, the analysis written for it would be reported at Stage 2 under Exploratory analyses, and a hypothesis whose condition is never confirmed is not run.
+
+# S8. The structural sample
+
+The pilot material for this protocol is the 35-row structural sample and the data dictionary that the data controller shared on 27 July 2026 to confirm the shape of the table, and the summary of that sample computed with the count script described under Data provenance in the main text. The sample is what fixed three inputs of the design analysis: the narration prevalence, the rating availability and the age-band missingness. It cannot support any hypothesis, because it holds one session per account and five distinct texts.
+
+The facts the sample established are these. Every one of the 35 sessions was a finished reading, with the last page reached equal to the page count, so the extract is a record of completed readings. Narration was on in 32 of the 35 sessions. The post-reading difficulty rating was present in 10 sessions and absent in 25. The age band was blank in 10 sessions, and the recorded bands skewed towards children under 7, which is why the protocol's inclusion criterion of 7 and older is expected to remove a substantial share of the export. The sessions covered ten reading languages. The per-session activity counters summed to more than the whole reading duration in 6 of the 14 sessions with any activity, in one case 438 seconds against 222, which is why those fields are set aside. Reading times were recorded as whole seconds.
+
+@tbl-sample-fields tabulates the 35 rows by field, and @tbl-sample-timing reproduces the reading-time check from the summary that the count script wrote on 6 August 2026. The script is deposited with the protocol in `count_script/`, and re-running it on the sample reproduces that summary line for line, so both tables can be regenerated from the sample deposit. One further fact about the file bears on the transfer. The account identifier reached us in floating-point notation with six significant digits, which is how a spreadsheet writes a nineteen-digit integer. The 35 values are distinct at that precision, but a full export written the same way could not be relied on to distinguish accounts. The sample itself, which carries real reading times, is deposited for peer review under embargo until Stage 2 acceptance, at the location the Data availability statement names.
+
+```{=latex}
+\begingroup\small
+```
+
+| **Field** | **Rows with a value** | **Distinct values** | **Values, or note** |
+|---|---|---|---|
+| user_id | 35 | 35 | One session per account. Six significant digits, as noted above. |
+| game_version | 35 | 10 | 6.2.0 to 6.7.2. |
+| finished_reading_at | 35 | 35 | 2 January to 30 June 2026, in UTC. |
+| user_country | 35 | 21 | Germany, Italy and Poland 4 each; 18 further countries. |
+| user_age_group | 25 | 4 | Age 3-4 (8), Age 5-6 (9), Age 7-8 (6), Age 9+ (2). Blank in 10. |
+| story_title | 35 | 2 | Crafted story (20), classic story (15). |
+| story_id | 35 | 5 | One classic text (15 sessions) and four attribute combinations (11, 7, 1 and 1 sessions). |
+| story_location, story_hero, story_sidekick, story_plot, story_theme | 20 | 1, 2, 2, 3, 3 | Filled for crafted stories only. |
+| is_customized | 35 | 2 | 1 (20), 0 (15). |
+| is_speech_on | 35 | 2 | 1 (32), 0 (3). |
+| time_spent_reading | 35 | 32 | Whole seconds. Checked through @tbl-sample-timing only, and no value is reported. |
+| read_language | 35 | 10 | English 11, German 5, Polish 5, Italian 4, Spanish 3, Korean 2, Portuguese 2, Dutch 1, French 1, Greek 1. |
+| user_reading_level | 32 | 3 | Age 3-5 (16), Age 5-7 (6), Age 7+ (10). Blank in 3. |
+| max_page_reached, total_page_available | 35 | 5 | 6, 7, 10, 11 or 17 pages. Equal to each other in every row. |
+| story_rating | 10 | 3 | Just Right (7), Easy (2), Difficult (1). Blank in 25. |
+| The eight minigame_*_ts fields | 35 | 4 to 10 | Zero throughout the 15 classic sessions and 6 crafted sessions. Non-zero in 14, of which 6 sum to more than the reading duration. |
+| word_explorer_ts | 35 | 8 | Non-zero in 7 sessions. A lifetime total, by the dictionary. |
+| inkmagination_ts | 35 | 30 | Non-zero in 29 sessions. A lifetime total, by the dictionary. |
+
+: The 35-row structural sample by field. Counts are of sessions unless stated. {#tbl-sample-fields tbl-colwidths="[26,12,12,50]"}
+
+| **Group** | **Sessions** |
+|---|---|
+| Empty | 0 |
+| Not a number | 0 |
+| Negative | 0 |
+| Zero | 0 |
+| Above 0 but below 1 | 0 |
+| 1 to 9 | 0 |
+| 10 to 99 | 15 |
+| 100 to 999 | 20 |
+| 1,000 to 9,999 | 0 |
+| 10,000 to 99,999 | 0 |
+| 100,000 or more | 0 |
+| Sessions with a usable number | 35 |
+| Distinct values in the column | 32 |
+| Sessions sharing the most common value | 2 |
+
+: The reading-time check on the sample, as the count script reports it. The bands are ten times wider than one another and are never crossed with any other field. {#tbl-sample-timing tbl-colwidths="[60,40]"}
+
+```{=latex}
+\endgroup
+```
 
 # References

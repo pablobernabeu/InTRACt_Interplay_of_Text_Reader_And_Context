@@ -60,7 +60,7 @@ BASE_SIZE <- 14
 SERIES_COLOURS <- c("Lexical difficulty"     = "#0072b2",
                     "Grammatical load"       = "#d55e00",
                     "Referential continuity" = "#333333",
-                    "Accumulated reading"    = "#0072b2")
+                    "Accumulated reading"    = "#8e2c6b")
 
 curve_panel <- function(d, x_lab, subtitle, log_x = TRUE) {
   d$construct <- droplevels(d$construct)
@@ -114,13 +114,19 @@ fig <- arrange_plots(pa, pb, ncol = 2, nrow = 1, guides = "collect") &
 # printed at about 8.9 cm as half of a double-column figure. Those are the two
 # widths the check needs: text that is comfortable on screen can still reach the
 # page below the six-point floor.
-chk <- check_figure(pa, width_cm = 8.9, render_width_cm = 13.97)
-print(chk)
-failed <- chk[chk$verdict == "fail", , drop = FALSE]
-if (nrow(failed)) {
-  warning("figure check failed: ", paste(failed$check, collapse = ", "))
-  print(failed)
+audit_panel <- function(p, what) {
+  chk <- check_figure(p, width_cm = 8.9, render_width_cm = 13.97)
+  print(chk)
+  failed <- chk[chk$verdict == "fail", , drop = FALSE]
+  if (nrow(failed)) {
+    print(failed)
+    stop("figure check failed for ", what, ": ",
+         paste(failed$check, collapse = ", "), call. = FALSE)
+  }
+  invisible(chk)
 }
+audit_panel(pa, "main panel a")
+audit_panel(pb, "main panel b")
 
 # The manuscript embeds the PDF, where the type stays selectable text; the PNG
 # serves the repository preview. cairo_pdf embeds the fonts.
@@ -132,10 +138,11 @@ save_plot(file.path(OUT, "fig_precision.pdf"), fig, width = 11, height = 5,
 # against the design effect for an unbalanced narration flag.
 narr <- prep(res[res$model == "narration", ], "texts", "narration")
 t2   <- prep(res[res$model == "within_child", ], "children", "within child")
-sup <- arrange_plots(
-  curve_panel(narr, "Distinct texts (log scale)", "Narration model"),
-  curve_panel(t2, "Children in tier 2 (log scale)", "Within-child model, five readings each"),
-  ncol = 2, nrow = 1, guides = "collect") &
+ps_a <- curve_panel(narr, "Distinct texts (log scale)", "Narration model")
+ps_b <- curve_panel(t2, "Children in tier 2 (log scale)", "Within-child model, five readings each")
+audit_panel(ps_a, "supplement panel a")
+audit_panel(ps_b, "supplement panel b")
+sup <- arrange_plots(ps_a, ps_b, ncol = 2, nrow = 1, guides = "collect") &
   theme(legend.position = "bottom", legend.box = "horizontal")
 save_plot(file.path(OUT, "fig_precision_supplement.png"), sup, width = 11, height = 5, dpi = 300)
 save_plot(file.path(OUT, "fig_precision_supplement.pdf"), sup, width = 11, height = 5,

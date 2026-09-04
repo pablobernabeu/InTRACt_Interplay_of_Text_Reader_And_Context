@@ -33,6 +33,9 @@ constructs:
       - "mean rated age of acquisition"
       - "mean orthographic length in characters"
       - "mean per-token surprisal under a language-specific neural language model"
+      - "lexical density"
+      - "Measure of Textual Lexical Diversity"
+      - "mean rated concreteness of content words"
     boundary_conditions:
       - "narrative prose of roughly 200 to 400 words"
       - "languages for which validated frequency or age-of-acquisition norms exist"
@@ -331,7 +334,7 @@ predictions:
 
   - id: pred_h5_reported_difficulty
     derives_from: [p1, p2, p3, p9]
-    statement: "In an ordinal model of the post-reading rating, lexical difficulty and grammatical integration load raise the odds of a harder rating and referential continuity lowers them, each by an odds ratio outside 0.95 to 1.05, and the ordering of the three coefficients matches their ordering in the reading-time model."
+    statement: "In an ordinal model of the post-reading rating, lexical difficulty and grammatical integration load are associated with higher odds of a harder rating and referential continuity with lower odds, each by an odds ratio outside 0.952 to 1.05 (a half-width of log 1.05 on the log-odds scale), and the ordering of the three coefficients matches their ordering in the reading-time model with posterior probability at least 0.90."
     type: "interval"
     risk_score: 0.80
     severity: 0.70
@@ -339,7 +342,7 @@ predictions:
 
   - id: pred_h6_accumulated_reading
     derives_from: [p4, p5]
-    statement: "Among children with several recorded sessions, a doubling of a child's own accumulated in-app reading is followed by a reduction in that child's log reading time per word of at least 0.05 standardised units, over and above session order and the interval since the previous session."
+    statement: "Among children with several recorded sessions, a doubling of a child's own accumulated in-app reading is followed by a reduction in that child's log reading time per word of at least 0.05 standardised units, over and above session order, the interval since the previous session and the time elapsed since the child's first session."
     type: "interval"
     risk_score: 0.75
     severity: 0.65
@@ -355,7 +358,7 @@ predictions:
 
   - id: pred_no_spurious_structure
     derives_from: [p1, p2, p3]
-    statement: "Text-feature coefficients estimated against a permuted assignment of texts to sessions are practically equivalent to zero, so that more than ninety-five per cent of each posterior falls inside the region of practical equivalence."
+    statement: "Text-feature coefficients estimated against a permuted assignment of texts to sessions carry no association: no coefficient is declared practically non-negligible in more than five per cent of 200 permuted refits, an inconclusive verdict on permuted data being the expected outcome at moderate text counts."
     type: "interval"
     risk_score: 0.30
     severity: 0.55
