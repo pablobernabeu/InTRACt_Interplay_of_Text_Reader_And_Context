@@ -1,3 +1,10 @@
+# Console summary of the theory object: score, gate, checklist items and the
+# testable implications of its causal graph.
+#
+# Run from the preregistration directory:  Rscript theory/report_theory.R
+# Reads theory/intract.theory.yaml and writes nothing. The counts the manuscript
+# quotes are printed by theory/check_manuscript_claims.R.
+
 library(theoryforge)
 th <- tf_read("theory/intract.theory.yaml")
 chk <- tf_check(th)
@@ -11,5 +18,5 @@ writeLines("-- checklist --")
 for (it in chk$items) writeLines(sprintf("  %-20s %-6s %.3f", it$id, it$status, it$score))
 writeLines("")
 writeLines("-- testable implications --")
-for (i in imp$implications) writeLines(paste0("  ", i$statement,
-  if (length(i$given)) paste0("  |  given ", paste(unlist(i$given), collapse=", ")) else ""))
+# Each statement already ends with its conditioning set after the bar.
+for (i in imp$implications) writeLines(paste0("  ", i$statement))

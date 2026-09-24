@@ -15,8 +15,9 @@ which children aged 7 and older read machine-generated stories in ten or more la
 
 **The scientific case.** Whether the text properties that govern reading under laboratory
 control still govern it in unsupervised, multilingual reading of machine-generated stories is
-unknown: a dated and archived Scopus search shows the intersection of children's reading
-comprehension, computational text features and platform log data to be empty. The protocol
+unknown. A dated and archived Scopus search finds the intersection of children's reading
+comprehension, computational text features and platform log data to be thin and unevenly
+indexed, and we report it as a sizing rather than as a claim about what exists. The protocol
 tests six confirmatory hypotheses in Bayesian crossed-effects models over hundreds to
 thousands of distinct texts, adjudicates between rival developmental accounts with two-sided
 tests that no laboratory sample has been large enough to decide, and registers every decision
@@ -24,6 +25,26 @@ about what is tested, on which sample and with which model as a function of prov
 counts and written answers, never of a fitted coefficient, with one stated exception. The question
 matters beyond one platform: children's reading is migrating to systems that record it, and
 this protocol is a worked answer to whether such records can support inference.
+
+**A prior publication on this platform by two of us.** Two authors of this submission, Ratner
+and Murphy, have published a descriptive study of *Let's Story* (2026, *Frontiers in
+Developmental Psychology*, doi:10.3389/fdpys.2026.1816559), which the Introduction cites. We
+declare it here, and set out why it leaves this protocol's questions open, rather than leave a
+reviewer to find it. Neither author had access to the raw data. They saw only summaries prepared
+for them by the data controller, and worked from aggregated dashboard counts covering the thirty
+days after the feature launched in November 2024. On that basis they report completion, the point
+at which a session was abandoned, use of the dictionary and discussion scaffolds, and the marginal
+distribution of the post-reading difficulty rating, for children aged 4 to 9. The analyses are
+descriptive throughout, and the paper states that aggregated data preclude inference about
+individual learners. It examines no property of the stories and no reading duration. Every
+association this protocol registers is therefore untested by it: no text feature is related to
+any behavioural measure, no reading time is modelled, and the session-level structure a
+within-child term requires was not in the summaries. The window does not overlap the one this
+study will use, which opens on 1 January 2026, and the summaries concern an age range beginning
+three years below this study's youngest band, so nothing reported there is an input to what we
+propose. We take this history as evidence that the sequestration described below is real and of
+long standing: no author of this submission has at any point held a session-level record from
+this platform.
 
 **Support in place.** [Confirm that all necessary support (funding, facilities, personnel) is
 in place for the proposed research, naming the funder and grant number, and that the study can
@@ -42,7 +63,10 @@ sample with the data dictionary and the story texts, [and the file manifest and 
 aggregate counts, received on DATE / with the file manifest and provider-computed aggregate counts
 to follow before in-principle acceptance]. The arrangement was put to the editorial office and
 confirmed as appropriate by the Chief Editor on 3 August 2026, including the direction, which we
-have followed, not to run the dimension reduction before submission.
+have followed, not to run the dimension reduction before submission. Beyond that material, the
+only quantities from this platform any author has seen are the summaries described above, which
+the data controller prepared, which relate no predictor to any outcome, and which enter no
+decision registered in this protocol.
 
 **Timeline.** [Anticipated timeline; the protocol proposes: data transfer within four weeks of
 in-principle acceptance; the frozen audit, feature extraction and outcome-blind dimension

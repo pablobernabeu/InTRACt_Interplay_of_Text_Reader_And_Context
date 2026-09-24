@@ -1,4 +1,4 @@
-run: 2026-08-26 19:43:00
+run: 2026-09-17 15:07:07
 replicates per grid point: 200 (secondary sweeps 120)
 region of practical equivalence: 0.05
 

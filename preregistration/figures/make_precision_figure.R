@@ -1,7 +1,10 @@
-# InTRACt Stage 1: the design-analysis figure.
+# InTRACt Stage 1: the design-analysis figure and its supplementary companion.
 #
 # Run from the preregistration directory, after run_design_analysis.R:
 #   Rscript figures/make_precision_figure.R
+# Reads design_analysis/precision_sweep.csv. Writes figures/fig_precision.{png,pdf}
+# (Figure 3) and figures/fig_precision_supplement.{png,pdf}, the narration and
+# within-child curves.
 #
 # Two panels answering two different questions. The left panel varies the number
 # of distinct texts, which is what the text coefficients are identified from and
@@ -53,10 +56,12 @@ prep <- function(d, xcol, what) {
 BASE_SIZE <- 14
 
 # The package's default qualitative palette put a light orange on white, which
-# check_figure() rejected at 2.25:1 against a threshold of 3. These three are
-# taken from the Okabe-Ito set with the light green swapped for a near-black, so
-# every series clears the contrast floor and the pair a deuteranope finds hardest
-# is separated by lightness as well as by hue.
+# check_figure() rejected at 2.25:1 against a threshold of 3. The four series use
+# Okabe-Ito blue (#0072b2) and vermilion (#d55e00), a near-black (#333333) in
+# place of the set's green, and a dark magenta (#8e2c6b, not an Okabe-Ito colour,
+# and its choice is not recorded) for accumulated reading. Every series clears
+# the contrast floor, and the pair a deuteranope finds hardest is separated by
+# lightness as well as by hue.
 SERIES_COLOURS <- c("Lexical difficulty"     = "#0072b2",
                     "Grammatical load"       = "#d55e00",
                     "Referential continuity" = "#333333",
@@ -88,8 +93,9 @@ curve_panel <- function(d, x_lab, subtitle, log_x = TRUE) {
   p
 }
 
-# `truth` is written as a number, so it is compared as one: a string comparison
-# silently selects nothing and composes an empty panel.
+# run_design_analysis.R writes `truth` as the string "0.10", which read.csv turns
+# into a number. The conversion keeps the comparison numeric if the column ever
+# arrives as text, where "0.10" == 0.10 would select nothing and prep() would stop.
 res$truth <- suppressWarnings(as.numeric(res$truth))
 ALT <- 0.10
 
@@ -99,7 +105,7 @@ dev_read  <- prep(res[res$model == "developmental" & res$sweep == "readings", ],
                   "per_text", "readings sweep")
 
 pa <- curve_panel(dev_texts, "Distinct texts (log scale)",
-                  "Twelve readings of each text")
+                  "Twelve readings per text on average")
 pb <- curve_panel(dev_read, "Readings per text (log scale)",
                   "250 distinct texts throughout")
 
@@ -128,8 +134,8 @@ audit_panel <- function(p, what) {
 audit_panel(pa, "main panel a")
 audit_panel(pb, "main panel b")
 
-# The manuscript embeds the PDF, where the type stays selectable text; the PNG
-# serves the repository preview. cairo_pdf embeds the fonts.
+# The manuscript embeds the PDF, where the type stays selectable text, and
+# cairo_pdf embeds the fonts. Neither document uses the PNG.
 save_plot(file.path(OUT, "fig_precision.png"), fig, width = 11, height = 5, dpi = 300)
 save_plot(file.path(OUT, "fig_precision.pdf"), fig, width = 11, height = 5,
           device = grDevices::cairo_pdf)
@@ -139,7 +145,7 @@ save_plot(file.path(OUT, "fig_precision.pdf"), fig, width = 11, height = 5,
 narr <- prep(res[res$model == "narration", ], "texts", "narration")
 t2   <- prep(res[res$model == "within_child", ], "children", "within child")
 ps_a <- curve_panel(narr, "Distinct texts (log scale)", "Narration model")
-ps_b <- curve_panel(t2, "Children in tier 2 (log scale)", "Within-child model, five readings each")
+ps_b <- curve_panel(t2, "Children in tier 2 (log scale)", "Within-child model, five distinct texts each")
 audit_panel(ps_a, "supplement panel a")
 audit_panel(ps_b, "supplement panel b")
 sup <- arrange_plots(ps_a, ps_b, ncol = 2, nrow = 1, guides = "collect") &

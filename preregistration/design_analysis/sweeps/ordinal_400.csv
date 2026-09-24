@@ -1,4 +1,4 @@
-"model","sweep","param","true","texts","per_text","rated_rate","min_raters","median_qualifying_texts","median_raters_per_text","mean_ci_width","p_meaningful","p_meaningful_lo","p_meaningful_hi","p_equivalent","n_returned","n_bad_se","n_warned","n_sims"
-"reported_difficulty","texts","LexPC",0.1,400,12,0.3,5,114.5,5.96,0.301064841217564,0.0961538461538462,0.041774350788203,0.206096302281933,0,52,8,0,60
-"reported_difficulty","texts","SynPC",0.1,400,12,0.3,5,114.5,5.96,0.305052556928119,0.0769230769230769,0.0303193449742104,0.18173562490879,0,52,8,0,60
-"reported_difficulty","texts","CohPC",-0.1,400,12,0.3,5,114.5,5.96,0.304802954828233,0.0961538461538462,0.041774350788203,0.206096302281933,0,52,8,0,60
+"model","sweep","param","true","texts","per_text","rated_rate","min_raters","median_qualifying_texts","median_raters_per_text","mean_est","sd_est","mean_se","mean_ci_width","p_meaningful","p_meaningful_lo","p_meaningful_hi","p_equivalent","n_returned","n_boundary","n_bad_se","n_skipped","n_warned","n_sims"
+"reported_difficulty","texts","LexPC",0.1,400,12,0.3,5,114.5,5.96,0.0865071266051968,0.0853810413361883,0.0763006654323735,0.299093114846993,0.1,0.0466428342012957,0.201494648226086,0,60,8,0,0,8,60
+"reported_difficulty","texts","SynPC",0.1,400,12,0.3,5,114.5,5.96,0.0917256835730565,0.0846608459659119,0.0773297781120491,0.303127162455209,0.0833333333333333,0.0361204563731266,0.180689421155396,0,60,8,0,0,8,60
+"reported_difficulty","texts","CohPC",-0.1,400,12,0.3,5,114.5,5.96,-0.0826489573416011,0.0784410102419076,0.0774237327267372,0.303495457780054,0.1,0.0466428342012957,0.201494648226086,0,60,8,0,0,8,60

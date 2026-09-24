@@ -9,7 +9,7 @@
   ],
   "factors": [
     { "name": "session_order", "levels": ["s1", "s2", "s3", "s4", "s5"],
-      "contrasts": { "accum": [-0.632, -0.316, 0, 0.316, 0.632] },
+      "contrasts": { "accum": [-1.414214, -0.707107, 0, 0.707107, 1.414214] },
       "vary_within": ["subject"] }
   ],
   "fixed": {

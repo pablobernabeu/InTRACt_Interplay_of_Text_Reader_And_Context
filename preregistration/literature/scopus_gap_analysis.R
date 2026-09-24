@@ -1,8 +1,13 @@
 # InTRACt Stage 1: a dated, reproducible sizing of the literature the study sits in.
 #
 # Run from the preregistration directory (not with --vanilla, since the API key
-# is read from ~/.Renviron):
+# is read from the SCOPUS_API_KEY environment variable, normally set in
+# ~/.Renviron and never in a .Renviron inside this repository):
 #   Rscript --no-save --no-restore literature/scopus_gap_analysis.R
+# Writes literature/scopus_gap_sizes.csv, scopus_topic_trends.csv,
+# scopus_search_record.md, scopus_run_stamp.txt and default-styled PNGs of both
+# figures. Run replot_scopus_figures.R afterwards for the styled PNG and PDF
+# figures the manuscript uses.
 #
 # The Introduction claims that children's reading has been modelled from text
 # properties in the laboratory, and that platform log data have been used to

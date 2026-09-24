@@ -1,5 +1,6 @@
-# Figure 1: the nomological net, emitted from the theory object so that the
-# figure and the hypotheses cannot drift apart.
+# Figure 2 of the manuscript, the nomological net (its files keep the prefix
+# fig1_), emitted from the theory object so that the figure and the hypotheses
+# cannot drift apart.
 #
 # tf_diagram() fixes the content: which constructs exist, which paths connect
 # them and what each path claims. Its default layout, though, labels every one
@@ -118,6 +119,9 @@ stopifnot(all(unwrap(s_nodes$label[order(s_nodes$id)]) ==
 writeLines("content assertion passed: 12 nodes, 18 edges, wording unchanged")
 
 # -- render --------------------------------------------------------------------
+# The layout is computed by the viz.js 1.8.2 engine that DiagrammeR 1.0.12
+# bundles, run through V8 by DiagrammeRsvg. A system Graphviz can lay the same
+# .gv files out differently.
 svg <- DiagrammeRsvg::export_svg(DiagrammeR::grViz(styled))
 writeLines(svg, "figures/fig1_nomological_net.svg")
 raw <- charToRaw(svg)

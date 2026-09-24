@@ -1,11 +1,12 @@
-# Verify that what the manuscript says about the theory object is true of the
-# theory object. Run from the preregistration directory:
+# Print what the theory object yields for the figures the manuscript quotes
+# about it, and fail if a prediction names a proposition or a rival account that
+# does not exist. Run from the preregistration directory:
 #   Rscript theory/check_manuscript_claims.R
 #
-# A Registered Report that describes its own deposited artefacts is making
-# checkable claims, so they are checked rather than trusted. Every number the
-# manuscript quotes about the theory is printed here beside the number the
-# object actually yields.
+# This script never reads the manuscript, so its printed counts are compared
+# with the text by eye. check_reported_numbers.R compares the aggregate score
+# and the construct, proposition, auxiliary-assumption and rival counts with
+# preregistration.qmd, and fails on a mismatch.
 
 library(theoryforge)
 

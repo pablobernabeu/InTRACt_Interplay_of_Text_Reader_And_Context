@@ -20,11 +20,22 @@
 # Tier 1 fits no child intercept. A child contributing a single session offers no
 # way to separate child variance from residual variance, so the analysis formula
 # omits that term while the simulation still generates the variance, which then
-# reaches the model as inflated residual, exactly as it will in the real fit.
+# reaches the model as inflated residual. The real fit does the same whenever the
+# registered estimability rule drops the Account intercept (fewer than ten per
+# cent of tier-1 readings from accounts with two or more readings). Where the
+# real fit includes that intercept, these requirements are an upper bound.
+#
+# The deposited specifications are not simulated exactly as written. Every
+# coefficient is set to 0.10 in absolute size, keeping the specification's sign
+# (a zero stays zero, and the null sweep sets all of them to zero), the tier-2
+# accumulated-reading coefficient is set to -0.10, and the units are replaced at
+# every grid point.
 #
 # Each sweep is written to its own file as soon as it finishes and is skipped on a
 # later run if that file is already there, so a long run can be resumed rather than
-# restarted. Delete design_analysis/sweeps/ to force everything to run again.
+# restarted. The cache is keyed on the file name alone. A changed specification,
+# replicate count, grid or region is not detected, so delete the matching file in
+# design_analysis/sweeps/, or the whole directory, after any such change.
 
 library(pilotr)
 
@@ -55,7 +66,8 @@ units_by_readings <- function(per_text, texts)
   lapply(per_text, function(m) list(subject = list(n = texts * m),
                                     item = list(n = texts, per_subject = 1)))
 
-# Set every coefficient to a value, keeping the sign the specification carries.
+# Each sweep runs every coefficient at one effect size, so the specification's
+# signs are kept and its magnitudes replaced.
 at_effect <- function(spec, value, keep_sign = TRUE) {
   co <- spec$fixed$coefficients
   for (nm in names(co)) co[[nm]] <- if (keep_sign) sign(co[[nm]]) * value else value
@@ -63,9 +75,11 @@ at_effect <- function(spec, value, keep_sign = TRUE) {
   spec
 }
 
-# A worker cluster can fail to come up on Windows, and losing an hour of fitting to
-# that is not acceptable, so the first grid point is attempted in parallel and the
-# whole sweep falls back to serial if the cluster refuses.
+# A PSOCK cluster can fail to start on Windows, and losing an hour of fitting to
+# that is not acceptable. One probe cluster is therefore started and stopped
+# before the first sweep, and if the probe fails every sweep runs serially. After
+# a successful probe, pilotr starts a fresh cluster at each grid point, and a
+# failure there is not caught. The spec argument is unused.
 safe_workers <- local({
   checked <- NULL
   function(spec) {
@@ -85,7 +99,8 @@ safe_workers <- local({
 # by repeating each value across its own block. Recycling it across the whole
 # frame would silently mislabel every row.
 run_sweep <- function(key, spec, path, values, focal, formula, label,
-                      axis_name, axis_values, constant = list(), n_sims = N_SIMS) {
+                      axis_name, axis_values, constant = list(), n_sims = N_SIMS,
+                      prep = NULL) {
   cached <- file.path(CACHE, paste0(key, ".csv"))
   if (file.exists(cached)) {
     msg("cached: ", key)
@@ -95,7 +110,7 @@ run_sweep <- function(key, spec, path, values, focal, formula, label,
       " (", length(values), " grid points, ", n_sims, " replicates each)")
   w <- safe_workers(spec)
   res <- sweep_spec(spec, path, values, precision_design,
-                    focal = focal, formula = formula, rope = ROPE,
+                    focal = focal, formula = formula, prep = prep, rope = ROPE,
                     n_sims = n_sims, workers = w)
   per_point <- nrow(res) / length(values)
   stopifnot(per_point == as.integer(per_point))
@@ -108,6 +123,10 @@ run_sweep <- function(key, spec, path, values, focal, formula, label,
   res
 }
 
+# Grid values. M_FIXED is the mean number of readings per text: each simulated
+# reader draws one text at random, so individual texts receive more or fewer.
+# The source of these values, and of the fixed 120 replicates the secondary
+# sweeps below use, is not recorded. TODO: justify.
 TEXTS    <- c(50, 100, 200, 400, 800, 1600)
 PER_TEXT <- c(2, 5, 12, 30, 60)
 M_FIXED  <- 12
@@ -124,6 +143,11 @@ dev_spec <- load_spec(file.path(OUT, "tier1_developmental.json"))
 # declared determinately outside it, so the meaningful-decision sweep is run at
 # twice the region's half-width, the smallest size the protocol treats as worth
 # reporting.
+#
+# pilotr derives the replicate seeds from the specification's own seed (20260826
+# here), so every grid point, and the alternative, null and readings sweeps,
+# reuse the same replicate seeds. The simulated data still differ between grid
+# points because the design size differs.
 dev_alt  <- at_effect(dev_spec, 0.10)
 dev_null <- at_effect(dev_spec, 0.00, keep_sign = FALSE)
 
@@ -136,6 +160,8 @@ all_rows$dev_texts <- run_sweep(
   F_DEV, "texts", "texts", TEXTS,
   list(per_text = M_FIXED, truth = "0.10", model = "developmental"))
 
+# The readings, null and tier-2 sweeps run a fixed 120 replicates and ignore
+# INTRACT_N_SIMS.
 all_rows$dev_readings <- run_sweep(
   "dev_readings", dev_alt, "units", units_by_readings(PER_TEXT, K_FIXED),
   focal_dev_alt, F_DEV, "readings", "per_text", PER_TEXT,
@@ -161,15 +187,59 @@ all_rows$narr_texts <- run_sweep(
 t2 <- load_spec(file.path(OUT, "tier2_within_child.json"))
 t2$fixed$coefficients$accum <- -0.10
 
+# The protocol registers each tier-2 child as reading five distinct texts, one per
+# session, with accumulated reading entered per within-child standard deviation.
+# pilotr crosses a within-subject factor with every item a subject reads, so the
+# simulation generates each of a child's five texts at all five session positions
+# (25 rows). The preparation step draws a random reading order for each child's
+# five texts and keeps each text's reading at its drawn position only, which
+# leaves five rows per child on five distinct texts. The order has to be drawn
+# here: pilotr returns a child's sampled texts sorted by index, so keeping the
+# j-th text at the j-th position would tie session position to text identity,
+# and the text intercepts would then absorb the contrast. The draw uses a seed
+# computed from the simulated design alone, never from the response, and
+# restores the caller's random-number state. The contrast in the specification
+# has a population standard deviation of exactly 1 over the five positions, so
+# the coefficient is on the registered per-SD unit. The checks below guard the
+# row count, the distinct texts and the independence of position from text.
+stopifnot(abs(sqrt(mean(unlist(t2$factors[[1]]$contrasts$accum)^2)) - 1) < 1e-3)
+prep_t2 <- local({
+  sp <- t2
+  function(d) {
+    d <- pilotr::model_data(sp, d)
+    levels_pos <- sp$factors[[1]]$levels
+    n_pos <- length(levels_pos)
+    had_seed <- exists(".Random.seed", envir = globalenv(), inherits = FALSE)
+    if (had_seed) old_seed <- get(".Random.seed", envir = globalenv())
+    on.exit(if (had_seed) assign(".Random.seed", old_seed, envir = globalenv())
+            else rm(".Random.seed", envir = globalenv()))
+    set.seed(sum(as.numeric(d$item) * seq_len(nrow(d))) %% .Machine$integer.max)
+    slot <- stats::ave(d$item, d$subject, FUN = function(v) match(v, unique(v)))
+    subjects <- sort(unique(d$subject))
+    order_of <- t(vapply(subjects, function(s) sample.int(n_pos), integer(n_pos)))
+    drawn <- order_of[cbind(match(d$subject, subjects), slot)]
+    d[drawn == match(d$session_order, levels_pos), , drop = FALSE]
+  }
+})
+local({
+  probe <- t2; probe$units$subject$n <- 400
+  d <- prep_t2(simulate_design(probe))
+  per_child <- table(d$subject)
+  stopifnot(all(per_child == t2$units$item$per_subject),
+            all(tapply(d$item, d$subject, function(v) !anyDuplicated(v))),
+            abs(stats::cor(d$item, d$accum)) < 0.08)
+})
+
 all_rows$t2 <- run_sweep(
   "t2_children", t2, "units$subject$n", CHILDREN, c(accum = -0.10), F_T2,
   "children", "children", CHILDREN,
-  list(texts = 250, per_text = 5, truth = "0.10", model = "within_child"),
-  n_sims = 120)
+  list(texts = t2$units$item$n, per_child = t2$units$item$per_subject,
+       truth = "0.10", model = "within_child"),
+  n_sims = 120, prep = prep_t2)
 
 # ---- Bind, save, and solve each curve for the target -------------------------
 
-KEEP <- c("model", "sweep", "param", "true", "texts", "per_text", "children",
+KEEP <- c("model", "sweep", "param", "true", "texts", "per_text", "per_child", "children",
           "mean_ci_width", "p_meaningful", "p_meaningful_lo", "p_meaningful_hi",
           "p_equivalent", "p_equivalent_lo", "p_equivalent_hi",
           "n_returned", "n_converged", "n_singular", "n_sims", "truth")

@@ -1,8 +1,11 @@
 # Build, check and score the InTRACt theory object.
 #
 # Run from the preregistration directory:  Rscript theory/build_theory.R
-# Writes theory/tf_check.txt, theory/tf_severity.csv, theory/tf_redundancy.csv,
-# theory/tf_implications.txt and theory/intract_nomological_net.svg.
+# Writes theory/tf_check.txt (which includes the testable implications),
+# theory/tf_severity.csv, theory/tf_redundancy.csv and
+# theory/intract_nomological_net.svg, theoryforge's default rendering of the
+# net. The manuscript does not use that SVG, and its Figure 2 is drawn by
+# theory/make_figure1.R.
 
 library(theoryforge)
 

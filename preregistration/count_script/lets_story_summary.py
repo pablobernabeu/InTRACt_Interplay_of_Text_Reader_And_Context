@@ -72,6 +72,46 @@ Standard library only, so there is nothing to install beyond Python 3.8 or later
 the charts are plain SVG inside one HTML file that opens in any browser offline.
 No preprocessing needed: files can be exactly as exported, comma or semicolon
 separated, with any column order and any extra columns present.
+
+WHAT CHANGED IN THIS VERSION (2026-09-17, after version 2026-08-05)
+Version 2026-08-05 was correct on a well formed export. Testing it against malformed
+inputs found five ways it could report a confident figure that was wrong, and each is
+now either impossible or reported. Nothing about what the script counts has changed.
+
+  1. A file that does not begin with a header row now stops the run. Before, its
+     first data row was read as the column names and written into the summary data
+     file, which would have put a reading time, an account identifier and a
+     timestamp into the deliverable, and its remaining rows were counted as sessions
+     with no identifiers. Every part of a split export needs the header.
+  2. Account and story identifiers written in scientific notation, which is how a
+     spreadsheet writes a long integer, are now counted and reported, and the
+     account figures are marked as unreliable when any are found. Before, accounts
+     whose identifiers agreed to six significant digits were silently merged: in a
+     test with 300,000 accounts written that way, 41,303 disappeared.
+  3. A file that lacks the reading-time column is now recorded as such, and its rows
+     are counted in the reading-time verdict as sessions the check could not cover.
+     Before, the verdict read "All n sessions carry a usable number" with n counting
+     only the files that had the column.
+  4. Lines that the CSV parser swallowed, which is what an unclosed quote does, now
+     stop the run before anything is written. The field-size limit is back to a sane
+     1 MB, every physical line is accounted for against the rows read, and an
+     implausibly long field is reported with the lines it consumed. Before, one
+     unclosed quote turned 4,233 rows into 199, with no warning and a skipped count
+     of 1, and the summary was written as though it described the export.
+  5. An empty story_id is now counted as an empty story_id. Before, the story title
+     stood in for it, and since the title has two values in this export, every such
+     row was filed under one of two pseudo-stories and the count of rows with no
+     story identifier stayed at zero.
+
+Smaller corrections in the same pass: missing-value tokens are treated alike
+wherever they appear (NA, NULL, N/A, NaN, None and a lone dash); a semicolon-separated
+export written with decimal commas is read as numbers rather than as text; the analysed
+age bands are matched allowing for spacing and capitalisation; folder input no longer
+reads a stray .txt file as sessions and is case-insensitive; a file supplied twice under
+different names is detected by checksum and read once; the encoding fallback and the
+date formats found are recorded per file; --manifest-from writes beside its input
+instead of overwriting the manifest it is meant to be compared with; and --help and
+--version work.
 """
 import codecs
 import csv
@@ -88,7 +128,7 @@ from collections import Counter
 from datetime import date, datetime, timezone
 from html import escape
 
-SCRIPT_VERSION = "2026-08-05"
+SCRIPT_VERSION = "2026-09-17"
 
 # The two outputs, named for their roles. The summary data file holds every figure
 # as data; the manifest is the readable page drawn from it. Both go to Oxford.
@@ -162,7 +202,25 @@ TIME_HEAVY_SLOTS = 10_000
 # The sampling plan concerns the sample actually analysed.
 ELIGIBLE_AGE_BANDS = ("Age 7-8", "Age 9+")
 
+
+def band_key(v):
+    """A form of an age label that ignores case, spacing and dashes.
+
+    "Age 7-8", "age 7 - 8" and "AGE 7–8" are one band. Version 2026-08-05 compared
+    the labels exactly, so any variant dropped out of Part 2 without a word.
+    """
+    v = v.replace("–", "-").replace("—", "-")
+    return re.sub(r"[\s_]+", "", v).strip().lower()
+
+
+ELIGIBLE_KEYS = frozenset(band_key(b) for b in ELIGIBLE_AGE_BANDS)
+
 MISSING = "(missing)"
+
+# One list of the tokens that mean "no value", used wherever a cell is tested, so that
+# a cell reading NA counts as empty in the missing-value counts and as empty, rather
+# than as text, in the reading-time check.
+MISSING_TOKENS = frozenset(("", "NA", "N/A", "NULL", "NONE", "NAN", "-", "--"))
 
 # Section and metric names shared by the two outputs. The summary data file writes
 # them and the manifest looks them up, so they are named once here rather than typed
@@ -170,9 +228,23 @@ MISSING = "(missing)"
 SCOPE_LABEL = " and ".join(ELIGIBLE_AGE_BANDS)
 TIME_SEC = "reading time, checked only for whether it can be used"
 TIME_USABLE_METRIC = "sessions with a usable number"
+TIME_UNCOVERED_METRIC = "sessions the check could not cover, the column being absent"
 SPAN_SEC = "days between an account's first and last session"
 
-csv.field_size_limit(min(2**31 - 1, sys.maxsize))
+# One field of an export like this is a title or a category, never a megabyte. The
+# limit is left at 1 MB, well above anything legitimate, so that a file whose quoting
+# has collapsed raises an error instead of quietly swallowing the rest of the file into
+# one field. Version 2026-08-05 raised the limit to 2 GB, which removed that safeguard.
+csv.field_size_limit(1024 * 1024)
+
+# A field longer than this is not a story title, so the row is set aside and counted.
+# An unclosed quote is the usual cause: the parser reads on to the next quote
+# character, taking whole lines with it.
+FIELD_ALERT = 4096
+
+# Identifiers written by a spreadsheet as 1.23457E+18 keep six significant digits, so
+# distinct accounts collide. Such values are counted, reported, and flagged.
+SCI_NOTATION = re.compile(r"^[+-]?[0-9](?:\.[0-9]+)?[EeDd][+-]?[0-9]+$")
 
 
 # ===================================================================== charting
@@ -576,8 +648,8 @@ def page(title, subtitle, record_rows, parts, lead=""):
 # ===================================================================== counting
 
 def blank(v):
-    """Is this cell empty? Whitespace, NA and NULL all count as empty."""
-    return v is None or v.strip() == "" or v.strip().upper() in ("NA", "NULL")
+    """Is this cell empty? Whitespace and the tokens in MISSING_TOKENS count as empty."""
+    return v is None or v.strip().upper() in MISSING_TOKENS
 
 
 def clean(v):
@@ -602,6 +674,15 @@ def norm_flag(v):
     return "1" if lv in _TRUE else "0" if lv in _FALSE else v
 
 
+def decomma(v):
+    """'1,5' -> '1.5' for a file written with decimal commas; anything else unchanged.
+
+    Only called for files where sniff() found that pattern, so a thousands separator
+    in a comma-separated file is never mistaken for a decimal point.
+    """
+    return v.replace(",", ".", 1) if v.count(",") == 1 else v
+
+
 def canon_num(v):
     """'8.0' -> '8', so page counts group correctly whatever wrote the file."""
     if v == MISSING:
@@ -623,8 +704,8 @@ def time_class(raw):
     shared value spotted without the number itself being kept: '1800', '1800.0' and
     '1.8e3' fingerprint alike, and no fingerprint is ever printed or charted.
     """
-    if raw is None or not raw.strip():
-        return "empty", None
+    if raw is None or raw.strip().upper() in MISSING_TOKENS:
+        return "empty", None            # NA and NULL are empty, not text
     v = raw.strip()
     try:
         x = float(v)
@@ -657,7 +738,10 @@ def pages_differ(mx, tp):
 
 
 def parse_when(raw):
-    """Return (iso_day, hour_or_None, weekday) or (None, None, None).
+    """Return (iso_day, hour_or_None, weekday, form) or (None, None, None, None).
+
+    `form` names the layout the value was read in, so the file record can show when
+    one export mixes as-logged local timestamps with UTC epochs.
 
     Accepted: ISO-style dates with '-' or '/' and an optional time after a space or
     'T'; compact all-digit YYYYMMDD and YYYYMMDDHHMMSS; and Unix epochs in seconds
@@ -675,23 +759,25 @@ def parse_when(raw):
                 if hh.isdigit():         # non-throwing: a malformed time must not
                     h = int(hh)          # discard the already-parsed day
                     hour = h if h <= 23 else None
-            return d.isoformat(), hour, d.weekday()
+            return d.isoformat(), hour, d.weekday(), "ISO date, as logged"
         if v.isdigit():
             if len(v) == 8:                     # YYYYMMDD
                 d = date(int(v[0:4]), int(v[4:6]), int(v[6:8]))
-                return d.isoformat(), None, d.weekday()
+                return d.isoformat(), None, d.weekday(), "compact YYYYMMDD"
             if len(v) == 14:                    # YYYYMMDDHHMMSS
                 d = date(int(v[0:4]), int(v[4:6]), int(v[6:8]))
                 h = int(v[8:10])
-                return d.isoformat(), (h if h <= 23 else None), d.weekday()
+                return (d.isoformat(), (h if h <= 23 else None), d.weekday(),
+                        "compact YYYYMMDDHHMMSS")
             if len(v) in (10, 13):              # epoch seconds / milliseconds, UTC
                 ts = int(v) / (1000 if len(v) == 13 else 1)
                 if 946684800 <= ts <= 4102444800:       # years 2000 to 2100
                     dt = datetime.fromtimestamp(ts, tz=timezone.utc)
-                    return dt.date().isoformat(), dt.hour, dt.date().weekday()
+                    return (dt.date().isoformat(), dt.hour, dt.date().weekday(),
+                            "Unix epoch, read as UTC")
     except ValueError:
         pass
-    return None, None, None
+    return None, None, None, None
 
 
 def sha256_of(path):
@@ -944,6 +1030,39 @@ class Summary:
 
 _SEP_WORDS = {",": "comma", ";": "semicolon", "\t": "tab", "|": "pipe"}
 _DATA_EXTS = (".csv", ".tsv", ".txt")
+# What a folder is searched for. A .txt file in an export folder is far more likely to
+# be a readme than an export, so folder mode leaves it alone; a .txt file named on the
+# command line is still read. Version 2026-08-05 read every .txt in the folder.
+_FOLDER_EXTS = (".csv", ".tsv", ".csv.gz", ".tsv.gz", ".zip")
+
+# Notes about files skipped or set aside, so they reach the summary data file and not
+# only the console.
+NOTES = []
+
+
+def note(msg):
+    NOTES.append(msg)
+    print("Note: " + msg)
+
+
+def _folder_files(a):
+    """Every data file directly inside a folder, whatever the case of its extension.
+
+    The script's own two outputs are skipped by name. Otherwise a second run on the
+    same folder would read the summary data file it wrote the first time as though it
+    were part of the export.
+    """
+    ours = {OUT_CSV.lower(), OUT_HTML.lower()}
+    found = []
+    for entry in sorted(os.listdir(a)):
+        low = entry.lower()
+        if low in ours:
+            continue
+        if any(low.endswith(ext) for ext in _FOLDER_EXTS):
+            p = os.path.join(a, entry)
+            if os.path.isfile(p):
+                found.append(p)
+    return found
 
 
 def resolve_inputs(args):
@@ -951,9 +1070,7 @@ def resolve_inputs(args):
     paths = []
     for a in args:
         if os.path.isdir(a):
-            found = []
-            for ext in _DATA_EXTS + (".csv.gz", ".tsv.gz", ".txt.gz", ".zip"):
-                found += glob.glob(os.path.join(a, "*" + ext))
+            found = _folder_files(a)
             if not found:
                 sys.exit(f"No CSV files found inside the folder {a}")
             # a compressed copy sitting next to its uncompressed twin is the same
@@ -963,13 +1080,15 @@ def resolve_inputs(args):
             for f in sorted(found):
                 if (f.lower().endswith(".gz")
                         and os.path.normcase(os.path.abspath(f[:-3])) in plain):
-                    print(f"Note: {os.path.basename(f)} skipped - "
-                          f"{os.path.basename(f[:-3])} in the same folder appears "
-                          "to be the same data.")
+                    note(f"{os.path.basename(f)} skipped - "
+                         f"{os.path.basename(f[:-3])} in the same folder appears "
+                         "to be the same data.")
                     continue
                 paths.append(f)
         elif any(ch in a for ch in "*?"):
-            found = sorted(glob.glob(a))
+            found = sorted(f for f in glob.glob(a)
+                           if os.path.basename(f).lower()
+                           not in (OUT_CSV.lower(), OUT_HTML.lower()))
             if not found:
                 sys.exit(f"Nothing matched the pattern {a}")
             paths += found
@@ -1003,6 +1122,12 @@ def build_sources(paths):
             chk_cache[p] = sha256_of(p)
         return chk_cache[p]
 
+    # The same data supplied twice under different names, or a copy beside its
+    # compressed twin outside folder mode, would double every session count. A file is
+    # therefore identified by its checksum rather than by its name, and a repeat is
+    # skipped and recorded. Version 2026-08-05 compared names in folder mode only.
+    seen_checksums = {}
+
     for p in paths:
         lp = p.lower()
         if lp.endswith(".zip"):
@@ -1018,20 +1143,29 @@ def build_sources(paths):
                            and not i.filename.startswith("__MACOSX")
                            and i.filename.lower().endswith(_DATA_EXTS)]
             if not members:
-                print(f"Note: no CSV found inside {p}, so it was skipped.")
+                note(f"no CSV found inside {os.path.basename(p)}, so it was skipped.")
                 continue
             chk = checksum_for(p)
+            if chk in seen_checksums:
+                note(f"{os.path.basename(p)} skipped - identical to "
+                     f"{seen_checksums[chk]} (same checksum).")
+                continue
+            seen_checksums[chk] = os.path.basename(p)
             for i in members:
                 srcs.append({"kind": "zip", "path": p, "member": i.filename,
                              "label": os.path.basename(p) + " :: " + i.filename,
                              "size": i.file_size,
                              "checksum": chk + " (the whole archive)"})
-        elif lp.endswith(".gz"):
-            srcs.append({"kind": "gz", "path": p, "label": os.path.basename(p),
-                         "size": os.path.getsize(p), "checksum": checksum_for(p)})
         else:
-            srcs.append({"kind": "plain", "path": p, "label": os.path.basename(p),
-                         "size": os.path.getsize(p), "checksum": checksum_for(p)})
+            chk = checksum_for(p)
+            if chk in seen_checksums:
+                note(f"{os.path.basename(p)} skipped - identical to "
+                     f"{seen_checksums[chk]} (same checksum).")
+                continue
+            seen_checksums[chk] = os.path.basename(p)
+            srcs.append({"kind": "gz" if lp.endswith(".gz") else "plain", "path": p,
+                         "label": os.path.basename(p),
+                         "size": os.path.getsize(p), "checksum": chk})
     return srcs
 
 
@@ -1070,8 +1204,9 @@ def probe_bytes(src, n=PROBE_N):
 
 
 def sniff(src):
-    """Record the encoding and delimiter, so the file record can state both."""
+    """Record the encoding, the delimiter and the decimal mark, for the file record."""
     buf = probe_bytes(src)
+    src["enc_note"] = ""
     if buf[:2] in (b"\xff\xfe", b"\xfe\xff"):
         src["enc"] = "utf-16"        # BOM present; the codec reads and strips it
     else:
@@ -1084,9 +1219,25 @@ def sniff(src):
             if len(buf) == PROBE_N and e.start >= len(buf) - 3:
                 src["enc"] = "utf-8-sig"
             else:
-                src["enc"] = "latin-1"   # decodes any byte, so never fails
+                # latin-1 decodes any byte, so it never fails and never counts a
+                # replacement. That silence is what the note is for: one stray byte
+                # can send a UTF-8 file down this path and garble every accented
+                # label in it, and the file record has to say so.
+                src["enc"] = "latin-1"
+                src["enc_note"] = ("UTF-8 decoding failed at byte "
+                                   f"{e.start:,}, so the file was read as latin-1; "
+                                   "accented labels may be garbled")
     first = buf.decode(src["enc"], errors="replace").split("\n", 1)[0]
     src["sep"] = max([",", ";", "\t", "|"], key=first.count)
+    # A semicolon-separated export often carries decimal commas. Unnoticed, every
+    # reading time in it reads as text and every page count as a violation.
+    src["decimal_comma"] = False
+    if src["sep"] == ";":
+        text = buf.decode(src["enc"], errors="replace")
+        fields = [f.strip() for line in text.split("\n")[1:200]
+                  for f in line.split(";")]
+        if sum(1 for f in fields if re.fullmatch(r"[0-9]+,[0-9]+", f)) >= 3:
+            src["decimal_comma"] = True
 
 
 def open_text(src):
@@ -1113,30 +1264,61 @@ def open_text(src):
 def process_source(src, allr, elig, G):
     """Read one CSV a row at a time, adding each row to the counters.
 
-    The file is streamed rather than loaded, so memory does not grow with the size
-    of the export. `allr` counts every row, `elig` only the age bands the study
-    analyses, and `G` holds the figures that describe the run as a whole rather than
-    either scope, such as the rows that had to be set aside.
+    The file is streamed rather than loaded, so no copy of the export is held. Memory
+    still grows with what has to be remembered to count distinct things: a digest of
+    each distinct row, and one entry per account, text and account-text pair. It
+    therefore grows with the number of accounts and texts and not with rows alone,
+    which is what the instruction sheet says of the run's footprint. `allr` counts
+    every row, `elig` only the age bands the study analyses, and `G` holds the figures
+    that describe the run as a whole rather than either scope, such as the rows that
+    had to be set aside.
     """
     src.update({"rows": 0, "columns": [], "absent": [],
-                "date_min": None, "date_max": None})
+                "date_min": None, "date_max": None, "lines": 0,
+                "date_forms": Counter()})
     _replaced["n"] = 0
     fh = open_text(src)
     try:
-        reader = csv.reader(fh, delimiter=src["sep"], quotechar='"')
+        # Every physical line is counted as the parser takes it, so the lines a
+        # collapsed quote swallowed can be accounted for at the end.
+        def counted_lines(handle):
+            for line in handle:
+                src["lines"] += 1
+                yield line
+
+        reader = csv.reader(counted_lines(fh), delimiter=src["sep"], quotechar='"')
         try:
             raw_header = next(reader)
         except StopIteration:
-            print(f"Note: {src['label']} is empty.")
+            note(f"{src['label']} is empty.")
             return
         header = [h.lstrip("\ufeff").strip() for h in raw_header]
         src["columns"] = header
         lower = [h.lower() for h in header]
+        # A file whose first line is data, which is what a split export looks like
+        # when only its first part carries the header, must not be read: version
+        # 2026-08-05 took that line for the column names and wrote it, reading time
+        # and account identifier included, into the deliverable. Three of the
+        # expected names are enough to recognise a header, so a renamed or reordered
+        # column does not trip this.
+        matched = sum(1 for k in KEEP if k.lower() in lower)
+        if matched < 3 and TIME_COL not in lower:
+            sys.exit(
+                f"{src['label']} does not begin with a header row: none of the "
+                "expected column names was found in its first line, which has "
+                f"{len(header)} fields.\n"
+                "Every file needs the header, including each part of a split "
+                "export. Please re-export with the header row in every part, or "
+                "add it, and run the script again.\n"
+                "Nothing was written.")
         idx = {n: (lower.index(n.lower()) if n.lower() in lower else None)
                for n in KEEP}
         src["absent"] = [k for k in KEEP if idx[k] is None]
         if src["absent"]:
-            print(f"Note: {src['label']} lacks: " + ", ".join(src["absent"]))
+            note(f"{src['label']} lacks: " + ", ".join(src["absent"]))
+        if TIME_COL not in lower:
+            note(f"{src['label']} has no {TIME_COL} column, so its rows cannot enter "
+                 "the reading-time check.")
 
         # Positions of the KEEP columns, so the loop below indexes each row directly
         # instead of resolving names 30 times per row. Slot numbers follow KEEP order.
@@ -1159,7 +1341,8 @@ def process_source(src, allr, elig, G):
         n_header = len(header)
         blake2b, intern = hashlib.blake2b, sys.intern
         digests = G["row_digests"]
-        eligible = ELIGIBLE_AGE_BANDS
+        eligible = ELIGIBLE_KEYS
+        dec = src["decimal_comma"]
         tcls, tdist, theavy = (G["time_classes"], G["time_distinct"],
                                G["time_heavy"])
         usable = [i for i in keep_pos if i is not None]
@@ -1193,21 +1376,47 @@ def process_source(src, allr, elig, G):
         def cpages(v):
             r = pcache.get(v, _S)
             if r is _S:
-                r = pcache[v] = intern(canon_num(fill(v)))
+                f = fill(v)
+                r = pcache[v] = intern(canon_num(decomma(f) if dec else f))
             return r
 
         def cgrain(mx, tp):
             key = (mx, tp)
             r = gcache.get(key, _S)
             if r is _S:
-                r = gcache[key] = (not blank(mx) and not blank(tp)
-                                   and pages_differ(mx, tp))
+                if blank(mx) or blank(tp):
+                    r = gcache[key] = False
+                else:
+                    a, b = (decomma(mx), decomma(tp)) if dec else (mx, tp)
+                    r = gcache[key] = pages_differ(a, b)
             return r
 
+        prev_lines = src["lines"]
         for row in reader:
+            # How many physical lines this row consumed. One is the ordinary case; a
+            # row spanning more has line breaks inside quoted fields, which is
+            # legitimate, or it has swallowed the lines that follow it, which is what
+            # an unclosed quote does. Counting the difference is exact and costs
+            # nothing per field, and it is what makes the line accounting in the file
+            # record add up.
+            extra_lines = src["lines"] - prev_lines - 1
+            prev_lines = src["lines"]
+            if extra_lines < 0:
+                extra_lines = 0
             if not row or not any(row):
                 G["empty_rows"] += 1
                 continue
+            # A field of thousands of characters is not a title or a category: it is
+            # what the parser produces when a quote opens and never closes. The row is
+            # set aside and the lines it consumed are counted, and main() stops the
+            # run rather than writing counts that describe part of the export.
+            if max(map(len, row)) > FIELD_ALERT:
+                G["oversized_field_rows"] += 1
+                G["swallowed_lines"] += extra_lines
+                G["oversized_files"].add(src["label"])
+                continue
+            if extra_lines:
+                G["embedded_newlines"] += extra_lines
             # concatenated exports sometimes carry the header again mid-file; the
             # cheap first-cell test keeps the full comparison off the common path
             if row[0].strip().lower() == h0 and \
@@ -1234,15 +1443,33 @@ def process_source(src, allr, elig, G):
             dt_blank = blank(raw_dt)
             day = hour = weekday = None
             if not dt_blank:
-                day, hour, weekday = parse_when(raw_dt)
+                day, hour, weekday, form = parse_when(raw_dt)
+                if form:
+                    src["date_forms"][form] += 1
 
             # A shift that gains one field and loses another keeps the field count
-            # intact, so check two anchors whose shapes a shift destroys. Both must
-            # fail, and neither counts as failed when simply empty, so an ordinary
-            # bad date does not discard a row.
+            # intact, so the row is tested against four anchors whose shapes a shift
+            # destroys: the date, the speech flag, the two page counts and the
+            # language. An empty cell never counts as a failure, so an ordinary bad
+            # date does not discard a row, and two failures are needed. Version
+            # 2026-08-05 used the date and the speech flag alone, which a shift
+            # inside this export's column order can leave intact.
             if day is None and not dt_blank:
+                fails = 1
                 _sp = vals[S_SPEECH]
                 if not blank(_sp) and norm_flag(clean(_sp)) not in ("0", "1"):
+                    fails += 1
+                for _pg in (vals[S_TP], vals[S_MX]):
+                    if not blank(_pg):
+                        _p = decomma(_pg.strip()) if dec else _pg.strip()
+                        try:
+                            float(_p)
+                        except ValueError:
+                            fails += 1
+                _lg = vals[S_LANG]
+                if not blank(_lg) and re.fullmatch(r"[0-9.,+-]+", _lg.strip()):
+                    fails += 1
+                if fails >= 2:
                     G["unshaped_rows"] += 1
                     continue
 
@@ -1263,9 +1490,25 @@ def process_source(src, allr, elig, G):
             age = cfill(vals[S_AGE])
             lvl = cfill(vals[S_LVL])
             usr = intern(fill(vals[S_USR]))
-            sid = vals[S_SID]
-            sid = fill(vals[S_TITLE]) if blank(sid) else clean(sid)
-            sid = intern(sid)
+            # The story title is no longer allowed to stand in for an empty story_id.
+            # It has two values in this export, so the substitution filed every such
+            # row under one of two pseudo-stories and left the count of rows with no
+            # story identifier at zero. An empty story_id is now just that, counted
+            # by tally() and kept out of the text tallies.
+            raw_sid = vals[S_SID]
+            if blank(raw_sid):
+                sid = MISSING
+                if not blank(vals[S_TITLE]):
+                    G["story_id_blank_with_title"] += 1
+            else:
+                sid = intern(clean(raw_sid))
+            # Identifiers a spreadsheet has turned into 1.23457E+18 keep six
+            # significant digits, so different accounts collide. Counted here and
+            # reported; the account figures are flagged when any are found.
+            if usr != MISSING and SCI_NOTATION.match(usr):
+                G["sci_user_rows"] += 1
+            if sid != MISSING and SCI_NOTATION.match(sid):
+                G["sci_story_rows"] += 1
             speech_flag = cflag(vals[S_SPEECH])
             custom_flag = cflag(vals[S_CUST])
 
@@ -1293,14 +1536,26 @@ def process_source(src, allr, elig, G):
             args = (lang, age, lvl, usr, sid, speech_flag, custom_flag, day,
                     blanks, extra)
             tally(allr, *args)
-            if age in eligible:
+            # Matched on the spacing- and case-insensitive form, so a variant label
+            # such as "age 7 - 8" still reaches Part 2, and the raw labels that
+            # matched are recorded so the mapping is visible.
+            if band_key(age) in eligible:
                 tally(elig, *args)
+                G["eligible_labels"][age] += 1
 
             # The outcome column, deliberately handled outside args: it is reduced
             # to a validity label here and never passed to tally(), so it cannot
             # reach any breakdown. See the TIME_COL note at the top of the file.
-            if time_pos is not None:
-                label, fp = time_class(row[time_pos])
+            if time_pos is None:
+                # A file without the column cannot contribute to the check, and the
+                # verdict must say so rather than reporting every row it did see as
+                # usable, which is what version 2026-08-05 did.
+                G["time_missing_rows"] += 1
+            else:
+                raw_time = row[time_pos]
+                if dec and raw_time:
+                    raw_time = decomma(raw_time)
+                label, fp = time_class(raw_time)
                 tcls[label] += 1
                 if fp is not None:
                     if tdist is not None:
@@ -1438,6 +1693,10 @@ def build_manifest(rows):
             ("In total",
              [("sessions with a usable number",
                f"{S.num(TIME_SEC, TIME_USABLE_METRIC, '', 'in total'):,}", "sum"),
+              (TIME_UNCOVERED_METRIC,
+               f"{S.num(TIME_SEC, TIME_UNCOVERED_METRIC, '', 'in total'):,}",
+               "bad" if S.num(TIME_SEC, TIME_UNCOVERED_METRIC, '', 'in total')
+               else "sum"),
               ("different values in the column",
                S.text(TIME_SEC, "different values in the column", "", "in total"),
                "sum"),
@@ -1456,11 +1715,24 @@ def build_manifest(rows):
         usable = S.num(TIME_SEC, TIME_USABLE_METRIC, "", "in total")
         unusable = sum(S.num(TIME_SEC, "sessions", lbl, "cannot be used")
                        for lbl in TIME_UNUSABLE)
+        # Rows in a file that does not carry the column are part of the export and
+        # are named here, so that a verdict can never describe fewer sessions than
+        # the export holds without saying so.
+        uncovered = S.num(TIME_SEC, TIME_UNCOVERED_METRIC, "", "in total")
+        tail = (f" A further {uncovered:,} sessions are in files that do not carry "
+                "the column, so the check does not cover them."
+                if uncovered else "")
         if usable == 0:
-            return ("No session carries a usable number.", "bad")
+            return ("No session carries a usable number." + tail, "bad")
+        if unusable and uncovered:
+            return (f"{usable:,} of {usable + unusable:,} checked sessions carry a "
+                    f"usable number. {unusable:,} need checking." + tail, "bad")
         if unusable:
             return (f"{usable:,} of {usable + unusable:,} sessions carry a usable "
                     f"number. {unusable:,} need checking.", "warn")
+        if uncovered:
+            return (f"All {usable:,} checked sessions carry a usable number." + tail,
+                    "warn")
         return (f"All {usable:,} sessions carry a usable number.", "good")
 
     # ---- the cards ---------------------------------------------------------
@@ -1624,28 +1896,65 @@ def rebuild_manifest(summary_path):
         if header is None or [h.strip().lower() for h in header[:5]] != expected:
             sys.exit(f"{summary_path} does not look like a summary data file. "
                      "Expected the five columns " + ", ".join(expected) + ".")
-        rows = [r[:5] for r in reader if len(r) >= 5]
+        kept, short = [], 0
+        for r in reader:
+            if len(r) >= 5:
+                kept.append(r[:5])
+            elif any(c.strip() for c in r):
+                short += 1
+        rows = kept
     if not rows:
         sys.exit(f"{summary_path} holds no rows.")
-    with open(OUT_HTML, "w", encoding="utf-8") as fh:
+    if short:
+        print(f"Note: {short:,} row(s) of {summary_path} had fewer than five fields "
+              "and were left out of the page.")
+    # Written beside the summary file it was drawn from, so a rebuild never overwrites
+    # the manifest it is meant to be compared with.
+    out = os.path.join(os.path.dirname(os.path.abspath(summary_path)),
+                       os.path.splitext(os.path.basename(summary_path))[0]
+                       + "_manifest_rebuilt.html")
+    with open(out, "w", encoding="utf-8", newline="\n") as fh:
         fh.write(build_manifest(rows))
-    print(f"Rebuilt {os.path.abspath(OUT_HTML)} from {summary_path}")
+    print(f"Rebuilt {out} from {summary_path}")
     print(f"{len(rows):,} summary rows read. The export was not needed.")
+
+
+USAGE = f"""Let's Story export: integrity check for Oxford (script {SCRIPT_VERSION})
+
+  python lets_story_summary.py <export.csv> [more files, a folder or a pattern]
+
+Options
+  --manifest-from FILE redraw the manifest from a summary data file, without the
+                       export. The page is written beside FILE.
+  --version            print the script version and exit.
+  -h, --help           print this message and exit.
+
+Writes {OUT_CSV} and
+       {OUT_HTML}. Please send both.
+"""
 
 
 def main():
     """Read the export, write the summary data file, then draw the manifest."""
-    # Redraw the manifest from a summary data file, without the export.
-    if len(sys.argv) == 3 and sys.argv[1] == "--manifest-from":
-        rebuild_manifest(sys.argv[2])
+    args = sys.argv[1:]
+    if not args or args[0] in ("-h", "--help"):
+        print(USAGE)
         return
-    if len(sys.argv) < 2:
-        sys.exit("Pass the export file(s), e.g.\n"
-                 "  python lets_story_summary.py C:/data/lets_story_export.csv\n"
-                 "Several files, a folder, or a pattern like exports/*.csv all work.\n"
-                 "\nTo redraw the manifest from a summary data file instead:\n"
-                 f"  python lets_story_summary.py --manifest-from {OUT_CSV}")
-    paths = resolve_inputs(sys.argv[1:])
+    if args[0] == "--version":
+        print(SCRIPT_VERSION)
+        return
+    # Redraw the manifest from a summary data file, without the export.
+    if args[0] == "--manifest-from":
+        if len(args) != 2:
+            sys.exit("--manifest-from takes exactly one summary data file.\n\n" + USAGE)
+        rebuild_manifest(args[1])
+        return
+    unknown = [a for a in args if a.startswith("--")]
+    if unknown:
+        sys.exit(f"Unknown option {unknown[0]}.\n\n" + USAGE)
+    if not args:
+        sys.exit("Pass the export file(s).\n\n" + USAGE)
+    paths = resolve_inputs(args)
     srcs = build_sources(paths)
     if not srcs:
         sys.exit("No readable CSV files were found.")
@@ -1654,13 +1963,26 @@ def main():
     G = {"empty_rows": 0, "repeated_headers": 0, "misaligned_rows": 0,
          "unshaped_rows": 0, "duplicate_rows": 0, "bad_dates": 0, "no_date": 0,
          "row_digests": set(), "time_classes": Counter(), "time_distinct": set(),
-         "time_heavy": {}, "time_heavy_approx": False}
+         "time_heavy": {}, "time_heavy_approx": False,
+         # added in 2026-09-17: the figures that make a silent failure visible
+         "oversized_field_rows": 0, "swallowed_lines": 0, "oversized_files": set(),
+         "sci_user_rows": 0, "sci_story_rows": 0, "story_id_blank_with_title": 0,
+         "time_missing_rows": 0, "eligible_labels": Counter(),
+         "embedded_newlines": 0}
     for src in srcs:
         sniff(src)
         print(f"Reading {src['label']} ({src['size']/1e6:,.0f} MB)..."
               if src["size"] >= 10e6 else f"Reading {src['label']}...")
         try:
             process_source(src, allr, elig, G)
+        except csv.Error as e:
+            # With the field limit back at 1 MB, a file whose quoting has collapsed
+            # stops the run here instead of quietly losing the rest of its rows.
+            sys.exit(f"{src['label']} could not be parsed after about "
+                     f"{src.get('lines', 0):,} lines: {e}\n"
+                     "A field grew past a megabyte, which is what an unclosed quote "
+                     "does: the parser reads on across line after line. Please check "
+                     "the quoting of that file and re-export it. Nothing was written.")
         except (EOFError, OSError, zipfile.BadZipFile) as e:
             sys.exit(f"{src['label']} could not be read to the end "
                      f"({type(e).__name__}). The file may be truncated or "
@@ -1671,21 +1993,12 @@ def main():
 
     elig_label = SCOPE_LABEL + " only"
 
-    # The reading-time check, resolved once so the summary and the manifest agree.
+    # The reading-time check. The verdict itself is drawn from the summary rows by
+    # build_manifest, so it is stated in one place only; version 2026-08-05 also
+    # computed it here and never used the result.
     time_absent = (not any(s.get("time_present", True) for s in srcs)
                    and not G["time_classes"])
     time_usable = sum(G["time_classes"].get(k, 0) for k in TIME_SIZES)
-    time_unusable = sum(G["time_classes"].get(k, 0) for k in TIME_UNUSABLE)
-    _tot = time_usable + time_unusable
-    if time_absent:
-        time_verdict = ("The reading-time column is not in this export.", "bad")
-    elif time_usable == 0:
-        time_verdict = ("No session carries a usable number.", "bad")
-    elif time_unusable:
-        time_verdict = (f"{time_usable:,} of {_tot:,} sessions carry a usable "
-                        f"number. {time_unusable:,} need checking.", "warn")
-    else:
-        time_verdict = (f"All {_tot:,} sessions carry a usable number.", "good")
     time_distinct_txt = (f"more than {TIME_DISTINCT_CAP:,}"
                          if G["time_distinct"] is None
                          else f"{len(G['time_distinct']):,}")
@@ -1744,14 +2057,62 @@ def main():
     add("file record", "", "", "rows with no session date", G["no_date"])
     add("file record", "", "", "rows whose session date could not be read",
         G["bad_dates"])
+    add("file record", "", "",
+        "rows set aside because one field was implausibly long, which is what an "
+        "unclosed quote produces", G["oversized_field_rows"])
+    add("file record", "", "",
+        "lines those rows had swallowed", G["swallowed_lines"])
+    # Physical lines against rows accounted for. A collapsed quote shows up here even
+    # if the row it produced was short enough to pass the length test.
+    total_lines = sum(s.get("lines", 0) for s in srcs)
+    accounted = (allr["n_rows"] + G["empty_rows"] + G["repeated_headers"]
+                 + G["misaligned_rows"] + G["unshaped_rows"]
+                 + G["oversized_field_rows"] + G["swallowed_lines"]
+                 + G["embedded_newlines"] + len(srcs))
+    add("file record", "", "", "physical lines in the files", total_lines)
+    add("file record", "", "", "lines accounted for", accounted)
+    add("file record", "", "", "lines not accounted for", total_lines - accounted)
+    for msg in NOTES:
+        add("file record", "", "", "note", msg)
+
+    # Nothing is written when lines have gone missing. A summary that describes 199 of
+    # 4,233 sessions is worse than no summary, because it looks like an answer: that
+    # is exactly what version 2026-08-05 produced from a single unclosed quote. The
+    # tolerance of one line per file covers a file whose last line has no line ending.
+    unaccounted = abs(total_lines - accounted)
+    if G["oversized_field_rows"] or unaccounted > len(srcs):
+        sys.exit(
+            "The files do not add up, so nothing was written.\n"
+            f"  rows counted:                    {allr['n_rows']:,}\n"
+            f"  physical lines in the files:     {total_lines:,}\n"
+            f"  lines not accounted for:         {total_lines - accounted:,}\n"
+            f"  rows with an implausibly long field: {G['oversized_field_rows']:,}\n"
+            f"  lines those rows had swallowed:  {G['swallowed_lines']:,}\n"
+            + ("  affected file(s): " + ", ".join(sorted(G["oversized_files"])) + "\n"
+               if G["oversized_files"] else "")
+            + "This is what an unclosed quote does: the parser reads on past the end "
+            "of the row, taking whole lines with it, so the counts would describe only "
+            "part of the export.\nPlease check that every field containing a quote "
+            "character, a comma or a line break is quoted and escaped, re-export, and "
+            "run the script again. Send us this message if it is not clear what to "
+            "change.")
 
     for s in srcs:
         add("files", s["label"], "", "file size in bytes", s["size"])
         add("files", s["label"], "", "SHA-256 checksum", s["checksum"])
         add("files", s["label"], "", "text encoding",
             "utf-8" if s["enc"] == "utf-8-sig" else s["enc"])
+        if s.get("enc_note"):
+            add("files", s["label"], "", "encoding note", s["enc_note"])
         add("files", s["label"], "", "delimiter", _SEP_WORDS.get(s["sep"], s["sep"]))
+        add("files", s["label"], "", "decimal mark",
+            "comma" if s.get("decimal_comma") else "point")
         add("files", s["label"], "", "data rows", s.get("rows", 0))
+        add("files", s["label"], "", "physical lines", s.get("lines", 0))
+        add("files", s["label"], "", "reading-time column present",
+            "yes" if s.get("time_present") else "no")
+        for form, n in sorted(s.get("date_forms", {}).items()):
+            add("files", s["label"], "", f"session dates read as {form}", n)
         add("files", s["label"], "", "earliest session date", fmt_date(s.get("date_min")))
         add("files", s["label"], "", "latest session date", fmt_date(s.get("date_max")))
         add("files", s["label"], "",
@@ -1918,6 +2279,27 @@ def main():
         for label, n in speech_consistency(a):
             add(pre + "speech mode within an account", label, "", "accounts", n)
 
+    # Identifier formatting and the counts that make a silent failure visible. Added
+    # in 2026-09-17; all are counts of rows, and none is crossed with anything.
+    add("identifiers and integrity", "", "",
+        "sessions whose account identifier is in scientific notation, which loses "
+        "digits", G["sci_user_rows"])
+    add("identifiers and integrity", "", "",
+        "sessions whose story identifier is in scientific notation, which loses "
+        "digits", G["sci_story_rows"])
+    add("identifiers and integrity", "", "",
+        "account figures reliable",
+        "no - identifiers in scientific notation cannot be told apart"
+        if G["sci_user_rows"] else "yes")
+    add("identifiers and integrity", "", "",
+        "sessions with an empty story identifier but a story title present",
+        G["story_id_blank_with_title"])
+    add("identifiers and integrity", "", "",
+        "sessions in files without the reading-time column", G["time_missing_rows"])
+    for lbl, n in sorted(G["eligible_labels"].items()):
+        add("identifiers and integrity", lbl, "",
+            "sessions counted in Part 2 under this age label", n)
+
     # Reading-time validity, reported once for the whole export and never crossed
     # with anything. Deliberately outside emit(), which is where the breakdowns live.
     sec = TIME_SEC
@@ -1931,6 +2313,7 @@ def main():
             add(sec, lbl, "grouped by size", "sessions",
                 G["time_classes"].get(lbl, 0))
         add(sec, "", "in total", TIME_USABLE_METRIC, time_usable)
+        add(sec, "", "in total", TIME_UNCOVERED_METRIC, G["time_missing_rows"])
         add(sec, "", "in total", "different values in the column", time_distinct_txt)
         add(sec, "", "in total", "sessions sharing one and the same value",
             time_shared_txt)
@@ -1951,11 +2334,30 @@ def main():
 
     html = build_manifest(rows)
 
-    with open(OUT_HTML, "w", encoding="utf-8") as fh:
+    # newline="\n" so the page's bytes are the same on Windows and on POSIX, which is
+    # what lets a rebuilt manifest be compared with this one byte for byte.
+    with open(OUT_HTML, "w", encoding="utf-8", newline="\n") as fh:
         fh.write(html)
 
     print(f"\nWrote {os.path.abspath(OUT_CSV)}")
     print(f"Wrote {os.path.abspath(OUT_HTML)}")
+
+    # The things a reader of the two files should not have to find for themselves.
+    if G["sci_user_rows"]:
+        print(f"\nWarning: {G['sci_user_rows']:,} of {allr['n_rows']:,} rows carry an "
+              "account identifier in scientific notation, such as 1.23457E+18. That "
+              "form keeps only six significant digits, so different accounts cannot "
+              "be told apart and every account figure in these files is a lower "
+              "bound. This usually happens when a file has been opened and saved in "
+              "a spreadsheet. Please re-export the identifier as a plain integer or "
+              "as text.")
+    if G["time_missing_rows"]:
+        print(f"\nWarning: {G['time_missing_rows']:,} rows are in file(s) without a "
+              f"{TIME_COL} column, so the reading-time check does not cover them.")
+    if G["story_id_blank_with_title"]:
+        print(f"\nNote: {G['story_id_blank_with_title']:,} rows have no story_id "
+              "although a story title is present. They are counted as sessions with "
+              "no story identifier and are left out of the text counts.")
     if G["duplicate_rows"] * 5 >= allr["n_rows"] and G["duplicate_rows"]:
         print(f"\nWarning: {G['duplicate_rows']:,} of {allr['n_rows']:,} rows were "
               "identical to an earlier row in every column the script reads. If the "

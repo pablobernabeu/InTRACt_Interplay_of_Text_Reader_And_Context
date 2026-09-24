@@ -1,9 +1,14 @@
 # InTRACt Stage 1: redraw the two Scopus figures from the archived counts.
 #
+# Run from the preregistration directory, after scopus_gap_analysis.R:
+#   Rscript literature/replot_scopus_figures.R
+# Reads literature/scopus_gap_sizes.csv and scopus_topic_trends.csv. Writes
+# literature/scopus_gap_intersections.{png,pdf} (Figure 1) and
+# scopus_topic_trends.{png,pdf} (a supplementary figure).
+#
 # scopus_gap_analysis.R queries the API and archives its counts as CSV files.
 # This script redraws the figures from those archives, so presentation can be
 # revised without issuing a single new request or moving the recorded numbers.
-#   Rscript literature/replot_scopus_figures.R
 #
 # The PDF is the copy the manuscript embeds, so that figure text remains text.
 # The captions in the manuscript and the supplement carry the titles, the
@@ -27,8 +32,9 @@ short_names <- c(
 )
 
 # The package's default palette (viridis) fails depictr's contrast floor on
-# white, so both figures are recoloured from the Okabe-Ito set that the
-# design-analysis figure already uses; ggplot takes as many as a scale needs.
+# white, so both figures are recoloured with the design-analysis figure's four
+# colours (Okabe-Ito blue and vermilion, a near-black and a dark magenta),
+# followed by Okabe-Ito green and orange. ggplot takes as many as a scale needs.
 PAIR <- c("#0072b2", "#d55e00", "#333333", "#8e2c6b", "#009e73", "#e69f00")
 
 strip_chrome <- function(p) {
