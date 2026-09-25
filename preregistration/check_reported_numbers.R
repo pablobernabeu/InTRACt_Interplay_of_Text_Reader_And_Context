@@ -4,12 +4,13 @@
 #   Rscript check_reported_numbers.R
 #
 # A protocol that reports its own precision analysis and its own literature
-# sizing makes arithmetic claims a reviewer can check, so they are checked here
+# counts makes arithmetic claims a reviewer can check, so they are checked here
 # and not trusted to have been copied correctly.
 #
 # Checked, in preregistration.qmd only: the title and abstract limits recorded in
 # journal.json; the 0.90 and 0.95 precision requirements quoted from
-# design_analysis/minimum_texts.csv and minimum_texts_095.csv; the ordinal
+# design_analysis/minimum_texts.csv and minimum_texts_095.csv; the Bayes-factor
+# requirements quoted to the nearest ten from minimum_texts_bf10.csv; the ordinal
 # refusal and projection from minimum_texts_ordinal.csv; the Scopus counts from
 # literature/scopus_gap_sizes.csv; and the theory object's rigour score and its
 # construct, proposition, auxiliary-assumption and rival counts. The supplement
@@ -145,6 +146,28 @@ if (is.null(m95)) {
 }
 
 writeLines("")
+writeLines("== Bayes-factor criterion, priced by solve_at_bf10.R ==")
+mbf <- read_solved(file.path("design_analysis", "minimum_texts_bf10.csv"))
+if (is.null(mbf)) {
+  skip("Bayes-factor requirements", "minimum_texts_bf10.csv is absent")
+} else {
+  # The protocol quotes these to the nearest ten, as "about N", for the parameters it
+  # registers; the narration model's main effects are not quoted.
+  mbf <- mbf[!(mbf$model == "narration" & mbf$param %in% c("LexPC", "CohPC")), ]
+  ten <- function(x) fmt(round(x, -1))
+  for (i in seq_len(nrow(mbf))) {
+    r <- mbf[i, ]
+    label <- sprintf("BF10 %s %s at %.2f", r$model, r$param, r$target)
+    if (is.na(r$value)) {
+      expect(label, has_text("neither reaching 0.95 within the 1,600 texts simulated") ||
+                    has_text("not reaching 0.95 within 1,600"), "not reached within the grid")
+    } else {
+      expect(label, has(num(ten(r$value))), ten(r$value))
+    }
+  }
+}
+
+writeLines("")
 writeLines("== ordinal precision projection ==")
 mo <- read_solved(file.path("design_analysis", "minimum_texts_ordinal.csv"))
 if (is.null(mo)) {
@@ -173,7 +196,7 @@ if (is.null(mo)) {
 }
 
 writeLines("")
-writeLines("== literature sizing ==")
+writeLines("== literature counts ==")
 gp <- utils::read.csv("literature/scopus_gap_sizes.csv", stringsAsFactors = FALSE)
 if (anyNA(gp$n) || sum(gp$size == 1) != 3 || sum(gp$size == 2) != 3 || sum(gp$size == 3) != 1)
   stop("scopus_gap_sizes.csv should hold three concept counts, three pairwise counts ",

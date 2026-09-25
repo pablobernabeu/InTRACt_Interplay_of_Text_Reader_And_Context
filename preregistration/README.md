@@ -51,9 +51,10 @@ write, apart from the Scopus step, which queries the API.
 | Step | Command | Reads | Writes |
 |---|---|---|---|
 | 1 | `Rscript theory/build_theory.R` | `theory/intract.theory.yaml` | `theory/tf_check.txt`, `tf_severity.csv`, `tf_redundancy.csv`, `intract_nomological_net.svg` |
-| 2 | `Rscript theory/make_figure1.R` | the theory object | `figures/fig1_nomological_net.{gv,svg,pdf,png}`, `fig1_nomological_net_styled.gv` |
+| 2 | `Rscript theory/make_nomological_net.R` | the theory object | `figures/nomological_net.{gv,svg,pdf,png}`, `nomological_net_styled.gv` |
 | 3 | `Rscript design_analysis/run_design_analysis.R` | `tier1_developmental.json`, `tier1_narration.json`, `tier2_within_child.json` | `sweeps/dev_texts.csv`, `dev_readings.csv`, `dev_texts_null.csv`, `narr_texts.csv`, `t2_children.csv`, then `precision_sweep.csv`, `minimum_texts.csv`, `session_info.txt` |
 | 4 | `Rscript design_analysis/solve_at_095.R` | `sweeps/dev_texts.csv`, `narr_texts.csv`, `t2_children.csv` | `minimum_texts_095.csv` |
+| 4b | `Rscript design_analysis/solve_at_bf10.R` | the same three sweeps | `minimum_texts_bf10.csv`, `sweeps/bf10_calibration.csv` |
 | 5 | `Rscript design_analysis/run_ordinal_analysis.R` | `tier1_reported_difficulty.json` | `sweeps/ordinal_<texts>.csv`, `sweeps/ordinal_texts.csv`, `minimum_texts_ordinal.csv` |
 | 6 | `Rscript design_analysis/summarise_ordinal.R` | `sweeps/ordinal_<texts>.csv` | `sweeps/ordinal_texts.csv` and `minimum_texts_ordinal.csv`, with the projection columns |
 | 7 | `Rscript figures/make_precision_figure.R` | `design_analysis/precision_sweep.csv` | `figures/fig_precision.{png,pdf}`, `fig_precision_supplement.{png,pdf}` |
@@ -93,11 +94,12 @@ The quoted numbers come from these artefacts:
 |---|---|---|
 | Distinct texts and children needed at 0.90 (Table 1, Design and precision analysis) | `design_analysis/minimum_texts.csv`, columns `value`, `lo`, `hi` | `run_design_analysis.R` |
 | The same at 0.95 | `design_analysis/minimum_texts_095.csv` | `solve_at_095.R` |
+| The Bayes-factor requirements, quoted to the nearest ten (Table 1, Design and precision analysis) | `design_analysis/minimum_texts_bf10.csv`, column `value` | `solve_at_bf10.R` |
 | The ordinal refusal and projected text counts (Hypothesis 5) | `design_analysis/minimum_texts_ordinal.csv`, columns `note`, `projected_texts`, `projected_qualifying_texts` | `summarise_ordinal.R` |
 | Scopus counts in the Introduction and in Figure 1 | `literature/scopus_gap_sizes.csv`, column `n` | `scopus_gap_analysis.R` |
 | Rigour score, checklist and implications | `theory/tf_check.txt` | `build_theory.R` |
 | Largest construct similarity | `theory/tf_redundancy.csv` | `build_theory.R` |
-| Figures 1, 2 and 3 | `literature/scopus_gap_intersections.pdf`, `figures/fig1_nomological_net.pdf`, `figures/fig_precision.pdf` | `replot_scopus_figures.R`, `make_figure1.R`, `make_precision_figure.R` |
+| Figures 1, 2 and 3 | `literature/scopus_gap_intersections.pdf`, `figures/nomological_net.pdf`, `figures/fig_precision.pdf` | `replot_scopus_figures.R`, `make_nomological_net.R`, `make_precision_figure.R` |
 
 ## theory/
 
@@ -108,11 +110,11 @@ confirmatory predictions, held as one machine-checkable file.
 |---|---|
 | `intract.theory.yaml` | The theory object. The source of truth for every hypothesis. |
 | `build_theory.R` | Validates it, scores it against the rigour checklist, screens the constructs for redundancy and derives the graph's testable implications. Writes `tf_check.txt` (which includes the implications), `tf_severity.csv`, `tf_redundancy.csv` and `intract_nomological_net.svg`. |
-| `intract_nomological_net.svg` | theoryforge's default rendering of the net. The manuscript does not use it, and Figure 2 comes from `make_figure1.R`. |
+| `intract_nomological_net.svg` | theoryforge's default rendering of the net. The manuscript does not use it, and Figure 2 comes from `make_nomological_net.R`. |
 | `report_theory.R` | A console summary of the score, the checklist and the implications. Writes nothing. |
 | `check_manuscript_claims.R` | Prints the counts, scores and structure the object yields, for comparison with the manuscript by eye, and fails if a prediction names a proposition or a rival that does not exist. |
 | `diagram_theory.R` | Prints the class, names and structure of what `tf_diagram()` returns. No other script or document uses it. |
-| `make_figure1.R` | Emits the nomological net (Figure 2) from the theory object, restyles the layout without touching its content (a hard assertion compares the node and edge sets), and renders the SVG, PDF and PNG. The manuscript embeds the PDF. The layout comes from the viz.js engine bundled with DiagrammeR, so a system Graphviz can lay the `.gv` files out differently. |
+| `make_nomological_net.R` | Emits the nomological net (Figure 2) from the theory object, restyles the layout without touching its content (a hard assertion compares the node and edge sets), and renders the SVG, PDF and PNG. The manuscript embeds the PDF. The layout comes from the viz.js engine bundled with DiagrammeR, so a system Graphviz can lay the `.gv` files out differently. |
 
 The object currently scores 90.7 out of 100 with no blocking failure (`tf_check.txt` always
 holds the current figure), and its causal graph is acyclic, which is what lets
@@ -134,6 +136,7 @@ The precision analysis, built on portable design specifications.
 | `tier2_within_child.json` | Tier 2, accumulated reading within a child. |
 | `run_design_analysis.R` | Runs five sweeps: distinct texts, readings per text and a null condition for the developmental model, distinct texts for the narration model, and children for tier 2. Writes `precision_sweep.csv`, solves the texts, narration and children curves for the number needed to reach a determinate verdict nine times in ten, and writes `minimum_texts.csv` and `session_info.txt`. |
 | `solve_at_095.R` | Re-solves the cached curves at 0.95 assurance, the floor Nature Human Behaviour names for frequentist plans, without re-simulating anything. Writes `minimum_texts_095.csv`. The protocol registers 0.90 and reports these figures beside it. |
+| `solve_at_bf10.R` | Prices the Bayes-factor criterion for a non-negligible verdict (interval Bayes factor of at least 10 under the reference prior) from the cached curves by a normal approximation: each grid point's mean interval width gives its standard error, the probability that a 0.10 effect clears the criterion is `pnorm(0.05/SE - z*)`, and the same solver inverts the curve at 0.90 and 0.95. Writes `minimum_texts_bf10.csv` (with `value_at_196`, the same approximation at the simulation's own criterion, for comparison) and `sweeps/bf10_calibration.csv`, the approximation against the simulated probability at every grid point. The re-run at the observed inputs computes the criterion by simulation and supersedes these figures. |
 | `run_ordinal_analysis.R` | The same question for the ordinal outcome behind Hypothesis 5. The general routine fits a linear mixed model, which would answer a different question about a three-category response, so pilotr still generates the data and `ordinal::clmm` fits the cumulative logit the protocol specifies. |
 | `summarise_ordinal.R` | Pools the cached ordinal grid points, attempts the 0.90 solve, and projects the requirement from the fitted width scaling where the target lies beyond the simulated range. The projection starts from the coefficient as attenuated by the omitted child intercept, computed analytically and checked against the mean fitted estimates. Writes `session_info_ordinal.txt`. Run it after `run_ordinal_analysis.R`. |
 
@@ -174,7 +177,7 @@ transferred, as the Code availability statement commits.
 
 | File | What it is |
 |---|---|
-| `fig1_nomological_net.{gv,svg,png,pdf}` | Figure 2 of the manuscript (the files keep the prefix `fig1_`), generated from the theory object by `theory/make_figure1.R`. The `_styled.gv` beside it is the restyled layout actually rendered. |
+| `nomological_net.{gv,svg,png,pdf}` | Figure 2 of the manuscript, generated from the theory object by `theory/make_nomological_net.R`. The `_styled.gv` beside it is the restyled layout actually rendered. |
 | `make_precision_figure.R` | Builds Figure 3 from `design_analysis/precision_sweep.csv`, and the supplementary narration and within-child panels. |
 | `fig_precision.{png,pdf}`, `fig_precision_supplement.{png,pdf}` | Figure 3 and the supplementary panels. |
 
@@ -207,7 +210,7 @@ cell, so the cost is a few dozen requests and nothing is downloaded.
 
 | File | What it is |
 |---|---|
-| `lets_story_summary.py` | The integrity check, script version 2026-09-17, standard library only. Reads nineteen columns besides reading time (identifiers, categories, the session timestamp and page counts) and treats reading time only as a column whose usability is checked, in bands ten times wider than one another, never crossed with any other field. Writes the summary data set and the manifest page. |
+| `lets_story_summary.py` | The integrity check, script version 2026-09-17, sent to the data controller on 18 September 2026, standard library only. Reads nineteen columns besides reading time (identifiers, categories, the session timestamp and page counts) and treats reading time only as a column whose usability is checked, in bands ten times wider than one another, never crossed with any other field. Writes the summary data set and the manifest page. |
 | `lets_story_summary_2026-08-05.py` | The version supplied to the data controller on 7 August 2026, kept byte for byte (SHA-256 09316DCC...B29B7A) because it produced the output Supplementary Section S8 tabulates. |
 | `HOW_TO_RUN.md` | The instruction sheet sent on 7 August 2026, kept as sent. |
 
@@ -219,9 +222,10 @@ notation (300,000 accounts counted as 258,697, silently), a part without the rea
 (verdict "All 2,161 sessions carry a usable number" for 4,322 sessions), one unclosed quote (199
 of 4,233 rows read, one row reported skipped, exit status 0) and an empty `story_id` (counted as
 zero empty identifiers, the story title standing in for the identifier). Version 2026-09-17
-refuses the first and fourth, and counts and reports the rest; it changes nothing about what is
-counted, and reproduces every figure the earlier version reported on the sample, adding
-seventeen rows of its own. The test scenarios are in `count_script/tests/`.
+refuses the first and fourth, and counts and reports the rest. It also reads some inputs differently. Among other changes, an empty
+`story_id` is no longer replaced by the story title, and tokens such as `None` and `NaN` are
+read as missing. On the sample, it reproduces every figure the earlier version reported,
+adding seventeen rows of its own. The test scenarios are in `count_script/tests/`.
 
 The instruction sheet was deliberately not reissued, to keep the change to the data controller as
 small as one file. Everything in it still holds of the new version: the command, the inputs it
@@ -256,6 +260,31 @@ reproduces every line of that output except the run date in the "summary produce
 "either hypothesis", wording from when the protocol had two hypotheses. The statement applies
 equally to all six.
 
+## priors/
+
+| File | What it is |
+|---|---|
+| `prior_derivation.md` | The frozen rules of the prior-derivation pipeline, which Supplementary Section S6 summarises and the Priors section of the protocol cites. |
+
+The file is a copy of `prior_derivation.md` in the systematic review's repository, taken on 25
+September 2026 from the working copy last saved on 16 September 2026. That revision is not yet
+committed there, and the version last committed (30 August 2026) differs from it in the opening
+paragraph and in §§2, 3, 3a, 6 and 7. The review's tables of extracted records and effects have
+held header rows only since the rules were first committed on 25 August 2026, and extraction has
+been on hold since 28 August 2026. Test extractions from 12 papers, made in June 2026 under an
+earlier schema, are archived in the review's `model_comparison/` folder. Only the line endings were changed,
+from CRLF to LF. SHA-256 of this copy:
+`fcbd560887ab847e9ff85b5785340ecaa151b6e017cfa2db4bce30bfb10240e3`. The file refers to
+two documents of the review's repository, `deterministic_extraction.md` and
+`preliminary_screening/search_parameters.md`, which are not copied here, and to the script
+`tools/derive_priors.py`, which is not yet written. The consumption contract in the first
+document, to which the file's §7 binds the script, allows direction-only rows to truncate or
+shift a prior, whereas this file confines them to a sign-consistency check. Where the two
+differ, this file governs. Any change made to it after in-principle acceptance will be reported
+as a deviation at Stage 2, whether or not extraction rows exist by then, and any earlier change
+will be recorded here with a new checksum. Both triggers are stricter than the file's own §7. The pipeline's timestamped output is deposited here before the extract is
+transferred.
+
 ## Bibliography maintenance
 
 `InTRACt references.bib` began as a Zotero export but is now repo-maintained. Two things in it
@@ -273,7 +302,7 @@ Four packages carry the reproducible parts of this protocol, each archived with 
 [theoryforge](https://doi.org/10.5281/zenodo.21229964) for the theory object and its scoring,
 [pilotr](https://doi.org/10.5281/zenodo.21266313) for the design specifications and the
 precision analysis, [scopusflow](https://doi.org/10.5281/zenodo.21252669) for the literature
-sizing, and [depictr](https://doi.org/10.5281/zenodo.21266308) for the figures. The versions
+search, and [depictr](https://doi.org/10.5281/zenodo.21266308) for the figures. The versions
 used are listed under Requirements. Which archived release each installed copy was built from
 is not recorded.
 
@@ -283,7 +312,7 @@ The session-level extract is not in this repository and is not in the research t
 possession. It is held by the data controller and is released only on written confirmation of
 in-principle acceptance, under the sequestration arrangement the manuscript describes. What
 this repository does hold is the protocol, the theory object, the design specifications, the
-literature sizing and the count script. The provider-computed aggregate counts and the file
+literature search, the count script and the frozen prior-derivation rules. The provider-computed aggregate counts and the file
 manifest, which contain no record of any individual, are deposited on receipt at the
 repository the Data availability statement names. The 35-row structural sample that
 Supplementary Section S8 reports carries real reading times and is likewise not in the

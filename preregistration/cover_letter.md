@@ -17,12 +17,14 @@ which children aged 7 and older read machine-generated stories in ten or more la
 control still govern it in unsupervised, multilingual reading of machine-generated stories is
 unknown. A dated and archived Scopus search finds the intersection of children's reading
 comprehension, computational text features and platform log data to be thin and unevenly
-indexed, and we report it as a sizing rather than as a claim about what exists. The protocol
+indexed. We report its counts as an indication of scale, since no database search can show what
+has not been published. The protocol
 tests six confirmatory hypotheses in Bayesian crossed-effects models over hundreds to
-thousands of distinct texts, adjudicates between rival developmental accounts with two-sided
-tests that no laboratory sample has been large enough to decide, and registers every decision
-about what is tested, on which sample and with which model as a function of provider-computed
-counts and written answers, never of a fitted coefficient, with one stated exception. The question
+thousands of distinct texts and adjudicates between rival developmental accounts with two-sided
+tests that no laboratory sample has been large enough to decide. Every decision about what is
+tested, on which sample and with which model is registered as a function of provider-computed
+counts, an audit of the frozen extract, the prior-derivation output and the data controller's written answers. The few
+decisions that depend on a fitted quantity are stated in advance as conditional rules. The question
 matters beyond one platform: children's reading is migrating to systems that record it, and
 this protocol is a worked answer to whether such records can support inference.
 
@@ -55,10 +57,13 @@ described below, so analysis can begin as soon as in-principle acceptance is con
 **No prior access to the data.** This is a secondary Registered Report, and no pre-registered
 analysis has been conducted. The session-level extract has never been in our possession: the
 data controller builds and holds it, and it will be transferred only on written confirmation of
-in-principle acceptance. A signed data-access certification from the data controller, naming an
+in-principle acceptance. [A signed data-access certification from the data controller, naming an
 owner and deputy for the held file and confirming that no analysis relating story text to
 reading time has been conducted or reported to us, accompanies this submission (Supplementary
-Section S7). We disclose in the protocol what was received in advance: a 35-row structural
+Section S7). / The data-access certification sent to the data controller on 7 August 2026, naming
+an owner and deputy for the held file and confirming that no analysis relating story text to
+reading time has been conducted or reported to us, is reproduced in Supplementary Section S7,
+with the fields still open at submission marked.] We disclose in the protocol what was received in advance: a 35-row structural
 sample with the data dictionary and the story texts, [and the file manifest and provider-computed
 aggregate counts, received on DATE / with the file manifest and provider-computed aggregate counts
 to follow before in-principle acceptance]. The arrangement was put to the editorial office and
@@ -68,16 +73,19 @@ only quantities from this platform any author has seen are the summaries describ
 the data controller prepared, which relate no predictor to any outcome, and which enter no
 decision registered in this protocol.
 
-**Timeline.** [Anticipated timeline; the protocol proposes: data transfer within four weeks of
-in-principle acceptance; the frozen audit, feature extraction and outcome-blind dimension
-reduction within three months of transfer; confirmatory models and the Stage 2 manuscript
+**Timeline.** [Anticipated timeline; the protocol proposes: feature extraction and its
+validation from the day in-principle acceptance is confirmed, on the story texts already
+received; data transfer within four weeks of in-principle acceptance; the audit of the frozen
+extract and the outcome-blind dimension reduction within three months of transfer; the
+confirmatory and sensitivity models within a further four months; and the Stage 2 manuscript
 within twelve months of in-principle acceptance.]
 
 **Data, materials, code and log sharing.** We agree to share the study's raw data, digital
 study materials, computer code and laboratory log for all published results. All analysis code
-is already public and version-controlled at
-<https://github.com/pablobernabeu/InTRACt_Interplay_of_Text_Reader_And_Context>, including the
-theory object, the design specifications and the precision analysis. One restriction applies
+is version-controlled at
+<https://github.com/pablobernabeu/InTRACt_Interplay_of_Text_Reader_And_Context>, public from
+submission, including the theory object, the design specifications, the precision analysis,
+both versions of the count script and the frozen rules for deriving the priors. One restriction applies
 for legal reasons: the session-level extract is governed by a data-sharing agreement between
 the University of Oxford and the data controller, and where a field cannot be released we will
 state the reason and deposit a derived form sufficient to reproduce every reported analysis,

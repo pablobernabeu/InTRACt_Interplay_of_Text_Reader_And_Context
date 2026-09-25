@@ -1,6 +1,5 @@
-# Figure 2 of the manuscript, the nomological net (its files keep the prefix
-# fig1_), emitted from the theory object so that the figure and the hypotheses
-# cannot drift apart.
+# Figure 2 of the manuscript, the nomological net, emitted from the theory object
+# so that the figure and the hypotheses cannot drift apart.
 #
 # tf_diagram() fixes the content: which constructs exist, which paths connect
 # them and what each path claims. Its default layout, though, labels every one
@@ -12,13 +11,13 @@
 # fails the script if the restyled graph carries any node or edge the theory
 # object did not emit, or misses one it did.
 #
-#   Rscript theory/make_figure1.R   (from the preregistration directory)
+#   Rscript theory/make_nomological_net.R   (from the preregistration directory)
 
 library(theoryforge)
 
 th  <- tf_read("theory/intract.theory.yaml")
 dot <- tf_diagram(th, type = "nomological_net", engine = "graphviz")
-writeLines(dot, "figures/fig1_nomological_net.gv")
+writeLines(dot, "figures/nomological_net.gv")
 
 # -- parse the emitted DOT into nodes (id, label) and edges (from, to, claim) --
 lines <- strsplit(dot, "\n")[[1]]
@@ -98,7 +97,7 @@ styled <- paste0(
 ', edge_lines, '
 }
 ')
-writeLines(styled, "figures/fig1_nomological_net_styled.gv")
+writeLines(styled, "figures/nomological_net_styled.gv")
 
 # -- the assertion: restyled content identical to emitted content --------------
 # Invisible edges are layout hints, not claims, so they are excluded here and
@@ -123,8 +122,8 @@ writeLines("content assertion passed: 12 nodes, 18 edges, wording unchanged")
 # bundles, run through V8 by DiagrammeRsvg. A system Graphviz can lay the same
 # .gv files out differently.
 svg <- DiagrammeRsvg::export_svg(DiagrammeR::grViz(styled))
-writeLines(svg, "figures/fig1_nomological_net.svg")
+writeLines(svg, "figures/nomological_net.svg")
 raw <- charToRaw(svg)
-rsvg::rsvg_pdf(raw, "figures/fig1_nomological_net.pdf")
-rsvg::rsvg_png(raw, "figures/fig1_nomological_net.png", width = 3200)
-writeLines("wrote figures/fig1_nomological_net.{gv,svg,pdf,png} and the styled .gv")
+rsvg::rsvg_pdf(raw, "figures/nomological_net.pdf")
+rsvg::rsvg_png(raw, "figures/nomological_net.png", width = 3200)
+writeLines("wrote figures/nomological_net.{gv,svg,pdf,png} and the styled .gv")

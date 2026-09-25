@@ -1,4 +1,4 @@
-# Scopus sizing of the literature InTRACt sits in
+# Scopus search record for the InTRACt literature counts
 
 Run on 26 August 2026 with scopusflow 0.4.0 against the Elsevier Scopus Search API.
 Publication years 2018 to 2026. Field tag TITLE-ABS-KEY throughout. No document type,
@@ -8,7 +8,7 @@ not row counts from a harvest: nothing was downloaded.
 Reporting follows PRISMA-S (Rethlefsen et al., 2021, doi:10.1186/s13643-020-01542-z)
 for the items a count-only search can supply: database name, full search strategies,
 limits and restrictions, and date of search. The remaining items belong to the
-systematic review that accompanies this protocol, not to this sizing.
+systematic review that accompanies this protocol, not to this search.
 
 ## Concept sets and their intersections
 

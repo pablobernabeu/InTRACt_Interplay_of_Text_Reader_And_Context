@@ -270,11 +270,16 @@ page or record on 2026-09-04; corrections were carried into the table the same d
   at title level only); Italian 1,121 (Montefinese et al. 2014, 10.3758/s13428-013-0405-3) and 417
   (Della Rosa et al. 2010, 10.3758/BRM.42.4.1042); Polish 4,905 (Imbir 2016,
   10.3389/fpsyg.2016.01081); Portuguese 3,800 (Soares et al. 2017, 10.3758/s13428-016-0767-4).
-  Greek: 348 affective words rated for abstraction, imageability and familiarity (Vaiouli, Panteli
-  & Panayiotou 2021, Current Psychology). Korean: 450 emotion nouns rated for valence, arousal and
-  concreteness (Hong, Nam & Lee 2016, Korean Journal of Cognitive Science 27(3), 377-406, KCI
-  ART002149809); Lee & Shin 2023 (10.3389/fpsyg.2023.1188909) assigned concreteness from English
-  translations and is excluded by the no-translation rule. So eight languages have usable norms.
+  Greek: 348 affective words rated for valence, arousal, abstraction, imageability and
+  familiarity (Vaiouli, Panteli & Panayiotou 2023, Current Psychology, online 2021), and 2,948
+  words rated for concreteness and imageability by Greek-Cypriot adults (Traikapi et al. 2024,
+  OSF preprint 10.31219/osf.io/g7n8t). Korean: 450 nouns from an affective word list, some of
+  them names of neutral objects, rated for valence, arousal and concreteness (Hong, Nam & Lee
+  2016, Korean Journal of Cognitive Science 27(3), 377-406, KCI ART002149809); Park 2004 rated
+  imageability for 665 nouns; Lee & Shin 2023 (10.3389/fpsyg.2023.1188909) assigned concreteness
+  from English translations and is excluded by the no-translation rule. So nine languages have
+  usable concreteness norms, Greek on a preprint. (Corrected 25 September 2026: this entry had
+  called the Korean items emotion nouns and counted eight languages.)
 - Stanza performance page (v1.5.1, UD 2.12, end-to-end from raw text): Dutch Alpino 88.67, Greek
   GDT 88.87, Korean Kaist 85.50, Polish PDB 91.73 (LFG 95.20 is not the default), Portuguese Bosque
   87.75, English EWT 86.77 / GUM 88.24, French GSD 91.28 / Sequoia 91.57, German GSD 81.80 / HDT
@@ -566,8 +571,11 @@ Checked directly against the resources' own pages during the pass, not taken on 
 - Goldfish (doi:10.63317/5ceec3hhv4d5) trains an identical architecture on byte-premium-scaled
   data per language, which is what makes surprisal comparable across languages by
   construction; mGPT is the single-model sensitivity.
-- Korean lacks a subtitle frequency norm, any coverage in the Łuniewska cross-linguistic
-  age-of-acquisition set, indexed concreteness norms and native affect norms. Crossref
+- Korean lacks a subtitle frequency norm and any coverage in the Łuniewska cross-linguistic
+  age-of-acquisition set. Its indexed rated norms are small: 450 nouns rated for concreteness
+  (Hong et al. 2016), four valence and arousal sets of 252 to 450 words (Lee et al. 2022,
+  CogSci), and 665 nouns rated for imageability (Park 2004). (Corrected 25 September 2026: this
+  entry had said Korean had no indexed concreteness or native affect norms.) Crossref
   indexes Korean-language journals poorly, so this is recorded as a search limitation and a
   KCI/RISS search by a Korean-reading collaborator is required before the feature inventory
   is frozen.

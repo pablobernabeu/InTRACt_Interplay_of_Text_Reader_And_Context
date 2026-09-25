@@ -1,4 +1,4 @@
-# InTRACt Stage 1: a dated, reproducible sizing of the literature the study sits in.
+# InTRACt Stage 1: a dated, reproducible count of the literature around the study.
 #
 # Run from the preregistration directory (not with --vanilla, since the API key
 # is read from the SCOPUS_API_KEY environment variable, normally set in
@@ -53,7 +53,7 @@ abbrev <- c("Children's reading" = "Reading",
 
 msg <- function(...) cat(format(Sys.time(), "%H:%M:%S"), " ", ..., "\n", sep = "")
 
-msg("sizing the three concept sets and every intersection")
+msg("counting the three concept sets and every intersection")
 ints <- scopus_intersections(
   concepts,
   intersections = list(
@@ -99,7 +99,7 @@ ggplot2::ggsave(file.path(OUT, "scopus_topic_trends.png"), pc,
 msg("writing the search-strategy record")
 
 rec <- c(
-  "# Scopus sizing of the literature InTRACt sits in",
+  "# Scopus search record for the InTRACt literature counts",
   "",
   sprintf("Run on %s with scopusflow %s against the Elsevier Scopus Search API.",
           format(Sys.Date(), "%d %B %Y"), as.character(packageVersion("scopusflow"))),
@@ -111,7 +111,7 @@ rec <- c(
   "Reporting follows PRISMA-S (Rethlefsen et al., 2021, doi:10.1186/s13643-020-01542-z)",
   "for the items a count-only search can supply: database name, full search strategies,",
   "limits and restrictions, and date of search. The remaining items belong to the",
-  "systematic review that accompanies this protocol, not to this sizing.",
+  "systematic review that accompanies this protocol, not to this search.",
   "",
   "## Concept sets and their intersections",
   "",

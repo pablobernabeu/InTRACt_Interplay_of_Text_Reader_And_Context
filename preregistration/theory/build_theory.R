@@ -5,7 +5,7 @@
 # theory/tf_severity.csv, theory/tf_redundancy.csv and
 # theory/intract_nomological_net.svg, theoryforge's default rendering of the
 # net. The manuscript does not use that SVG, and its Figure 2 is drawn by
-# theory/make_figure1.R.
+# theory/make_nomological_net.R.
 
 library(theoryforge)
 

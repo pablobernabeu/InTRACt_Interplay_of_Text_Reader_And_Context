@@ -8,6 +8,175 @@ date and rationale.
 
 ## [Unreleased]
 
+### 25 September 2026 (later): count script assessed, priors aligned, open literature items closed
+
+No further request can go to the data controller before submission, so the count script it has
+held since 18 September 2026 (version 2026-09-17) was assessed against every use the protocol
+makes of the provider-computed counts. No revision is needed. Only the revised version counts
+account identifiers in scientific notation, a count two rules read, and the data controller holds
+that version. Otherwise both versions write every count the protocol draws on. The revised version
+reproduces the first on the 35-row sample (apart from the run date, its version number and
+seventeen added rows), and both test suites in `count_script/tests/` pass when given absolute
+script paths. `check_reported_numbers.R` exits 0. A five-lens verification (evidence, whole-document
+consistency, count-script claims, priors, prose), each lens challenged by a second reviewer,
+corrected the edits below before rendering.
+
+- Count script and decision sources: the protocol gives the date the revision was sent, says where
+  the two versions differ, and says the data controller has been asked to run the revision. The
+  manifest is described as what it is, the script's record of each file read, with the build date
+  and window coming from the certification. The identifier rule no longer presupposes a new
+  request, because the revised script itself flags account identifiers in scientific notation and
+  asks for a re-export, and it now also appears among the grounds for declaring a hypothesis
+  untestable. The audit of the frozen extract and the output of the prior-derivation pipeline are
+  named among the inputs to registered decisions. The Account rule is applied to the tier-1
+  sample as the audit counts it, because the provider-computed sessions per account apply no
+  tier-1 exclusion except the age bands. A switch in narration activates the contingent
+  requirement only when the revised script finds no account identifier in scientific notation.
+  Supplementary Section S8 no longer claims that every sample-table entry can be regenerated
+  from the script's output, and its country row is corrected (Poland 5, not 4).
+- Priors: derived priors are restricted to the three component main effects on reading time,
+  wherever at least two papers report a standardised regression coefficient. The frozen rules
+  translate no pooled estimate to the cumulative-logit scale of Hypothesis 5 or the within-child
+  unit of Hypothesis 6, so those coefficients keep weakly informative priors, as do narrativity,
+  valence and arousal, to which the rules map no evidence. The freeze is described as it
+  happened: rules first committed in August, last revised on 16 September, after test extractions
+  from 12 papers in June. The sixth design adjustment compares absolute pooled values, the
+  alternative-pooling refit that the frozen rules pre-specify is registered, and a rule covers a
+  prior table delayed by the review. The frozen rules are deposited verbatim as
+  `preregistration/priors/prior_derivation.md` (the review's working copy of 16 September 2026,
+  not yet committed there, LF endings, SHA-256 and provenance in the README).
+- Orthographic depth: Polish is annotated at Seymour et al.'s middle level (Awramiuk and
+  Krasowicz-Kupis 2013; Schüppert et al. 2017) and Korean as shallow in the reading direction
+  (Lee et al. 2023; Leachman et al. 2025), both fixed with the feature inventory. The
+  collaborator's search for a Korean classification is no longer needed.
+- Korean length: the account of Ju et al. 2022 and Pae et al. 2020 in the 25 September entry below
+  overstated them. With frequency modelled, neither jamo nor block length had a main effect, and
+  the adult null confounds the two counts. Jamo remain the unit, now on the ground of
+  comparability with the other languages' letter counts, and the counting convention is stated.
+- Norms: Korean concreteness rests on one set of 450 nouns, and its valence and arousal sets hold
+  252 to 450 words. Both Greek affect sets are named, and both were rated by native speakers. French
+  has native age-of-acquisition sets restricted by word length, and the larger is now put to the
+  token-coverage rule instead of being excluded by assertion.
+- Wording: the Bruner et al. measure (mean log word frequency), the Kruchinina et al. signature
+  (at most partial at 6 to 7), the splitter-agreement sample (the sixth check's 50 texts) and the
+  per-doubling conversion for Hypothesis 6. The justification record
+  `literature/evidence_notes.md` is corrected inline on the Korean and Greek norms, and the
+  Kruchinina et al. title takes the en dash Crossref records.
+- New sources, all DOIs checked against Crossref except the three without one (Schüppert et al.
+  2017, Park 2004, Lee et al. 2022): Awramiuk and Krasowicz-Kupis 2013, Łockiewicz and
+  Ciecholewska 2017, Dębska et al. 2019, Lee et al. 2023, Perfetti and Verhoeven 2017, Gorman et
+  al. 2020, Hong et al. 2016, Lee and Shin 2023, Tae et al. 2026, Palogiannidi et al. 2016, Vaiouli
+  et al. 2023, Dimitropoulou et al. 2009, Lachaud 2007. Leachman et al. 2025 and Ferrand et al.
+  2008 were in the bibliography uncited, and the former's truncated title is corrected.
+- Cover letter: "sizing" removed, the decision sources and conditional post-fitting rules stated
+  as the protocol states them, the timeline aligned with the protocol's, the code described as
+  public from submission, and a bracketed alternative for a certification still unsigned.
+
+### 25 September 2026: pending decisions resolved from the literature and the data
+
+The inconsistencies that the language pass surfaced were resolved and each choice motivated in
+the text. `check_reported_numbers.R` exits 0, and Tables 1 and 2 keep their landscape pages (77
+pages). New sources were checked against Crossref and, where a claim rests on them, against the
+paper: Fieller 1954 and von Luxburg and Franz 2009, Matuschek et al. 2017, Gathercole et al. 2004,
+Staub 2026, Schuurman et al. 2016, Wang et al. 2019, Ju et al. 2022 and Cheung 2019 (added to the
+bibliography with Borenstein et al. 2009 and Li et al. 2019), and Barr et al. 2013 and Futrell et
+al. 2015 (already there). Lahoud et al. 2023 is no longer cited.
+
+- Rules that change: accumulated reading for Hypothesis 6 is counted in story units, split into
+  the account mean and the deviation, and both are divided by the within-child root mean square
+  per language, so the coefficient is per within-child standard deviation as simulated; session
+  order enters as its logarithm, which leaves the term identified by story lengths. Concreteness
+  and age of acquisition, which have no admissible uniform resource, are left out of the pooled
+  lexical solution and enter the language-specific solutions and a pooled sensitivity solution.
+  Korean word length is counted in jamo, with blocks as a check (Ju et al. 2022). The
+  language-slope simplification order is continuity, lexical, grammatical. The permutation check
+  scores maximum-likelihood refits by the Wald interval. A supplied audio duration replaces the
+  predicted one only if it covers every eligible text. Account identifiers are to be exported as
+  text, with a registered consequence if they still cannot distinguish accounts. Contingent
+  hypotheses can be activated by the provider-computed counts for the narration-states
+  requirement.
+- Rules described accurately that were misdescribed: the Hypothesis 4 precondition (posterior
+  criterion only, with the reason), the ReferentialContinuity anchors (four), the two untested
+  interaction terms, the three Hypothesis 6 covariates, the pilot's two design inputs, timed-out
+  sessions (absent if unfinished, censored if capped), the prior-derivation rules in S6 (now
+  those frozen in the review's `prior_derivation.md`: one primary estimate per paper, metric
+  families kept apart, an age-restricted primary pool) and the null-condition error rate (at most
+  2 of 120 replicates).
+- Literature claims corrected against the papers: the reading systems framework, the scope of
+  the word-length evidence (Kuperman et al. 2024 covered Greek and excluded Korean), Kruchinina et
+  al. 2026, the ages of the Tortorelli, Tucker and Koriat samples, the adult basis of the capacity
+  account, and the evidence on shallow processing.
+- `theory/make_figure1.R` is now `theory/make_nomological_net.R`, writing
+  `figures/nomological_net.*`; the Scopus script and record say "search" in place of "sizing".
+
+### 24 September 2026: language pass on the protocol and the supplement
+
+No hypothesis, threshold, number or registered rule changed, `check_reported_numbers.R` exits 0,
+and Tables 1 and 2 keep their landscape pages in the render (75 pages). Counted as whitespace
+tokens of the `.qmd` sources, the protocol fell from 29,804 to 28,926 and the supplement from 9,295
+to 8,978. The share of main-text sentences over 35 words fell from 25.5 to 3.5 per cent (mean
+26.4 to 21.2 words).
+
+- Engineering and Claude-dialect register removed. Criteria no longer "bind", diagnostics no
+  longer "fire" and simulations no longer "price" a coefficient; "carries" (65 uses), "beside"
+  (41), "gate" (18) and "The first is ..." scaffolding (32) are gone or rare. The interpretive
+  sense of "reading" is now "interpretation", as in Table 1's column head. "The recording" is
+  "the audio", since question (a) asks whether the voice is recorded. The Hypothesis 4 gate is
+  "the Hypothesis 4 precondition", and Koriat's framework is "the cue-utilisation approach",
+  distinct from the Hypothesis 3 rival.
+- The heading "What is not yet settled, and what follows from each answer" is now "Questions
+  outstanding at submission", Table 2's column heads are "Open question", "Bearing on the design"
+  and "Decision rule for each answer", S4 is "The literature search" and now gives the three
+  Scopus concept-set expressions, and the precision-figure caption is plain.
+- Order: the reading systems framework and the three components now open the evidence review,
+  the paragraph coupling Hypotheses 2 and 3 follows Hypothesis 3, and the two protocol-wide
+  conventions moved from Ethics information to Data provenance.
+- Places where the text misdescribed its own rules now describe them as registered: the
+  convention on post-fitting decisions and the list of post-fitting rules under Decision rules;
+  the Hypothesis 4 precondition, stated by its operational criterion (fewer than 5 per cent of
+  draws inside the region); Bayes factors reported under the derived priors and their halved and
+  doubled scales, the refits Priors registers; "before any outcome data existed" and "before any
+  data were seen", now "before we had any access to outcome data"; the constraints on generality,
+  which now name the generated stories; four Table 2 pointers; families, not children, as the
+  choosers of story, level and narration; and Code availability, which now lists the
+  Bayes-factor recomputation.
+
+### 24 September 2026: the decision rule gains a Bayes-factor criterion; abstract in plain language
+
+The analytic plan was checked against Nature Human Behaviour's Registered Report guidelines,
+which name a Bayes factor of 10 as the evidence threshold for Bayesian plans and allow a
+maximum feasible sample where inconclusive results would still matter. Under the registered
+weakly informative priors, the posterior criterion for a non-negligible verdict (fewer than
+5 per cent of the posterior inside the region) corresponds to an interval Bayes factor of
+only 1.5 for a main effect and 3.2 for an interaction at its boundary, whereas the
+equivalence criterion (95 per cent inside) corresponds to a Bayes factor above 100. The
+rule therefore now takes the stricter criterion on each side: a non-negligible verdict
+also requires an interval Bayes factor of at least 10, computed as the ratio of posterior to
+prior odds of the two regions from the reference (weakly informative) refit, and the
+equivalence verdict keeps the posterior criterion. The Hypothesis 4 contrast keeps its own
+posterior criteria, with the Bayes factors of its constituent interactions reported beside
+it. Because the Bayes factor is computed under the reference prior, a review-derived prior
+centred on the prediction never supplies the evidence that confirms it, which replaces the
+earlier answer to the circularity question under Priors.
+
+- `design_analysis/solve_at_bf10.R` prices the new criterion from the archived curves by a
+  normal approximation (calibration against the simulated probabilities within 0.06 at every
+  grid point, written to `sweeps/bf10_calibration.csv`) and writes `minimum_texts_bf10.csv`.
+  At 0.90 the binding requirements are about 930, 930 and 940 distinct texts for the three
+  main effects (simulated posterior-criterion figures: 738, 660, 634), about 1,470 and 1,480
+  for the two age-band interactions, about 1,470 for the narration interaction and about 810
+  children in tier 2; at 0.95, 1,120, 1,120 and 1,130 texts, 970 children, and the
+  interactions not reached within 1,600 texts. Table 1 and the Design and precision analysis
+  quote these beside the simulated figures, and `check_reported_numbers.R` gates them.
+- Twelve Crossref-verified methodological sources added (Morey and Rouder 2011; Klugkist,
+  Kato and Hoijtink 2005; Linde et al. 2023; Campbell and Gustafson 2023 and the 2021
+  arXiv reply; Schönbrodt and Wagenmakers 2018; van Doorn et al. 2023; Heck et al. 2023;
+  Lakens et al. 2020; Rouder, Haaf and Vandekerckhove 2018; Hoijtink et al. 2019; Kelter
+  2025; Schad and Modrák 2026); Kruschke 2018, already in the bibliography, is now cited.
+- The abstract no longer uses "posterior", "crossed-effects" or "region of practical
+  equivalence"; it names the three text properties in plain words and judges each
+  association against a pre-set smallest effect of interest (149 words).
+
 ### 24 September 2026: anonymised title page, one home per registered rule, supplement de-duplicated
 
 No hypothesis, threshold, Table 1 cell or Table 2 cell changed; `check_reported_numbers.R`
