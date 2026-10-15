@@ -64,9 +64,9 @@ source("R/references.R")
 COL_MM <- 269
 dims <- list(
   evidence  = c(COL_MM, evidence_height_mm()),
-  scopus    = c(COL_MM, 80),
-  model     = c(COL_MM, 136),
-  precision = c(COL_MM, 130)
+  scopus    = c(COL_MM, 82),
+  model     = c(COL_MM, 142),
+  precision = c(COL_MM, 136)
 )
 
 # The QR code opens this folder on the main branch, where README.md shows the
@@ -129,7 +129,7 @@ Scopus records matching each search, counted on 14 October 2026 with the scopusf
 
 ## *Let's Story*: AI stories, logged at scale
 
-In this feature of a children's app, a generative model writes stories from the character, setting, plot and theme a child picks [@ratnerDidRobotWrite2025]. In its first month, *Let's Story* logged 419,700 story sessions in 18 languages [@ratnerProductiveStruggleChildrens2026].
+In this app feature, a child picks a hero, companion, setting, plot and theme. A generative model then writes the story [@ratnerDidRobotWrite2025]. In its first month, *Let's Story* logged 419,700 sessions in 18 languages [@ratnerProductiveStruggleChildrens2026].
 
 ## Six confirmatory hypotheses
 
@@ -140,7 +140,7 @@ We test whether text features that slow or speed reading in the laboratory do th
 ```
 
 ::: {.caption}
-A plus sign predicts slower reading (more seconds per word), a minus sign faster reading. H2 and H3 are two-sided because rival accounts predict opposite signs. The analysis covers the app's 7–8 and 9+ age bands, in ten of its languages.
+A plus sign predicts slower reading, a minus sign faster. H2 and H3 are `#box[two-sided]`{=typst} because rival accounts predict opposite signs. The analysis covers two age bands (7–8 and 9+) and ten of the app's languages.
 :::
 
 ## Precision comes from stories, not sessions

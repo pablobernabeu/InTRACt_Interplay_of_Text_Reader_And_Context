@@ -3,7 +3,7 @@
 //
 // The sheet is A1 portrait, 594 x 841 mm. Sizes are set for reading at one to
 // two metres: body 26 pt, section heads 36 pt, the message 46 pt, and nothing
-// smaller than 21 pt anywhere on the sheet.
+// smaller than 22 pt anywhere on the sheet.
 
 // The theme takes its two colours from the department's lockup: Oxford blue,
 // and the green of the department's tree. That green clears only 2.8:1 against
@@ -39,7 +39,7 @@
 ]
 
 #let caption(body) = block(above: 4mm, below: 6mm)[
-  #set text(size: 21pt, fill: ink-soft)
+  #set text(size: 22pt, fill: ink-soft)
   #set par(leading: 0.42em)
   #body
 ]
@@ -79,45 +79,46 @@
 ]
 
 // A small label over a logo, saying what the logo stands for here.
-#let logo-label(body) = text(size: 21pt, fill: ink-soft)[#body]
+#let logo-label(body) = text(size: 22pt, fill: ink-soft)[#body]
 
-// The foot of the sheet, in three rows. The middle row holds the project's
-// logo, the funders', the acknowledgement with the contact address, and the QR
-// code that carries what the sheet leaves out, the reference list included, all
+// The foot of the sheet, in two rows. The lower row holds the project's logo,
+// the funders', the acknowledgement with the contact address, and the QR code
+// that carries what the sheet leaves out, the reference list included, all
 // centred on one line. Above it, short labels say what the first two logos
-// stand for; below it, the QR code's short address serves readers who would
-// rather type than scan. The funders' two logos are stacked at one width, so
-// they share a single slot.
+// stand for. The QR code's caption carries its short address, for readers who
+// would rather type than scan. The funders' two logos are stacked at one
+// width, so they share a single slot.
 #let footer(qr: none, qr-url: none, qr-caption: none, short-url: none, project-logo: none,
             funder-logos: (), funder-text: none, thanks: none, contact: none) = block(
   width: 100%, above: 6mm)[
   #grid(columns: (auto, auto, 1fr, auto), column-gutter: 13mm, row-gutter: 2mm,
-    align: (x, y) => if y == 0 { left + bottom } else if y == 2 { right + top }
+    align: (x, y) => if y == 0 { left + bottom }
       else { (left, left, center, right).at(x) + horizon },
     logo-label[Part of], logo-label[Funded by], [], [],
-    image(project-logo, height: 33mm, width: auto),
+    image(project-logo, height: 32mm, width: auto),
     grid(columns: (auto, auto), column-gutter: 7mm, align: (center + horizon, left + horizon),
       stack(spacing: 3.5mm, ..funder-logos.map(f => image(f, width: 54mm))),
       block[
-        #set text(size: 22pt, fill: ink)
+        #set text(size: 24pt, fill: ink)
         #set par(leading: 0.4em)
         #funder-text
       ]),
     block[
       #set par(leading: 0.4em)
-      #text(size: 22pt, fill: ink)[#thanks]
+      #text(size: 23pt, fill: ink)[#thanks]
       #v(3mm)
-      #text(size: 22pt, fill: ox-mid)[#contact]
+      #text(size: 23pt, fill: ox-mid)[#contact]
     ],
-    grid(columns: (auto, 37mm), column-gutter: 6mm, align: (right + horizon, center + horizon),
+    grid(columns: (auto, 35mm), column-gutter: 6mm, align: (right + horizon, center + horizon),
       block[
         #set par(leading: 0.36em, justify: false)
         #set align(right)
-        #text(size: 22pt, weight: "semibold", fill: ox-blue)[#qr-caption]
+        #text(size: 23pt, weight: "semibold", fill: ox-blue)[#qr-caption]
+        #v(2.5mm)
+        #text(size: 23pt, weight: "bold", fill: ox-blue)[#short-url]
       ],
       // On screen the code opens what it encodes, so the PDF works unprinted.
-      link(qr-url, image(qr, width: 37mm))),
-    [], [], [], text(size: 23pt, weight: "bold", fill: ox-blue)[#short-url])
+      link(qr-url, image(qr, width: 35mm))))
 ]
 
 // A figure with links laid over it. Typst draws an SVG's text without the links
@@ -191,7 +192,7 @@
   ]
 
   // The message, in a band only as deep as its two lines.
-  block(width: 100%, fill: tint, outset: (x: page-margin-x), inset: (y: 8mm), below: 7mm)[
+  block(width: 100%, fill: tint, outset: (x: page-margin-x), inset: (y: 6mm), below: 7mm)[
     #set par(leading: 0.34em)
     #text(size: 46pt, weight: "semibold", fill: ox-blue)[#message]
   ]

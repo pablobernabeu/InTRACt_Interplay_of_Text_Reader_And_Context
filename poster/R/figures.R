@@ -56,9 +56,9 @@ register_poster_fonts <- function(dir = FONT_DIR) {
 }
 
 # Text sizes on an A1 sheet read at one to two metres. Body text on the poster is
-# 26 pt; nothing in a figure is drawn below 21 pt.
-BASE_PT <- 25
-MIN_PT  <- 21
+# 26 pt; nothing in a figure is drawn below 22 pt.
+BASE_PT <- 26
+MIN_PT  <- 22
 pt_mm   <- function(pt) pt / ggplot2::.pt  # geom_text() sizes are in mm
 
 # Width of a label as drawn, in mm, so a label column can be sized to its
@@ -172,7 +172,7 @@ read_evidence <- function(file = "data/evidence.csv") {
 
 # Rows and group headings take fixed heights in mm, so the figure grows with the
 # file instead of squeezing its rows; poster.qmd asks for this height.
-EV_ROW_MM <- 15; EV_HEAD_MM <- 18; EV_FRAME_MM <- 38
+EV_ROW_MM <- 16; EV_HEAD_MM <- 19; EV_FRAME_MM <- 39
 evidence_height_mm <- function(file = "data/evidence.csv") {
   ev <- read_evidence(file)
   EV_FRAME_MM + EV_ROW_MM * nrow(ev) + EV_HEAD_MM * length(unique(ev$group))
@@ -207,7 +207,7 @@ fig_evidence <- function(width_mm, height_mm, file = "data/evidence.csv") {
 
   # The axis runs further left than the lowest interval needs, so that a verdict
   # centred on zero clears the label column.
-  xr <- c(-0.67, 0.75)
+  xr <- c(-0.7, 0.75)
   # The group headings have rows of their own, so they may run past the label
   # column; only the labels and sources set its width.
   lab_mm <- max(text_mm(ev$label, MIN_PT + 1), text_mm(ev$source, MIN_PT)) + 6
@@ -592,8 +592,11 @@ fig_model <- function(width_mm, height_mm) {
         size = MIN_PT + 2, colour = PAL[["ox_mid"]]) +
     txt((ox0 + W) / 2, mean(rate) - 0.105 * H, "H5", size = MIN_PT,
         colour = PAL[["ox_mid"]]) +
-    txt((ox0 + W) / 2, 0.935 * H, "H6: more reading,\nfaster pace", size = MIN_PT,
-        colour = PAL[["ox_blue"]], face = "plain") +
+    # Centred over the outcome column, unless it would then run past the
+    # figure's right edge, where the SVG would cut it.
+    txt(min((ox0 + W) / 2, W - text_mm("H6: more reading,", MIN_PT) / 2 - 1), 0.935 * H,
+        "H6: more reading,\nfaster pace", size = MIN_PT, colour = PAL[["ox_blue"]],
+        face = "plain") +
     annotate("segment", x = (ox0 + W) / 2, xend = (ox0 + W) / 2, y = 0.865 * H,
              yend = pace[2] + 0.004 * H, colour = PAL[["ox_blue"]], linewidth = 1.1,
              arrow = arrow(length = unit(3.5, "mm"), type = "closed"))
