@@ -1,0 +1,8 @@
+# Quarto's cache and the intermediate Typst source it writes when keep-typ is on.
+.quarto/
+poster.typ
+*_files/
+
+# The figures and the evidence map's link positions are rebuilt from data/ on
+# every render, and are embedded in poster.pdf, which is committed.
+figures/
