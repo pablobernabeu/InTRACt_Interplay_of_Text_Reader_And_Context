@@ -1,0 +1,181 @@
+---
+title: "The language on the screen: children's reading in a multilingual story app"
+kicker: "InTRACt · Interplay of Text, Reader And Context"
+# The department's logo stands in for the printed affiliation in the header;
+# the affiliations below still reach the PDF's metadata.
+header-logo: img/oxford-education.png
+author:
+  - name: Pablo Bernabeu
+    email: pablo.bernabeu@education.ox.ac.uk
+    affiliations: [{ref: oxed}]
+  - name: Riddhi Jain
+    affiliations: [{ref: oxed}]
+  - name: Suzanna Dryden
+    affiliations: [{ref: oxed}]
+  - name: Sara Ratner
+    affiliations: [{ref: oxed}]
+  - name: Victoria A. Murphy
+    affiliations: [{ref: oxed}]
+affiliations:
+  - id: oxed
+    name: University of Oxford
+    department: Department of Education
+# One sentence to a line: the backslash ends the first line.
+message: |
+  Research has asked whether screens help or hurt children's reading.\
+  We ask how the language of on-screen stories shapes reading too.
+lang: en-GB
+# The works the poster cites, in the protocol's APA 7 style. The sheet prints
+# author-date citations only; R/references.R writes the full list into
+# README.md, which the QR code opens.
+bibliography: references.bib
+csl: ../preregistration/apa7.csl
+suppress-bibliography: true
+link-citations: false
+# cite-links.lua formats the citations itself and links each to its work's DOI.
+filters:
+  - typst-blocks.lua
+  - path: cite-links.lua
+    at: post-render
+format:
+  typst:
+    papersize: a1
+    font-paths: [fonts]
+    citeproc: true
+    keep-typ: false
+    template-partials:
+      - typst-template.typ
+      - typst-show.typ
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+#| include: false
+source("R/figures.R")
+source("R/references.R")
+
+# The body is two columns of (594 - 2 x 18 - 20) / 2 = 269 mm, set by the page
+# margins and column gutter in typst-template.typ. Figures are drawn at exactly
+# that width, so their type prints at the size it was set.
+COL_MM <- 269
+dims <- list(
+  evidence  = c(COL_MM, evidence_height_mm()),
+  scopus    = c(COL_MM, 80),
+  model     = c(COL_MM, 136),
+  precision = c(COL_MM, 130)
+)
+
+# The QR code opens this folder on the main branch, where README.md shows the
+# reference list. The short address printed above it redirects to the same
+# folder (TinyURL, created 15 October 2026).
+REPO <- "https://github.com/pablobernabeu/InTRACt_Interplay_of_Text_Reader_And_Context"
+POSTER_URL <- paste0(REPO, "/tree/main/poster")
+SHORT_URL <- "tinyurl.com/intract-poster"
+build_figures(dims, POSTER_URL)
+write_references(bib = unlist(rmarkdown::metadata$bibliography),
+                 csl = rmarkdown::metadata$csl)
+
+gap <- scopus_gap()
+fmt <- function(x) format(x, big.mark = ",", trim = TRUE)
+n_digital <- fmt(gap[["Digital reading"]])
+n_both    <- fmt(gap[["Digital reading × Language of the text × Log data"]])
+req <- precision_requirements()
+```
+
+```{=typst}
+#grid(columns: (1fr, 1fr), column-gutter: col-gutter,
+[
+#kicker[What we know]
+```
+
+## Screens, apps and children's reading
+
+In 2025, more than one in five UK 8- to 18-year-olds read fiction on a screen at least monthly [@pictonTrendsChildrenYoung2026].
+
+```{=typst}
+#linked-image("figures/evidence.svg", "figures/evidence-links.json")
+```
+
+::: {.caption}
+Italic rows give findings without a pooled g or d. In the other rows, k is the number of comparisons pooled.
+:::
+
+::: {.takeaway}
+Plain screens cost about 0.2 SD of comprehension, with no clear cost for narratives. Add-ons help when they serve the story, and ed-tech gains shrink on standardised tests.
+:::
+
+### Where the research has looked
+
+Research on children's digital reading has studied devices and add-ons far more than the language of the text or log data.
+
+```{=typst}
+#image("figures/scopus.svg")
+```
+
+::: {.caption}
+Scopus records matching each search, counted on 14 October 2026 with the scopusflow package [@bernabeuScopusflowCRAN2026]. AI's share doubled, yet we found no meta-analysis of generative AI and children's reading.
+:::
+
+```{=typst}
+],
+[
+#kicker[What we will test]
+#bignum[`r n_both`][of `r n_digital` records on children's digital reading matched both our #box[language-of-the-text] and #box[log-data] searches. This study brings the two together.]
+```
+
+## *Let's Story*: AI stories, logged at scale
+
+In this feature of a children's app, a generative model writes stories from the character, setting, plot and theme a child picks [@ratnerDidRobotWrite2025]. In its first month, *Let's Story* logged 419,700 story sessions in 18 languages [@ratnerProductiveStruggleChildrens2026].
+
+## Six confirmatory hypotheses
+
+We test whether text features that slow or speed reading in the laboratory do the same in the app.
+
+```{=typst}
+#image("figures/model.svg")
+```
+
+::: {.caption}
+A plus sign predicts slower reading (more seconds per word), a minus sign faster reading. H2 and H3 are two-sided because rival accounts predict opposite signs. The analysis covers the app's 7–8 and 9+ age bands, in ten of its languages.
+:::
+
+## Precision comes from stories, not sessions
+
+```{=typst}
+#image("figures/precision.svg")
+```
+
+::: {.caption}
+Chance that a 0.10 SD effect is judged non-negligible (95% interval outside ±0.05 SD), simulated with the pilotr package [@bernabeuPilotrCRAN2026]. A main effect needs `r req$main_lo`–`r req$main_hi` distinct stories, or about `r req$bf_main` under the registered `#box[Bayes-factor]`{=typst} rule. Assumed: one reading per child, 9% of the variance between stories and 20% between children, equal age bands, independent text measures, and no language terms, covariates or priors.
+:::
+
+::: {.takeaway}
+Effects that hold in the app could inform how AI stories are pitched to each age band, though faster reading is not better understanding. Effects that fade may reflect home reading conditions or the measure as much as the theory.
+:::
+
+```{=typst}
+])
+```
+
+```{=typst}
+#v(1fr)
+#band[A Registered Report on sealed data][
+  #steps(
+    [Peer review before any outcome is seen],
+    [Logs released only after acceptance],
+    [Text measures fixed blind to outcomes],
+    [Decision rules set in advance],
+  )
+]
+#footer(qr: "figures/qr.svg", qr-url: "`r POSTER_URL`",
+  qr-caption: [References, \ protocol and code],
+  short-url: link("https://`r SHORT_URL`")[`r SHORT_URL`],
+  project-logo: "img/lift.png", funder-logos: ("img/kinder.png", "img/ferrero.png"),
+  funder-text: [and the John Fell Fund, \ University of Oxford],
+  thanks: [We thank Gameloft for their collaboration.],
+  contact: link("mailto:pablo.bernabeu@education.ox.ac.uk")[pablo.bernabeu\@education.ox.ac.uk])
+```
