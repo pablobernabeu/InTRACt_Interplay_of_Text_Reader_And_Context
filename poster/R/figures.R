@@ -172,7 +172,7 @@ read_evidence <- function(file = "data/evidence.csv") {
 
 # Rows and group headings take fixed heights in mm, so the figure grows with the
 # file instead of squeezing its rows; poster.qmd asks for this height.
-EV_ROW_MM <- 16; EV_HEAD_MM <- 19; EV_FRAME_MM <- 39
+EV_ROW_MM <- 16.5; EV_HEAD_MM <- 19; EV_FRAME_MM <- 39
 evidence_height_mm <- function(file = "data/evidence.csv") {
   ev <- read_evidence(file)
   EV_FRAME_MM + EV_ROW_MM * nrow(ev) + EV_HEAD_MM * length(unique(ev$group))
@@ -181,6 +181,9 @@ evidence_height_mm <- function(file = "data/evidence.csv") {
 fig_evidence <- function(width_mm, height_mm, file = "data/evidence.csv") {
   ev <- read_evidence(file)
   for (v in c("group", "label", "source", "verdict")) ev[[v]] <- curly(ev[[v]])
+  # The sheet names each source and its children's ages; how many comparisons
+  # or studies it pooled stays in data/evidence.csv, behind the QR code.
+  ev$source <- sub(" · (k = [0-9]+|[0-9]+ studies)$", "", ev$source)
 
   # Rows run top to bottom in file order, with a heading above each group. The
   # label and its source form a column of their own inside the panel, left of
@@ -275,7 +278,7 @@ fig_evidence <- function(width_mm, height_mm, file = "data/evidence.csv") {
                        expand = expansion(add = 0)) +
     scale_y_continuous(limits = c(bottom, top + 0.75), expand = expansion(add = 0)) +
     coord_cartesian(xlim = c(xmin, xr[2]), clip = "off") +
-    labs(x = "Pooled effect in standard deviations (g or d), with 95% interval", y = NULL) +
+    labs(x = "Average effect in standard deviations, with 95% interval", y = NULL) +
     theme_poster() +
     # The coloured direction labels above the panel are the key, which keeps a
     # legend from sitting over the lowest intervals.
@@ -435,7 +438,7 @@ fig_precision <- function(width_mm, height_mm,
   n_line <- tapply(texts$param, texts$term, function(x) length(unique(x)))
   words <- c("One", "Two", "Three", "Four", "Five", "Six")
   key_lab <- c(main = sprintf("%s main effects (H1)", words[n_line[["main"]]]),
-               int  = sprintf("%s age-band interactions (H2, H3)", words[n_line[["int"]]]))
+               int  = sprintf("%s age-band differences (H2, H3)", words[n_line[["int"]]]))
 
   panel <- function(d, x, title, xlab, breaks) {
     p <- ggplot(d, aes(.data[[x]], p_meaningful, colour = term, linetype = term,
@@ -509,97 +512,161 @@ precision_requirements <- function(file = file.path(DESIGN_DIR, "minimum_texts.c
 }
 
 # ---------------------------------------------------------------------------
-# The six registered hypotheses, drawn as one diagram
+# The six registered hypotheses, one row each, in order
 # ---------------------------------------------------------------------------
 
-# Each text property runs to a common bus and from there to the two outcomes.
-# A property's path carries its predicted sign (H1) and a tag for each
-# hypothesis that qualifies it: narration on the lexical and continuity paths
-# (H4 sets one against the other), the age band on the grammatical (H2) and
-# continuity (H3) paths.
-fig_model <- function(width_mm, height_mm) {
-  W <- width_mm; H <- height_mm
-  bx <- function(x0, x1, y0, y1, fill, colour = NA)
-    annotate("rect", xmin = x0, xmax = x1, ymin = y0, ymax = y1, fill = fill,
-             colour = colour, linewidth = 0.9)
-  txt <- function(x, y, label, size = MIN_PT + 3, colour = "white", face = "bold",
-                  hjust = 0.5, lineheight = 0.92)
-    annotate("text", x = x, y = y, label = label, family = FONT, size = pt_mm(size),
-             colour = colour, fontface = face, hjust = hjust, lineheight = lineheight)
-  tag <- function(x, y, label, colour)
-    annotate("label", x = x, y = y, label = label, family = FONT, size = pt_mm(MIN_PT),
-             colour = colour, fill = "white", linewidth = 0.7, lineheight = 0.95,
-             label.padding = unit(2, "mm"), label.r = unit(2.5, "mm"))
+# The protocol's outcome is log seconds per word, on which a feature that slows
+# reading has a positive sign. A poster reader takes a plus to mean faster, so
+# the figure states each prediction on the reading-speed scale instead, as
+# "slower" or "faster". Log words per second is exactly the negative of log
+# seconds per word, so every registered prediction keeps its meaning. The rows
+# run H1 to H6 from top to bottom, each hypothesis named once. H1's three
+# features are boxes, and the rows below name the feature each one concerns in
+# that feature's colour. H5's outcome is the child's difficulty rating, on
+# which the same features act the other way round, so its row says so in words
+# and draws no arrow.
+LADDER <- list(box_h = 22, box_gap = 4, group_gap = 8, row_h = 13, row2_h = 22,
+               row_gap = 4, pad = 2)
+LADDER_ROWS <- c(1, 1, 2, 2, 1)          # lines in the rows for H2 to H6
 
-  fx1 <- 0.405 * W                    # right edge of the property boxes
-  bus <- 0.745 * W                    # where the three paths meet
-  ox0 <- 0.782 * W                    # left edge of the outcome boxes
-  fh  <- 0.22 * H
-  fy  <- c(0.78, 0.47, 0.16) * H      # centres of the three property boxes
+model_height_mm <- function() {
+  with(LADDER, 2 * pad + 3 * box_h + 2 * box_gap + group_gap +
+         sum(ifelse(LADDER_ROWS == 1, row_h, row2_h)) + (length(LADDER_ROWS) - 1) * row_gap)
+}
+
+fig_model <- function(width_mm, height_mm) {
+  W <- width_mm; H <- height_mm; L <- LADDER
+  lab_pt <- MIN_PT + 5; title_pt <- MIN_PT + 4; sub_pt <- MIN_PT + 1; row_pt <- MIN_PT + 4
+  col <- c(lex = PAL[["lexical"]], gram = PAL[["grammatical"]], cont = PAL[["continuity"]],
+           ink = PAL[["ink"]], out = PAL[["ox_mid"]])
+  y_at <- function(top) H - top                     # mm from the top to plot units
+  txt <- function(x, top, label, size, colour, face = "plain", hjust = 0, lineheight = 0.92)
+    annotate("text", x = x, y = y_at(top), label = label, family = FONT, size = pt_mm(size),
+             colour = colour, fontface = face, hjust = hjust, lineheight = lineheight)
+  # A line of text set in parts, each in its own colour and weight, placed from
+  # the parts' measured widths. The SVG drops a part's leading or trailing
+  # space, so each part is drawn trimmed and its spaces become measured gaps.
+  space_mm <- text_mm(" ", row_pt)
+  part_widths <- function(text, face, size = row_pt)
+    vapply(seq_along(text), function(i)
+      text_mm(trimws(text[i]), size, bold = face[i] == "bold") +
+        space_mm * (nchar(text[i]) - nchar(trimws(text[i]))), 0)
+  parts <- function(x, top, text, colour, face, size = row_pt) {
+    w <- part_widths(text, face, size)
+    lead <- space_mm * (nchar(text) - nchar(sub("^ +", "", text)))
+    xs <- x + c(0, cumsum(w))[seq_along(text)] + lead
+    lapply(seq_along(text), function(i)
+      txt(xs[i], top, trimws(text[i]), size, colour[i], face[i]))
+  }
+  # An effect: a triangle pointing up for faster or down for slower (both for
+  # either), and its word.
+  effect <- function(x, top, dir, word, colour) {
+    shapes <- c(up = 24, down = 25)[dir]
+    dx <- seq(0, by = 6, length.out = length(shapes))
+    c(lapply(seq_along(shapes), function(i)
+        annotate("point", x = x + 2.5 + dx[i], y = y_at(top), shape = shapes[i], size = 5,
+                 colour = colour, fill = colour)),
+      list(txt(x + 2.5 + max(dx) + 5, top, word, row_pt, colour, "bold")))
+  }
+
   feat <- data.frame(
-    y = fy,
-    fill = c(PAL[["lexical"]], PAL[["grammatical"]], PAL[["continuity"]]),
+    key = c("lex", "gram", "cont"),
     title = c("Lexical difficulty", "Grammatical load", "Referential continuity"),
     sub = c("rare, long, unexpected words", "long, embedded sentences",
             "sentences that state their links"),
-    sign = c("+", "+", "−"),
-    tags = I(list("× narration  H4", "× age band  H2",
-                  c("× age band  H3", "× narration  H4")))
+    dir = c("down", "down", "up"), word = c("slower", "slower", "faster"))
+
+  x0 <- 20                                          # where the rows' content starts
+  box_w <- max(text_mm(feat$title, title_pt, bold = TRUE), text_mm(feat$sub, sub_pt)) + 12
+  x1 <- x0 + box_w
+
+  # H2 to H6, one row each. A row of two lines spans the figure's width; a row
+  # of one line ends in its effect, in the column of H1's effects.
+  rows <- list(
+    list(h = "H2", lines = list(list(c("Grammatical", " effect, by age band"),
+                                     c("gram", "ink"), c("bold", "plain"))),
+         eff = list(dir = c("up", "down"), word = "either way", col = "gram")),
+    list(h = "H3", lines = list(list(c("Continuity", " effect, by age band"),
+                                     c("cont", "ink"), c("bold", "plain"))),
+         eff = list(dir = c("up", "down"), word = "either way", col = "cont")),
+    list(h = "H4", lines = list(
+      list(c("Narration shrinks the ", "lexical", " effect"),
+           c("ink", "lex", "ink"), c("plain", "bold", "plain")),
+      list(c("more than the ", "continuity", " effect"),
+           c("ink", "cont", "ink"), c("plain", "bold", "plain")))),
+    list(h = "H5", lines = list(
+      list("Children rate a story harder", "ink", "plain"),
+      list("when its features slow reading", "ink", "plain"))),
+    list(h = "H6", lines = list(list("More stories read so far", "ink", "plain")),
+         eff = list(dir = "up", word = "faster", col = "out"))
   )
+  stopifnot(length(rows) == length(LADDER_ROWS),
+            all(vapply(rows, function(r) length(r$lines), 0) == LADDER_ROWS))
+  # The effects form one column, clear of the boxes and of the longest row that
+  # ends in an effect.
+  row_end <- max(vapply(rows, function(r) if (is.null(r$eff)) 0 else
+    x0 + sum(part_widths(r$lines[[1]][[1]], r$lines[[1]][[3]])), 0))
+  eff_x <- max(x1, row_end) + 6
+  brk_x <- eff_x + 2.5 + 5 + max(text_mm(feat$word, row_pt, bold = TRUE)) + 6
+  out_x0 <- brk_x + 12
+  out_lines <- c("Reading", "speed", "words per", "second")
+  if (W - out_x0 < max(text_mm(out_lines[1:2], title_pt, bold = TRUE),
+                       text_mm(out_lines[3:4], sub_pt)) + 6)
+    stop("the hypotheses figure's outcome box is too narrow", call. = FALSE)
 
   p <- ggplot() + coord_cartesian(xlim = c(0, W), ylim = c(0, H), expand = FALSE, clip = "off") +
     theme_void() + theme(plot.background = element_rect(fill = PAL[["paper"]], colour = NA))
+  rule <- function(top) annotate("segment", x = 0, xend = W, y = y_at(top), yend = y_at(top),
+                                 colour = PAL[["grid"]], linewidth = 0.7)
 
-  sx <- fx1 + 0.06 * W                # the sign discs
-  p <- p + txt(sx, 0.975 * H, "H1: predicted sign", size = MIN_PT, colour = PAL[["ink_soft"]],
-               face = "bold")
+  # H1: the three features, each with its predicted effect, joined to the
+  # reading-speed outcome.
+  top <- L$pad
+  mid <- numeric(3)
   for (i in seq_len(nrow(feat))) {
     f <- feat[i, ]
-    p <- p + bx(0, fx1, f$y - fh / 2, f$y + fh / 2, f$fill) +
-      txt(fx1 / 2, f$y + 0.038 * H, f$title, size = MIN_PT + 4) +
-      txt(fx1 / 2, f$y - 0.05 * H, f$sub, size = MIN_PT, face = "plain") +
-      annotate("segment", x = fx1, xend = bus, y = f$y, yend = f$y, colour = f$fill,
-               linewidth = 1.8) +
-      annotate("point", x = sx, y = f$y, size = 14, shape = 21, fill = "white",
-               colour = f$fill, stroke = 1.8) +
-      txt(sx, f$y, f$sign, size = MIN_PT + 9, colour = f$fill)
-    tg <- f$tags[[1]]
-    tx <- if (length(tg) == 1) (sx + bus) / 2 + 0.02 * W else
-      c(sx + 0.16 * W, sx + 0.16 * W)
-    ty <- if (length(tg) == 1) f$y else f$y + c(0.075, -0.075) * H
-    for (k in seq_along(tg)) p <- p + tag(tx[k], ty[k], tg[k], f$fill)
+    t0 <- top + (i - 1) * (L$box_h + L$box_gap)
+    mid[i] <- t0 + L$box_h / 2
+    p <- p +
+      annotate("rect", xmin = x0, xmax = x1, ymin = y_at(t0 + L$box_h), ymax = y_at(t0),
+               fill = col[[f$key]]) +
+      txt((x0 + x1) / 2, mid[i] - 4.8, f$title, title_pt, "white", "bold", hjust = 0.5) +
+      txt((x0 + x1) / 2, mid[i] + 5, f$sub, sub_pt, "white", hjust = 0.5) +
+      effect(eff_x, mid[i], f$dir, f$word, col[[f$key]]) +
+      annotate("segment", x = brk_x - 4, xend = brk_x, y = y_at(mid[i]), yend = y_at(mid[i]),
+               colour = col[["out"]], linewidth = 1.2)
   }
-
-  # The bus and the two outcomes: reading pace carries H1 to H4 and H6, the
-  # child's own rating H5.
-  pace <- c(0.46, 0.80) * H
-  rate <- c(0.05, 0.34) * H
+  g_top <- top; g_bot <- top + 3 * L$box_h + 2 * L$box_gap
   p <- p +
-    annotate("segment", x = bus, xend = bus, y = min(fy), yend = max(fy),
-             colour = PAL[["ox_blue"]], linewidth = 2.2) +
-    annotate("segment", x = bus, xend = ox0, y = mean(pace), yend = mean(pace),
-             colour = PAL[["ox_blue"]], linewidth = 1.8,
-             arrow = arrow(length = unit(4.5, "mm"), type = "closed")) +
-    annotate("segment", x = bus, xend = ox0, y = mean(rate), yend = mean(rate),
-             colour = PAL[["ox_mid"]], linewidth = 1.4, linetype = "22",
-             arrow = arrow(length = unit(4.5, "mm"), type = "closed")) +
-    bx(ox0, W, pace[1], pace[2], PAL[["ox_blue"]]) +
-    txt((ox0 + W) / 2, mean(pace) + 0.075 * H, "Reading\npace", size = MIN_PT + 4) +
-    txt((ox0 + W) / 2, mean(pace) - 0.09 * H, "log seconds\nper word", size = MIN_PT,
-        face = "plain") +
-    bx(ox0, W, rate[1], rate[2], "white", colour = PAL[["ox_mid"]]) +
-    txt((ox0 + W) / 2, mean(rate) + 0.04 * H, curly("Child's\ndifficulty\nrating"),
-        size = MIN_PT + 2, colour = PAL[["ox_mid"]]) +
-    txt((ox0 + W) / 2, mean(rate) - 0.105 * H, "H5", size = MIN_PT,
-        colour = PAL[["ox_mid"]]) +
-    # Centred over the outcome column, unless it would then run past the
-    # figure's right edge, where the SVG would cut it.
-    txt(min((ox0 + W) / 2, W - text_mm("H6: more reading,", MIN_PT) / 2 - 1), 0.935 * H,
-        "H6: more reading,\nfaster pace", size = MIN_PT, colour = PAL[["ox_blue"]],
-        face = "plain") +
-    annotate("segment", x = (ox0 + W) / 2, xend = (ox0 + W) / 2, y = 0.865 * H,
-             yend = pace[2] + 0.004 * H, colour = PAL[["ox_blue"]], linewidth = 1.1,
-             arrow = arrow(length = unit(3.5, "mm"), type = "closed"))
+    txt(0, mean(mid), "H1", lab_pt, PAL[["ox_blue"]], "bold") +
+    annotate("segment", x = brk_x, xend = brk_x, y = y_at(mid[1]), yend = y_at(mid[3]),
+             colour = col[["out"]], linewidth = 1.2) +
+    annotate("segment", x = brk_x, xend = out_x0, y = y_at(mean(mid)), yend = y_at(mean(mid)),
+             colour = col[["out"]], linewidth = 1.2,
+             arrow = arrow(length = unit(3.5, "mm"), type = "closed")) +
+    annotate("rect", xmin = out_x0, xmax = W, ymin = y_at(g_bot), ymax = y_at(g_top),
+             fill = PAL[["ox_blue"]]) +
+    txt((out_x0 + W) / 2, mean(mid) - 9.5, "Reading\nspeed", title_pt, "white", "bold",
+        hjust = 0.5) +
+    txt((out_x0 + W) / 2, mean(mid) + 11, "words per\nsecond", sub_pt, "white", hjust = 0.5)
+
+  # H2 to H6, one row each, below H1.
+  top <- g_bot + L$group_gap
+  line_mm <- row_pt * 25.4 / 72 * 1.05
+  for (r in rows) {
+    h <- if (length(r$lines) == 1) L$row_h else L$row2_h
+    p <- p + rule(top - L$row_gap / 2 - 1)
+    centre <- top + h / 2
+    tops <- centre + (seq_along(r$lines) - (length(r$lines) + 1) / 2) * line_mm
+    p <- p + txt(0, centre, r$h, lab_pt, PAL[["ox_blue"]], "bold")
+    for (k in seq_along(r$lines)) {
+      ln <- r$lines[[k]]
+      p <- p + parts(x0, tops[k], ln[[1]], col[ln[[2]]], ln[[3]])
+    }
+    if (!is.null(r$eff))
+      p <- p + effect(eff_x, centre, r$eff$dir, r$eff$word, col[[r$eff$col]])
+    top <- top + h + L$row_gap
+  }
   p
 }
 

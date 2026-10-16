@@ -44,12 +44,12 @@
   #body
 ]
 
-// A large number with its gloss beside it.
-#let bignum(n, body, colour: green-ink) = block(width: 100%, fill: tint, radius: 3mm,
-  inset: (x: 8mm, y: 5mm), above: 5mm, below: 4mm)[
-  #grid(columns: (auto, 1fr), column-gutter: 8mm, align: (center + horizon, left + horizon),
-    text(size: 110pt, weight: "extrabold", fill: colour)[#n],
-    text(size: 26pt, fill: ink)[#body])
+// The study's question, in a tinted box that opens the right-hand column.
+#let question(body) = block(width: 100%, fill: tint, radius: 3mm,
+  inset: (x: 8mm, y: 6mm), above: 5mm, below: 4mm)[
+  #set text(size: 29pt, weight: "semibold", fill: ox-blue)
+  #set par(leading: 0.42em)
+  #body
 ]
 
 // The safeguards strip: numbered steps in a row, each number beside its text.
