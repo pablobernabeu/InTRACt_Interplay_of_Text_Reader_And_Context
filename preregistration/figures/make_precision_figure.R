@@ -135,8 +135,11 @@ audit_panel(pa, "main panel a")
 audit_panel(pb, "main panel b")
 
 # The manuscript embeds the PDF, where the type stays selectable text, and
-# cairo_pdf embeds the fonts. Neither document uses the PNG.
-save_plot(file.path(OUT, "fig_precision.png"), fig, width = 11, height = 5, dpi = 300)
+# cairo_pdf embeds the fonts. Neither document uses the PNG. ggsave() draws a PNG
+# with ragg only when ragg is installed and otherwise falls back to a device that
+# rasterises text differently, so ragg is named here and the dependency is declared.
+save_plot(file.path(OUT, "fig_precision.png"), fig, width = 11, height = 5, dpi = 300,
+          device = ragg::agg_png)
 save_plot(file.path(OUT, "fig_precision.pdf"), fig, width = 11, height = 5,
           device = grDevices::cairo_pdf)
 
@@ -150,7 +153,8 @@ audit_panel(ps_a, "supplement panel a")
 audit_panel(ps_b, "supplement panel b")
 sup <- arrange_plots(ps_a, ps_b, ncol = 2, nrow = 1, guides = "collect") &
   theme(legend.position = "bottom", legend.box = "horizontal")
-save_plot(file.path(OUT, "fig_precision_supplement.png"), sup, width = 11, height = 5, dpi = 300)
+save_plot(file.path(OUT, "fig_precision_supplement.png"), sup, width = 11, height = 5, dpi = 300,
+          device = ragg::agg_png)
 save_plot(file.path(OUT, "fig_precision_supplement.pdf"), sup, width = 11, height = 5,
           device = grDevices::cairo_pdf)
 

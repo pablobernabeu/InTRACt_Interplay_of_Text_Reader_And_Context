@@ -69,8 +69,10 @@ ints <- utils::read.csv(file.path(OUT, "scopus_gap_sizes.csv"),
 class(ints) <- c("scopus_intersections", "data.frame")
 p <- strip_chrome(plot_scopus_intersections(ints))
 audit(p, "gap intersections")
+# ragg is named because ggsave() otherwise draws the PNG with whichever device is
+# installed, and the fallback rasterises text differently.
 ggplot2::ggsave(file.path(OUT, "scopus_gap_intersections.png"), p,
-                width = 7.5, height = 4.6, dpi = 300, bg = "white")
+                width = 7.5, height = 4.6, dpi = 300, bg = "white", device = ragg::agg_png)
 ggplot2::ggsave(file.path(OUT, "scopus_gap_intersections.pdf"), p,
                 width = 7.5, height = 4.6, bg = "white", device = grDevices::cairo_pdf)
 
@@ -89,7 +91,7 @@ pc <- suppressMessages(
 )
 audit(pc, "topic trends")
 ggplot2::ggsave(file.path(OUT, "scopus_topic_trends.png"), pc,
-                width = 7.5, height = 4.6, dpi = 300, bg = "white")
+                width = 7.5, height = 4.6, dpi = 300, bg = "white", device = ragg::agg_png)
 ggplot2::ggsave(file.path(OUT, "scopus_topic_trends.pdf"), pc,
                 width = 7.5, height = 4.6, bg = "white", device = grDevices::cairo_pdf)
 
