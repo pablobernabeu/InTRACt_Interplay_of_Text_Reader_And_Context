@@ -14,5 +14,8 @@ $endif$
 $if(message)$
   message: [$message$],
 $endif$
+$if(bleed)$
+  print-bleed: true,
+$endif$
   doc,
 )

@@ -242,12 +242,13 @@ fig_evidence <- function(width_mm, height_mm, file = "data/evidence.csv") {
       return(data.frame(y = told$y[i], x = left * per_mm, label = txt,
                         direction = factor(dirs, levels = names(DIR))))
     }
-    # Too wide for one line: the parts stack, each centred on zero, on the
-    # lines the row's label and citation take.
+    # Too wide for one line: the parts stack, each centred on zero, a little
+    # further apart than the row's label and citation, so that the lower part's
+    # white backing does not clip the upper part's descenders.
     if (length(w) != 2 || max(w) / 2 > room)
       stop("the verdict '", told$verdict[i], "' is too wide to centre on zero",
            call. = FALSE)
-    data.frame(y = told$y[i] + c(LAB_DY, SRC_DY), x = -w / 2 * per_mm, label = txt,
+    data.frame(y = told$y[i] + c(0.29, -0.29), x = -w / 2 * per_mm, label = txt,
                direction = factor(dirs, levels = names(DIR)))
   }))
 

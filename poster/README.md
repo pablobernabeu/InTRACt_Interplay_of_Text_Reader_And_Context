@@ -4,20 +4,23 @@ An A1 portrait conference poster (594 x 841 mm) on the InTRACt study, part of th
 [LiFT project](https://www.education.ox.ac.uk/project/lift-learning-in-families-through-technology/)
 at the Department of Education, University of Oxford. The left half sets out what meta-analyses
 and a bibliometric count show about digital technology and children's reading. The right half
-presents the study: the gap it addresses, the *Let's Story* logs, the six confirmatory
-hypotheses, the design analysis and the Registered Report safeguards. The poster reports no data
-from the study itself.
+presents the study: its question, the *Let's Story* logs, the six confirmatory hypotheses, the
+design analysis and the Registered Report safeguards. The poster reports no data from the study
+itself.
 
-[`poster.pdf`](poster.pdf) is the print file and [`poster-preview.png`](poster-preview.png) a
-72 dpi preview. The reference list is [at the end of this page](#references). The poster's QR
-code opens this folder, and so does the short address printed above it,
+[`poster.pdf`](poster.pdf) is the A1 sheet, for screens and for printers that add their own
+bleed. [`poster-print.pdf`](poster-print.pdf) is the same sheet with 3 mm of bleed and crop
+marks, on a 614 x 861 mm page. [`poster-preview.png`](poster-preview.png) is a 72 dpi preview.
+The reference list is [at the end of this page](#references). The poster's QR code opens this
+folder, and so does the short address printed beside it,
 [tinyurl.com/intract-poster](https://tinyurl.com/intract-poster).
 
 ## Building it
 
-From this folder:
+From this folder, the print file first, because Quarto writes `poster.pdf` and then renames it:
 
 ```bash
+quarto render poster.qmd -M bleed:true --output poster-print.pdf
 quarto render poster.qmd
 Rscript R/preview.R                                 # poster-preview.png, 72 dpi
 Rscript --no-save --no-restore R/scopus_counts.R   # only to refresh the Scopus counts
