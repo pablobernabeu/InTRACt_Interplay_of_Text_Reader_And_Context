@@ -13,10 +13,10 @@ suppressPackageStartupMessages({
   library(patchwork)
 })
 
-# The protocol's design-analysis outputs, copied from
-# ../preregistration/design_analysis/ on 15 October 2026, so that the poster
-# builds on a branch that lacks the protocol's latest files. Copy them again if
-# the design analysis is re-run.
+# The protocol's design-analysis outputs, copied on 15 October 2026 from
+# preregistration/design_analysis/ on the protocol branch, wip/bib-2026-07-21,
+# so that the poster also builds on main, whose protocol folder is an earlier
+# draft. Copy them again if the design analysis is re-run.
 DESIGN_DIR <- "data/design_analysis"
 
 # The palette is the poster's theme: Oxford blue, and the green of the
