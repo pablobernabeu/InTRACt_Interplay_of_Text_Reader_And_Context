@@ -300,7 +300,7 @@ fig_evidence <- function(width_mm, height_mm, file = "data/evidence.csv") {
   # A link box over each row's label and citation, which the poster lays over
   # the printed figure to open the source's DOI.
   url <- bib_urls()[ev$bibkey]
-  if (anyNA(url)) stop("references.bib gives no DOI or URL for ",
+  if (anyNA(url)) stop("data/references.bib gives no DOI or URL for ",
                        paste(unique(ev$bibkey[is.na(url)]), collapse = ", "), call. = FALSE)
   pm <- panel_mm(p, width_mm, height_mm)
   xlim <- c(xmin, xr[2]); ylim <- c(bottom, top + 0.75)
@@ -316,8 +316,12 @@ fig_evidence <- function(width_mm, height_mm, file = "data/evidence.csv") {
 }
 
 # The DOI of each entry in the poster's bibliography as a URL, or the entry's
-# URL where it has no DOI, named by citation key.
-bib_urls <- function(file = "references.bib") {
+# URL where it has no DOI, named by citation key. The file defaults to the one
+# poster.qmd names, so the path is written in one place only.
+bib_urls <- function(file = unlist(rmarkdown::metadata$bibliography)) {
+  if (length(file) != 1)
+    stop("bib_urls() needs the poster's single bibliography file: render poster.qmd, ",
+         "or pass `file`", call. = FALSE)
   x <- readLines(file, encoding = "UTF-8", warn = FALSE)
   starts <- grep("^@[A-Za-z]+\\{", x)
   ends <- c(starts[-1] - 1, length(x))

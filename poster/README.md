@@ -9,7 +9,7 @@ Pablo Bernabeu, Riddhi Jain, Suzanna Dryden, Sara Ratner and Victoria A. Murphy,
 Education, University of Oxford. Contact:
 [pablo.bernabeu@education.ox.ac.uk](mailto:pablo.bernabeu@education.ox.ac.uk).
 
-<a href="poster.pdf"><img src="poster-preview.png" alt="Preview of the poster" width="560"></a>
+<a href="poster.pdf"><img src="img/poster-preview.png" alt="Preview of the poster" width="560"></a>
 
 [Poster (PDF, A1)](poster.pdf) · [Print file with 3 mm bleed](poster-print.pdf) ·
 [Study protocol](../preregistration/) · [References](#references)
@@ -134,7 +134,7 @@ the app's logs or its story texts.
 - `data/scopus_*`: the Scopus counts and the full search record, from 14 October 2026.
 - `data/design_analysis/`: the protocol's design-analysis outputs behind the precision figure,
   copied on 15 October 2026 from `../preregistration/design_analysis/`.
-- `references.bib`: the works the poster cites, with fields checked against Crossref and CRAN.
+- `data/references.bib`: the works the poster cites, with fields checked against Crossref and CRAN.
 
 ## References
 
@@ -180,15 +180,15 @@ then renames it:
 ```bash
 quarto render poster.qmd -M bleed:true --output poster-print.pdf
 quarto render poster.qmd
-Rscript R/preview.R                                 # poster-preview.png, 72 dpi
+Rscript R/preview.R                                 # img/poster-preview.png, 72 dpi
 Rscript --no-save --no-restore R/scopus_counts.R   # only to refresh the Scopus counts
 ```
 
 Rendering needs R (4.6.1 here) with ggplot2, patchwork, svglite, systemfonts, ragg, qrcode,
 scales, jsonlite, rmarkdown and depictr, and Quarto (1.10.19 here, which bundles Typst 0.15.1
 and Pandoc 3.10). Set `QUARTO_R` to R's `bin` folder if Quarto cannot find R. The render makes no
-network request, and everything it reads is in this folder except the protocol's citation style,
-`../preregistration/apa7.csl`. `R/preview.R` needs pdftools and png, and it stops on a PDF that is
+network request, and everything it reads is in this folder, including `layout/apa7.csl`, a copy of
+the protocol's citation style. `R/preview.R` needs pdftools and png, and it stops on a PDF that is
 not a single A1 page. `R/scopus_counts.R` needs scopusflow 0.4.0 and a Scopus API key in the
 `SCOPUS_API_KEY` environment variable.
 
@@ -198,8 +198,9 @@ written.
 The audit covers the smallest text (23 pt), contrast, and separability of colours in greyscale
 and under simulated colour-vision deficiency. `R/references.R` writes the reference list and the
 evidence table on this page on every render. In the PDF, every citation links to its DOI.
-`cite-links.lua` adds the links in the text, and the template lays invisible link boxes over the
-evidence map's rows, whose positions `R/figures.R` writes with the figure.
+`layout/cite-links.lua` adds the links in the text, and the Typst template in `layout/` lays
+invisible link boxes over the evidence map's rows, whose positions `R/figures.R` writes with the
+figure.
 
 The colours are Oxford blue (#002147) and the green of the department's tree (#1dad89), with a
 darker shade of that green (#127b61) wherever it carries text or data. The typeface is Figtree,
