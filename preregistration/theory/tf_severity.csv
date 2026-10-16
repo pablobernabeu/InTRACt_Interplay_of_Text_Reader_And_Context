@@ -1,0 +1,11 @@
+"prediction_id","type","risk_score","computed_severity"
+"pred_h1_lexical","interval",0.7,0.7
+"pred_h1_syntax","interval",0.7,0.7
+"pred_h1_coherence","interval",0.7,0.8
+"pred_h2_syntax_by_age","interval",0.7,0.8
+"pred_h3_coherence_by_age","interval",0.7,0.8
+"pred_h4_narration_selectivity","interval",0.7,0.8
+"pred_h5_reported_difficulty","interval",0.7,0.8
+"pred_h6_accumulated_reading","interval",0.7,0.8
+"pred_within_level_persistence","interval",0.7,0.8
+"pred_no_spurious_structure","interval",0.7,0.7

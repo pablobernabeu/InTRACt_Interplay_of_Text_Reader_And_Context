@@ -1,0 +1,4 @@
+"model","sweep","param","true","texts","per_text","rated_rate","min_raters","median_qualifying_texts","median_raters_per_text","mean_est","sd_est","mean_se","mean_ci_width","p_meaningful","p_meaningful_lo","p_meaningful_hi","p_equivalent","n_returned","n_boundary","n_bad_se","n_skipped","n_warned","n_sims"
+"reported_difficulty","texts","LexPC",0.1,1600,12,0.3,5,470.5,5.94,0.0986770757750006,0.0379636467313842,0.0374686379915853,0.146874363185079,0.3,0.198981660718534,0.425087080495156,0,60,1,0,0,1,60
+"reported_difficulty","texts","SynPC",0.1,1600,12,0.3,5,470.5,5.94,0.0938547760629885,0.0367795530317062,0.0374317400558289,0.146729725933565,0.133333333333333,0.0691410944517193,0.241651597773381,0,60,1,0,0,1,60
+"reported_difficulty","texts","CohPC",-0.1,1600,12,0.3,5,470.5,5.94,-0.0941176022184532,0.034164069944092,0.0376155560233076,0.147450271291332,0.216666666666667,0.131230439953905,0.336200276765491,0,60,1,0,0,1,60

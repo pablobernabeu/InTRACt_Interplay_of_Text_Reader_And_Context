@@ -1,0 +1,42 @@
+# Operating-system and editor clutter
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# R session files
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+Rplots.pdf
+
+# The Scopus API key belongs in ~/.Renviron, never in the repository
+.Renviron
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Node dependencies are restored from package-lock.json with npm ci. The copy
+# already tracked under mindmap/source files/ stays tracked until it is removed
+# from the index (see ISSUES.md).
+node_modules/
+
+# Local Claude Code state
+.claude/worktrees/
+.claude/settings.local.json
+
+# Quarto's undated outputs, renamed by preregistration/_rename-output.R
+preregistration/preregistration.pdf
+preregistration/preregistration.html
+preregistration/preregistration.tex
+
+# The count script's deliverables derive from the data controller's export and
+# are deposited elsewhere, never committed here
+lets_story_summary_data_for_oxford.csv
+lets_story_manifest_for_oxford.html
+
+# The count script's test scenarios write a synthetic export into a folder each
+preregistration/count_script/tests/v2_*/
+preregistration/count_script/tests/v3_*/

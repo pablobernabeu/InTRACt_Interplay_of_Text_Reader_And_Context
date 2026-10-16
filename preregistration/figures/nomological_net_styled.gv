@@ -1,0 +1,59 @@
+digraph nomological_net {
+  graph [rankdir=TB, bgcolor="white", fontname="Helvetica", fontsize=12,
+         pad="0.25", nodesep="0.4", ranksep="0.7", splines=true, newrank=true]
+  node [fontname="Helvetica", fontsize=12, shape=box, style="rounded,filled",
+        color="#33567A", fillcolor="#F2F6F9", fontcolor="#12283A", penwidth=1.1,
+        margin="0.18,0.11"]
+  edge [arrowsize=0.75]
+  subgraph cluster_reader {
+    label="The reader"; labeljust=l; fontsize=13; fontcolor="#5A6B78";
+    color="#C9D4DC"; style=rounded; margin=14;
+    "c_accumulated_reading" [label="Reading\naccumulated\nwithin the app"]
+    "c_decoding_automaticity" [label="Automaticity of\nprint-to-sound\nmapping in the\nreader"]
+    "c_verbal_working_memory" [label="Verbal working\nmemory of the\nreader"]
+    "c_inferential_resource" [label="Readiness to\nsupply an\nunstated\nconnection"]
+  }
+  subgraph cluster_session {
+    label="The session"; labeljust=l; fontsize=13; fontcolor="#5A6B78";
+    color="#C9D4DC"; style=rounded; margin=14;
+    "c_spoken_rendition" [label="Availability of\na spoken\nrendition\nalongside the\ntext"]
+  }
+  subgraph cluster_text {
+    label="The text"; labeljust=l; fontsize=13; fontcolor="#5A6B78";
+    color="#C9D4DC"; style=rounded; margin=14;
+    "c_text_provenance" [label="How a text came\nto have the\nproperties it\nhas"]
+    "c_lexical_accessibility" [label="Lexical\naccessibility\nof a text"]
+    "c_structural_integration_load" [label="Grammatical\nintegration\nload imposed by\na text"]
+    "c_referential_continuity" [label="Referential\ncontinuity\nacross a text"]
+  }
+  subgraph cluster_reading {
+    label="The reading"; labeljust=l; fontsize=13; fontcolor="#5A6B78";
+    color="#C9D4DC"; style=rounded; margin=14;
+    "c_processing_effort" [label="Effort expended\nwhile reading a\ntext"]
+    "c_experienced_difficulty" [label="Difficulty the\nchild reports\nhaving met"]
+    "c_situation_model" [label="Quality of the\nmental model\nbuilt from a\ntext"]
+  }
+  { rank=same; "c_accumulated_reading"; "c_verbal_working_memory"; "c_inferential_resource" }
+  { rank=same; "c_lexical_accessibility"; "c_structural_integration_load"; "c_referential_continuity"; "c_spoken_rendition" }
+  { rank=same; "c_experienced_difficulty"; "c_situation_model" }
+  "c_experienced_difficulty" -> "c_situation_model" [style=invis]
+  "c_lexical_accessibility" -> "c_processing_effort" [color="#0072b2", label="−", fontcolor="#0072b2", fontsize=16, penwidth=1.2]
+  "c_structural_integration_load" -> "c_processing_effort" [color="#d55e00", label="+", fontcolor="#d55e00", fontsize=16, penwidth=1.2]
+  "c_referential_continuity" -> "c_processing_effort" [color="#0072b2", label="−", fontcolor="#0072b2", fontsize=16, penwidth=1.2]
+  "c_decoding_automaticity" -> "c_processing_effort" [color="#0072b2", label="−", fontcolor="#0072b2", fontsize=16, penwidth=1.2]
+  "c_accumulated_reading" -> "c_decoding_automaticity" [color="#3A4A58", penwidth=1.2]
+  "c_verbal_working_memory" -> "c_processing_effort" [color="#8A9BA8", style=dashed, penwidth=1.1]
+  "c_inferential_resource" -> "c_processing_effort" [color="#8A9BA8", style=dashed, penwidth=1.1]
+  "c_spoken_rendition" -> "c_processing_effort" [color="#8A9BA8", style=dashed, penwidth=1.1]
+  "c_processing_effort" -> "c_experienced_difficulty" [color="#3A4A58", penwidth=1.2]
+  "c_lexical_accessibility" -> "c_situation_model" [color="#d55e00", label="+", fontcolor="#d55e00", fontsize=16, penwidth=1.2]
+  "c_structural_integration_load" -> "c_situation_model" [color="#0072b2", label="−", fontcolor="#0072b2", fontsize=16, penwidth=1.2]
+  "c_referential_continuity" -> "c_situation_model" [color="#d55e00", label="+", fontcolor="#d55e00", fontsize=16, penwidth=1.2]
+  "c_decoding_automaticity" -> "c_situation_model" [color="#d55e00", label="+", fontcolor="#d55e00", fontsize=16, penwidth=1.2]
+  "c_spoken_rendition" -> "c_situation_model" [color="#d55e00", label="+", fontcolor="#d55e00", fontsize=16, penwidth=1.2]
+  "c_text_provenance" -> "c_lexical_accessibility" [color="#3A4A58", penwidth=1.2]
+  "c_text_provenance" -> "c_structural_integration_load" [color="#3A4A58", penwidth=1.2]
+  "c_text_provenance" -> "c_referential_continuity" [color="#3A4A58", penwidth=1.2]
+  "c_decoding_automaticity" -> "c_text_provenance" [color="#3A4A58", penwidth=1.2]
+}
+

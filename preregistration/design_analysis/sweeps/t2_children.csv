@@ -1,0 +1,5 @@
+"n","param","true","mean_ci_width","p_meaningful","p_meaningful_mcse","p_meaningful_lo","p_meaningful_hi","p_equivalent","p_equivalent_mcse","p_equivalent_lo","p_equivalent_hi","n_attempted","n_returned","n_converged","n_singular","n_warning","sweep","children","texts","per_child","truth","model","n_sims"
+200,"accum",-0.1,0.109036013101035,0.383333333333333,0.0443836389608537,0.301245277548569,0.472659194615795,0,0,0,0.0310191664187035,120,120,120,0,0,"children",200,250,5,"0.10","within_child",120
+500,"accum",-0.1,0.0678235922254169,0.791666666666667,0.0370731883751087,0.710523215670187,0.854715603918903,0,0,0,0.0310191664187035,120,120,120,0,0,"children",500,250,5,"0.10","within_child",120
+1000,"accum",-0.1,0.0475286207770365,1,0,0.968980833581297,1,0,0,0,0.0310191664187035,120,120,120,0,0,"children",1000,250,5,"0.10","within_child",120
+2000,"accum",-0.1,0.0332888029159381,1,0,0.968980833581297,1,0,0,0,0.0310191664187035,120,120,120,0,0,"children",2000,250,5,"0.10","within_child",120

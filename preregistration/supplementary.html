@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Supplementary material: Text properties and children’s reading pace in a multilingual storytelling app</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="supplementary_files/libs/clipboard/clipboard.min.js"></script>
+<script src="supplementary_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="supplementary_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="supplementary_files/libs/quarto-html/popper.min.js"></script>
+<script src="supplementary_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="supplementary_files/libs/quarto-html/anchor.min.js"></script>
+<link href="supplementary_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="supplementary_files/libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="supplementary_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="supplementary_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="supplementary_files/libs/bootstrap/bootstrap-215b371544c282197b31c8aa00ce3677.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="supplementary.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Supplementary material: Text properties and children’s reading pace in a multilingual storytelling app</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="s1.-the-theory-object" class="level1">
+<h1>S1. The theory object</h1>
+<p>The object is a single machine-readable file, <code>theory/intract.theory.yaml</code>, which the theoryforge package reads and checks <span class="citation" data-cites="bernabeuTheoryforge2026">(<a href="#ref-bernabeuTheoryforge2026" role="doc-biblioref">Bernabeu, 2026b</a>)</span>. From this file, <code>theory/make_nomological_net.R</code> draws Figure 2 of the main text. Running <code>theory/build_theory.R</code> reproduces the checklist scores, the redundancy screen and the implications reported below, and <code>theory/check_manuscript_claims.R</code> prints the counts quoted here.</p>
+<p>The object registers twelve constructs and eighteen propositions linking them, each with a mechanism and a direction, fifteen as directed edges of the causal graph and three as moderation claims. Six auxiliary assumptions are recorded as separate entries, five of them corresponding to questions put to the data controller (Table 2 of the main text). Seven of the object’s ten predictions are marked diagnostic against one of the six rival accounts it names.</p>
+<p>The rigour checklist scores the object at 90.7 out of 100, and all twelve items pass. On falsifiability and precision, at least one prediction forbids an observation, all ten are interval predictions, and their mean severity exceeds the checklist’s threshold. For construct quality, every construct has a definition, an intended measurement and boundary conditions, no pair is flagged by the lexical redundancy screen (largest observed similarity 0.17), and the theory’s scope is stated. Every proposition states a mechanism, at least one relation is causal, and every prediction is reachable from a proposition in the graph. Auxiliary assumptions are fewer than propositions, and none was added defensively in response to a prediction. Finally, at least one prediction discriminates between registered alternatives, and the formal-model entry refers to the design specification used for the precision analysis.</p>
+<p>Because the causal graph is acyclic, it yields thirty testable implications, of which the main text’s fourth outcome-neutral quality check tests three. The most consequential is that the three text properties should be mutually independent given the reading level and the generation route. A first version of the object, without the text-provenance construct, implied that they were independent unconditionally. That implication is false of any real corpus, because a text’s target reading level shifts all three property families at once. Adding text provenance as a common cause of all three, with an incoming path from the reader’s decoding automaticity, corrected the implication and produced the adjustment set the analysis uses.</p>
+<p>The third tested implication is that the difficulty rating should carry no further information about reading level given reading time. The literature gives more specific grounds for expecting it to fail than for the other two. A reported feeling of difficulty is a metacognitive experience drawing on affective as well as cognitive input <span class="citation" data-cites="efklidesMetacognitionAffectWhat2006">(<a href="#ref-efklidesMetacognitionAffectWhat2006" role="doc-biblioref">Efklides, 2006</a>)</span>. When 274 pupils of grades 7 to 9 solved mathematical problems, that feeling varied across the phases of a task and bore on performance only indirectly, through ideas about what the task required <span class="citation" data-cites="efklidesFeelingDifficultyAspect1999">(<a href="#ref-efklidesFeelingDifficultyAspect1999" role="doc-biblioref">Efklides et al., 1999</a>)</span>. After a battery of cognitive tasks, 80 children aged 8 to 12, 38 with attention-deficit hyperactivity disorder, rated task difficulty and effort. The ratings were uncorrelated with each other and only weakly related to performance <span class="citation" data-cites="torresMetacognitiveRatingsCognitive2026">(<a href="#ref-torresMetacognitiveRatingsCognitive2026" role="doc-biblioref">Torres &amp; Toplak, 2026</a>)</span>. Among college readers, such judgements often rest on surface features of a text, which are poor cues to comprehension <span class="citation" data-cites="thiedePoorMetacomprehensionAccuracy2010">(<a href="#ref-thiedePoorMetacomprehensionAccuracy2010" role="doc-biblioref">Thiede et al., 2010</a>)</span>. The main text’s fourth quality check states which omitted path a failure of this implication would identify and how that path would be reported.</p>
+</section>
+<section id="s2.-studies-from-the-accompanying-systematic-review" class="level1">
+<h1>S2. Studies from the accompanying systematic review</h1>
+<p>Two tables list the studies closest to the present design in method and in modality. Those closest in method, in <a href="#tbl-computational-reading" class="quarto-xref">Supplementary Table&nbsp;1</a>, entered a broad set of text features into a statistical or machine-learning model to predict a behavioural or comprehension outcome in children.</p>
+<div id="tbl-computational-reading" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[22,25,53]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-computational-reading-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Supplementary Table&nbsp;1: Studies modelling children’s reading computationally from text features
+</figcaption>
+<div aria-describedby="tbl-computational-reading-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 25%">
+<col style="width: 53%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Study</strong></th>
+<th><strong>Sample and design</strong></th>
+<th><strong>Method and key findings</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="citation" data-cites="pickrenContributionTextCharacteristics2022">Pickren et al. (<a href="#ref-pickrenContributionTextCharacteristics2022" role="doc-biblioref">2022</a>)</span></td>
+<td>Children (<em>N</em> = 158, ages 8;8 to 11;2); multilevel logistic models</td>
+<td>Word frequency, pronoun density, concreteness and deep cohesion each predicted passage comprehension after decoding and language comprehension were controlled, and lexical arousal predicted it beyond those.</td>
+</tr>
+<tr class="even">
+<td><span class="citation" data-cites="aparicioComprehensionPerformancesExplanatory2022">Aparicio et al. (<a href="#ref-aparicioComprehensionPerformancesExplanatory2022" role="doc-biblioref">2022</a>)</span></td>
+<td>Children (<em>N</em> = 1,229, grades 2 to 9); multivariate regression</td>
+<td>Text and sentence characteristics predicted comprehension, but the direction and size of each effect varied by question type.</td>
+</tr>
+<tr class="odd">
+<td><span class="citation" data-cites="ludewigVocabularyTextCoverage2023">Ludewig et al. (<a href="#ref-ludewigVocabularyTextCoverage2023" role="doc-biblioref">2023</a>)</span></td>
+<td>Children (<em>N</em> = 924, grade 4); non-linear regression</td>
+<td>Estimated lexical text coverage predicted comprehension non-linearly, rising more steeply once coverage exceeded about 56 per cent.</td>
+</tr>
+<tr class="even">
+<td><span class="citation" data-cites="yuyangniePredictingReadingComprehension2022">Nie et al. (<a href="#ref-yuyangniePredictingReadingComprehension2022" role="doc-biblioref">2022</a>)</span></td>
+<td>Elementary-school students; feature-based prediction model</td>
+<td>Sentence complexity, lexical surprisal and rare-word features improved prediction of item-level comprehension scores over a baseline.</td>
+</tr>
+<tr class="odd">
+<td><span class="citation" data-cites="wasitokiranaSentenceProcessingIndonesianEnglish2025">Wasito Kirana et al. (<a href="#ref-wasitokiranaSentenceProcessingIndonesianEnglish2025" role="doc-biblioref">2025</a>)</span></td>
+<td>Bilingual children (<em>N</em> = 44, 22 with language impairment); eye-tracking</td>
+<td>Syntactic complexity impaired comprehension accuracy and slowed recall, disproportionately for children with language impairment.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p><a href="#tbl-app-data" class="quarto-xref">Supplementary Table&nbsp;2</a> lists the digital and computerised reading studies closest in modality and measurement. Most come from the review, with one directly comparable app-log study added from outside it <span class="citation" data-cites="sortkaerBothSidesStory2021">(<a href="#ref-sortkaerBothSidesStory2021" role="doc-biblioref">Sortkær et al., 2021</a>)</span>.</p>
+<div id="tbl-app-data" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[22,26,52]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-app-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Supplementary Table&nbsp;2: Digital and app-based reading studies informing the present design
+</figcaption>
+<div aria-describedby="tbl-app-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 26%">
+<col style="width: 52%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Study</strong></th>
+<th><strong>Platform and sample</strong></th>
+<th><strong>Data, focus and key findings</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="citation" data-cites="sortkaerBothSidesStory2021">Sortkær et al. (<a href="#ref-sortkaerBothSidesStory2021" role="doc-biblioref">2021</a>)</span></td>
+<td>Educational app (BookBites); 10,903 students in grades 0 to 9 contributing 215,521 reading sessions, with test-score comparisons for users in grades 3, 5 and 7</td>
+<td>App reading time against standardised test scores. Reading speed correlated with ability (<em>r</em> = .39 to .48), and models predicted 16 to 18 per cent of variance in progress.</td>
+</tr>
+<tr class="even">
+<td>Gissel and Andersen <span class="citation" data-cites="gisselClusterrandomizedTrialMeasuring2021">(<a href="#ref-gisselClusterrandomizedTrialMeasuring2021" role="doc-biblioref">2021</a>)</span></td>
+<td>Digital text-to-speech tool; <em>N</em> = 1,013 children, 47 classrooms, grade 2</td>
+<td>Cluster-randomised trial against an active phonics control. The groups did not differ in decoding, but the digital tool improved comprehension, the outcome most sensitive to text-level scaffolding.</td>
+</tr>
+<tr class="odd">
+<td><span class="citation" data-cites="toppingImplementationFidelityComputerised2018">Topping (<a href="#ref-toppingImplementationFidelityComputerised2018" role="doc-biblioref">2018</a>)</span></td>
+<td>Computerised book-reading assessment; <em>N</em> = 852,295 students, 3,243 schools</td>
+<td>Quiz-based comprehension checks linked to a computerised adaptive test. Higher quiz engagement went with higher achievement, but the engagement measure was of limited reliability.</td>
+</tr>
+<tr class="even">
+<td><span class="citation" data-cites="bulutEvaluatingGroupDifferences2023">Bulut et al. (<a href="#ref-bulutEvaluatingGroupDifferences2023" role="doc-biblioref">2023</a>)</span></td>
+<td>Online reading assessment; multi-country sample of fourth graders (ePIRLS 2016)</td>
+<td>Explanatory item response modelling of item format, text complexity and cognitive complexity. Item properties and student characteristics interacted to predict online comprehension.</td>
+</tr>
+<tr class="odd">
+<td><span class="citation" data-cites="keelorImpactTexttospeechFeatures2023">Keelor et al. (<a href="#ref-keelorImpactTexttospeechFeatures2023" role="doc-biblioref">2023</a>)</span></td>
+<td>Text-to-speech study; children aged 8 to 12 with reading and language difficulties</td>
+<td>Within-subject comparison of silent reading, listening only and text-to-speech. Text-to-speech improved comprehension over silent reading, with the benefit concentrated in children with dyslexia.</td>
+</tr>
+<tr class="even">
+<td>Tüchler and Cain <span class="citation" data-cites="tuchlerEffectsMediumText2026">(<a href="#ref-tuchlerEffectsMediumText2026" role="doc-biblioref">2026</a>)</span></td>
+<td>Digital against print medium; <em>N</em> = 120 children, grades 4 to 6</td>
+<td>Generalised linear mixed models of medium and text structure. Comprehension was lower in the digital condition after word recognition and vocabulary were controlled, a screen-inferiority effect relevant to interpreting any digital-only dataset.</td>
+</tr>
+<tr class="odd">
+<td>Beigman Klebanov and Hoang <span class="citation" data-cites="beigmanklebanovStealthAssessmentReading2026">(<a href="#ref-beigmanklebanovStealthAssessmentReading2026" role="doc-biblioref">2026</a>)</span></td>
+<td>App-embedded stealth assessment (Relay Reader)</td>
+<td>Machine-learning models using text and oral-reading features predicted passage comprehension unobtrusively within the app, with over 80 per cent precision.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="s3.-language-resources-for-the-text-features" class="level1">
+<h1>S3. Language resources for the text features</h1>
+<p>We set out the reasons for the first rule under Materials and the limits of the uniform resources, then register the pipeline settings and diagnostics the fourth rule requires. <a href="#tbl-resources" class="quarto-xref">Supplementary Table&nbsp;3</a> lists each feature family’s resources for the ten languages of the structural sample, and the paragraphs after it treat Korean, the placement of every language not in the classification of orthographic depth used in the main text, and Greek. <a href="#tbl-resources-more" class="quarto-xref">Supplementary Table&nbsp;4</a> and the rules after it extend the same design to the app’s nine other languages, and the section ends with adult-rated affective values.</p>
+<p>A multilingual design faces a measurement problem that a monolingual one does not. Concreteness scores from a 40,000-item English rating study, a 350,000-lemma German regression, a 1,400-item Spanish rating study and a 77-language embedding prediction are four different measurements under one label. If each language’s resource is chosen for its local quality, the method of measurement is perfectly confounded with language. Standardising within language removes differences in location and scale but not in construct. One coherent approach uses a single uniformly produced resource everywhere, accepting lower absolute quality for higher comparability. The other uses native norms and treats every cross-language comparison as descriptive. We choose uniformity, because language enters the confirmatory models as a grouping factor with varying slopes, and those slopes must mean the same thing in every language. The same reasoning keeps concreteness and age of acquisition, for which only native norms are admissible, out of the pooled lexical solution. The native-norm sensitivity analysis under Materials shows how much the choice of resource matters.</p>
+<p>The rules under Materials exclude two widely used resources, each the obvious candidate for its family, so we record why. The <code>wordfreq</code> package is not the primary frequency source. Its data are a frozen snapshot of usage to about 2021, and its maintainer discontinued it in September 2024 to avoid ingesting post-2022 web text contaminated by generated language. Its Korean and Greek wordlists draw on fewer sources than the rest. The non-English editions of the NRC Valence, Arousal and Dominance lexicon are not used at all. They are 2022 machine translations of the English norms, not ratings collected in the target languages, and their licence is non-commercial.</p>
+<p>The primary frequency resource, subs2vec, is built from subtitles and so indexes adult exposure. The register mismatch for developing readers is a limitation that no available uniform resource removes. A recent study found that frequency estimates from a large-language-model corpus prompted for child-directed text fitted young German readers better than child-book norms did <span class="citation" data-cites="schepensCanLargeLanguage2025">(<a href="#ref-schepensCanLargeLanguage2025" role="doc-biblioref">Schepens et al., 2025</a>)</span>. Generated corpora, however, are neither frozen nor documented in the way a subtitle pipeline is, and the same study notes that they show atypical linguistic patterns. We therefore keep subs2vec as the primary resource. Wherever a language has a native child-register norm, we will report the primary frequency estimate’s correlation with that norm as a measure of its register mismatch. The choice of frequency database also matters for reading-time fit. A pooled analysis of five self-paced reading studies in German found that a written-corpus database fitted sentential reading times best, ahead of subtitle frequencies, and that the ranking of databases differed by participant population <span class="citation" data-cites="haeuserNotSubtlexWord2025">(<a href="#ref-haeuserNotSubtlexWord2025" role="doc-biblioref">Haeuser &amp; Kray, 2025</a>)</span>. That finding is a further reason for the native-norm sensitivity analysis. It cautions against interpreting a pooled frequency coefficient as a property of the language when it is partly a property of the resource.</p>
+<p>The register problem extends to surprisal, since language models whose training experience matches the reader’s predict reading times better than general-corpus models do <span class="citation" data-cites="skrjanecLanguageModelsMatch2026">(<a href="#ref-skrjanecLanguageModelsMatch2026" role="doc-biblioref">Škrjanec &amp; Demberg, 2026</a>)</span>. No child-register model exists for these languages under one procedure, so the mismatch is recorded as a limitation of the uniform primary resource, the Goldfish models. Their 1 GB tier is chosen on the psychometric grounds given in <a href="#tbl-resources" class="quarto-xref">Supplementary Table&nbsp;3</a>. To measure the mismatch, we will report, for each language, the model’s mean per-word surprisal on the story texts and on a held-out 10 MB sample of its training corpus, OSCAR 21.09. The ratio of the two, reported with them, expresses the register gap on a scale comparable across languages and flags any language where the model is badly matched. None of these quantities involves an outcome.</p>
+<p>Two properties of the surprisal pipeline are registered here because the fourth rule requires them to be frozen. Each text is scored in 512-token windows, the model’s maximum, at a stride of 256 tokens. A token’s surprisal is retained only from the window in which it has at least 256 tokens of preceding context, except at the start of a text, where every token is retained. Per language, we will report the mean and maximum subword-token count per text, the tokens-per-word ratio and the proportion of texts exceeding 512 tokens. The same rule requires per-language segmentation diagnostics: the mean and standard deviation of sentence length, the proportion of sentences ending without terminal punctuation, and boundary agreement between the two parsers’ splitters. Agreement is measured on the stratified sample of 50 texts per language drawn for the sixth outcome-neutral check. A native speaker’s adjudication of sentence boundaries, registered and reported with that check, completes these diagnostics.</p>
+<p>The date of the Goldfish training snapshot favours this study, because OSCAR 21.09 derives from the February 2021 Common Crawl, which predates the generator that wrote these stories. A predictability model that could not have been fitted to text of this kind is a safeguard, whereas the same frozen-snapshot property counted against <code>wordfreq</code> as a measure of current usage. The classic stories, however, may be in the training corpus if they are public-domain texts. A model’s surprisal is lower on text it has seen than on text it has not. A classic text’s lexical component would then be pulled towards the easy end for a reason unrelated to the child. The per-language comparison of classic and generated surprisal, registered under Sensitivity analyses, checks for this bias. The refit on generated texts alone shows how far the bias could affect the estimates.</p>
+<p>Every per-language claim in <a href="#tbl-resources" class="quarto-xref">Supplementary Table&nbsp;3</a> refers to the ten languages the structural sample showed: Dutch, English, French, German, Greek, Italian, Korean, Polish, Portuguese and Spanish. The app offers nine more, Arabic, Hebrew, Indonesian, Romanian, Russian, Simplified Chinese, Thai, Traditional Chinese and Turkish, and the extract may contain any of them. The same four rules apply to them, and <a href="#tbl-resources-more" class="quarto-xref">Supplementary Table&nbsp;4</a>, after the paragraphs on Greek, gives their resources and the rules their scripts require. A language outside these 19 would be treated in the same way, with its resources reported before the feature inventory is frozen.</p>
+<div id="tbl-resources" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[14,27,15,44]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-resources-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Supplementary Table&nbsp;3: Uniform primary and native sensitivity resources for the text features. Concreteness and age of acquisition have no admissible uniform resource, so the primary column gives native norms for both (the exception to the first rule under Materials). Outcome-blind dimension reduction sets out how the two enter the component solutions.
+</figcaption>
+<div aria-describedby="tbl-resources-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 27%">
+<col style="width: 15%">
+<col style="width: 44%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Feature family</strong></th>
+<th><strong>Primary resource, uniform across languages</strong></th>
+<th><strong>Sensitivity resource, native where one exists</strong></th>
+<th><strong>Coverage of the ten sampled languages</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Word frequency</td>
+<td>subs2vec, one OpenSubtitles pipeline applied identically to 55 languages <span class="citation" data-cites="vanparidonSubs2vecWordEmbeddings2021">(<a href="#ref-vanparidonSubs2vecWordEmbeddings2021" role="doc-biblioref"><span class="nocase">van Paridon &amp; Thompson</span>, 2021</a>)</span></td>
+<td>The SUBTLEX family, native per language</td>
+<td>All ten for the primary. Native norms exist for nine, eight of them peer-reviewed and the Italian one a conference release. Korean has no subtitle-based norm. The pipeline is identical, but the precision of its estimates varies, because the OpenSubtitles corpora it runs on differ in size by two orders of magnitude across the ten. Korean’s corpus is the smallest by a wide margin. Noise in a frequency estimate attenuates its slope, so we will report the type and token counts behind each language’s list with the matched-token proportions. A language-varying lexical slope can then be judged against the precision of its predictor. Korean is the language most likely to fail the token-coverage rule for frequency, a risk that the morpheme-level lookup described after this table addresses. Whether Korean passes is decided on its measured proportion and reported either way.</td>
+</tr>
+<tr class="even">
+<td>Age of acquisition</td>
+<td>Broad native rated sets, available for seven of the ten: English at about 30,000 words <span class="citation" data-cites="kupermanAgeofacquisitionRatings300002012">(<a href="#ref-kupermanAgeofacquisitionRatings300002012" role="doc-biblioref">Kuperman et al., 2012</a>)</span>, Dutch at about 30,000 <span class="citation" data-cites="brysbaertNormsAgeAcquisition2014">(<a href="#ref-brysbaertNormsAgeAcquisition2014" role="doc-biblioref">Brysbaert, Stevens, et al., 2014</a>)</span>, Spanish at 7,039 <span class="citation" data-cites="alonsoSubjectiveAgeofacquisitionNorms2015">(<a href="#ref-alonsoSubjectiveAgeofacquisitionNorms2015" role="doc-biblioref">Alonso et al., 2015</a>)</span>, Polish at about 4,900 <span class="citation" data-cites="imbirAffectiveNorms49002016">(<a href="#ref-imbirAffectiveNorms49002016" role="doc-biblioref">Imbir, 2016</a>)</span>, German at over 3,200, Italian at about 1,950 and Portuguese at about 1,750. French has a set restricted to 1,493 monosyllabic words <span class="citation" data-cites="ferrandAgeofacquisitionSubjectiveFrequency2008">(<a href="#ref-ferrandAgeofacquisitionSubjectiveFrequency2008" role="doc-biblioref">Ferrand et al., 2008</a>)</span></td>
+<td>Not applicable</td>
+<td>Seven of ten on sets without a restriction on word length. Each native set is subject to the token-coverage rule, and the matched-token proportion decides each case. French has a second set restricted by word length, 1,225 words of one or two syllables <span class="citation" data-cites="lachaudCHACQFAMBaseDonnees2007">(<a href="#ref-lachaudCHACQFAMBaseDonnees2007" role="doc-biblioref">Lachaud, 2007</a>)</span>. The larger French set will be tested against the rule, although a list of monosyllables is not expected to pass it. For Greek, the ratings found cover 260 picture names <span class="citation" data-cites="dimitropoulouStandardizedSet2602009">(<a href="#ref-dimitropoulouStandardizedSet2602009" role="doc-biblioref">Dimitropoulou et al., 2009</a>)</span> and the 299 cross-linguistic words. No Korean set was found, so neither Greek nor Korean contributes age of acquisition. The cross-linguistic norms of Łuniewska and colleagues rate the same 299 words on one scale in 32 languages <span class="citation" data-cites="luniewskaRatingsAgeAcquisition2016 luniewskaCrosslinguisticRatingsAge2019">(<a href="#ref-luniewskaRatingsAgeAcquisition2016" role="doc-biblioref">Łuniewska et al., 2016</a>; <a href="#ref-luniewskaCrosslinguisticRatingsAge2019" role="doc-biblioref">Łuniewska et al., 2019</a>)</span>. They are not used, because 299 words could not match 80 per cent of the content-word tokens of a story.</td>
+</tr>
+<tr class="odd">
+<td>Surprisal</td>
+<td>Goldfish, one GPT-2 model per language (<code>goldfish-models/&lt;lang&gt;_1000mb</code>, 124,770,816 parameters, 50,000-token SentencePiece vocabulary, 512-token window, 10 epochs), trained under one procedure on OSCAR 21.09 scaled by each language’s byte premium to 1,000 MB, under an Apache-2.0 licence <span class="citation" data-cites="changGoldfishMonolingualLanguage2026">(<a href="#ref-changGoldfishMonolingualLanguage2026" role="doc-biblioref">Chang et al., 2026</a>)</span></td>
+<td>EuroLLM-1.7B (<code>utter-project/EuroLLM-1.7B</code>, 1.657 billion parameters, Apache-2.0) is the single-multilingual-model contrast. Because it differs from the primary in multilinguality, scale, corpus, tokeniser and vocabulary at once, it shows how far the choice of resource can move the estimates without isolating any one cause. The controlled contrast is <code>goldfish-models/&lt;lang&gt;_100mb</code>, which keeps architecture, vocabulary, corpus and tokeniser fixed and varies the byte-scaled data tenfold</td>
+<td>All ten at all four tiers, so coverage does not decide the tier. Only the 100 MB and 1 GB tiers share the identical 125-million-parameter architecture, the smaller two being 4-layer models of about 36 to 39 million parameters. The scaling equalises bytes, not training tokens. Byte premiums run from 1.000 for English to 1.293 for Korean and 1.967 for Greek, and training tokens range from 210.8 to 251.4 million. The tier is also chosen on psychometric grounds. In eye-movement data from 10 languages, over models of 564 million to 4.5 billion parameters, surprisal from smaller models fitted early reading-time measures better than surprisal from the largest models <span class="citation" data-cites="devardaScalingCognitiveModelling2023">(<a href="#ref-devardaScalingCognitiveModelling2023" role="doc-biblioref">De Varda &amp; Marelli, 2023</a>)</span>. For late measures, however, larger models held an advantage <span class="citation" data-cites="devardaScalingCognitiveModelling2023">(<a href="#ref-devardaScalingCognitiveModelling2023" role="doc-biblioref">De Varda &amp; Marelli, 2023</a>)</span>. The same inverse scaling was replicated in Dutch, where GPT-2-based models predicted best overall and both effects varied with the evaluation corpus <span class="citation" data-cites="boeveSystematicEvaluationDutch2025">(<a href="#ref-boeveSystematicEvaluationDutch2025" role="doc-biblioref">Boeve &amp; Bogaerts, 2025</a>)</span>. Transformer surprisal fitted reading times best after about two billion training tokens <span class="citation" data-cites="ohTransformerbasedLanguageModel2023">(<a href="#ref-ohTransformerbasedLanguageModel2023" role="doc-biblioref">Oh &amp; Schuler, 2023</a>)</span>. The 1 GB models reach that level, at 2.11 to 2.51 billion tokens over 10 epochs, and the smaller tiers fall short of it. mGPT is not used, because its 61 languages exclude Dutch, which is one of the ten and the language in which the psychometric evidence is strongest. The developers state that Goldfish is built for cross-linguistic comparability and is not competitive with modern large models on high-resource languages.</td>
+</tr>
+<tr class="even">
+<td>Word length, lexical density, lexical diversity</td>
+<td>Computed from the text directly, so no norm is involved. Diversity is the moving-average type-token ratio over a 50-token window, chosen over the Measure of Textual Lexical Diversity because it is the more stable of the two at the length of these stories</td>
+<td>The Measure of Textual Lexical Diversity, with the per-language correlation between the two reported</td>
+<td>All ten. Length is counted in letters in every language, which in Korean are the jamo of Hangul, as argued after this table. The Korean syllable-block count enters no component solution, and its correlation with the jamo count is reported with the feature-pipeline validation.</td>
+</tr>
+<tr class="odd">
+<td>Concreteness</td>
+<td>Native human ratings only, with no value predicted or projected</td>
+<td>Not applicable, since the native norm is the only acceptable measure</td>
+<td>Nine of ten, with sets of about 1,100 to 40,000 items <span class="citation" data-cites="brysbaertConcretenessRatings402014">(<a href="#ref-brysbaertConcretenessRatings402014" role="doc-biblioref">Brysbaert, Warriner, et al., 2014</a>)</span>. Korean is the one language with no usable set. Its only published concreteness ratings cover 450 nouns in an affective word list <span class="citation" data-cites="hongDevelopingKoreanAffect2016">(<a href="#ref-hongDevelopingKoreanAffect2016" role="doc-biblioref">Hong et al., 2016</a>)</span>. Its larger rated sets measure other constructs, imageability for 665 nouns <span class="citation" data-cites="parkInvestigationAssociationFrequency2004">(<a href="#ref-parkInvestigationAssociationFrequency2004" role="doc-biblioref">Park, 2004</a>)</span> and perceptual strength for 1,000 words <span class="citation" data-cites="leeCrosslinguisticComparisonPerceptual2023">(<a href="#ref-leeCrosslinguisticComparisonPerceptual2023" role="doc-biblioref">Lee &amp; Shin, 2023</a>)</span>. The latter’s concreteness values were taken from English translations, so the second rule under Materials excludes them. Concreteness is not computed for Korean. Greek is admitted on a set of 2,948 words rated for concreteness and imageability <span class="citation" data-cites="traikapiGreekCypriotWord2024">(<a href="#ref-traikapiGreekCypriotWord2024" role="doc-biblioref">Traikapi et al., 2024</a>)</span>, subject to the same token-coverage rule as every other language and to the caveats stated after the table. Even an admitted set of a few thousand items is unlikely to match 80 per cent of the content-word tokens of a story. Concreteness is expected to survive the token-coverage rule in English and Dutch and possibly in Polish and Portuguese, with the matched-token proportion deciding each case.</td>
+</tr>
+<tr class="even">
+<td>Dependency distance and clause structure</td>
+<td>Stanza <span class="citation" data-cites="qiStanzaPythonNatural2020">(<a href="#ref-qiStanzaPythonNatural2020" role="doc-biblioref">Qi et al., 2020</a>)</span> in its <code>nocharlm</code> tier, the only tier the toolkit publishes for all ten languages and so the only configuration that satisfies the uniformity rule (the first rule under Materials). Taking each language’s most accurate package instead would fit a different pretrained encoder in each language, such as a Greek BERT for Greek and a Dutch RoBERTa for Dutch. Korean, for which only <code>nocharlm</code> packages exist, would have no encoder-based counterpart at all. Such a choice would confound the method of measurement with the language, a confound the uniformity rule exists to prevent. Labelled attachment scores in the maintainers’ published table, which reports their default packages at version 1.5.1 on Universal Dependencies 2.12, run from 85.5 on Korean Kaist to 93.6 on German HDT</td>
+<td>UDPipe 2, whose current models track a later Universal Dependencies release and, on their own later test sets, score higher on nine of the ten matched treebanks and level on French GSD</td>
+<td>All ten in both. The published attachment scores are the most recent the maintainers report per treebank, and they lag the software: Stanza’s current release is 1.15.0 (October 2026), for which no per-treebank table is published. We will run the release current at the freeze date and record its version and each model checkpoint, as the fourth rule under Materials requires. For the uniform configuration, we will report the accuracy the maintainers publish for that release at the freeze date, or state that they publish none. One named single-treebank package is fixed per language, giving each language one annotation convention. The packages are Alpino for Dutch, GUM for English, GSD for French, HDT for German, GDT for Greek, ISDT for Italian, Kaist for Korean, PDB for Polish, Bosque for Portuguese and AnCora for Spanish. Both parsers are run on the same sentence segmentation, so that the per-language correlation between their dependency-distance estimates isolates parsing disagreement. That correlation will be reported with the feature-pipeline validation. A second comparison tests the annotation convention itself, the larger source of variation. Where a language has a second usable package, the same parser is run on both, and the per-language correlation of each grammatical feature between the two conventions is reported. Neither comparison excludes a language. On grounds of parse quality, only the labelled-attachment criterion of the sixth outcome-neutral check removes a language from the grammatical component. One limit is left unresolved: the five grammatical features are computable from universal-dependencies output in all ten languages but are not comparable in level across them. Standardising within language equates scale without changing what a token is or which relations exist, so a pooled grammatical coefficient averages ten differently calibrated measures.</td>
+</tr>
+<tr class="odd">
+<td>Adjacent-sentence similarity</td>
+<td>multilingual-E5-large-instruct, identified by checkpoint, since no DOI is registered. It is chosen because multilingual benchmarks rank it the stronger of the two encoders on the task this feature poses, sentence-to-sentence semantic similarity</td>
+<td>BGE-M3 <span class="citation" data-cites="chenM3EmbeddingMultiLinguality2024">(<a href="#ref-chenM3EmbeddingMultiLinguality2024" role="doc-biblioref">Chen et al., 2024</a>)</span>, peer-reviewed and covering over 100 languages, retained as the sensitivity encoder</td>
+<td>All ten in both, and the per-language correlation between the two estimates is reported with the feature-pipeline validation. BGE-M3 is presented by its authors for retrieval, a different objective from sentence similarity. LaBSE is not used, because it is optimised for retrieving translation pairs, a different objective again <span class="citation" data-cites="fengLanguageagnosticBERTSentence2022">(<a href="#ref-fengLanguageagnosticBERTSentence2022" role="doc-biblioref">Feng et al., 2022</a>)</span>. The measure descends from the propositional analysis of the construction-integration model, and its vector-space form recovered the comprehension effects of two coherence manipulations <span class="citation" data-cites="foltzMeasurementTextualCoherence1998">(<a href="#ref-foltzMeasurementTextualCoherence1998" role="doc-biblioref">Foltz et al., 1998</a>)</span>. A cosine indexes semantic relatedness between adjoining sentences. Because it rises with topical overlap whether or not the second sentence takes up a referent from the first, the measure is reported as relatedness, not coreference.</td>
+</tr>
+<tr class="even">
+<td>Referential overlap, connective density</td>
+<td>Both computed from the parse, with no coreference resolver involved. For referential overlap as defined under Materials, a content lemma is in a nominal position when its universal part-of-speech tag is NOUN or PROPN. Connective densities use language-specific inventories, seeded from the published lexicons where they exist, among them the Connective-Lex family, and compiled for this study where they do not</td>
+<td>Pronoun-inclusive referential overlap, with PRON added to the tag set. Connective densities recomputed with ambiguous forms excluded</td>
+<td>All ten. Coreference is not attempted, because uniform multilingual coreference resolution does not exist for these ten, whereas lemma overlap in nominal positions is computable identically in all of them. Published connective lexicons cover seven of the ten. We found none for Greek, Polish or Korean, whose inventories are compiled for this study. That difference in provenance, which the coverage statistic cannot show, is recorded here. Every inventory, whether seeded or compiled, is checked by a native speaker and deposited with the protocol. Each form is given a relation label from one taxonomy, so that causal and contrastive forms are separable in every language. The proportion of connective tokens whose relation label is ambiguous is reported per language.</td>
+</tr>
+<tr class="odd">
+<td>Valence and arousal</td>
+<td>MEmoLon, induced for 91 languages from a single procedure, at over 100,000 entries per language <span class="citation" data-cites="buechelLearningEvaluatingEmotion2020">(<a href="#ref-buechelLearningEvaluatingEmotion2020" role="doc-biblioref">Buechel et al., 2020</a>)</span></td>
+<td>Native rated norms, whose size differs by more than an order of magnitude across the ten: English about 14,000 <span class="citation" data-cites="warrinerNormsValenceArousal2013">(<a href="#ref-warrinerNormsValenceArousal2013" role="doc-biblioref">Warriner et al., 2013</a>)</span>, Dutch about 24,000, Spanish about 14,000 <span class="citation" data-cites="stadthagen-gonzalezNormsValenceArousal2017">(<a href="#ref-stadthagen-gonzalezNormsValenceArousal2017" role="doc-biblioref">Stadthagen-Gonzalez et al., 2017</a>)</span>, Polish about 4,900 <span class="citation" data-cites="imbirAffectiveNorms49002016">(<a href="#ref-imbirAffectiveNorms49002016" role="doc-biblioref">Imbir, 2016</a>)</span>, German about 2,900 <span class="citation" data-cites="voBerlinAffectiveWord2009">(<a href="#ref-voBerlinAffectiveWord2009" role="doc-biblioref">Võ et al., 2009</a>)</span>, Italian about 1,100 <span class="citation" data-cites="montefineseAdaptationAffectiveNorms2014">(<a href="#ref-montefineseAdaptationAffectiveNorms2014" role="doc-biblioref">Montefinese et al., 2014</a>)</span>, Portuguese about 1,000 <span class="citation" data-cites="soaresAdaptationAffectiveNorms2012">(<a href="#ref-soaresAdaptationAffectiveNorms2012" role="doc-biblioref">Soares et al., 2012</a>)</span>, French about 1,000 <span class="citation" data-cites="monnierAffectiveNormsFrench2014">(<a href="#ref-monnierAffectiveNormsFrench2014" role="doc-biblioref">Monnier &amp; Syssau, 2014</a>)</span>, Greek about 1,000 <span class="citation" data-cites="palogiannidiAffectiveLexiconCreation2016">(<a href="#ref-palogiannidiAffectiveLexiconCreation2016" role="doc-biblioref">Palogiannidi et al., 2016</a>)</span> and Korean 252 to 450 <span class="citation" data-cites="leeEmotionEvaluatorExpanding2022">(<a href="#ref-leeEmotionEvaluatorExpanding2022" role="doc-biblioref">Lee et al., 2022</a>)</span>. The Polish set is taken from the corrected data released with its 2021 corrigendum, which repaired the values of 193 words</td>
+<td>All ten for the primary, though not at uniform quality. The source evaluates its predictions against native rated norms in 26 datasets across 12 languages, among them eight of these ten, all but French and Korean. Valence correlates with native ratings between about .75 and .94, and arousal between about .50 for Greek and .78 for German. The Greek criterion was the 1,034-word set, whose raters agreed less on arousal than on valence <span class="citation" data-cites="buechelLearningEvaluatingEmotion2020 palogiannidiAffectiveLexiconCreation2016">(<a href="#ref-buechelLearningEvaluatingEmotion2020" role="doc-biblioref">Buechel et al., 2020</a>; <a href="#ref-palogiannidiAffectiveLexiconCreation2016" role="doc-biblioref">Palogiannidi et al., 2016</a>)</span>. The correlations are best judged against the agreement between independent native norm sets in the same language. Such sets agree far more closely on valence than on arousal, so part of the arousal shortfall is criterion noise that no resource could remove. Coverage limits the native-norm sensitivity analysis, because a list of about a thousand content words cannot match 80 per cent of the tokens of a story of several hundred words. We therefore expect the native comparison to run in English, Dutch and Spanish, possibly in Polish, and not in the remaining six. The matched-token proportion reported per language decides where it runs.</td>
+</tr>
+<tr class="even">
+<td>Narrativity, a secondary covariate in every confirmatory model</td>
+<td>Computed from the parse as the mean of three quantities, each first standardised within language. The quantities are the proportions of finite verbs in the past tense, of tokens tagged PRON with a first- or third-person feature, and of sentences containing a direct-speech marker, identified from quotation punctuation</td>
+<td>Each of the three quantities reported and modelled separately, to check that the composite is not driven by one of them alone</td>
+<td>All ten. The Coh-Metrix construct of the same name is not used. It is scored relative to an English reference corpus and derived from measures with no multilingual equivalent, so it cannot be transported to ten languages under the uniformity rule. The definition used here is stipulated for this study, computable identically in all ten from the same parse as the grammatical features, and frozen with the feature inventory. Narrativity is a covariate throughout, enters no hypothesis and is excluded from the component solution under Outcome-blind dimension reduction.</td>
+</tr>
+<tr class="odd">
+<td>Predicted spoken duration per word, for the Hypothesis 4 adjustment only</td>
+<td>Syllables per word from one hyphenation resource per language, counting Hangul syllable blocks for Korean, plus sentence- and clause-boundary pauses per word from punctuation</td>
+<td>The measured per-text audio duration, if the data controller supplies it. Materials states when it replaces the prediction and when it serves a sensitivity analysis restricted to the texts it covers</td>
+<td>All ten, with the matched-token proportion reported per language as for every other measure. This quantity enters no confirmatory model and serves the registered duration-adjusted sensitivity contrast.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Korean has the fewest resources of the ten languages in the structural sample, though several of the app’s other languages have fewer (<a href="#tbl-resources-more" class="quarto-xref">Supplementary Table&nbsp;4</a>). It lacks a subtitle frequency norm and any coverage in the cross-linguistic age-of-acquisition set. Its only published concreteness ratings cover 450 nouns from an affective word list, some of them names of neutral objects <span class="citation" data-cites="hongDevelopingKoreanAffect2016">(<a href="#ref-hongDevelopingKoreanAffect2016" role="doc-biblioref">Hong et al., 2016</a>)</span>. Its four sets rated for valence and arousal hold 252 to 450 words each, mostly emotion terms <span class="citation" data-cites="leeEmotionEvaluatorExpanding2022">(<a href="#ref-leeEmotionEvaluatorExpanding2022" role="doc-biblioref">Lee et al., 2022</a>)</span>, and imageability has been rated for 665 nouns <span class="citation" data-cites="parkInvestigationAssociationFrequency2004">(<a href="#ref-parkInvestigationAssociationFrequency2004" role="doc-biblioref">Park, 2004</a>)</span>. At these sizes, none of the sets is expected to meet the 80 per cent token-coverage rule. Korean does have a uniform frequency estimate, a Goldfish model, both parsers, induced affect and a lexical decision megastudy of 30,930 words <span class="citation" data-cites="yiKoreanLexiconProject2017">(<a href="#ref-yiKoreanLexiconProject2017" role="doc-biblioref">Yi et al., 2017</a>)</span>, which supplies decision times, not rated norms. Through the uniform resources, it contributes to the lexical and grammatical components and to the affective predictors, but to no analysis that requires a native norm. Korean also determined the parser tier, since Stanza publishes only <code>nocharlm</code> packages for all three of its Korean treebanks (see the dependency row of <a href="#tbl-resources" class="quarto-xref">Supplementary Table&nbsp;3</a>).</p>
+<p>The eojeol convention under Measures needs a separate rule for lexical lookups. The eojeol is the right unit for the outcome’s denominator and for the parser-derived grammatical features, since the Korean treebanks are tokenised on whitespace. For a frequency lookup, however, it is the wrong unit: a surface eojeol carries its particles, so most eojeol forms will be absent from any word list. For the lexical features that require a lookup, Korean text is segmented into morphemes with a named morphological analyser whose version is frozen with the inventory. The lookup is performed on content morphemes, which the source list can match, and the values are aggregated back to the eojeol and then to the text mean. Both matched-token proportions, at eojeol and at morpheme level, are reported before the features are frozen. Without this rule, Korean would be expected to fail the token-coverage rule for frequency and to contribute no lexical feature.</p>
+<p>In Korean, mean sentence length, mean dependency distance and mean orthographic length all rest on the eojeol, a unit that bundles a content word with its grammatical particles <span class="citation" data-cites="baekReadingSpacedUnspaced2023">(<a href="#ref-baekReadingSpacedUnspaced2023" role="doc-biblioref">Baek et al., 2023</a>)</span>. For that reason, the Korean lexical slope is interpreted on its own, as Measures requires of every Korean association, and is not compared like for like with other languages’ lexical slopes. Hangul is written in syllable blocks. Korean kindergarten children identified consonant-vowel blocks better than consonant and vowel letters, and their identification of these blocks predicted word reading over and above letter knowledge <span class="citation" data-cites="choSyllableLetterKnowledge2009">(<a href="#ref-choSyllableLetterKnowledge2009" role="doc-biblioref">Cho, 2009</a>)</span>. Among 74 children from kindergarten to grade 3 reading isolated words aloud, naming latency rose with length in both jamo (letters) and blocks, less steeply in older children <span class="citation" data-cites="juInfluenceOrthographicUnits2022">(<a href="#ref-juInfluenceOrthographicUnits2022" role="doc-biblioref">Ju et al., 2022</a>)</span>. Once word frequency was modelled, neither count had a main effect. The jamo effect still declined with age, whereas the block effect varied with frequency but no longer reliably with age. Because the two counts were collinear, their effects were estimated in separate models. Among 94 university students, lexical decision latency did not differ significantly between two- and three-block words <span class="citation" data-cites="paeLexicalPropertiesInfluencing2020">(<a href="#ref-paeLexicalPropertiesInfluencing2020" role="doc-biblioref">Pae et al., 2020</a>)</span>. Every block in these words had a final consonant, so they also differed in jamo, six against nine. The null result therefore applies equally to both counts.</p>
+<p>Neither length study separates the two counts, so the choice between them rests on comparability. The jamo count will be the Korean length measure because it is a letter count like those of the other languages, and the block count will enter only the correlation described in <a href="#tbl-resources" class="quarto-xref">Supplementary Table&nbsp;3</a>. Jamo are counted after Unicode canonical decomposition, which treats a doubled or compound letter as one jamo and a silent initial ㅇ as one. This convention reproduces the ranges of letter length reported by <span class="citation" data-cites="juInfluenceOrthographicUnits2022">Ju et al. (<a href="#ref-juInfluenceOrthographicUnits2022" role="doc-biblioref">2022</a>)</span>. Both length findings come from isolated words, and whether length drives the lexical component in Korean text remains open. Korean’s congruence with the pooled component solution will therefore be reported whether or not Korean is among the five largest languages. Where Korean has fewer than the 100 distinct eligible texts required for a language-specific solution, the correlations of its features with the pooled component scores will be reported in place of its congruence.</p>
+<p>Before the features are frozen, a Korean-reading collaborator will look for further Korean norms, because a search of Crossref is a poor instrument for Korean-language psycholinguistics. The collaborator will search the Korea Citation Index and RISS directly, with the Korean terms for concreteness (구체성), imageability (심상성, 심상가), age of acquisition (습득연령), valence (정서가) and arousal (각성가). The collaborator will also ask Tae and colleagues about the unpublished norming study behind the emotion ratings of their 1,544 words <span class="citation" data-cites="taeEmotionalArousalEffects2026">(<a href="#ref-taeEmotionalArousalEffects2026" role="doc-biblioref">Tae et al., 2026</a>)</span>. Any larger norm set found that passes the token-coverage rule will enter the analyses that use a native norm for the same feature, as a recorded deviation from this protocol.</p>
+<p>The classification of orthographic depth used in the main text <span class="citation" data-cites="seymourFoundationLiteracyAcquisition2003">(<a href="#ref-seymourFoundationLiteracyAcquisition2003" role="doc-biblioref"><span class="nocase">Seymour et al.</span>, 2003</a>)</span> omits Korean and Polish, so both are placed from other sources. The two placements are fixed with the feature inventory and will not be revised in the light of the per-language estimates. Two meta-analyses from one research group, both drawing on that classification, coded Korean as shallow for reading, and French and English as deep <span class="citation" data-cites="leeRelationsMorphologicalAwareness2023 leachmanRelationTextReading2025">(<a href="#ref-leachmanRelationTextReading2025" role="doc-biblioref">Leachman et al., 2025</a>; <a href="#ref-leeRelationsMorphologicalAwareness2023" role="doc-biblioref">J. won Lee et al., 2023</a>)</span>. The first coded Korean as deep for spelling, because Korean spelling preserves morphemes across resyllabification, which makes words harder to spell than to decode. The outcome here is reading time, so Korean will be annotated as shallow in the reading direction. Each meta-analysis coded depth as a dichotomy, so Korean will be placed shallower than French and English but not ranked among the seven sampled orthographies placed shallower than French, Polish included. Two further sources agree that Korean is shallower than English. The editors of a survey of seventeen orthographies give Finnish and Korean as examples of the most transparent alphabetic orthographies <span class="citation" data-cites="perfettiEpilogueUniversalsParticulars2017">(<a href="#ref-perfettiEpilogueUniversalsParticulars2017" role="doc-biblioref">Perfetti &amp; Verhoeven, 2017</a>)</span>. The Multilingual Eye-movement Corpus classes Korean as moderately transparent, beside Dutch and German <span class="citation" data-cites="siegelmanExpandingHorizonsCrosslinguistic2022">(<a href="#ref-siegelmanExpandingHorizonsCrosslinguistic2022" role="doc-biblioref">Siegelman et al., 2022</a>)</span>. A benchmark of grapheme-to-phoneme conversion instead calls Hangul relatively deep, because its spelling leaves sound changes across syllable boundaries unmarked <span class="citation" data-cites="gormanSIGMORPHON2020Shared2020">(<a href="#ref-gormanSIGMORPHON2020Shared2020" role="doc-biblioref">Gorman et al., 2020</a>)</span>.</p>
+<p>In the judgement of <span class="citation" data-cites="awramiukReadingSpellingAcquisition2013">Awramiuk &amp; Krasowicz-Kupis (<a href="#ref-awramiukReadingSpellingAcquisition2013" role="doc-biblioref">2013</a>)</span>, Polish is less shallow than Italian or Finnish but less opaque than English or French. In grapheme-to-phoneme entropies computed over the same nouns in 16 languages, it lies between German and Portuguese, nearest Portuguese <span class="citation" data-cites="schuppertWriteYouSpeak2017">(<a href="#ref-schuppertWriteYouSpeak2017" role="doc-biblioref">Schüppert et al., 2017</a>)</span>. The classification places German at the second level and Portuguese at the third. Polish will therefore be annotated at the middle level, beside Dutch and Portuguese. That placement is less secure than those taken from the classification itself. Polish is more consistent for reading than for spelling <span class="citation" data-cites="awramiukReadingSpellingAcquisition2013 lockiewiczPhonologicalProcessingReading2017">(<a href="#ref-awramiukReadingSpellingAcquisition2013" role="doc-biblioref">Awramiuk &amp; Krasowicz-Kupis, 2013</a>; <a href="#ref-lockiewiczPhonologicalProcessingReading2017" role="doc-biblioref">Łockiewicz &amp; Ciecholewska, 2017</a>)</span>, and one study of Polish children, citing the same entropies, groups it with Finnish, German and Greek as a transparent orthography <span class="citation" data-cites="debskaReadingSpellingSkills2019">(<a href="#ref-debskaReadingSpellingSkills2019" role="doc-biblioref">Dębska et al., 2019</a>)</span>. One of the two meta-analyses codes Polish as deep, but only in an appendix table and without naming a source <span class="citation" data-cites="leachmanRelationTextReading2025">(<a href="#ref-leachmanRelationTextReading2025" role="doc-biblioref">Leachman et al., 2025</a>)</span>.</p>
+<p>The app’s other alphabetic languages are placed on the principle applied to Korean, by their consistency in the reading direction. Indonesian is grouped with Finnish and Italian as an orthography in which a letter is almost always pronounced the same way whatever the word <span class="citation" data-cites="borleffsMeasuringOrthographicTransparency2017">(<a href="#ref-borleffsMeasuringOrthographicTransparency2017" role="doc-biblioref">Borleffs et al., 2017, p. 1620</a>)</span>. The Multilingual Eye-movement Corpus classes Turkish as transparent, beside Finnish, Greek, Italian and Spanish <span class="citation" data-cites="siegelmanExpandingHorizonsCrosslinguistic2022">(<a href="#ref-siegelmanExpandingHorizonsCrosslinguistic2022" role="doc-biblioref">Siegelman et al., 2022</a>, Table 1)</span>. No comparative measure we found includes Romanian, but a study of its early readers describes its orthography as rather transparent, with most sounds written by a single letter <span class="citation" data-cites="doleanLanguageSkillsNot2021">(<a href="#ref-doleanLanguageSkillsNot2021" role="doc-biblioref">Dolean et al., 2021</a>)</span>. Indonesian, Romanian and Turkish will therefore be annotated as shallow, the Romanian placement resting on the weakest evidence of the three. The same corpus classes Russian as moderately transparent, beside Dutch, German and Korean <span class="citation" data-cites="siegelmanExpandingHorizonsCrosslinguistic2022">(<a href="#ref-siegelmanExpandingHorizonsCrosslinguistic2022" role="doc-biblioref">Siegelman et al., 2022</a>, Table 1)</span>. Russian spelling is, however, asymmetric: highly consistent from spelling to sound and much less so from sound to spelling, because of vowel reduction and voicing assimilation <span class="citation" data-cites="rakhlinPhonemicAwarenessIs2014">(<a href="#ref-rakhlinPhonemicAwarenessIs2014" role="doc-biblioref">Rakhlin et al., 2014</a>)</span>. Like Korean, Russian will therefore be annotated as shallow in the reading direction. The five levels were built to order European alphabets, so Arabic, Hebrew, Thai and Chinese are not placed on them. Arabic and Hebrew are annotated as abjads, Thai as an abugida and Chinese, in both scripts, as morphosyllabic.</p>
+<p>Greek is the next weakest in norms, though not in the suitability of its writing system. Its orthography is transparent enough for every word to be aligned completely between graphemes and phonemes, and that transparency has been quantified separately in the reading and the spelling direction <span class="citation" data-cites="protopapasComparativeQuantitativeAnalysis2009">(<a href="#ref-protopapasComparativeQuantitativeAnalysis2009" role="doc-biblioref">Protopapas &amp; Vlahou, 2009</a>)</span>. Greek children reach accurate foundation word reading within the first school year <span class="citation" data-cites="seymourFoundationLiteracyAcquisition2003">(<a href="#ref-seymourFoundationLiteracyAcquisition2003" role="doc-biblioref"><span class="nocase">Seymour et al.</span>, 2003</a>)</span>. Among 234 Greek children followed through the first two grades, word reading fluency predicted accuracy by the second grade, but no path from accuracy to fluency was found <span class="citation" data-cites="georgiouCrosslaggedRelationsWord2025">(<a href="#ref-georgiouCrosslaggedRelationsWord2025" role="doc-biblioref"><span class="nocase">Georgiou et al.</span>, 2025</a>)</span>. Greek has two sets rated for valence and arousal, and neither is expected to meet the token-coverage rule for the native-norm affective sensitivity analysis. One covers 348 words, rated for valence, arousal and other dimensions by 229 native Greek speakers at the University of Cyprus <span class="citation" data-cites="vaiouliAffectivePsycholinguisticNorms2023">(<a href="#ref-vaiouliAffectivePsycholinguisticNorms2023" role="doc-biblioref">Vaiouli et al., 2023</a>)</span>. The other covers the 1,034 words of the Affective Norms for English Words, translated into Greek and rated anew by 105 native Greek speakers <span class="citation" data-cites="palogiannidiAffectiveLexiconCreation2016">(<a href="#ref-palogiannidiAffectiveLexiconCreation2016" role="doc-biblioref">Palogiannidi et al., 2016</a>)</span>. For concreteness, Greek has a set of 2,948 words rated for concreteness and imageability, most of them nouns <span class="citation" data-cites="traikapiGreekCypriotWord2024">(<a href="#ref-traikapiGreekCypriotWord2024" role="doc-biblioref">Traikapi et al., 2024</a>)</span>. The set is available only as a preprint, and its 312 concreteness raters were Greek-Cypriot adults. Both facts will be stated wherever a Greek concreteness value is reported.</p>
+<p>The app’s nine other languages are covered by the same uniform resources, with three exceptions. subs2vec has no Chinese or Thai, so in those languages the primary frequency is computed from the OpenSubtitles 2018 corpus <span class="citation" data-cites="lisonOpenSubtitles2018StatisticalRescoring2018">(<a href="#ref-lisonOpenSubtitles2018StatisticalRescoring2018" role="doc-biblioref">Lison et al., 2018</a>)</span> after segmentation with the frozen word segmenter. That keeps the source register, subtitles, but not the pipeline, since the subs2vec documentation does not name the corpus release it used. Goldfish publishes no 1 GB model for Traditional Chinese, so Traditional Chinese text is converted to Simplified script with OpenCC, at a version frozen with the inventory, for every lexical lookup, for surprisal under the Simplified Chinese models and for the induced affective values, which are Simplified. The parse and the sentence encoders run on the text as served. EuroLLM-1.7B does not cover Hebrew, Indonesian or Thai, so the single-multilingual-model contrast runs without them. The other uniform resources cover all nine. Stanza publishes <code>nocharlm</code> packages for each, and UDPipe 2 has models for each, Thai only in its latest release. The byte premiums that scale each Goldfish training corpus run from 0.94 for Simplified Chinese to 2.74 for Thai.</p>
+<div id="tbl-resources-more" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[13,25,37,25]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-resources-more-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Supplementary Table&nbsp;4: Resources for the app’s nine languages beyond the structural sample. Every uniform resource not listed in the second column, the two sentence encoders, MEmoLon and UDPipe 2, covers all nine. Each native set is subject to the token-coverage rule, so a set of a few thousand words is not expected to pass it.
+</figcaption>
+<div aria-describedby="tbl-resources-more-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 25%">
+<col style="width: 37%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Language</strong></th>
+<th><strong>Uniform resources</strong></th>
+<th><strong>Native norms for the sensitivity analyses</strong></th>
+<th><strong>Connectives and script rules</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Arabic</td>
+<td>subs2vec, Goldfish <code>arb_arab</code> (byte premium 1.47), Stanza PADT and EuroLLM-1.7B</td>
+<td>Frequency from SUBTLEX-AR <span class="citation" data-cites="boudelaaSUBTLEXARArabicWord2025">(<a href="#ref-boudelaaSUBTLEXARArabicWord2025" role="doc-biblioref">Boudelaa et al., 2025</a>)</span>. Age of acquisition and concreteness for 2,467 words of Modern Standard Arabic <span class="citation" data-cites="alzahraniKalimahNormsRatings2025">(<a href="#ref-alzahraniKalimahNormsRatings2025" role="doc-biblioref">Alzahrani et al., 2025</a>)</span>. No rated set for valence and arousal was found</td>
+<td>Seeded from a published lexicon <span class="citation" data-cites="keskesLearningExplicitImplicit2014">(<a href="#ref-keskesLearningExplicitImplicit2014" role="doc-biblioref">Keskes et al., 2014</a>)</span>. Lookups on clitic-split words, as described below. No syllable count</td>
+</tr>
+<tr class="even">
+<td>Hebrew</td>
+<td>subs2vec, Goldfish <code>heb_hebr</code> (1.36) and Stanza HTB</td>
+<td>Frequency from subs2vec only. Age of acquisition only for the 299 cross-linguistic words <span class="citation" data-cites="luniewskaRatingsAgeAcquisition2016">(<a href="#ref-luniewskaRatingsAgeAcquisition2016" role="doc-biblioref">Łuniewska et al., 2016</a>)</span>. No concreteness, valence or arousal set was found</td>
+<td>Inventory compiled for this study. Lookups on clitic-split words. No syllable count</td>
+</tr>
+<tr class="odd">
+<td>Indonesian</td>
+<td>subs2vec, Goldfish <code>ind_latn</code> (1.18) and Stanza GSD</td>
+<td>Frequency from TUBELEX <span class="citation" data-cites="nohejlFilmSubtitlesYouTube2025">(<a href="#ref-nohejlFilmSubtitlesYouTube2025" role="doc-biblioref">Nohejl et al., 2025</a>)</span>. Concreteness, valence and arousal for 1,490 words <span class="citation" data-cites="sianiparAffectiveMeaningConcreteness2016">(<a href="#ref-sianiparAffectiveMeaningConcreteness2016" role="doc-biblioref"><span class="nocase">Sianipar et al.</span>, 2016</a>)</span>, the concreteness scale reversed, since it runs from concrete to abstract. No age-of-acquisition set was found</td>
+<td>Inventory compiled for this study. Syllables from hyphenation patterns</td>
+</tr>
+<tr class="even">
+<td>Romanian</td>
+<td>subs2vec, Goldfish <code>ron_latn</code> (1.12), Stanza RRT and EuroLLM-1.7B</td>
+<td>No subtitle-based frequency norm and no age-of-acquisition, concreteness, valence or arousal set was found</td>
+<td>Inventory compiled for this study. Syllables from hyphenation patterns</td>
+</tr>
+<tr class="odd">
+<td>Russian</td>
+<td>subs2vec, Goldfish <code>rus_cyrl</code> (1.82), Stanza SynTagRus and EuroLLM-1.7B</td>
+<td>Frequency from StimulStat <span class="citation" data-cites="alexeevaStimulStatLexicalDatabase2018">(<a href="#ref-alexeevaStimulStatLexicalDatabase2018" role="doc-biblioref">Alexeeva et al., 2018</a>)</span>. Age of acquisition for 30,849 words <span class="citation" data-cites="grigorievSubjectiveAgeAcquisition2026">(<a href="#ref-grigorievSubjectiveAgeAcquisition2026" role="doc-biblioref">Grigoriev et al., 2026</a>)</span>, concreteness for about 1,500 <span class="citation" data-cites="solovyevRussianDictionaryConcreteness2022">(<a href="#ref-solovyevRussianDictionaryConcreteness2022" role="doc-biblioref">Solovyev et al., 2022</a>)</span> and valence and arousal for 1,000 <span class="citation" data-cites="solovyevOsgoodParameterValues2025">(<a href="#ref-solovyevOsgoodParameterValues2025" role="doc-biblioref">Solovyev et al., 2025</a>)</span></td>
+<td>Seeded from Ru-DiMLex. Syllables counted as vowel letters</td>
+</tr>
+<tr class="even">
+<td>Simplified Chinese</td>
+<td>OpenSubtitles 2018 frequency, Goldfish <code>zho_hans</code> (0.94), Stanza GSDSimp and EuroLLM-1.7B</td>
+<td>Frequency from SUBTLEX-CH <span class="citation" data-cites="caiSUBTLEXCHChineseWord2010">(<a href="#ref-caiSUBTLEXCHChineseWord2010" role="doc-biblioref">Cai &amp; Brysbaert, 2010</a>)</span>. Age of acquisition for 19,716 words <span class="citation" data-cites="xuAgeAcquisitionRatings2021">(<a href="#ref-xuAgeAcquisitionRatings2021" role="doc-biblioref">Xu et al., 2021</a>)</span>, concreteness for 9,877 two-character words <span class="citation" data-cites="xuConcretenessAbstractnessRatings2020">(<a href="#ref-xuConcretenessAbstractnessRatings2020" role="doc-biblioref">Xu &amp; Li, 2020</a>)</span> and valence and arousal for 11,310 words <span class="citation" data-cites="xuValenceArousalRatings2022">(<a href="#ref-xuValenceArousalRatings2022" role="doc-biblioref">Xu et al., 2022</a>)</span></td>
+<td>Seeded from Chinese-DiMLex <span class="citation" data-cites="wanChineseDiMLexLexiconChinese2025">(<a href="#ref-wanChineseDiMLexLexiconChinese2025" role="doc-biblioref">Wan et al., 2025</a>)</span>. Words from the segmenter. Length counted in characters, and one syllable per character</td>
+</tr>
+<tr class="odd">
+<td>Thai</td>
+<td>OpenSubtitles 2018 frequency, Goldfish <code>tha_thai</code> (2.74) and Stanza TUD, with sentence boundaries from PyThaiNLP <span class="citation" data-cites="phatthiyaphaibunPyThaiNLPThaiNatural2023">(<a href="#ref-phatthiyaphaibunPyThaiNLPThaiNatural2023" role="doc-biblioref">Phatthiyaphaibun et al., 2023</a>)</span></td>
+<td>Frequency from the Thai National Corpus <span class="citation" data-cites="aroonmanakunThaiNationalCorpus2009">(<a href="#ref-aroonmanakunThaiNationalCorpus2009" role="doc-biblioref">Aroonmanakun et al., 2009</a>)</span>. No word-level age-of-acquisition, concreteness, valence or arousal set was found</td>
+<td>Seeded from the Thai Discourse Treebank <span class="citation" data-cites="prasertsomThaiDiscourseTreebank2024">(<a href="#ref-prasertsomThaiDiscourseTreebank2024" role="doc-biblioref">Prasertsom et al., 2024</a>)</span>. Words from the segmenter. Length counted in consonant and vowel letters, excluding tone marks. Syllables from PyThaiNLP</td>
+</tr>
+<tr class="even">
+<td>Traditional Chinese</td>
+<td>As Simplified Chinese, after conversion to Simplified script, with Stanza GSD run on the text as served</td>
+<td>Frequency from SUBTLEX-CH after conversion, which predicted Hong Kong readers’ lexical decisions on Traditional words best of six measures <span class="citation" data-cites="tseChineseLexiconProject2017">(<a href="#ref-tseChineseLexiconProject2017" role="doc-biblioref">Tse et al., 2017</a>)</span>. Concreteness, valence and arousal for 25,281 two-character words rated in Hong Kong <span class="citation" data-cites="chanDecodingEssenceTwocharacter2024">(<a href="#ref-chanDecodingEssenceTwocharacter2024" role="doc-biblioref">Chan &amp; Tse, 2024</a>)</span>. Age of acquisition is rated only for characters, so none at word level</td>
+<td>As Simplified Chinese, the inventory converted to Traditional script</td>
+</tr>
+<tr class="odd">
+<td>Turkish</td>
+<td>subs2vec, Goldfish <code>tur_latn</code> (1.04), Stanza IMST and EuroLLM-1.7B</td>
+<td>Frequency from LexiTR <span class="citation" data-cites="sezerTurkishWordFrequency2025">(<a href="#ref-sezerTurkishWordFrequency2025" role="doc-biblioref">Sezer &amp; Karadağ, 2025</a>)</span>. Age of acquisition for 600 words <span class="citation" data-cites="gozSubjectiveAgeofacquisitionNorms2017">(<a href="#ref-gozSubjectiveAgeofacquisitionNorms2017" role="doc-biblioref">Göz et al., 2017</a>)</span>. Concreteness, valence and arousal for 2,031 words <span class="citation" data-cites="kapucuTurkishEmotionalWord2021">(<a href="#ref-kapucuTurkishEmotionalWord2021" role="doc-biblioref">Kapucu et al., 2021</a>)</span></td>
+<td>Seeded from TCL <span class="citation" data-cites="zeyrekTCLLexiconTurkish2019">(<a href="#ref-zeyrekTCLLexiconTurkish2019" role="doc-biblioref">Zeyrek &amp; Başıbüyük, 2019</a>)</span>. Syllables counted as vowel letters</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Four rules for these scripts are registered with the inventory. First, as Measures sets out, a Chinese or Thai word is a token of the frozen word segmenter of the Stanza package fixed for the language, which segments the text before it is parsed. The same tokens serve the outcome’s denominator, the frequency counts and every lookup, so a segmentation error moves all of them together. Second, Arabic and Hebrew write the article and some prepositions and conjunctions as prefixes to the word they precede. For lexical lookups in these languages, the parser’s multi-word-token expansion splits each orthographic word, and the lookup is made on the content word. As under the morpheme rule for Korean, the value is aggregated back to the orthographic word and then to the text mean, and both matched-token proportions are reported. Third, a script that leaves short vowels unwritten does not show its syllables, so Arabic and Hebrew do not contribute to the predicted spoken duration, and the duration-adjusted contrast for Hypothesis 4 runs without them. Fourth, Chinese, Thai and Indonesian do not mark tense on the verb, so the past-tense quantity of narrativity is undefined there, and the composite is the mean of the two quantities that are defined.</p>
+<p>Three further limits are recorded here. Published attachment scores for the Thai treebank are far below those of the other languages, and Stanza’s Thai package has no lemmatiser, so a Thai lemma is its surface form. Thai is therefore expected to fail the labelled-attachment criterion of the sixth outcome-neutral check and to leave the grammatical component, and the check decides. Turkish expresses some connective relations with converbal suffixes, which a match on whole tokens cannot count, so Turkish connective densities cover free forms only. Finally, the stories in every language but English are machine translations of the English texts (Table 2 of the main text). A text property measured in a translation is a property of that translation, so the cross-language comparisons registered here compare translations of one set of stories, not texts written independently in each language.</p>
+<p>Every affective value in this design descends from adult ratings. The induced resource is trained on adult English norms and propagated to the other languages, and every native set named in <a href="#tbl-resources" class="quarto-xref">Supplementary Table&nbsp;3</a> is adult-rated. The readers are children of 7 and over, and where child norms exist, the difference between child and adult ratings is age-graded across this study’s two age bands. The overlap of valence and arousal with LexicalDifficulty, given under Measures, is one reason for entering them as main effects only, and adult rating is another. A covariate measured on an adult referent cannot separate a developmental change in reading from a developmental change in how a word is rated. For the languages in which a child-rated set is available, we will recompute mean valence and mean arousal from it at rating ages inside each band. Their correlations with the primary means and with each other will be reported, whatever they show, as a descriptive check that enters no model.</p>
+<p>Several tools named in this section have no registered DOI, as is usual for research software distributed through model repositories. Such tools are identified by the checkpoint that the fourth rule under Materials freezes, and the identifiers are deposited with the feature-extraction code.</p>
+</section>
+<section id="s4.-the-literature-search" class="level1">
+<h1>S4. The literature search</h1>
+<p>The Scopus counts reported in the Introduction come from three concept sets, each searched with one of the following expressions.</p>
+<ul>
+<li>Children’s reading: <code>TITLE-ABS-KEY("reading comprehension" OR "text comprehension" OR "passage comprehension" OR "reading fluency" OR "reading time") AND TITLE-ABS-KEY(child OR children OR pupils OR "primary school" OR "elementary school")</code></li>
+<li>Computational text features: <code>TITLE-ABS-KEY("word frequency" OR "lexical diversity" OR "syntactic complexity" OR "dependency distance" OR "text cohesion" OR "text coherence" OR readability OR surprisal OR "age of acquisition" OR concreteness) AND TITLE-ABS-KEY(computational OR corpus OR "natural language processing" OR "language model" OR psycholinguistic)</code></li>
+<li>Platform log data: <code>TITLE-ABS-KEY("log data" OR logfile OR "log file" OR "trace data" OR "learning analytics" OR "app data" OR "mobile application" OR "digital platform" OR telemetry OR "behavioural logs" OR "behavioral logs")</code></li>
+</ul>
+<p>Each pairwise and three-way intersection reported in the Introduction joins the corresponding expressions with AND. All searches covered the publication years 2018 to 2026 in the field TITLE-ABS-KEY, with no document-type, language or subject-area limit. They were run on 26 August 2026 with scopusflow 0.4.0, and only count queries were issued, one request per count, so nothing was downloaded and no record set was assembled. The full record, including the yearly counts, is in <code>literature/scopus_search_record.md</code>. <a href="#fig-trends" class="quarto-xref">Supplementary Figure&nbsp;1</a> uses those counts to show how three related topics changed over the same years.</p>
+<div id="fig-trends" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-trends-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<embed src="literature/scopus_topic_trends.pdf" class="img-fluid" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trends-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Supplementary Figure&nbsp;1: Publication trend, 2018 to 2026, for children’s reading comprehension combined with narration, with reading apps and e-books, and with machine-generated text, as a percentage of the reference set. The reference set is a query narrower than the children’s reading concept set counted in the main text. Its expression is in <code>literature/scopus_gap_analysis.R</code> and its yearly counts in <code>literature/scopus_search_record.md</code>. The 2026 point covers only records indexed up to the search date of 26 August 2026. Shaded bands are 95 per cent Wilson score intervals on each yearly share. Because the counts are a census of indexed records, the bands illustrate how stable each share is, not its sampling uncertainty, and widen where the yearly reference count is small. Machine-generated text does not appear in this literature before 2024.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="s5.-the-design-analysis-in-full" class="level1">
+<h1>S5. The design analysis in full</h1>
+<p>The precision analysis simulated data from the design specifications deposited in <code>design_analysis/</code>, and <code>design_analysis/run_design_analysis.R</code> reproduces it <span class="citation" data-cites="bernabeuPilotr2026">(<a href="#ref-bernabeuPilotr2026" role="doc-biblioref">Bernabeu, 2026a</a>)</span>. The main text describes the three simulated models and what their omissions imply. This section records how the models were fitted and how the requirements were derived. The tier-1 and narration models were fitted by restricted maximum likelihood with lme4, with its derivative-based convergence checks switched off. Each simulated tier-2 child read five distinct texts in a random order, one at each session position. The accumulated-reading contrast has a standard deviation of one across the five positions, so its coefficient is on the per-standard-deviation unit that Hypothesis 6 registers. In the texts sweeps, each simulated reader drew one text at random, so twelve readings per text is an average and individual texts received more or fewer.</p>
+<p>Each requirement comes from a probit regression of the decision probability on the square root of the swept quantity, with each grid point weighted by its replicate count. The fitted curve is inverted at the target, and the delta method gives the requirement’s 95 per cent interval. Where the two-parameter curve fits the grid worse than its replicate counts imply, the interval is widened by Pearson’s heterogeneity factor. A target that the simulated range does not reach is reported as not reached, and the fitted curve is never extrapolated. The texts and narration sweeps used 200 replicates per grid point, and the readings, null and tier-2 sweeps used 120. At two readings per text, 4 of the 120 fits for each coefficient were singular and were retained in the widths and probabilities. The pooled grid is in <code>design_analysis/precision_sweep.csv</code>. The per-sweep files under <code>design_analysis/sweeps/</code> add, for each grid point, the Monte Carlo standard error on each decision probability, the number of fits attempted and how many converged, were singular or raised warnings. <a href="#fig-precision-sup" class="quarto-xref">Supplementary Figure&nbsp;2</a> shows the narration and within-child curves that the main text summarises.</p>
+<div id="fig-precision-sup" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-precision-sup-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<embed src="figures/fig_precision_supplement.pdf" class="img-fluid" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-precision-sup-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Supplementary Figure&nbsp;2: Precision for the narration contrast (a) and the within-child accumulated-reading term (b). Points are the probability of a determinate verdict for an effect of 0.10 standard deviations, over 200 simulation replicates per grid point in a and 120 in b. Panel a assumes an average of twelve readings per text, and panel b five distinct texts per child. Shaded bands are 95 per cent Wilson score intervals on each probability, and the dashed line marks the 0.90 target. The narration curve assumes a balanced contrast, and the first adjustment to the main text’s precision thresholds corrects its requirement by the design effect for the observed narration prevalence.
+</figcaption>
+</figure>
+</div>
+<p>For comparison with Nature Human Behaviour’s a priori power floor of 0.95 for frequentist plans, <code>design_analysis/solve_at_095.R</code> recomputes the requirements at that level from the same archived curves, without re-simulating, and writes them to <code>minimum_texts_095.csv</code>. At that target, the main effects need 926 distinct texts for lexical difficulty (95 per cent interval 794 to 1,069), 812 for grammatical load (723 to 906) and 784 for referential continuity (696 to 877). The grammatical-load interaction with the age band needs 1,510 texts (1,349 to 1,680), the narration interaction 1,506 (1,349 to 1,672) and the within-child term 731 children in tier 2 (621 to 851). The continuity interaction did not reach 0.95 within the 1,600 texts simulated.</p>
+<p>For the Bayes-factor criterion registered under Decision rules, the requirements were computed from the same archived curves by <code>design_analysis/solve_at_bf10.R</code>, again without re-simulating. The reference prior is a Student <em>t</em> with 3 degrees of freedom, centred at zero, with scale 0.5 for a main effect and 0.25 for an interaction. Under it, the prior mass inside the region of practical equivalence is 7.3 per cent for a main effect and 14.6 per cent for an interaction. A Bayes factor of 10 for the region outside is therefore reached when the posterior mass inside falls to 0.8 and 1.7 per cent. For a normal posterior, those masses place the estimate 2.42 and 2.13 standard errors beyond the region’s edge. The normal approximation is applied at each grid point. The mean interval width gives the standard error, and the probability that a true effect of 0.10 clears that distance is the normal tail beyond it. The resulting curve is inverted at 0.90 and 0.95 as in <code>solve_at_095.R</code>, and the requirements are written to <code>minimum_texts_bf10.csv</code>.</p>
+<p>The approximation is checked against the simulation at the simulation’s own criterion. At every grid point, the approximated probability of an interval wholly outside the region lies within 0.06 of the simulated one (<code>sweeps/bf10_calibration.csv</code>). Applied at that criterion, the same approximation puts the 0.90 requirement at about 715 texts for each main effect, against the simulated 738, 660 and 634, whose spread is Monte Carlo variation. Relative to the simulation’s criterion, the Bayes-factor criterion raises the requirement by a factor of about 1.3 for a main effect and for the tier-2 term, and by about 1.1 for an interaction. The Bayes-factor requirements are reported under Design and precision analysis and in Table 1 of the main text.</p>
+<p>The variance shares in the design specifications are assumptions, as Design and precision analysis states, so <code>design_analysis/run_variance_sensitivity.R</code> re-derives the tier-1 requirements with the share of variance between texts at 5, 13 and 20 per cent. The script holds the child variance at the specifications’ value and the total variance at one, so the residual absorbs each change. It re-runs the texts sweeps for Hypotheses 1 to 4 with 200 replicates per grid point and solves each curve as the main analysis does, under the simulation’s criterion and the Bayes-factor criterion, at 0.90 and 0.95. The rows at 9 per cent are read from the main analysis’s cached sweeps and reproduce its figures. The 20 per cent sweeps were run on the University of Oxford’s Advanced Research Computing cluster with the package versions of the main analysis. A re-run there of both 5 per cent sweeps reproduced the local results in every replicate decision, with mean interval widths agreeing to within <span class="math inline">\(10^{-9}\)</span>. The results are in <code>design_analysis/variance_sensitivity.csv</code>, and the software versions in <code>session_info_variance_sensitivity.txt</code> and <code>session_info_variance_sensitivity_arc.txt</code>.</p>
+<p>At 0.90 under the simulation’s criterion, the three main effects needed 489 to 553 distinct texts at a text share of 5 per cent, 634 to 738 at the registered 9 per cent, 753 to 946 at 13 per cent and 1,146 to 1,243 at 20 per cent. Under the Bayes-factor criterion, they needed about 720, 930, 1,140 and 1,490, and at 20 per cent none reached 0.95 within the 1,600 texts simulated. A main effect is identified between texts, so its requirement rises with the variance between them. The two age-band interactions and the narration interaction moved the other way, and by less. At 0.90, they needed 1,256, 1,498 and 1,276 texts at 5 per cent and 1,141, 1,224 and 1,145 at 20 per cent. An interaction with a reader attribute compares readings of the same texts, from which the text intercept cancels, and with the total held at one, a larger text share leaves less variance within texts. The text share can be estimated only from a fitted model, so it enters none of the registered adjustments. Its estimate, the Text-level intraclass correlation reported under Measures, will show where on this range the extract lies.</p>
+<p>The ordinal outcome of Hypothesis 5 was simulated and fitted with a separate script, <code>design_analysis/run_ordinal_analysis.R</code>, because the routine used for the reading-time models cannot fit a cumulative logit. Treating the three-category rating as continuous would avoid that problem but answer a different question. The script generates the rating from the same design specification, with each replicate seeded deterministically from its grid point and replicate index. On the latent logistic scale, whose residual variance is fixed at <span class="math inline">\(\pi^2/3\)</span>, the specification’s standard deviations give the text intercept about 2.5 per cent of the latent variance and the child intercept about 5.7 per cent, so the shares of 9 and 20 per cent stated in the main text describe the reading-time models only. The two thresholds, at -0.85 and 0.85 on that scale, are a placeholder that puts roughly 30, 40 and 30 per cent of ratings in the three categories, and the fourth adjustment in the main text replaces them with the observed proportions. It keeps each reading’s rating with probability 0.30, the availability that the structural sample showed, and applies the protocol’s five-rater floor inside every replicate. The model fitted with <code>ordinal::clmm</code> is a cumulative-logit counterpart of the registered model, containing only the three components, the age band and a text intercept. On the log-odds scale, the region is symmetric about zero, with the half-width of log(1.05) that the main text registers. Only a determinate verdict in the direction of the true effect counts as a success. The ordinal sweep used 60 replicates per grid point. In 14, 8, 4 and 1 of them at 200, 400, 800 and 1,600 texts, the text variance was estimated at zero and the standard errors were undefined. Those replicates are not a random subset, so none was discarded. Each was refitted as the fixed-effects cumulative logit to which the mixed model reduces at that boundary.</p>
+<p>The rating sets the most demanding requirement in the design. At 200, 400, 800 and 1,600 generated texts, with an average of twelve readings each, the 95 per cent interval on a coefficient whose true value is 0.10 log odds has a mean width of 0.42 to 0.44, 0.30, 0.21 and 0.15. The probability of a determinate verdict does not exceed 0.30 at any grid point, so the 0.90 target is not reached within the range simulated, and no requirement is obtained by inverting the curve. The grid does, however, establish how interval width scales with the number of texts, with fitted exponents between -0.505 and -0.524 against a theoretical -0.5. A requirement projected from that scaling must also allow for attenuation, because the simulation generates child variance that the fitted model omits. In a logit model, that omission shrinks every coefficient towards zero, by a factor of about 0.967 at the specification’s child standard deviation of 0.45 <span class="citation" data-cites="zegerModelsLongitudinalData1988">(<a href="#ref-zegerModelsLongitudinalData1988" role="doc-biblioref">Zeger et al., 1988</a>)</span>. The mean fitted estimates across the grid, 0.093 to 0.095 in absolute value with Monte Carlo standard errors of 0.004, agree with that factor. A determinate verdict must then clear the region’s boundary starting from the attenuated value of 0.097, and doing so requires a mean interval width of 0.058. On the fitted scaling law, that width is reached at roughly 9,300 to 10,300 generated texts, of which about 2,700 to 3,000 have at least five ratings. Without the attenuation, the projection would be 8,200 to 9,000. Against the 634 to 738 texts that the three components need on reading time at the same criterion and target, the rating demands an order of magnitude more. The difference follows from a three-category response observed for 30 per cent of readings. These projections depend on the rating’s availability across the full window and on how heavily texts are reused, which the provider-computed counts will supply. Before any outcome model is fitted, the simulation will be re-run at the observed values of both and at the category proportions observed in the extract. Those proportions matter because they fix the spacing of the simulated thresholds and with it the information a cumulative logit can recover. Design and precision analysis registers the re-runs at the observed availability and proportions as its third and fourth adjustments. Every number in this paragraph is reproduced by <code>design_analysis/summarise_ordinal.R</code>, which pools the stored grid-point results.</p>
+</section>
+<section id="s6.-deriving-the-priors-from-the-systematic-review" class="level1">
+<h1>S6. Deriving the priors from the systematic review</h1>
+<p>The main text states under Priors which coefficients receive review-derived priors, when the rules of the prior-derivation pipeline were frozen and when the pipeline will be run. The rules are deposited verbatim as <code>priors/prior_derivation.md</code>, and the README of the <code>preregistration</code> directory records the revision copied and the copy’s SHA-256 checksum. They were preceded in June 2026 by test extractions from 12 papers, made under an earlier schema and later used to refine the extraction instructions. An automated listing of the statistics reported in the included papers began in the same month. Here we summarise the fixed assignment of the review’s extracted effects to this protocol’s coefficients, the metric families and the pooling and de-duplication rules. LexicalDifficulty pools the review’s word-frequency, lexical-coverage, other-lexical and lexical-diversity effects on reading. Before pooling, these are sign-harmonised so that frequency and coverage are reversed to the direction of difficulty, whereas age of acquisition, word length and surprisal keep their sign. Age-of-acquisition effects remain in the pool, and so partly shape the prior’s centre, because the confirmatory component omits that feature only for want of norms comparable across languages. GrammaticalLoad pools syntactic-complexity and sentence-length effects. ReferentialContinuity pools coherence effects. The rules assign no review evidence to any secondary predictor, so the effects of discourse structure and of emotionality that the review extracts inform no prior here.</p>
+<p>Pooling keeps metric families apart, because a conversion that is mathematically available is not always a valid one. The primary prior for a coefficient uses only standardised regression coefficients reported on the mapped predictor and outcome. No other metric is admitted to reach the two papers that the main text requires for a derived prior. Correlations, partial correlations recovered from <em>t</em> or from one-degree-of-freedom <em>F</em> statistics, standardised mean differences and odds ratios form separately named sensitivity pools, and no generic conversion from an odds ratio or a <em>d</em> to a correlation is applied to a continuous predictor. Estimates are pooled within an outcome class and never across classes, so a reading-time coefficient draws only on reading-time evidence and the rating coefficient only on rated difficulty. Unstandardised coefficients without convertible scaling, and rows whose direction the extraction could not resolve, are listed with the reason for their exclusion.</p>
+<p>Within each combination of coefficient, outcome class and metric family, a random-effects meta-analysis fitted by restricted maximum likelihood pools one estimate per paper per relation, the one the extraction marks as primary, with the paper as the cluster. Labelled subgroups and alternative specifications are never treated as independent studies. A sensitivity analysis keeps every eligible estimate and models their dependence in a multilevel model <span class="citation" data-cites="cheungGuideConductingMetaanalysis2019">(<a href="#ref-cheungGuideConductingMetaanalysis2019" role="doc-biblioref">Cheung, 2019</a>)</span>, and a Bayesian random-effects model is a second. The primary pool is restricted to samples aged 7 to 10. A moderated pool adds samples aged 11 to 18 or spanning both ranges, with the age stratum as a moderator, and its estimate is reported with Hypotheses 2 and 3 as the review’s own evidence on whether text-feature effects change with age. Where the primary pool has fewer than two papers for a coefficient but the moderated pool has at least two, the moderated estimate is used and the substitution is stated. For Hypothesis 6, studies of oral reading rate enter only a sensitivity pool, because the app does not record whether a child read silently or aloud. Where a meta-analysis in the corpus subsumes three or more of the other papers, the pooled row will be preferred and those papers dropped. Otherwise, those papers will be used and the pooled row dropped. In either case, the alternative will be reported as a sensitivity analysis.</p>
+<p>The prior is then Student’s <span class="math inline">\(t(3, \hat\mu, \sigma)\)</span>, where <span class="math inline">\(\hat\mu\)</span> is the pooled estimate on the model’s scale and <span class="math inline">\(\sigma = 2\sqrt{\mathrm{SE}(\hat\mu)^2 + \hat\tau^2}\)</span>, with a floor of 0.10. The heavy tails let the data override a misplaced centre. For each component, we will record from the pipeline’s output whether <span class="math inline">\(|\hat\mu|\)</span> falls below 0.10 standard deviations, the comparison that decides whether the sixth adjustment to the main text’s precision thresholds runs. The frozen rules do not contain this step, which this protocol adds. The timestamped output will be deposited before the extract is transferred. The complete prior table, forest plots, conversion arithmetic and exclusion appendix will accompany the Stage 2 report.</p>
+</section>
+<section id="s7.-data-access-certification-and-record-of-contingent-hypothesis-activation" class="level1">
+<h1>S7. Data-access certification and record of contingent-hypothesis activation</h1>
+<p>We sent the certification below to the data controller on 7 August 2026 and reproduce it as it stands. Its bracketed fields will be completed and the document signed before submission. [At submission: “The certification was signed on DATE and every field is completed above.” / “The following fields remained open at submission: …”.]</p>
+<blockquote class="blockquote">
+<p>Gameloft confirms that, as of [date]:</p>
+<ol type="1">
+<li>An export of <em>Let’s Story</em> reading sessions was built on [build date], covering [window] and comprising [n] rows, in the file or files listed in the accompanying record with their SHA-256 checksums.</li>
+<li>That extract is held by Gameloft and has not been transferred, in whole or in part, to the University of Oxford research team or to anyone acting for it.</li>
+<li>It will be transferred only on written confirmation of in-principle acceptance.</li>
+<li>Material shared with the team to date: a 35-row sample and the data dictionary, shared on 27 July 2026 to confirm the structure of the table; the story texts; and the counts and file record described above.</li>
+<li>No analysis relating story text to reading time has been conducted by Gameloft or reported to the team.</li>
+</ol>
+<p>Owner: [name, role]<br>
+Deputy: [name, role]<br>
+Signed: [name, role, date]</p>
+</blockquote>
+<p>The accompanying record in clause 1 is the manifest described under Data provenance in the main text, to be deposited on receipt as the Data availability statement sets out. The data controller will record any row removed from the held extract between the build and the transfer, as Ethics information states. The effect of any removal on the counts will be reported at Stage 2.</p>
+<p>Clause 4 lists the 35-row structural sample, which contains real reading times. The main text discloses the sample under Pilot data, with the summary computed from it on 6 August 2026, and Section S8 reports both. The story texts in clause 4 are stimulus materials. The editorial office confirmed in advance that such materials may be received before submission, for the reasons given under Data provenance in the main text.</p>
+<p>Clause 5 is consistent with the published descriptive analysis of an earlier window of this platform <span class="citation" data-cites="ratnerProductiveStruggleChildrens2026">(<a href="#ref-ratnerProductiveStruggleChildrens2026" role="doc-biblioref">Ratner &amp; Murphy, 2026</a>)</span>. That analysis draws on summaries the data controller prepared and reports completion, disengagement, scaffold use and the marginal distribution of the difficulty rating. It relates no property of a story to any behavioural measure and analyses no reading duration.</p>
+<p>None of the four hypotheses set out under Contingent hypotheses in the main text is activated at submission. The data controller has confirmed neither that post-story responses include comprehension items nor that classic stories are fixed, human-authored texts. Any written confirmation would be reproduced here, as would the provider-computed counts of accounts that switched narration and the revised script’s count of sessions whose account identifier is in floating-point notation.</p>
+</section>
+<section id="s8.-the-structural-sample" class="level1">
+<h1>S8. The structural sample</h1>
+<p>This section reports in full the 35-row structural sample and the summary computed from it, both described under Pilot data in the main text, and cites the data dictionary where it defines a field. All 35 sessions were finished readings, with the last page reached equal to the page count, so the extract is a record of completed readings. The age band was blank in 10 sessions, and the recorded bands skewed towards children under 7, with only six sessions at 7 to 8 and two at 9 and over. The inclusion criterion of 7 and over is therefore expected to remove a substantial share of the extract. The per-session activity counters summed to more than the recorded reading time in 6 of the 14 sessions with any activity, so they are set aside under question (b) in Table 2 of the main text.</p>
+<p><a href="#tbl-sample-fields" class="quarto-xref">Supplementary Table&nbsp;5</a> tabulates the 35 rows by field, and <a href="#tbl-sample-timing" class="quarto-xref">Supplementary Table&nbsp;6</a> reproduces the reading-time check from the summary the count script wrote on 6 August 2026. The script is deposited in <code>count_script/</code>, both in the version supplied on 7 August 2026, which wrote that summary, and in a revised version dated 17 September 2026 and supplied on 18 September. Re-running either version on the sample reproduces that summary line for line, apart from the date of the run and, for the revised version, its version number and the seventeen rows it adds. <a href="#tbl-sample-timing" class="quarto-xref">Supplementary Table&nbsp;6</a> can be regenerated from either version’s output, as can most entries of <a href="#tbl-sample-fields" class="quarto-xref">Supplementary Table&nbsp;5</a>. The script does not report the rating categories, the two title values, the sessions per text, the number of distinct timestamps or whether reading times are whole numbers. Those entries, the three activity-counter rows and the comparison of those counters with the recorded reading time were tallied directly from the sample.</p>
+<p>In the sample, the account identifier was written in floating-point notation with six significant digits, the form a spreadsheet gives a nineteen-digit integer. The 35 values are distinct at that precision. A full extract written the same way, however, could not be relied on to distinguish accounts, so the identifier’s format matters for the transfer.</p>
+<div id="tbl-sample-fields" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[26,12,12,50]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-sample-fields-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Supplementary Table&nbsp;5: The 35-row structural sample by field. Counts are of sessions unless stated.
+</figcaption>
+<div aria-describedby="tbl-sample-fields-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Field</strong></th>
+<th><strong>Rows with a value</strong></th>
+<th><strong>Distinct values</strong></th>
+<th><strong>Values or note</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>user_id</td>
+<td>35</td>
+<td>35</td>
+<td>One session per account. Six significant digits, as noted above.</td>
+</tr>
+<tr class="even">
+<td>game_version</td>
+<td>35</td>
+<td>10</td>
+<td>6.2.0 to 6.7.2.</td>
+</tr>
+<tr class="odd">
+<td>finished_reading_at</td>
+<td>35</td>
+<td>35</td>
+<td>2 January to 30 June 2026, in UTC.</td>
+</tr>
+<tr class="even">
+<td>user_country</td>
+<td>35</td>
+<td>21</td>
+<td>Poland 5, Germany and Italy 4 each, and 18 further countries.</td>
+</tr>
+<tr class="odd">
+<td>user_age_group</td>
+<td>25</td>
+<td>4</td>
+<td>Age 3-4 (8), Age 5-6 (9), Age 7-8 (6), Age 9+ (2). Blank in 10.</td>
+</tr>
+<tr class="even">
+<td>story_title</td>
+<td>35</td>
+<td>2</td>
+<td>Crafted story (20), classic story (15).</td>
+</tr>
+<tr class="odd">
+<td>story_id</td>
+<td>35</td>
+<td>5</td>
+<td>One classic text (15 sessions) and four attribute combinations (11, 7, 1 and 1 sessions).</td>
+</tr>
+<tr class="even">
+<td>story_location, story_hero, story_sidekick, story_plot, story_theme</td>
+<td>20</td>
+<td>1, 2, 2, 3, 3</td>
+<td>Filled for crafted stories only.</td>
+</tr>
+<tr class="odd">
+<td>is_customized</td>
+<td>35</td>
+<td>2</td>
+<td>1 (20), 0 (15).</td>
+</tr>
+<tr class="even">
+<td>is_speech_on</td>
+<td>35</td>
+<td>2</td>
+<td>1 (32), 0 (3).</td>
+</tr>
+<tr class="odd">
+<td>time_spent_reading</td>
+<td>35</td>
+<td>32</td>
+<td>Whole seconds. Checked through <a href="#tbl-sample-timing" class="quarto-xref">Supplementary Table&nbsp;6</a> only, and no value is reported.</td>
+</tr>
+<tr class="even">
+<td>read_language</td>
+<td>35</td>
+<td>10</td>
+<td>English 11, German 5, Polish 5, Italian 4, Spanish 3, Korean 2, Portuguese 2, Dutch 1, French 1, Greek 1.</td>
+</tr>
+<tr class="odd">
+<td>user_reading_level</td>
+<td>32</td>
+<td>3</td>
+<td>Age 3-5 (16), Age 5-7 (6), Age 7+ (10). Blank in 3.</td>
+</tr>
+<tr class="even">
+<td>max_page_reached, total_page_available</td>
+<td>35</td>
+<td>5</td>
+<td>6, 7, 10, 11 or 17 pages. Equal to each other in every row.</td>
+</tr>
+<tr class="odd">
+<td>story_rating</td>
+<td>10</td>
+<td>3</td>
+<td>Just Right (7), Easy (2), Difficult (1). Blank in 25.</td>
+</tr>
+<tr class="even">
+<td>The eight minigame_*_ts fields</td>
+<td>35</td>
+<td>4 to 10</td>
+<td>Zero throughout the 15 classic sessions and 6 crafted sessions. Non-zero in 14, of which 6 sum to more than the recorded reading time.</td>
+</tr>
+<tr class="odd">
+<td>word_explorer_ts</td>
+<td>35</td>
+<td>8</td>
+<td>Non-zero in 7 sessions. A lifetime total, according to the data dictionary.</td>
+</tr>
+<tr class="even">
+<td>inkmagination_ts</td>
+<td>35</td>
+<td>30</td>
+<td>Non-zero in 29 sessions. A lifetime total, according to the data dictionary.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div id="tbl-sample-timing" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[60,40]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-sample-timing-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Supplementary Table&nbsp;6: The reading-time check on the structural sample, as the count script reports it. Counts are of sessions except in the row for distinct values. The band boundaries are successive powers of ten, and the bands are never crossed with any other field.
+</figcaption>
+<div aria-describedby="tbl-sample-timing-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 60%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Reading-time check</strong></th>
+<th><strong>Count</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Empty</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Not a number</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>Negative</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Zero</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>Above 0 but below 1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>1 to 9</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>10 to 99</td>
+<td>15</td>
+</tr>
+<tr class="even">
+<td>100 to 999</td>
+<td>20</td>
+</tr>
+<tr class="odd">
+<td>1,000 to 9,999</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>10,000 to 99,999</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>100,000 or more</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Sessions with a usable number</td>
+<td>35</td>
+</tr>
+<tr class="odd">
+<td>Distinct values in the column</td>
+<td>32</td>
+</tr>
+<tr class="even">
+<td>Sessions sharing the most common value</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="references" class="level1 unnumbered">
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-alexeevaStimulStatLexicalDatabase2018" class="csl-entry" role="listitem">
+Alexeeva, S., Slioussar, N., &amp; Chernova, D. (2018). <span>StimulStat</span>: <span>A</span> lexical database for <span>Russian</span>. <em>Behavior Research Methods</em>, <em>50</em>(6), 2305–2315. <a href="https://doi.org/10.3758/s13428-017-0994-3">https://doi.org/10.3758/s13428-017-0994-3</a>
+</div>
+<div id="ref-alonsoSubjectiveAgeofacquisitionNorms2015" class="csl-entry" role="listitem">
+Alonso, M. A., Fernandez, A., &amp; Díez, E. (2015). <span>Subjective</span> age-of-acquisition norms for 7,039 <span>Spanish</span> words. <em>Behavior Research Methods</em>, <em>47</em>(1), 268–274. <a href="https://doi.org/10.3758/s13428-014-0454-2">https://doi.org/10.3758/s13428-014-0454-2</a>
+</div>
+<div id="ref-alzahraniKalimahNormsRatings2025" class="csl-entry" role="listitem">
+Alzahrani, A., Aljuaythin, W., Alshumrani, H., Saleh, A. M., &amp; Mostafa, M. M. (2025). <span>Kalimah</span> norms: <span>Ratings</span> for 2,467 modern standard <span>Arabic</span> words on two scales. <em>Behavior Research Methods</em>, <em>57</em>(7), 194. <a href="https://doi.org/10.3758/s13428-025-02692-5">https://doi.org/10.3758/s13428-025-02692-5</a>
+</div>
+<div id="ref-aparicioComprehensionPerformancesExplanatory2022" class="csl-entry" role="listitem">
+Aparicio, X., Mégalakaki, O., Drai-Zerbib, V., &amp; Baccino, T. (2022). <span>Comprehension</span> performances of explanatory texts in <span>French</span> language according to their characteristics: <span>Evidence</span> for 1229 children from 2nd to 9th grade. <em>Scientific Studies of Reading</em>, <em>26</em>(4), 287–304. <a href="https://doi.org/10.1080/10888438.2021.1983819">https://doi.org/10.1080/10888438.2021.1983819</a>
+</div>
+<div id="ref-aroonmanakunThaiNationalCorpus2009" class="csl-entry" role="listitem">
+Aroonmanakun, W., Tansiri, K., &amp; Nittayanuparp, P. (2009). <span>Thai National Corpus</span>: <span>A</span> progress report. <em><span class="nocase">Proceedings of the 7th Workshop on Asian Language Resources</span></em>, 153–160. <a href="https://doi.org/10.3115/1690299.1690321">https://doi.org/10.3115/1690299.1690321</a>
+</div>
+<div id="ref-awramiukReadingSpellingAcquisition2013" class="csl-entry" role="listitem">
+Awramiuk, E., &amp; Krasowicz-Kupis, G. (2013). <span>Reading</span> and spelling acquisition in <span>Polish</span>: <span>Educational</span> and linguistic determinants. <em>L1-Educational Studies in Language and Literature</em>, <em>14</em>(2), 1–24. <a href="https://doi.org/10.17239/L1ESLL-2014.01.13">https://doi.org/10.17239/L1ESLL-2014.01.13</a>
+</div>
+<div id="ref-baekReadingSpacedUnspaced2023" class="csl-entry" role="listitem">
+Baek, H., Choi, W., &amp; Gordon, P. C. (2023). <span>Reading</span> spaced and unspaced <span>Korean</span> text: <span>Evidence</span> from eye-tracking during reading. <em>Quarterly Journal of Experimental Psychology</em>, <em>76</em>(5), 1072–1085. <a href="https://doi.org/10.1177/17470218221104736">https://doi.org/10.1177/17470218221104736</a>
+</div>
+<div id="ref-beigmanklebanovStealthAssessmentReading2026" class="csl-entry" role="listitem">
+Beigman Klebanov, B., &amp; Hoang, A. (2026). <span>Toward</span> stealth assessment of reading comprehension. <em>Journal of Research on Technology in Education</em>, <em>58</em>(1), 73–92. <a href="https://doi.org/10.1080/15391523.2025.2568522">https://doi.org/10.1080/15391523.2025.2568522</a>
+</div>
+<div id="ref-bernabeuPilotr2026" class="csl-entry" role="listitem">
+Bernabeu, P. (2026a). <em><span class="nocase">pilotr</span>: <span>Simulate</span> experimental and behavioural data from a portable design specification</em> [Computer software]. Zenodo. <a href="https://doi.org/10.5281/zenodo.21266313">https://doi.org/10.5281/zenodo.21266313</a>
+</div>
+<div id="ref-bernabeuTheoryforge2026" class="csl-entry" role="listitem">
+Bernabeu, P. (2026b). <em><span class="nocase">theoryforge</span>: <span>Systematic</span> theory development</em> [Computer software]. Zenodo. <a href="https://doi.org/10.5281/zenodo.21229964">https://doi.org/10.5281/zenodo.21229964</a>
+</div>
+<div id="ref-boeveSystematicEvaluationDutch2025" class="csl-entry" role="listitem">
+Boeve, S., &amp; Bogaerts, L. (2025). <span>A</span> systematic evaluation of <span>Dutch</span> large language models’ surprisal estimates in sentence, paragraph and book reading. <em>Behavior Research Methods</em>, <em>57</em>(9), 266. <a href="https://doi.org/10.3758/s13428-025-02774-4">https://doi.org/10.3758/s13428-025-02774-4</a>
+</div>
+<div id="ref-borleffsMeasuringOrthographicTransparency2017" class="csl-entry" role="listitem">
+Borleffs, E., Maassen, B. A. M., Lyytinen, H., &amp; Zwarts, F. (2017). <span>Measuring</span> orthographic transparency and morphological-syllabic complexity in alphabetic orthographies: <span>A</span> narrative review. <em>Reading and Writing</em>, <em>30</em>(8), 1617–1638. <a href="https://doi.org/10.1007/s11145-017-9741-5">https://doi.org/10.1007/s11145-017-9741-5</a>
+</div>
+<div id="ref-boudelaaSUBTLEXARArabicWord2025" class="csl-entry" role="listitem">
+Boudelaa, S., Carreiras, M., Jariya, N., &amp; Perea, M. (2025). <span>SUBTLEX-AR</span>: <span>Arabic</span> word distributional characteristics based on movie subtitles. <em>Behavior Research Methods</em>, <em>57</em>(4), 104. <a href="https://doi.org/10.3758/s13428-024-02560-8">https://doi.org/10.3758/s13428-024-02560-8</a>
+</div>
+<div id="ref-brysbaertNormsAgeAcquisition2014" class="csl-entry" role="listitem">
+Brysbaert, M., Stevens, M., De Deyne, S., Voorspoels, W., &amp; Storms, G. (2014). <span>Norms</span> of age of acquisition and concreteness for 30,000 <span>Dutch</span> words. <em>Acta Psychologica</em>, <em>150</em>, 80–84. <a href="https://doi.org/10.1016/j.actpsy.2014.04.010">https://doi.org/10.1016/j.actpsy.2014.04.010</a>
+</div>
+<div id="ref-brysbaertConcretenessRatings402014" class="csl-entry" role="listitem">
+Brysbaert, M., Warriner, A. B., &amp; Kuperman, V. (2014). <span>Concreteness</span> ratings for 40 thousand generally known <span>English</span> word lemmas. <em>Behavior Research Methods</em>, <em>46</em>(3), 904–911. <a href="https://doi.org/10.3758/s13428-013-0403-5">https://doi.org/10.3758/s13428-013-0403-5</a>
+</div>
+<div id="ref-buechelLearningEvaluatingEmotion2020" class="csl-entry" role="listitem">
+Buechel, S., Rücker, S., &amp; Hahn, U. (2020). <span>Learning</span> and evaluating emotion lexicons for 91 languages. <em><span class="nocase">Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics</span></em>, 1202–1217. <a href="https://doi.org/10.18653/v1/2020.acl-main.112">https://doi.org/10.18653/v1/2020.acl-main.112</a>
+</div>
+<div id="ref-bulutEvaluatingGroupDifferences2023" class="csl-entry" role="listitem">
+Bulut, H. C., Bulut, O., &amp; Arikan, S. (2023). <span>Evaluating</span> group differences in online reading comprehension: <span>The</span> impact of item properties. <em>International Journal of Testing</em>, <em>23</em>(1), 10–33. <a href="https://doi.org/10.1080/15305058.2022.2044821">https://doi.org/10.1080/15305058.2022.2044821</a>
+</div>
+<div id="ref-caiSUBTLEXCHChineseWord2010" class="csl-entry" role="listitem">
+Cai, Q., &amp; Brysbaert, M. (2010). <span>SUBTLEX-CH</span>: <span>Chinese</span> <span>Word</span> and <span>Character</span> <span>Frequencies</span> <span>Based</span> on <span>Film</span> <span>Subtitles</span>. <em><span>PLOS</span> <span>ONE</span></em>, <em>5</em>(6), e10729. <a href="https://doi.org/10.1371/journal.pone.0010729">https://doi.org/10.1371/journal.pone.0010729</a>
+</div>
+<div id="ref-chanDecodingEssenceTwocharacter2024" class="csl-entry" role="listitem">
+Chan, Y.-L., &amp; Tse, C.-S. (2024). <span>Decoding</span> the essence of two-character <span>Chinese</span> words: <span>Unveiling</span> valence, arousal, concreteness, familiarity, and imageability through word norming. <em>Behavior Research Methods</em>, <em>56</em>(7), 7574–7601. <a href="https://doi.org/10.3758/s13428-024-02437-w">https://doi.org/10.3758/s13428-024-02437-w</a>
+</div>
+<div id="ref-changGoldfishMonolingualLanguage2026" class="csl-entry" role="listitem">
+Chang, T. A., Arnett, C., Tu, Z., &amp; Bergen, B. (2026). <span>Goldfish</span>: <span>Monolingual</span> language models for 350 languages. <em><span class="nocase">Proceedings of the Fifteenth Language Resources and Evaluation Conference (LREC 2026)</span></em>, 3750–3781. <a href="https://doi.org/10.63317/5ceec3hhv4d5">https://doi.org/10.63317/5ceec3hhv4d5</a>
+</div>
+<div id="ref-chenM3EmbeddingMultiLinguality2024" class="csl-entry" role="listitem">
+Chen, J., Xiao, S., Zhang, P., Luo, K., Lian, D., &amp; Liu, Z. (2024). <span>M3-Embedding</span>: <span class="nocase">Multi-linguality</span>, multi-functionality, multi-granularity text embeddings through self-knowledge distillation. <em><span class="nocase">Findings of the Association for Computational Linguistics: ACL 2024</span></em>, 2318–2335. <a href="https://doi.org/10.18653/v1/2024.findings-acl.137">https://doi.org/10.18653/v1/2024.findings-acl.137</a>
+</div>
+<div id="ref-cheungGuideConductingMetaanalysis2019" class="csl-entry" role="listitem">
+Cheung, M. W.-L. (2019). <span>A</span> guide to conducting a meta-analysis with non-independent effect sizes. <em>Neuropsychology Review</em>, <em>29</em>(4), 387–396. <a href="https://doi.org/10.1007/s11065-019-09415-6">https://doi.org/10.1007/s11065-019-09415-6</a>
+</div>
+<div id="ref-choSyllableLetterKnowledge2009" class="csl-entry" role="listitem">
+Cho, J.-R. (2009). <span>Syllable</span> and letter knowledge in early <span>Korean</span> <span>Hangul</span> reading. <em>Journal of Educational Psychology</em>, <em>101</em>(4), 938–947. <a href="https://doi.org/10.1037/a0016212">https://doi.org/10.1037/a0016212</a>
+</div>
+<div id="ref-devardaScalingCognitiveModelling2023" class="csl-entry" role="listitem">
+De Varda, A., &amp; Marelli, M. (2023). <span>Scaling</span> in cognitive modelling: <span>A</span> multilingual approach to human reading times. <em>Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 2: Short Papers)</em>, 139–149. <a href="https://doi.org/10.18653/v1/2023.acl-short.14">https://doi.org/10.18653/v1/2023.acl-short.14</a>
+</div>
+<div id="ref-debskaReadingSpellingSkills2019" class="csl-entry" role="listitem">
+Dębska, A., Chyl, K., Dzięgiel, G., Kacprzak, A., Łuniewska, M., Plewko, J., Marchewka, A., Grabowska, A., &amp; Jednoróg, K. (2019). <span>Reading</span> and spelling skills are differentially related to phonological processing: <span>Behavioral</span> and <span class="nocase">fMRI</span> study. <em>Developmental Cognitive Neuroscience</em>, <em>39</em>, 100683. <a href="https://doi.org/10.1016/j.dcn.2019.100683">https://doi.org/10.1016/j.dcn.2019.100683</a>
+</div>
+<div id="ref-dimitropoulouStandardizedSet2602009" class="csl-entry" role="listitem">
+Dimitropoulou, M., Duñabeitia, J. A., Blitsas, P., &amp; Carreiras, M. (2009). <span>A</span> standardized set of 260 pictures for <span>Modern</span> <span>Greek</span>: <span>Norms</span> for name agreement, age of acquisition, and visual complexity. <em>Behavior Research Methods</em>, <em>41</em>(2), 584–589. <a href="https://doi.org/10.3758/BRM.41.2.584">https://doi.org/10.3758/BRM.41.2.584</a>
+</div>
+<div id="ref-doleanLanguageSkillsNot2021" class="csl-entry" role="listitem">
+Dolean, D. D., Lervåg, A., Visu-Petra, L., &amp; Melby-Lervåg, M. (2021). <span>Language</span> skills, and not executive functions, predict the development of reading comprehension of early readers: <span>Evidence</span> from an orthographically transparent language. <em>Reading and Writing</em>, <em>34</em>(6), 1491–1512. <a href="https://doi.org/10.1007/s11145-020-10107-4">https://doi.org/10.1007/s11145-020-10107-4</a>
+</div>
+<div id="ref-efklidesMetacognitionAffectWhat2006" class="csl-entry" role="listitem">
+Efklides, A. (2006). <span>Metacognition</span> and affect: <span>What</span> can metacognitive experiences tell us about the learning process? <em>Educational Research Review</em>, <em>1</em>(1), 3–14. <a href="https://doi.org/10.1016/j.edurev.2005.11.001">https://doi.org/10.1016/j.edurev.2005.11.001</a>
+</div>
+<div id="ref-efklidesFeelingDifficultyAspect1999" class="csl-entry" role="listitem">
+Efklides, A., Samara, A., &amp; Petropoulou, M. (1999). <span>Feeling</span> of difficulty: <span>An</span> aspect of monitoring that influences control. <em>European Journal of Psychology of Education</em>, <em>14</em>(4), 461–476. <a href="https://doi.org/10.1007/BF03172973">https://doi.org/10.1007/BF03172973</a>
+</div>
+<div id="ref-fengLanguageagnosticBERTSentence2022" class="csl-entry" role="listitem">
+Feng, F., Yang, Y., Cer, D., Arivazhagan, N., &amp; Wang, W. (2022). <span class="nocase">Language-agnostic</span> <span>BERT</span> <span>Sentence</span> <span>Embedding</span>. <em>Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)</em>, 878–891. <a href="https://doi.org/10.18653/v1/2022.acl-long.62">https://doi.org/10.18653/v1/2022.acl-long.62</a>
+</div>
+<div id="ref-ferrandAgeofacquisitionSubjectiveFrequency2008" class="csl-entry" role="listitem">
+Ferrand, L., Bonin, P., Méot, A., Augustinova, M., New, B., Pallier, C., &amp; Brysbaert, M. (2008). <span class="nocase">Age-of-acquisition</span> and subjective frequency estimates for all generally known monosyllabic <span>French</span> words and their relation with other psycholinguistic variables. <em>Behavior Research Methods</em>, <em>40</em>(4), 1049–1054. <a href="https://doi.org/10.3758/BRM.40.4.1049">https://doi.org/10.3758/BRM.40.4.1049</a>
+</div>
+<div id="ref-foltzMeasurementTextualCoherence1998" class="csl-entry" role="listitem">
+Foltz, P. W., Kintsch, W., &amp; Landauer, T. K. (1998). <span>The</span> measurement of textual coherence with latent semantic analysis. <em>Discourse Processes</em>, <em>25</em>(2-3), 285–307. <a href="https://doi.org/10.1080/01638539809545029">https://doi.org/10.1080/01638539809545029</a>
+</div>
+<div id="ref-georgiouCrosslaggedRelationsWord2025" class="csl-entry" role="listitem">
+<span class="nocase">Georgiou, G. K., Inoue, T., de Jong, P. F., Manolitsis, G., &amp; Parrila, R.</span> (2025). <span class="nocase">Cross-lagged</span> relations between word reading accuracy and fluency: <span>Evidence</span> from languages varying in orthographic consistency. <em>Reading and Writing</em>, <em>38</em>(10), 3009–3020. <a href="https://doi.org/10.1007/s11145-024-10624-6">https://doi.org/10.1007/s11145-024-10624-6</a>
+</div>
+<div id="ref-gisselClusterrandomizedTrialMeasuring2021" class="csl-entry" role="listitem">
+Gissel, S. T., &amp; Andersen, S. C. (2021). <span>A</span> cluster‐randomized trial measuring the effects of a digital learning tool supporting decoding and reading for meaning in grade 2. <em>Journal of Computer Assisted Learning</em>, <em>37</em>(2), 287–304. <a href="https://doi.org/10.1111/jcal.12488">https://doi.org/10.1111/jcal.12488</a>
+</div>
+<div id="ref-gormanSIGMORPHON2020Shared2020" class="csl-entry" role="listitem">
+Gorman, K., Ashby, L. F. E., Goyzueta, A., McCarthy, A., Wu, S., &amp; You, D. (2020). <span>The</span> <span>SIGMORPHON</span> 2020 shared task on multilingual grapheme-to-phoneme conversion. <em>Proceedings of the 17th <span>SIGMORPHON</span> Workshop on Computational Research in Phonetics, Phonology, and Morphology</em>, 40–50. <a href="https://doi.org/10.18653/v1/2020.sigmorphon-1.2">https://doi.org/10.18653/v1/2020.sigmorphon-1.2</a>
+</div>
+<div id="ref-gozSubjectiveAgeofacquisitionNorms2017" class="csl-entry" role="listitem">
+Göz, İ., Tekcan, A. İ., &amp; Erciyes, A. A. (2017). <span>Subjective</span> age-of-acquisition norms for 600 <span>Turkish</span> words from four age groups. <em>Behavior Research Methods</em>, <em>49</em>(5), 1736–1746. <a href="https://doi.org/10.3758/s13428-016-0817-y">https://doi.org/10.3758/s13428-016-0817-y</a>
+</div>
+<div id="ref-grigorievSubjectiveAgeAcquisition2026" class="csl-entry" role="listitem">
+Grigoriev, A. A., Sugonyaev, K. V., Pashneva, S. A., Valueva, E. A., &amp; Grigorev, N. A. (2026). <span>Subjective</span> age of acquisition norms for 30,849 <span>Russian</span> words. <em>Behavior Research Methods</em>, <em>58</em>(10), 281. <a href="https://doi.org/10.3758/s13428-026-03138-2">https://doi.org/10.3758/s13428-026-03138-2</a>
+</div>
+<div id="ref-haeuserNotSubtlexWord2025" class="csl-entry" role="listitem">
+Haeuser, K. I., &amp; Kray, J. (2025). <span>Not</span> so <span>SUBTLE(X)</span>: <span>Word</span> frequency estimates and their fit to sentential reading times in interaction with predictability. <em>Linguistics</em>. <a href="https://doi.org/10.1515/ling-2024-0143">https://doi.org/10.1515/ling-2024-0143</a>
+</div>
+<div id="ref-hongDevelopingKoreanAffect2016" class="csl-entry" role="listitem">
+Hong, Y., Nam, Y., &amp; Lee, Y. (2016). <span>Developing</span> <span>Korean</span> affect word list and it’s application. <em>Korean Journal of Cognitive Science</em>, <em>27</em>(3), 377–406. <a href="https://doi.org/10.19066/cogsci.2016.27.3.002">https://doi.org/10.19066/cogsci.2016.27.3.002</a>
+</div>
+<div id="ref-imbirAffectiveNorms49002016" class="csl-entry" role="listitem">
+Imbir, K. K. (2016). <span>Affective</span> norms for 4900 <span>Polish</span> words reload (<span>ANPW_R</span>): <span>Assessments</span> for valence, arousal, dominance, origin, significance, concreteness, imageability and, age of acquisition. <em>Frontiers in Psychology</em>, <em>7</em>, 1081. <a href="https://doi.org/10.3389/fpsyg.2016.01081">https://doi.org/10.3389/fpsyg.2016.01081</a>
+</div>
+<div id="ref-juInfluenceOrthographicUnits2022" class="csl-entry" role="listitem">
+Ju, Y., Sambai, A., &amp; Uno, A. (2022). <span>The</span> influence of orthographic units across <span>Korean</span> children of different ages in <span>Hangul</span> reading. <em>Frontiers in Psychology</em>, <em>13</em>, 797874. <a href="https://doi.org/10.3389/fpsyg.2022.797874">https://doi.org/10.3389/fpsyg.2022.797874</a>
+</div>
+<div id="ref-kapucuTurkishEmotionalWord2021" class="csl-entry" role="listitem">
+Kapucu, A., Kılıç, A., Özkılıç, Y., &amp; Sarıbaz, B. (2021). <span>Turkish</span> emotional word norms for arousal, valence, and discrete emotion categories. <em>Psychological Reports</em>, <em>124</em>(1), 188–209. <a href="https://doi.org/10.1177/0033294118814722">https://doi.org/10.1177/0033294118814722</a>
+</div>
+<div id="ref-keelorImpactTexttospeechFeatures2023" class="csl-entry" role="listitem">
+Keelor, J. L., Creaghead, N. A., Silbert, N. H., Breit, A. D., &amp; Horowitz-Kraus, T. (2023). <span>Impact</span> of text-to-speech features on the reading comprehension of children with reading and language difficulties. <em>Annals of Dyslexia</em>, <em>73</em>(3), 469–486. <a href="https://doi.org/10.1007/s11881-023-00281-9">https://doi.org/10.1007/s11881-023-00281-9</a>
+</div>
+<div id="ref-keskesLearningExplicitImplicit2014" class="csl-entry" role="listitem">
+Keskes, I., Benamara Zitoune, F., &amp; Belguith, L. H. (2014). <span>Learning</span> explicit and implicit <span>Arabic</span> discourse relations. <em>Journal of King Saud University – Computer and Information Sciences</em>, <em>26</em>(4), 398–416. <a href="https://doi.org/10.1016/j.jksuci.2014.06.001">https://doi.org/10.1016/j.jksuci.2014.06.001</a>
+</div>
+<div id="ref-kupermanAgeofacquisitionRatings300002012" class="csl-entry" role="listitem">
+Kuperman, V., Stadthagen-Gonzalez, H., &amp; Brysbaert, M. (2012). <span class="nocase">Age-of-acquisition</span> ratings for 30,000 <span>English</span> words. <em>Behavior Research Methods</em>, <em>44</em>(4), 978–990. <a href="https://doi.org/10.3758/s13428-012-0210-4">https://doi.org/10.3758/s13428-012-0210-4</a>
+</div>
+<div id="ref-lachaudCHACQFAMBaseDonnees2007" class="csl-entry" role="listitem">
+Lachaud, C. M. (2007). <span>CHACQFAM</span>: <span>Une</span> base de données renseignant l’âge d’acquisition estimé et la familiarité pour 1225 mots monosyllabiques et bisyllabiques du <span>Français</span>. <em>L’Année psychologique</em>, <em>107</em>(1), 39–63. <a href="https://doi.org/10.4074/S0003503307001030">https://doi.org/10.4074/S0003503307001030</a>
+</div>
+<div id="ref-leachmanRelationTextReading2025" class="csl-entry" role="listitem">
+Leachman, M., Wolters, A., &amp; Kim, Y.-S. G. (2025). <span>The</span> relation between text reading and reading comprehension varies as a function of developmental phase, orthographic depth, and measurement characteristics: <span>Evidence</span> from a meta-analysis. <em>Journal of Educational Psychology</em>, <em>117</em>(3), 508–528. <a href="https://doi.org/10.1037/edu0000932">https://doi.org/10.1037/edu0000932</a>
+</div>
+<div id="ref-leeCrosslinguisticComparisonPerceptual2023" class="csl-entry" role="listitem">
+Lee, J., &amp; Shin, J.-A. (2023). <span>The</span> cross-linguistic comparison of perceptual strength norms for <span>Korean</span>, <span>English</span> and <span>L2</span> <span>English</span>. <em>Frontiers in Psychology</em>, <em>14</em>, 1188909. <a href="https://doi.org/10.3389/fpsyg.2023.1188909">https://doi.org/10.3389/fpsyg.2023.1188909</a>
+</div>
+<div id="ref-leeRelationsMorphologicalAwareness2023" class="csl-entry" role="listitem">
+Lee, J. won, Wolters, A., &amp; Kim, Y.-S. G. (2023). <span>The</span> relations of morphological awareness with language and literacy skills vary depending on orthographic depth and nature of morphological awareness. <em>Review of Educational Research</em>, <em>93</em>(4), 528–558. <a href="https://doi.org/10.3102/00346543221123816">https://doi.org/10.3102/00346543221123816</a>
+</div>
+<div id="ref-leeEmotionEvaluatorExpanding2022" class="csl-entry" role="listitem">
+Lee, J., Lim, J., Park, J., &amp; Kim, C. (2022). <span>Emotion</span> <span>Evaluator</span>: <span>Expanding</span> the affective lexicon with neural network model. In J. Culbertson, A. Perfors, H. Rabagliati, &amp; V. Ramenzoni (Eds.), <em>Proceedings of the 44th annual conference of the cognitive science society</em> (pp. 1771–1778). <a href="https://escholarship.org/uc/item/20s0r7c1">https://escholarship.org/uc/item/20s0r7c1</a>
+</div>
+<div id="ref-lisonOpenSubtitles2018StatisticalRescoring2018" class="csl-entry" role="listitem">
+Lison, P., Tiedemann, J., &amp; Kouylekov, M. (2018). <span>OpenSubtitles2018</span>: <span>Statistical</span> rescoring of sentence alignments in large, noisy parallel corpora. <em><span class="nocase">Proceedings of the Eleventh International Conference on Language Resources and Evaluation (LREC 2018)</span></em>. <a href="https://aclanthology.org/L18-1275/">https://aclanthology.org/L18-1275/</a>
+</div>
+<div id="ref-lockiewiczPhonologicalProcessingReading2017" class="csl-entry" role="listitem">
+Łockiewicz, M., &amp; Ciecholewska, N. (2017). <span>Phonological</span> processing and reading in a semi-transparent orthography (<span>Polish</span>). <em>L1-Educational Studies in Language and Literature</em>, <em>17</em>(1), 1–13. <a href="https://doi.org/10.17239/L1ESLL-2017.17.01.02">https://doi.org/10.17239/L1ESLL-2017.17.01.02</a>
+</div>
+<div id="ref-ludewigVocabularyTextCoverage2023" class="csl-entry" role="listitem">
+Ludewig, U., Hübner, N., &amp; Schroeder, S. (2023). <span>Vocabulary</span>, text coverage, word frequency and the lexical threshold in elementary school reading comprehension. <em>Reading and Writing</em>, <em>36</em>(9), 2409–2431. <a href="https://doi.org/10.1007/s11145-022-10385-0">https://doi.org/10.1007/s11145-022-10385-0</a>
+</div>
+<div id="ref-luniewskaRatingsAgeAcquisition2016" class="csl-entry" role="listitem">
+Łuniewska, M., Haman, E., Armon-Lotem, S., Etenkowski, B., Southwood, F., Anđelković, D., Blom, E., Boerma, T., Chiat, S., De Abreu, P. E., Gagarina, N., Gavarró, A., Håkansson, G., Hickey, T., De López, K. J., Marinis, T., Popović, M., Thordardottir, E., Blažienė, A., … Ünal-Logacev, Ö. (2016). <span>Ratings</span> of age of acquisition of 299 words across 25 languages: <span>Is</span> there a cross-linguistic order of words? <em>Behavior Research Methods</em>, <em>48</em>(3), 1154–1177. <a href="https://doi.org/10.3758/s13428-015-0636-6">https://doi.org/10.3758/s13428-015-0636-6</a>
+</div>
+<div id="ref-luniewskaCrosslinguisticRatingsAge2019" class="csl-entry" role="listitem">
+Łuniewska, M., Wodniecka, Z., Miller, C. A., Smolík, F., Butcher, M., Chondrogianni, V., Hreich, E. K., Messarra, C., A. Razak, R., Treffers-Daller, J., Yap, N. T., Abboud, L., Talebi, A., Gureghian, M., Tuller, L., &amp; Haman, E. (2019). <span>Age</span> of acquisition of 299 words in seven languages: <span>American</span> <span>English</span>, <span>Czech</span>, <span>Gaelic</span>, <span>Lebanese</span> <span>Arabic</span>, <span>Malay</span>, <span>Persian</span> and <span>Western</span> <span>Armenian</span>. <em><span>PLOS</span> <span>ONE</span></em>, <em>14</em>(8), e0220611. <a href="https://doi.org/10.1371/journal.pone.0220611">https://doi.org/10.1371/journal.pone.0220611</a>
+</div>
+<div id="ref-monnierAffectiveNormsFrench2014" class="csl-entry" role="listitem">
+Monnier, C., &amp; Syssau, A. (2014). <span>Affective</span> norms for french words (<span>FAN</span>). <em>Behavior Research Methods</em>, <em>46</em>(4), 1128–1137. <a href="https://doi.org/10.3758/s13428-013-0431-1">https://doi.org/10.3758/s13428-013-0431-1</a>
+</div>
+<div id="ref-montefineseAdaptationAffectiveNorms2014" class="csl-entry" role="listitem">
+Montefinese, M., Ambrosini, E., Fairfield, B., &amp; Mammarella, N. (2014). <span>The</span> adaptation of the <span>Affective</span> <span>Norms</span> for <span>English</span> <span>Words</span> (<span>ANEW</span>) for <span>Italian</span>. <em>Behavior Research Methods</em>, <em>46</em>(3), 887–903. <a href="https://doi.org/10.3758/s13428-013-0405-3">https://doi.org/10.3758/s13428-013-0405-3</a>
+</div>
+<div id="ref-yuyangniePredictingReadingComprehension2022" class="csl-entry" role="listitem">
+Nie, Y., Deacon, H., Fyshe, A., &amp; Epp, C. D. (2022). <span>Predicting</span> reading comprehension scores of elementary school students. In A. Mitrovic &amp; N. Bosch (Eds.), <em><span class="nocase">Proceedings of the 15th International Conference on Educational Data Mining</span></em> (pp. 158–170). International Educational Data Mining Society. <a href="https://doi.org/10.5281/ZENODO.6852952">https://doi.org/10.5281/ZENODO.6852952</a>
+</div>
+<div id="ref-nohejlFilmSubtitlesYouTube2025" class="csl-entry" role="listitem">
+Nohejl, A., Hudi, F., Kardinata, E. A., Ozaki, S., Riera Machin, M. A., Sun, H., Vasselli, J., &amp; Watanabe, T. (2025). <span>Beyond</span> film subtitles: <span>Is</span> <span>YouTube</span> the best approximation of spoken vocabulary? <em><span class="nocase">Proceedings of the 31st International Conference on Computational Linguistics</span></em>, 9566–9585. <a href="https://aclanthology.org/2025.coling-main.641/">https://aclanthology.org/2025.coling-main.641/</a>
+</div>
+<div id="ref-ohTransformerbasedLanguageModel2023" class="csl-entry" role="listitem">
+Oh, B.-D., &amp; Schuler, W. (2023). <span>Transformer</span>-based language model surprisal predicts human reading times best with about two billion training tokens. <em><span class="nocase">Findings of the Association for Computational Linguistics: EMNLP 2023</span></em>, 1915–1921. <a href="https://doi.org/10.18653/v1/2023.findings-emnlp.128">https://doi.org/10.18653/v1/2023.findings-emnlp.128</a>
+</div>
+<div id="ref-paeLexicalPropertiesInfluencing2020" class="csl-entry" role="listitem">
+Pae, H. K., Bae, S., &amp; Yi, K. (2020). <span>Lexical</span> properties influencing visual word recognition in <span>Hangul</span>. <em>Reading and Writing</em>, <em>33</em>(9), 2391–2412. <a href="https://doi.org/10.1007/s11145-020-10042-4">https://doi.org/10.1007/s11145-020-10042-4</a>
+</div>
+<div id="ref-palogiannidiAffectiveLexiconCreation2016" class="csl-entry" role="listitem">
+Palogiannidi, E., Koutsakis, P., Iosif, E., &amp; Potamianos, A. (2016). <span>Affective</span> lexicon creation for the <span>Greek</span> language. <em>Proceedings of the <span>Tenth</span> <span>International</span> <span>Conference</span> on <span>Language</span> <span>Resources</span> and <span>Evaluation</span> (<span>LREC</span> 2016)</em>, 2867–2872. <a href="https://doi.org/10.63317/3zni3fqskjg7">https://doi.org/10.63317/3zni3fqskjg7</a>
+</div>
+<div id="ref-parkInvestigationAssociationFrequency2004" class="csl-entry" role="listitem">
+Park, T. J. (2004). <span>Investigation</span> of association frequency and imagery value of <span>Korean</span> words. <em>Korean Journal of Experimental Psychology</em>, <em>16</em>(2), 239–263.
+</div>
+<div id="ref-perfettiEpilogueUniversalsParticulars2017" class="csl-entry" role="listitem">
+Perfetti, C., &amp; Verhoeven, L. (2017). <span>Epilogue</span>: <span>Universals</span> and particulars in learning to read across seventeen orthographies. In L. Verhoeven &amp; C. Perfetti (Eds.), <em>Learning to read across languages and writing systems</em> (pp. 437–454). Cambridge University Press. <a href="https://doi.org/10.1017/9781316155752.019">https://doi.org/10.1017/9781316155752.019</a>
+</div>
+<div id="ref-phatthiyaphaibunPyThaiNLPThaiNatural2023" class="csl-entry" role="listitem">
+Phatthiyaphaibun, W., Chaovavanich, K., Polpanumas, C., Suriyawongkul, A., Lowphansirikul, L., Chormai, P., Limkonchotiwat, P., Suntorntip, T., &amp; Udomcharoenchaikit, C. (2023). <span>PyThaiNLP</span>: <span>Thai</span> natural language processing in <span>Python</span>. <em><span class="nocase">Proceedings of the 3rd Workshop for Natural Language Processing Open Source Software (NLP-OSS 2023)</span></em>, 25–36. <a href="https://doi.org/10.18653/v1/2023.nlposs-1.4">https://doi.org/10.18653/v1/2023.nlposs-1.4</a>
+</div>
+<div id="ref-pickrenContributionTextCharacteristics2022" class="csl-entry" role="listitem">
+Pickren, S. E., Stacy, M., Tufo, S. N. D., Spencer, M., &amp; Cutting, L. E. (2022). <span>The</span> contribution of text characteristics to reading comprehension: Investigating the influence of text emotionality. <em>Reading Research Quarterly</em>, <em>57</em>(2), 649–667. <a href="https://doi.org/10.1002/rrq.431">https://doi.org/10.1002/rrq.431</a>
+</div>
+<div id="ref-prasertsomThaiDiscourseTreebank2024" class="csl-entry" role="listitem">
+Prasertsom, P., Jaroonpol, A., &amp; Rutherford, A. T. (2024). <span>The</span> <span>Thai Discourse Treebank</span>: <span>Annotating</span> and classifying <span>Thai</span> discourse connectives. <em>Transactions of the Association for Computational Linguistics</em>, <em>12</em>, 613–629. <a href="https://doi.org/10.1162/tacl_a_00650">https://doi.org/10.1162/tacl_a_00650</a>
+</div>
+<div id="ref-protopapasComparativeQuantitativeAnalysis2009" class="csl-entry" role="listitem">
+Protopapas, A., &amp; Vlahou, E. L. (2009). <span>A</span> comparative quantitative analysis of <span>Greek</span> orthographic transparency. <em>Behavior Research Methods</em>, <em>41</em>(4), 991–1008. <a href="https://doi.org/10.3758/BRM.41.4.991">https://doi.org/10.3758/BRM.41.4.991</a>
+</div>
+<div id="ref-qiStanzaPythonNatural2020" class="csl-entry" role="listitem">
+Qi, P., Zhang, Y., Zhang, Y., Bolton, J., &amp; Manning, C. D. (2020). <span>Stanza</span>: <span>A</span> <span>Python</span> natural language processing toolkit for many human languages. <em><span class="nocase">Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics: System Demonstrations</span></em>, 101–108. <a href="https://doi.org/10.18653/v1/2020.acl-demos.14">https://doi.org/10.18653/v1/2020.acl-demos.14</a>
+</div>
+<div id="ref-rakhlinPhonemicAwarenessIs2014" class="csl-entry" role="listitem">
+Rakhlin, N., Cardoso-Martins, C., &amp; Grigorenko, E. L. (2014). <span>Phonemic</span> awareness is a more important predictor of orthographic processing than rapid serial naming: <span>Evidence</span> from <span>Russian</span>. <em>Scientific Studies of Reading</em>, <em>18</em>(6), 395–414. <a href="https://doi.org/10.1080/10888438.2014.918981">https://doi.org/10.1080/10888438.2014.918981</a>
+</div>
+<div id="ref-ratnerProductiveStruggleChildrens2026" class="csl-entry" role="listitem">
+Ratner, S., &amp; Murphy, V. A. (2026). <span>Productive</span> struggle in children’s app-based digital reading. <em>Frontiers in Developmental Psychology</em>, <em>4</em>, 1816559. <a href="https://doi.org/10.3389/fdpys.2026.1816559">https://doi.org/10.3389/fdpys.2026.1816559</a>
+</div>
+<div id="ref-schepensCanLargeLanguage2025" class="csl-entry" role="listitem">
+Schepens, J., Woloszyn, H., Marx, N., &amp; Gagl, B. (2025). <span>Can</span> large language models generate useful linguistic corpora? <span>A</span> case study of the word frequency effect in young <span>German</span> readers. <em>Open Mind</em>, <em>9</em>, 1597–1656. <a href="https://doi.org/10.1162/opmi.a.30">https://doi.org/10.1162/opmi.a.30</a>
+</div>
+<div id="ref-schuppertWriteYouSpeak2017" class="csl-entry" role="listitem">
+Schüppert, A., Heeringa, W., Golubovic, J., &amp; Gooskens, C. (2017). <span>Write</span> as you speak? <span>A</span> cross-linguistic investigation of orthographic transparency in 16 <span>Germanic</span>, <span>Romance</span> and <span>Slavic</span> languages. In <span class="nocase">M. Wieling, M. Kroon, G. van Noord, &amp; G. Bouma (Eds.)</span>, <em>From semantics to dialectometry: <span>Festschrift</span> in honor of <span>John</span> <span>Nerbonne</span></em> (Vol. 32, pp. 303–313). College Publications.
+</div>
+<div id="ref-seymourFoundationLiteracyAcquisition2003" class="csl-entry" role="listitem">
+<span class="nocase">Seymour, P. H. K., Aro, M., Erskine, J. M., &amp; collaboration with COST Action A8 network</span>. (2003). <span>Foundation</span> literacy acquisition in <span>European</span> orthographies. <em>British Journal of Psychology</em>, <em>94</em>(2), 143–174. <a href="https://doi.org/10.1348/000712603321661859">https://doi.org/10.1348/000712603321661859</a>
+</div>
+<div id="ref-sezerTurkishWordFrequency2025" class="csl-entry" role="listitem">
+Sezer, T., &amp; Karadağ, Ö. (2025). <span>A</span> <span>Turkish</span> word frequency tool: <span>LexiTR</span> frequency. <em>Ana Dili Eğitimi Dergisi</em>, <em>13</em>(2), 266–276. <a href="https://doi.org/10.16916/aded.1636416">https://doi.org/10.16916/aded.1636416</a>
+</div>
+<div id="ref-sianiparAffectiveMeaningConcreteness2016" class="csl-entry" role="listitem">
+<span class="nocase">Sianipar, A., van Groenestijn, P., &amp; Dijkstra, T.</span> (2016). <span>Affective</span> meaning, concreteness, and subjective frequency norms for <span>Indonesian</span> words. <em>Frontiers in Psychology</em>, <em>7</em>, 1907. <a href="https://doi.org/10.3389/fpsyg.2016.01907">https://doi.org/10.3389/fpsyg.2016.01907</a>
+</div>
+<div id="ref-siegelmanExpandingHorizonsCrosslinguistic2022" class="csl-entry" role="listitem">
+Siegelman, N., Schroeder, S., Acartürk, C., Ahn, H.-D., Alexeeva, S., Amenta, S., Bertram, R., Bonandrini, R., Brysbaert, M., Chernova, D., Da Fonseca, S. M., Dirix, N., Duyck, W., Fella, A., Frost, R., Gattei, C. A., Kalaitzi, A., Kwon, N., Lõo, K., … Kuperman, V. (2022). <span>Expanding</span> horizons of cross-linguistic research on reading: <span>The</span> <span>Multilingual</span> <span class="nocase">Eye-movement</span> <span>Corpus</span> (<span>MECO</span>). <em>Behavior Research Methods</em>, <em>54</em>(6), 2843–2863. <a href="https://doi.org/10.3758/s13428-021-01772-6">https://doi.org/10.3758/s13428-021-01772-6</a>
+</div>
+<div id="ref-skrjanecLanguageModelsMatch2026" class="csl-entry" role="listitem">
+Škrjanec, I., &amp; Demberg, V. (2026). <span>Language</span> models that match reader experience are better predictors of reading times. <em>Journal of Memory and Language</em>, <em>146</em>, 104677. <a href="https://doi.org/10.1016/j.jml.2025.104677">https://doi.org/10.1016/j.jml.2025.104677</a>
+</div>
+<div id="ref-soaresAdaptationAffectiveNorms2012" class="csl-entry" role="listitem">
+Soares, A. P., Comesaña, M., Pinheiro, A. P., Simões, A., &amp; Frade, C. S. (2012). <span>The</span> adaptation of the <span>Affective</span> <span>Norms</span> for <span>English</span> <span>Words</span> (<span>ANEW</span>) for <span>European</span> <span>Portuguese</span>. <em>Behavior Research Methods</em>, <em>44</em>(1), 256–269. <a href="https://doi.org/10.3758/s13428-011-0131-7">https://doi.org/10.3758/s13428-011-0131-7</a>
+</div>
+<div id="ref-solovyevRussianDictionaryConcreteness2022" class="csl-entry" role="listitem">
+Solovyev, V. D., Volskaya, Y. A., Andreeva, M. I., &amp; Zaikin, A. A. (2022). <span>Russian</span> dictionary with concreteness/abstractness indices. <em>Russian Journal of Linguistics</em>, <em>26</em>(2), 515–549. <a href="https://doi.org/10.22363/2687-0088-29475">https://doi.org/10.22363/2687-0088-29475</a>
+</div>
+<div id="ref-solovyevOsgoodParameterValues2025" class="csl-entry" role="listitem">
+Solovyev, V. D., Volskaya, Y. A., &amp; Toksubaeva, A. A. (2025). <span>Osgood</span> parameter values for 1000 words of the <span>Russian</span> language. <em>Research Result. Theoretical and Applied Linguistics</em>, <em>11</em>(1), 72–106. <a href="https://doi.org/10.18413/2313-8912-2025-11-1-0-4">https://doi.org/10.18413/2313-8912-2025-11-1-0-4</a>
+</div>
+<div id="ref-sortkaerBothSidesStory2021" class="csl-entry" role="listitem">
+Sortkær, B., Smith, E., Reimer, D., Oehmcke, S., &amp; Andersen, I. G. (2021). <span>Both</span> sides of the story: Comparing student-level data on reading performance from administrative registers to application generated data from a reading app. <em>EPJ Data Science</em>, <em>10</em>(1), 44. <a href="https://doi.org/10.1140/epjds/s13688-021-00300-y">https://doi.org/10.1140/epjds/s13688-021-00300-y</a>
+</div>
+<div id="ref-stadthagen-gonzalezNormsValenceArousal2017" class="csl-entry" role="listitem">
+Stadthagen-Gonzalez, H., Imbault, C., Pérez Sánchez, M. A., &amp; Brysbaert, M. (2017). <span>Norms</span> of valence and arousal for 14,031 <span>Spanish</span> words. <em>Behavior Research Methods</em>, <em>49</em>(1), 111–123. <a href="https://doi.org/10.3758/s13428-015-0700-2">https://doi.org/10.3758/s13428-015-0700-2</a>
+</div>
+<div id="ref-taeEmotionalArousalEffects2026" class="csl-entry" role="listitem">
+Tae, J., Kang, J., Lowder, M. W., &amp; Choi, W. (2026). <span>Emotional</span> arousal effects in visual word recognition across valence types: <span>Evidence</span> from an age-continuous sample of <span>Korean</span> adults. <em>Quarterly Journal of Experimental Psychology</em>. Advance online publication. <a href="https://doi.org/10.1177/17470218261481507">https://doi.org/10.1177/17470218261481507</a>
+</div>
+<div id="ref-thiedePoorMetacomprehensionAccuracy2010" class="csl-entry" role="listitem">
+Thiede, K. W., Griffin, T. D., Wiley, J., &amp; Anderson, M. C. M. (2010). <span>Poor</span> metacomprehension accuracy as a result of inappropriate cue use. <em>Discourse Processes</em>, <em>47</em>(4), 331–362. <a href="https://doi.org/10.1080/01638530902959927">https://doi.org/10.1080/01638530902959927</a>
+</div>
+<div id="ref-toppingImplementationFidelityComputerised2018" class="csl-entry" role="listitem">
+Topping, K. (2018). <span>Implementation</span> fidelity in computerised assessment of book reading. <em>Computers &amp; Education</em>, <em>116</em>, 176–190. <a href="https://doi.org/10.1016/j.compedu.2017.09.009">https://doi.org/10.1016/j.compedu.2017.09.009</a>
+</div>
+<div id="ref-torresMetacognitiveRatingsCognitive2026" class="csl-entry" role="listitem">
+Torres, A. P., &amp; Toplak, M. E. (2026). <span>Metacognitive</span> ratings on cognitive tasks: <span>Task</span> difficulty and effort rating differences in children with <span>ADHD</span> and neurotypical children. <em>Journal of Attention Disorders</em>, <em>30</em>(8), 970–985. <a href="https://doi.org/10.1177/10870547261428879">https://doi.org/10.1177/10870547261428879</a>
+</div>
+<div id="ref-traikapiGreekCypriotWord2024" class="csl-entry" role="listitem">
+Traikapi, A., Michael, M., &amp; Konstantinou, N. (2024, January 30). <em><span>The</span> <span>Greek-Cypriot</span> <span>Word</span> <span>Pool</span>: <span>Normative</span> data for concreteness and imageability for 2,950 words</em>. Center for Open Science. <a href="https://doi.org/10.31219/osf.io/g7n8t">https://doi.org/10.31219/osf.io/g7n8t</a>
+</div>
+<div id="ref-tseChineseLexiconProject2017" class="csl-entry" role="listitem">
+Tse, C.-S., Yap, M. J., Chan, Y.-L., Sze, W. P., Shaoul, C., &amp; Lin, D. (2017). <span>The</span> <span>Chinese Lexicon Project</span>: <span>A</span> megastudy of lexical decision performance for 25,000+ traditional <span>Chinese</span> two-character compound words. <em>Behavior Research Methods</em>, <em>49</em>(4), 1503–1519. <a href="https://doi.org/10.3758/s13428-016-0810-5">https://doi.org/10.3758/s13428-016-0810-5</a>
+</div>
+<div id="ref-tuchlerEffectsMediumText2026" class="csl-entry" role="listitem">
+Tüchler, A. F., &amp; Cain, K. (2026). <span>Effects</span> of medium, text structure and participant characteristics on reading comprehension in young readers. <em>Journal of Research in Reading</em>, <em>49</em>(3), e70029. <a href="https://doi.org/10.1111/1467-9817.70029">https://doi.org/10.1111/1467-9817.70029</a>
+</div>
+<div id="ref-vaiouliAffectivePsycholinguisticNorms2023" class="csl-entry" role="listitem">
+Vaiouli, P., Panteli, M., &amp; Panayiotou, G. (2023). <span>Affective</span> and psycholinguistic norms of <span>Greek</span> words: <span>Manipulating</span> their affective or psycho-linguistic dimensions. <em>Current Psychology</em>, <em>42</em>(12), 10299–10309. <a href="https://doi.org/10.1007/s12144-021-02329-8">https://doi.org/10.1007/s12144-021-02329-8</a>
+</div>
+<div id="ref-vanparidonSubs2vecWordEmbeddings2021" class="csl-entry" role="listitem">
+<span class="nocase">van Paridon, J., &amp; Thompson, B.</span> (2021). subs2vec: <span>Word</span> embeddings from subtitles in 55 languages. <em>Behavior Research Methods</em>, <em>53</em>(2), 629–655. <a href="https://doi.org/10.3758/s13428-020-01406-3">https://doi.org/10.3758/s13428-020-01406-3</a>
+</div>
+<div id="ref-voBerlinAffectiveWord2009" class="csl-entry" role="listitem">
+Võ, M. L. H., Conrad, M., Kuchinke, L., Urton, K., Hofmann, M. J., &amp; Jacobs, A. M. (2009). <span>The</span> <span>Berlin</span> <span>Affective</span> <span>Word</span> <span>List</span> <span>Reloaded</span> (<span>BAWL-R</span>). <em>Behavior Research Methods</em>, <em>41</em>(2), 534–538. <a href="https://doi.org/10.3758/BRM.41.2.534">https://doi.org/10.3758/BRM.41.2.534</a>
+</div>
+<div id="ref-wanChineseDiMLexLexiconChinese2025" class="csl-entry" role="listitem">
+Wan, S., Bourgonje, P., Xiao, H., &amp; Ho, C. W. C. (2025). <span>Chinese-DiMLex</span>: <span>A</span> lexicon of <span>Chinese</span> discourse connectives. <em>Language Resources and Evaluation</em>, <em>59</em>(2), 1235–1256. <a href="https://doi.org/10.1007/s10579-024-09761-9">https://doi.org/10.1007/s10579-024-09761-9</a>
+</div>
+<div id="ref-warrinerNormsValenceArousal2013" class="csl-entry" role="listitem">
+Warriner, A. B., Kuperman, V., &amp; Brysbaert, M. (2013). <span>Norms</span> of valence, arousal, and dominance for 13,915 <span>English</span> lemmas. <em>Behavior Research Methods</em>, <em>45</em>(4), 1191–1207. <a href="https://doi.org/10.3758/s13428-012-0314-x">https://doi.org/10.3758/s13428-012-0314-x</a>
+</div>
+<div id="ref-wasitokiranaSentenceProcessingIndonesianEnglish2025" class="csl-entry" role="listitem">
+Wasito Kirana, A., Segoh, D., Achmad Syukri, M., &amp; Prassetyo, S. (2025). <span>Sentence</span> processing in <span>Indonesian-English</span> bilingual children with and without language impairment. <em>GEMA Online® Journal of Language Studies</em>, <em>25</em>(4), 796–816. <a href="https://doi.org/10.17576/gema-2025-2504-01">https://doi.org/10.17576/gema-2025-2504-01</a>
+</div>
+<div id="ref-xuConcretenessAbstractnessRatings2020" class="csl-entry" role="listitem">
+Xu, X., &amp; Li, J. (2020). <span>Concreteness</span>/abstractness ratings for two-character <span>Chinese</span> words in <span>MELD-SCH</span>. <em>PLOS ONE</em>, <em>15</em>(6), e0232133. <a href="https://doi.org/10.1371/journal.pone.0232133">https://doi.org/10.1371/journal.pone.0232133</a>
+</div>
+<div id="ref-xuValenceArousalRatings2022" class="csl-entry" role="listitem">
+Xu, X., Li, J., &amp; Chen, H. (2022). <span>Valence</span> and arousal ratings for 11,310 simplified <span>Chinese</span> words. <em>Behavior Research Methods</em>, <em>54</em>(1), 26–41. <a href="https://doi.org/10.3758/s13428-021-01607-4">https://doi.org/10.3758/s13428-021-01607-4</a>
+</div>
+<div id="ref-xuAgeAcquisitionRatings2021" class="csl-entry" role="listitem">
+Xu, X., Li, J., &amp; Guo, S. (2021). <span>Age</span> of acquisition ratings for 19,716 simplified <span>Chinese</span> words. <em>Behavior Research Methods</em>, <em>53</em>(2), 558–573. <a href="https://doi.org/10.3758/s13428-020-01455-8">https://doi.org/10.3758/s13428-020-01455-8</a>
+</div>
+<div id="ref-yiKoreanLexiconProject2017" class="csl-entry" role="listitem">
+Yi, K., Koo, M.-M., Nam, K., Park, K., Park, T., Bae, S., Lee, C.-H., Lee, H.-W., &amp; Cho, J.-R. (2017). <span>The</span> <span>Korean</span> <span>Lexicon</span> <span>Project</span>: <span>A</span> lexical decision study on 30,930 <span>Korean</span> words and nonwords. <em>Korean Journal of Cognitive and Biological Psychology</em>, <em>29</em>(4), 395–410. <a href="https://doi.org/10.22172/cogbio.2017.29.4.004">https://doi.org/10.22172/cogbio.2017.29.4.004</a>
+</div>
+<div id="ref-zegerModelsLongitudinalData1988" class="csl-entry" role="listitem">
+Zeger, S. L., Liang, K.-Y., &amp; Albert, P. S. (1988). <span>Models</span> for longitudinal data: <span>A</span> generalized estimating equation approach. <em>Biometrics</em>, <em>44</em>(4), 1049–1060. <a href="https://doi.org/10.2307/2531734">https://doi.org/10.2307/2531734</a>
+</div>
+<div id="ref-zeyrekTCLLexiconTurkish2019" class="csl-entry" role="listitem">
+Zeyrek, D., &amp; Başıbüyük, K. (2019). <span>TCL</span>: <span>A</span> lexicon of <span>Turkish</span> discourse connectives. <em><span class="nocase">Proceedings of the First International Workshop on Designing Meaning Representations</span></em>, 73–81. <a href="https://doi.org/10.18653/v1/W19-3308">https://doi.org/10.18653/v1/W19-3308</a>
+</div>
+</div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

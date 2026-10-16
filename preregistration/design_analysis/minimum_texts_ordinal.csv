@@ -1,0 +1,4 @@
+"param","model","axis","target","value","lo","hi","note","true","attenuated_estimate","attenuation","simulated_mean_estimate","simulated_mean_estimate_se","width_needed","width_scaling_exponent","projected_texts","projected_qualifying_texts","projected_texts_unattenuated"
+"CohPC","reported_difficulty","texts",0.9,NA,NA,NA,"not reached within 200 to 1600",-0.1,-0.0967,0.9667,-0.0928,0.0035,0.0579,-0.505,10300,3000,9000
+"LexPC","reported_difficulty","texts",0.9,NA,NA,NA,"not reached within 200 to 1600",0.1,0.0967,0.9667,0.0939,0.0036,0.0579,-0.524,9300,2700,8200
+"SynPC","reported_difficulty","texts",0.9,NA,NA,NA,"not reached within 200 to 1600",0.1,0.0967,0.9667,0.0946,0.0037,0.0579,-0.52,9500,2700,8300

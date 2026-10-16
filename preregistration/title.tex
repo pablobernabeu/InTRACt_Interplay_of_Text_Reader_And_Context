@@ -1,0 +1,31 @@
+$-- Title block for the Stage 1 protocol: authors with numbered affiliations and the
+$-- corresponding author's email, read from Quarto's normalised author metadata.
+$-- Quarto's stock partial prints author names only, so the affiliations given in the
+$-- YAML header never reached the PDF; this partial replaces it.
+$if(title)$
+\title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
+$endif$
+$if(subtitle)$
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{$subtitle$}
+$endif$
+\author{%
+$for(by-author)$
+$it.name.literal$$if(it.affiliations)$\textsuperscript{$for(it.affiliations)$$it.number$$sep$,$endfor$$if(it.attributes.corresponding)$,*$endif$}$else$$if(it.attributes.corresponding)$\textsuperscript{*}$endif$$endif$$sep$, %
+$endfor$
+$if(by-affiliation)$
+\\[1.5ex]
+\begin{minipage}{\textwidth}\centering\normalsize\setstretch{1.15}
+$for(by-affiliation)$
+\textsuperscript{$it.number$}$if(it.department)$$it.department$, $endif$$it.name$$if(it.city)$, $it.city$$endif$$if(it.country)$, $it.country$$endif$$sep$\\
+$endfor$
+$for(by-author)$$if(it.attributes.corresponding)$\\[0.5ex]\textsuperscript{*}Corresponding author$if(it.email)$: $it.email$$endif$$endif$$endfor$
+\end{minipage}
+$endif$
+}
+\date{$date$}

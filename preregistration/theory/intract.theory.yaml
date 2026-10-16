@@ -1,0 +1,518 @@
+# InTRACt: the theory object behind the Stage 1 Registered Report.
+#
+# This file is the source of truth for the study's constructs, causal claims,
+# auxiliary assumptions, registered rival accounts and confirmatory predictions.
+# It is read by the theoryforge package, which checks that every prediction is
+# reachable from a proposition, scores the set against a versioned rigour
+# checklist, screens the constructs for redundancy and derives the diagram used
+# as Figure 2. check_reported_numbers.R compares the rigour score and the
+# construct, proposition, auxiliary-assumption and rival counts quoted in the
+# manuscript with this file. Nothing compares the wording of the predictions,
+# so a hypothesis edited in the manuscript must be copied here by hand.
+#
+# Five of the auxiliary assumptions below name an outstanding question put to
+# the data controller on 7 August 2026 (lettered as in that message). The
+# manuscript's data-provenance table states what happens to the affected
+# predictions under each possible answer.
+
+schema_version: "1.0"
+id: "intract-2026"
+title: "Text-driven processing load in children's digital story reading"
+maturity: "developing"
+theory_form: "variance"
+version:
+  id: "v1.0"
+  parent_id: null
+  content_hash: null
+
+constructs:
+  - id: c_lexical_accessibility
+    label: "Lexical accessibility of a text"
+    definition: "The ease with which the word forms a text contains can be identified and their meanings retrieved, considered as a property of the text rather than of any one reader."
+    measurement:
+      - "mean log corpus frequency of content words"
+      - "proportion of words below a low-frequency threshold"
+      - "mean rated age of acquisition"
+      - "mean orthographic length in characters"
+      - "mean per-word surprisal under a language-specific neural language model, a word's surprisal being the sum of the surprisals of the subword tokens composing it"
+      - "lexical density"
+      - "moving-average type-token ratio over a 50-token window, with the Measure of Textual Lexical Diversity reported beside it"
+      - "mean rated concreteness of content words"
+    boundary_conditions:
+      - "narrative prose of roughly 200 to 400 words"
+      - "languages for which validated frequency or age-of-acquisition norms exist"
+      - "written presentation on a touchscreen device"
+
+  - id: c_structural_integration_load
+    label: "Grammatical integration load imposed by a text"
+    definition: "The demand a text places on the reader to keep track of open grammatical dependencies and to resolve each one when the element completing it arrives, considered as a property of the text."
+    measurement:
+      - "mean dependency distance from a universal-dependencies parse (the distance over which a dependency is resolved)"
+      - "clauses per sentence (embedding, indexing how many dependencies are open at once)"
+      - "ratio of subordinate to main clauses (embedding)"
+      - "mean sentence length in words (length, with which the other four covary)"
+      - "mean depth of noun-phrase modification (embedding)"
+    boundary_conditions:
+      - "narrative prose of roughly 200 to 400 words"
+      - "languages with a validated dependency parser and reported attachment accuracy"
+      - "written presentation on a touchscreen device"
+
+  - id: c_referential_continuity
+    label: "Referential continuity across a text"
+    definition: "The degree to which a text makes the connection between one idea and the next available on the surface, through repeated reference, semantic overlap and explicit connectives, so that the reader need not supply it."
+    measurement:
+      - "mean semantic similarity between adjacent sentences from a multilingual sentence encoder"
+      - "proportion of adjacent sentence pairs sharing a referring expression"
+      - "connectives per hundred words, by relation type"
+    boundary_conditions:
+      - "narrative prose of roughly 200 to 400 words"
+      - "languages covered by the multilingual sentence encoder used"
+      - "texts long enough to contain at least five sentences"
+
+  - id: c_decoding_automaticity
+    label: "Automaticity of print-to-sound mapping in the reader"
+    definition: "The degree to which a reader converts written word forms into phonological forms without deliberate attention, freeing capacity for other work."
+    measurement:
+      - "not measured in this study; approached through the recorded age band"
+    boundary_conditions:
+      - "children aged 7 and older"
+      - "reading in a language the family selected in the app, which need not be the child's first language"
+      - "no individual assessment of reading skill is available"
+      - "the age at which print-to-sound mapping automatises depends on the depth of the orthography, so a given age band indexes a different degree of automaticity in different languages"
+
+  - id: c_verbal_working_memory
+    label: "Verbal working memory of the reader"
+    definition: "The capacity to hold and manipulate linguistic material over the seconds needed to resolve a grammatical dependency or link two propositions."
+    measurement:
+      - "not measured in this study; approached through the recorded age band"
+    boundary_conditions:
+      - "children aged 7 and older"
+      - "no individual cognitive assessment is available"
+
+  - id: c_inferential_resource
+    label: "Readiness to supply an unstated connection"
+    definition: "The reader's disposition and capacity to generate the bridging inference that an implicit link between two ideas requires, drawing on background knowledge and on experience of how narratives cohere."
+    measurement:
+      - "not measured in this study; approached through the recorded age band"
+    boundary_conditions:
+      - "children aged 7 and older"
+      - "narrative rather than expository material"
+      - "no measure of background knowledge is available"
+
+  - id: c_spoken_rendition
+    label: "Availability of a spoken rendition alongside the text"
+    definition: "Whether a synchronous recorded or synthesised voicing of the text is playing while the child reads, so that word identity reaches the child by ear as well as by eye."
+    measurement:
+      - "the session-level narration flag recorded by the app"
+    boundary_conditions:
+      - "narration is chosen by the child or family, never assigned"
+      - "the flag distinguishes sessions, not pages"
+      - "playback dose, pacing, page locking, word-level highlighting and whether the voice is recorded or synthesised are not recorded"
+      - "the flag does not record whether the child read along, nor whether words were highlighted in time with the voice"
+
+  - id: c_accumulated_reading
+    label: "Reading accumulated within the app"
+    definition: "The quantity of text a child has already read through the app before the current session, counted in words of completed distinct stories."
+    measurement:
+      - "cumulative words of previously completed distinct stories"
+      - "count of previous eligible sessions"
+      - "days elapsed since the previous eligible session"
+    boundary_conditions:
+      - "counted only within the exported window, so reading before that window is invisible"
+      - "requires a child with more than one recorded session"
+      - "reading outside the app is not observed"
+
+  - id: c_processing_effort
+    label: "Effort expended while reading a text"
+    definition: "The quantity of cognitive work a reader actually performs in getting through a text, expressed on a time scale: greater effort means more time spent per word."
+    measurement:
+      - "elapsed time for the whole text, divided by the text's word count, on a log scale"
+    boundary_conditions:
+      - "timing is available for a whole text only, never per page"
+      - "the session was completed, so the whole text was reached"
+      - "the interval may include time spent idle, backgrounded or in embedded activities"
+
+  - id: c_experienced_difficulty
+    label: "Difficulty the child reports having met"
+    definition: "The child's own summary judgement, given after finishing, of how demanding the text turned out to be: a feeling of difficulty in the sense of the metacognitive-experience literature."
+    measurement:
+      - "the three-point post-reading rating: easy, just right, difficult"
+    boundary_conditions:
+      - "offered optionally, so most sessions carry no rating"
+      - "a single item with no repetition within a session"
+      - "given after reading, so it reports a recollection rather than a running judgement"
+      - "a three-point response format whose use by children of this age is not established, given their limited grasp of multi-point scales and the positive skew of their ratings of software"
+
+  - id: c_text_provenance
+    label: "How a text came to have the properties it has"
+    definition: "The route by which a particular text was produced and served: whether it was machine-generated from the attributes a family chose or drawn from a fixed classic set, and which reading level the platform was targeting when it served it."
+    measurement:
+      - "the customisation flag distinguishing generated from classic texts"
+      - "the reading level recorded for the session"
+      - "the app version in use when the text was produced"
+    boundary_conditions:
+      - "applies only to texts served by this platform"
+      - "the generating model, its version and its prompt are not disclosed"
+      - "a text is fixed once produced and is not regenerated on rereading"
+
+  - id: c_situation_model
+    label: "Quality of the mental model built from a text"
+    definition: "How complete and well connected a representation of the described situation the reader ends with, including the links the text left implicit."
+    measurement:
+      - "accuracy on post-reading comprehension items, if such items prove to exist"
+    boundary_conditions:
+      - "measurable only if the app records item-level comprehension responses"
+      - "not established to exist at the time of writing"
+
+boundary_conditions:
+  - "children aged 7 and older reading in a commercial storytelling app"
+  - "narrative texts of roughly 200 to 400 words, read on a touchscreen device"
+  - "reading is unsupervised, self-selected and outside any assessment context"
+  - "timing is available for a whole text only, never per page"
+  - "no measure of the individual child's reading skill, vocabulary or language background is available"
+  - "texts are generated from a fixed set of chosen attributes, or drawn from a fixed classic set"
+  - "narration, text choice and continued use of the app are all chosen by the family"
+
+propositions:
+  - id: p1
+    from: c_lexical_accessibility
+    to: c_processing_effort
+    relation: "decreases"
+    mechanism: "A word is identified from less evidence when its form has been met often, met early and written briefly, and when the preceding context has already made it likely. These savings are separable and additive, so a text scoring high on the pooled component leaves more of the reading interval to be spent settling which word is on the page. A word met a second time within the same text is identified faster than on its first encounter, so a text that repeats its word types spends less of the interval on identification. Once the form is identified, a word whose meaning is supported by perceptual as well as linguistic representations is retrieved more readily, so the interval also carries less of the meaning-retrieval cost this construct is defined to include. All of this is the text-side face of lexical quality."
+    functional_form: "monotonic"
+
+  - id: p2
+    from: c_structural_integration_load
+    to: c_processing_effort
+    relation: "increases"
+    mechanism: "A dependency left open has to be kept track of until the element completing it arrives and then resolved by retrieving its dependent, and the more material, and the more similar material, that intervened, the slower and less reliable both steps are. A text whose dependencies are longer, more numerous and more deeply nested therefore spends more of its reading interval on them."
+    functional_form: "monotonic"
+
+  - id: p3
+    from: c_referential_continuity
+    to: c_processing_effort
+    relation: "decreases"
+    mechanism: "When the link between two ideas is on the surface, the reader can take it up directly; when it is not, the reader must construct it, and constructing it takes time the surface link would have saved."
+    functional_form: "monotonic"
+
+  - id: p4
+    from: c_decoding_automaticity
+    to: c_processing_effort
+    relation: "decreases"
+    mechanism: "Lexical quality, in Perfetti's sense, is what makes print-to-sound mapping run without attention. Mapping that runs without attention returns the word form quickly and leaves the rest of the reader's capacity for meaning, so the same text costs a more automatic decoder less time."
+    functional_form: "monotonic"
+
+  - id: p5
+    from: c_accumulated_reading
+    to: c_decoding_automaticity
+    relation: "causes"
+    mechanism: "Every encounter with a written word form is an opportunity to acquire or sharpen the word-specific orthographic representation supporting its later recognition, and the quality of those representations is what makes skilled word reading cheap, so reading in the app sharpens the very machinery that makes reading cheap. The learning is in the first place item-based, with limited and graded transfer to orthographically related forms, so how far the association reaches is bounded by how much of a new text earlier reading can already have discounted."
+    functional_form: "monotonic, decelerating"
+
+  - id: p6
+    from: c_verbal_working_memory
+    to: c_processing_effort
+    relation: "moderates"
+    mechanism: "Moderates p2. A dependency costs time in proportion to how close its maintenance comes to exhausting the capacity available, so the same grammatical demand takes a smaller share of a larger capacity and buys back proportionally less time when it is removed. The rival account registered as alt_release_not_capacity derives the opposite sign from a shrinking decoding base and from fuller structure building. The experience-based alternative to capacity, on which exposure to complex structure makes that structure cheaper, shares the capacity account's sign and is not separated from it by this prediction. pred_h2_syntax_by_age is written to separate the two signs."
+
+  - id: p7
+    from: c_inferential_resource
+    to: c_processing_effort
+    relation: "moderates"
+    mechanism: "Moderates p3. Surface continuity saves the reader an inference, so it is worth most to a reader for whom that inference would have been effortful and worth least to one who would have drawn it readily in any case. The inference-saving route runs through all three devices. The rival account registered as alt_cue_utilisation derives the opposite sign for the connective anchors in particular, because a connective has to be reached and understood before it can save anything, and pred_h3_coherence_by_age is written to separate them."
+
+  - id: p8
+    from: c_spoken_rendition
+    to: c_processing_effort
+    relation: "moderates"
+    mechanism: "Moderates p1 more than p3. A voice supplies a word's identity by ear, which spares print-to-sound mapping only for a word the voice reaches before the reader's own fixation on it has resolved. A reader slower than the recording receives the identity before decoding completes and keeps only the cost of relating the word to what came before, whereas a reader faster than it, whose eyes run ahead of the voice, gains nothing at the word and, if they wait for the voice, is held to the recording's pace, which is the regime alt_audio_pacing describes. The recorded age band is the coarse proxy for that rate. The voice does not supply the link between two ideas, which every reader must still construct. It may also moderate p2, because prosodic phrasing supplies phrase boundaries a silent reader has to project unaided, and that second route is why the registered contrast in pred_h4_narration_selectivity lies between p1 and p3 and excludes p2."
+
+  - id: p9
+    from: c_processing_effort
+    to: c_experienced_difficulty
+    relation: "causes"
+    mechanism: "A judgement of how hard something was is inferred from the effort the reader experienced while reading, the effort heuristic of the cue-utilisation account of metacognitive judgement. Effort that the text imposes is attributed to the text, so the same text is reported as harder by the reader who worked harder on it, whereas effort the reader invests by choice carries no such attribution. The use of that feedback as a cue is itself developing over the years this study spans, so the same expended effort need not be reported alike by a reader of 7 and a reader of 10."
+    functional_form: "monotonic"
+
+  - id: p10
+    from: c_lexical_accessibility
+    to: c_situation_model
+    relation: "increases"
+    mechanism: "Meaning that arrives cheaply arrives intact and leaves capacity for the work of relating it to what came before, whereas a word retrieved with difficulty may be retrieved late, partially or not at all."
+
+  - id: p11
+    from: c_structural_integration_load
+    to: c_situation_model
+    relation: "decreases"
+    mechanism: "A dependency that exceeds what the reader can hold is resolved wrongly or abandoned, and the proposition it would have delivered never reaches the model being built."
+
+  - id: p12
+    from: c_referential_continuity
+    to: c_situation_model
+    relation: "increases"
+    mechanism: "A link the text states is a link the model acquires reliably; a link the reader must infer is acquired only when the inference is drawn, and only some are."
+
+  - id: p13
+    from: c_decoding_automaticity
+    to: c_situation_model
+    relation: "increases"
+    mechanism: "Capacity not spent on identifying words is available for relating them, so the same text yields a better connected model to a more automatic decoder."
+
+  - id: p14
+    from: c_spoken_rendition
+    to: c_situation_model
+    relation: "increases"
+    mechanism: "A voice removes the decoding step for every word at once, releasing capacity for integration, and its prosody marks phrase boundaries that the reader would otherwise have to recover from punctuation."
+
+  - id: p15
+    from: c_text_provenance
+    to: c_lexical_accessibility
+    relation: "causes"
+    mechanism: "A generator writing to a stated reading level chooses commoner and shorter words for a lower level, so the level being targeted, and not only the story chosen, fixes how accessible the wording turns out to be."
+
+  - id: p16
+    from: c_text_provenance
+    to: c_structural_integration_load
+    relation: "causes"
+    mechanism: "The same generator writes shorter and less embedded sentences for a lower level, so grammatical demand is set alongside lexical demand by one and the same decision and the two arrive correlated."
+
+  - id: p17
+    from: c_text_provenance
+    to: c_referential_continuity
+    relation: "causes"
+    mechanism: "Writing for a younger reader means stating the links between events rather than leaving them to be inferred, so surface continuity is raised by the same decision that lowers the other two demands."
+
+  - id: p18
+    from: c_decoding_automaticity
+    to: c_text_provenance
+    relation: "causes"
+    mechanism: "A family sets the reading level to suit the child they have, so a more automatic decoder is served texts built for a higher level. This opens a path from the reader's own capacity to the properties of the text, which is why every text coefficient has to be read within reading level rather than across it."
+
+predictions:
+  - id: pred_h1_lexical
+    derives_from: [p1]
+    statement: "In a model of log reading time per word fitted across distinct texts, with reading level, language and text length adjusted for, the standardised coefficient on lexical difficulty is positive and at least 0.05 in magnitude, so that less than five per cent of its posterior mass falls within the region of practical equivalence."
+    type: "interval"
+    risk_score: 0.55
+    severity: 0.60
+    diagnostic_vs: []
+
+  - id: pred_h1_syntax
+    derives_from: [p2]
+    statement: "In the same model the standardised coefficient on grammatical integration load is positive and at least 0.05 in magnitude, with less than five per cent of its posterior mass in the region of practical equivalence."
+    type: "interval"
+    risk_score: 0.60
+    severity: 0.60
+    diagnostic_vs: []
+
+  - id: pred_h1_coherence
+    derives_from: [p3]
+    statement: "In the same model the standardised coefficient on referential continuity is negative and at least 0.05 in magnitude, with less than five per cent of its posterior mass in the region of practical equivalence."
+    type: "interval"
+    risk_score: 0.70
+    severity: 0.65
+    diagnostic_vs: [alt_engagement]
+
+  - id: pred_h2_syntax_by_age
+    derives_from: [p2, p6]
+    statement: "The interaction between grammatical integration load and the age band lies outside the region of practical equivalence of 0.05 standardised units, and it is negative: the proportional cost of a grammatical dependency is smaller among children in the older band. A negative interaction is consistent with the capacity account and with the experience-based alternative, which it does not separate. A positive interaction of the same size corroborates the registered bottleneck-release account instead, and a posterior lying inside the region weighs against all three."
+    type: "interval"
+    risk_score: 0.80
+    severity: 0.75
+    diagnostic_vs: [alt_release_not_capacity]
+
+  - id: pred_h3_coherence_by_age
+    derives_from: [p3, p7]
+    statement: "The interaction between referential continuity and the age band lies outside the region of practical equivalence of 0.05 standardised units, and it is positive: the facilitation surface continuity affords is smaller in magnitude among children in the older band. A negative interaction of the same size corroborates the registered cue-utilisation account instead, and a posterior lying inside the region weighs against both."
+    type: "interval"
+    risk_score: 0.85
+    severity: 0.75
+    diagnostic_vs: [alt_cue_utilisation]
+
+  - id: pred_h4_narration_selectivity
+    derives_from: [p1, p3, p8]
+    statement: "The proportional attenuation of the lexical-difficulty coefficient under narration exceeds the proportional attenuation of the referential-continuity coefficient by more than 0.20, whereas an account on which narration simply paces the reader requires the two attenuations to be equal once the recording's own duration per word is accounted for, and predicts a lexical attenuation no larger than the continuity attenuation before it is."
+    type: "interval"
+    risk_score: 0.85
+    severity: 0.80
+    diagnostic_vs: [alt_audio_pacing]
+
+  - id: pred_h5_reported_difficulty
+    derives_from: [p1, p2, p3, p9]
+    statement: "In an ordinal model of the post-reading rating, lexical difficulty and grammatical integration load are associated with higher odds of a harder rating and referential continuity with lower odds, each by an odds ratio outside 0.952 to 1.05 (a half-width of log 1.05 on the log-odds scale), and the ordering of the three coefficients matches their ordering in the reading-time model with posterior probability at least 0.90."
+    type: "interval"
+    risk_score: 0.80
+    severity: 0.70
+    diagnostic_vs: [alt_engagement]
+
+  - id: pred_h6_accumulated_reading
+    derives_from: [p4, p5]
+    statement: "Among children with several recorded sessions, a one-standard-deviation within-child increase in that child's accumulated in-app reading, on the log scale on which it is entered, is followed by a reduction in that child's log reading time per word of at least 0.05 standardised units, over and above session order, the interval since the previous session and the time elapsed since the child's first session. The implied change per doubling of accumulated words is reported beside the coefficient."
+    type: "interval"
+    risk_score: 0.75
+    severity: 0.65
+    diagnostic_vs: [alt_skill_drives_practice]
+
+  - id: pred_within_level_persistence
+    derives_from: [p1, p2, p3]
+    statement: "The three text coefficients estimated within a single platform-assigned reading level retain at least half the magnitude of the same coefficients estimated across reading levels, which an account attributing the association to platform assignment forbids."
+    type: "interval"
+    risk_score: 0.70
+    severity: 0.75
+    diagnostic_vs: [alt_platform_assignment]
+
+  - id: pred_no_spurious_structure
+    derives_from: [p1, p2, p3]
+    statement: "Text-feature coefficients estimated against a permuted assignment of texts to sessions carry no association: no coefficient is declared practically non-negligible in more than five per cent of 200 permuted refits, an inconclusive verdict on permuted data being the expected outcome at moderate text counts."
+    type: "interval"
+    risk_score: 0.30
+    severity: 0.55
+    diagnostic_vs: []
+
+auxiliary_assumptions:
+  - id: aux_age_proxy
+    statement: "The recorded age band stands in for decoding automaticity, verbal working memory and readiness to infer, none of which is measured, and the automaticity it stands for is attained through years of reading instruction rather than through age alone. For the rating it stands in additionally for the maturing use of experienced effort as a cue in a judgement about one's own reading. A band difference is therefore evidence about development in the aggregate and not about any one of these capacities."
+    added_for: null
+    protects: [pred_h2_syntax_by_age, pred_h3_coherence_by_age, pred_h5_reported_difficulty]
+
+  - id: aux_time_is_effort
+    statement: "Elapsed time for a whole text, divided by its word count, indexes effort expended in reading it, and is not dominated by time spent idle, backgrounded or in activities embedded in the session. This is the assumption most exposed to how the platform defines the interval, which is question (c) to the data controller."
+    added_for: null
+    protects: [pred_h1_lexical, pred_h1_syntax, pred_h1_coherence, pred_h2_syntax_by_age, pred_h3_coherence_by_age, pred_h6_accumulated_reading]
+
+  - id: aux_text_identity
+    statement: "The text a child read is the one keyed by story identifier, reading language, reading level and app version, and every child meeting that key read the same words. This is question (d) to the data controller, and it also fixes how many distinct texts the design has to work with."
+    added_for: null
+    protects: [pred_h1_lexical, pred_h1_syntax, pred_h1_coherence, pred_within_level_persistence]
+
+  - id: aux_account_is_child
+    statement: "One account corresponds to one child throughout the window, so that repeated sessions on an account are repeated readings by the same reader. This is question (f) to the data controller."
+    added_for: null
+    protects: [pred_h6_accumulated_reading]
+
+  - id: aux_narration_played
+    statement: "The narration flag records that a spoken rendition played during the session, not merely that the setting was available, and it does not change within a session. This is question (a) to the data controller."
+    added_for: null
+    protects: [pred_h4_narration_selectivity]
+
+  - id: aux_within_window_acyclic
+    statement: "Over the months covered by the export, accumulated reading is treated as acting on decoding automaticity rather than the reverse. The evidence that the relation is reciprocal comes from designs with yearly lags, which do not speak to lags of days, so the approximation is defended against the two routes by which the reverse path could operate inside the window. The first is attrition within a child's own series, since a child whose session went slowly may not return, so later sessions would be contributed disproportionately by children whose earlier sessions went well. The second is drift in the material chosen, since a child reading faster may select longer stories, or a family may raise the reading level, which changes the composition of what accumulates. Both are thought weak here, the first because a single story's pace is a noisy signal of skill to a family and the second because the reading level is a setting changed rarely, and both are checked by the descriptives and refits registered for the hypothesis rather than assumed away. How far the export's window reaches back, and so how much earlier reading the measure leaves out, is question (l) to the data controller. The accumulated-reading coefficient is reported as an association throughout."
+    added_for: null
+    protects: [pred_h6_accumulated_reading]
+
+alternatives:
+  - id: alt_audio_pacing
+    label: "Narrated reading time is set by the recording, not by the reader"
+    key_constructs: ["duration of the audio recording", "duration of the recording as a function of the text's syllable count and pauses", "page advance locked to playback", "listening rather than reading"]
+    source_doi: "10.1177/0022219416688170"
+
+  - id: alt_engagement
+    label: "Time on a text reflects how engaging it is, not how demanding"
+    key_constructs: ["narrative interest", "voluntary lingering and rereading", "enjoyment"]
+    source_doi: "10.1177/08295735251342678"
+
+  - id: alt_platform_assignment
+    label: "Text difficulty is assigned by the platform, so its association with time is a selection artefact"
+    key_constructs: ["reading level chosen in the app", "text version served for that level", "reader capacity behind that choice"]
+    source_doi: null
+
+  - id: alt_release_not_capacity
+    label: "What changes with age is the decoding base and how fully structure is built, not the capacity to hold structure"
+    key_constructs: ["automatisation of print-to-sound mapping shrinking the base interval a proportional cost is divided by", "depth of syntactic structure building", "underspecification of structure in less skilled reading"]
+    source_doi: "10.1016/0010-0285(74)90015-2"
+
+  - id: alt_cue_utilisation
+    label: "A cohesive cue must first be reached and understood before it can help"
+    key_constructs: ["decoding fluency sufficient to reach the cue", "explicit knowledge of what a connective signals"]
+    source_doi: "10.1017/S0305000905007014"
+
+  - id: alt_skill_drives_practice
+    label: "Prior reading in the app marks pre-existing skill rather than producing gains"
+    key_constructs: ["early reading skill", "self-selection into continued reading"]
+    source_doi: "10.1111/cdev.13241"
+
+evidence:
+  - supports: pred_h1_lexical
+    source_doi: "10.1002/rrq.431"
+    direction: "corroborates"
+  - supports: pred_h1_lexical
+    source_doi: "10.1016/j.jml.2023.104497"
+    direction: "corroborates"
+  - supports: pred_h1_lexical
+    source_doi: "10.1162/tacl_a_00612"
+    direction: "corroborates"
+  - supports: pred_h1_syntax
+    source_doi: "10.1075/lia.18013.del"
+    direction: "corroborates"
+  - supports: pred_h1_coherence
+    source_doi: "10.1037/a0022824"
+    direction: "corroborates"
+  - supports: pred_h1_coherence
+    source_doi: "10.1207/s1532690xci1401_1"
+    direction: "mixed"
+  - supports: pred_h1_coherence
+    source_doi: "10.1002/rrq.431"
+    direction: "corroborates"
+  - supports: pred_h4_narration_selectivity
+    source_doi: "10.1177/0022219416688170"
+    direction: "mixed"
+  - supports: pred_h4_narration_selectivity
+    source_doi: "10.1007/s11881-021-00246-w"
+    direction: "refutes"
+  - supports: pred_h6_accumulated_reading
+    source_doi: "10.1016/0010-0277(94)00645-2"
+    direction: "corroborates"
+  - supports: pred_h6_accumulated_reading
+    source_doi: "10.1016/j.jecp.2025.106309"
+    direction: "corroborates"
+  - supports: pred_h6_accumulated_reading
+    source_doi: "10.1111/cdev.13241"
+    direction: "mixed"
+  - supports: pred_h6_accumulated_reading
+    source_doi: "10.1002/rrq.309"
+    direction: "mixed"
+  - supports: pred_h2_syntax_by_age
+    source_doi: "10.1080/17470218.2015.1011176"
+    direction: "refutes"
+  - supports: pred_h2_syntax_by_age
+    source_doi: "10.1371/journal.pone.0054141"
+    direction: "mixed"
+  - supports: pred_h3_coherence_by_age
+    source_doi: "10.1037/a0022824"
+    direction: "refutes"
+  - supports: pred_h3_coherence_by_age
+    source_doi: "10.1016/j.lindif.2016.02.008"
+    direction: "refutes"
+  - supports: pred_h3_coherence_by_age
+    source_doi: "10.1016/j.lindif.2017.11.007"
+    direction: "mixed"
+  - supports: pred_h3_coherence_by_age
+    source_doi: "10.1017/S0142716422000303"
+    direction: "mixed"
+  - supports: pred_h3_coherence_by_age
+    source_doi: "10.1017/S0305000924000205"
+    direction: "mixed"
+
+formal_model:
+  type: "sem"
+  spec_ref: "design_analysis/intract_processing_model.json"
+
+provenance:
+  - step: "1"
+    action: "tf_add_construct"
+    detail: "Registered eleven constructs spanning text properties, reader capacities, the reading context and three outcomes, separating the effort a text costs from the difficulty a child reports and from the model a child ends with."
+  - step: "2"
+    action: "tf_add_proposition"
+    detail: "Linked them into an acyclic graph with three text-to-effort paths, one reader path through decoding automaticity, three moderation claims and a parallel set of paths to the situation model."
+  - step: "3"
+    action: "tf_add_alternative"
+    detail: "Registered four rival accounts: audio pacing, engagement, platform assignment and reverse causation from skill to practice."
+  - step: "4"
+    action: "tf_add_prediction"
+    detail: "Derived ten interval predictions, six of them diagnostic against a registered alternative, and two of them outcome-neutral controls."
+  - step: "5"
+    action: "tf_add_alternative"
+    detail: "Added two further rivals after an adversarial reading of the developmental literature: a bottleneck-release account opposing the capacity account behind p6, and a cue-utilisation account opposing the knowledge account behind p7. The two age-band predictions were rewritten as two-sided adjudicating tests, because on a proportional scale the direct evidence supports neither sign."
+  - step: "6"
+    action: "tf_add_assumption"
+    detail: "Recorded six core auxiliary assumptions, five of which correspond to questions put to the data controller on 7 August 2026 and are resolved in the manuscript's data-provenance table."

@@ -1,2 +1,8 @@
 /.quarto/
 **/*.quarto_ipynb
+**/*.log
+Rplots.pdf
+
+# Publisher PDFs fetched from a personal Zotero library: not redistributable, kept
+# locally only (untracked on 16 October 2026, register item RS-12).
+downloaded_papers_zotero_keys/

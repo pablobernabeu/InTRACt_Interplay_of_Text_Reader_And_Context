@@ -1,0 +1,230 @@
+<svg width="1022pt" height="530pt"
+ viewBox="0.00 0.00 1022.41 529.59" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(14.4 515.1887)">
+<title>nomological_net</title>
+<!-- c_lexical_accessibility -->
+<g id="node1" class="node">
+<title>c_lexical_accessibility</title>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M635.4829,-150.5902C635.4829,-150.5902 555.3514,-150.5902 555.3514,-150.5902 549.3514,-150.5902 543.3514,-144.5902 543.3514,-138.5902 543.3514,-138.5902 543.3514,-109.3873 543.3514,-109.3873 543.3514,-103.3873 549.3514,-97.3873 555.3514,-97.3873 555.3514,-97.3873 635.4829,-97.3873 635.4829,-97.3873 641.4829,-97.3873 647.4829,-103.3873 647.4829,-109.3873 647.4829,-109.3873 647.4829,-138.5902 647.4829,-138.5902 647.4829,-144.5902 641.4829,-150.5902 635.4829,-150.5902"/>
+<text text-anchor="middle" x="595.4172" y="-133.8887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Lexical</text>
+<text text-anchor="middle" x="595.4172" y="-120.6887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">accessibility of a</text>
+<text text-anchor="middle" x="595.4172" y="-107.4887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">text</text>
+</g>
+<!-- c_processing_effort -->
+<g id="node9" class="node">
+<title>c_processing_effort</title>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M828.0702,-334.5902C828.0702,-334.5902 750.7798,-334.5902 750.7798,-334.5902 744.7798,-334.5902 738.7798,-328.5902 738.7798,-322.5902 738.7798,-322.5902 738.7798,-293.3873 738.7798,-293.3873 738.7798,-287.3873 744.7798,-281.3873 750.7798,-281.3873 750.7798,-281.3873 828.0702,-281.3873 828.0702,-281.3873 834.0702,-281.3873 840.0702,-287.3873 840.0702,-293.3873 840.0702,-293.3873 840.0702,-322.5902 840.0702,-322.5902 840.0702,-328.5902 834.0702,-334.5902 828.0702,-334.5902"/>
+<text text-anchor="middle" x="789.425" y="-317.8887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Effort expended</text>
+<text text-anchor="middle" x="789.425" y="-304.6887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">while reading a</text>
+<text text-anchor="middle" x="789.425" y="-291.4887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">text</text>
+</g>
+<!-- c_lexical_accessibility&#45;&gt;c_processing_effort -->
+<g id="edge1" class="edge">
+<title>c_lexical_accessibility&#45;&gt;c_processing_effort</title>
+<path fill="none" stroke="#7b909f" d="M642.4484,-150.7438C646.5217,-154.1951 650.3228,-157.9495 653.5759,-161.9887 666.1053,-177.5459 656.2205,-189.1346 669.5759,-203.9887 685.3191,-221.4985 698.0904,-213.7024 716.8079,-227.9887 734.6027,-241.5708 751.5879,-259.8757 764.6511,-275.5482"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="762.9461,-277.3326 769.2807,-281.1895 766.7339,-274.2241 762.9461,-277.3326"/>
+<text text-anchor="middle" x="693.1919" y="-230.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">decreases</text>
+</g>
+<!-- c_situation_model -->
+<g id="node12" class="node">
+<title>c_situation_model</title>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M834.1594,-100.5902C834.1594,-100.5902 744.6906,-100.5902 744.6906,-100.5902 738.6906,-100.5902 732.6906,-94.5902 732.6906,-88.5902 732.6906,-88.5902 732.6906,-59.3873 732.6906,-59.3873 732.6906,-53.3873 738.6906,-47.3873 744.6906,-47.3873 744.6906,-47.3873 834.1594,-47.3873 834.1594,-47.3873 840.1594,-47.3873 846.1594,-53.3873 846.1594,-59.3873 846.1594,-59.3873 846.1594,-88.5902 846.1594,-88.5902 846.1594,-94.5902 840.1594,-100.5902 834.1594,-100.5902"/>
+<text text-anchor="middle" x="789.425" y="-83.8887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Quality of the</text>
+<text text-anchor="middle" x="789.425" y="-70.6887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">mental model built</text>
+<text text-anchor="middle" x="789.425" y="-57.4887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">from a text</text>
+</g>
+<!-- c_lexical_accessibility&#45;&gt;c_situation_model -->
+<g id="edge10" class="edge">
+<title>c_lexical_accessibility&#45;&gt;c_situation_model</title>
+<path fill="none" stroke="#7b909f" d="M636.9408,-97.3282C642.5701,-93.5772 648.2417,-89.7259 653.5759,-85.9887 660.8559,-80.8884 661.1432,-76.7996 669.5759,-73.9887 687.1763,-68.1219 707.0554,-66.3419 725.4907,-66.5135"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="725.6928,-68.9687 732.7472,-66.6801 725.8053,-64.07 725.6928,-68.9687"/>
+<text text-anchor="middle" x="693.1919" y="-76.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">increases</text>
+</g>
+<!-- c_structural_integration_load -->
+<g id="node2" class="node">
+<title>c_structural_integration_load</title>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M638.6089,-74.5902C638.6089,-74.5902 552.2254,-74.5902 552.2254,-74.5902 546.2254,-74.5902 540.2254,-68.5902 540.2254,-62.5902 540.2254,-62.5902 540.2254,-33.3873 540.2254,-33.3873 540.2254,-27.3873 546.2254,-21.3873 552.2254,-21.3873 552.2254,-21.3873 638.6089,-21.3873 638.6089,-21.3873 644.6089,-21.3873 650.6089,-27.3873 650.6089,-33.3873 650.6089,-33.3873 650.6089,-62.5902 650.6089,-62.5902 650.6089,-68.5902 644.6089,-74.5902 638.6089,-74.5902"/>
+<text text-anchor="middle" x="595.4172" y="-57.8887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Grammatical</text>
+<text text-anchor="middle" x="595.4172" y="-44.6887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">integration load</text>
+<text text-anchor="middle" x="595.4172" y="-31.4887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">imposed by a text</text>
+</g>
+<!-- c_structural_integration_load&#45;&gt;c_processing_effort -->
+<g id="edge2" class="edge">
+<title>c_structural_integration_load&#45;&gt;c_processing_effort</title>
+<path fill="none" stroke="#7b909f" d="M643.7052,-74.7167C647.422,-78.1396 650.8003,-81.8961 653.5759,-85.9887 673.6834,-115.6375 647.8887,-136.4752 669.5759,-164.9887 683.8306,-183.7303 699.5232,-172.9987 716.8079,-188.9887 742.8493,-213.0796 762.8762,-248.5956 775.2387,-274.5555"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="773.0359,-275.6289 778.2156,-280.9369 777.4765,-273.5574 773.0359,-275.6289"/>
+<text text-anchor="middle" x="693.1919" y="-191.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">increases</text>
+</g>
+<!-- c_structural_integration_load&#45;&gt;c_situation_model -->
+<g id="edge11" class="edge">
+<title>c_structural_integration_load&#45;&gt;c_situation_model</title>
+<path fill="none" stroke="#7b909f" d="M650.6775,-33.9483C671.6194,-30.738 695.5335,-29.6373 716.8079,-34.9887 725.0479,-37.0614 733.372,-40.2706 741.2979,-43.9776"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="740.4879,-46.3093 747.8513,-47.1945 742.6472,-41.9106 740.4879,-46.3093"/>
+<text text-anchor="middle" x="693.1919" y="-37.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">decreases</text>
+</g>
+<!-- c_referential_continuity -->
+<g id="node3" class="node">
+<title>c_referential_continuity</title>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M636.321,-226.5902C636.321,-226.5902 554.5133,-226.5902 554.5133,-226.5902 548.5133,-226.5902 542.5133,-220.5902 542.5133,-214.5902 542.5133,-214.5902 542.5133,-185.3873 542.5133,-185.3873 542.5133,-179.3873 548.5133,-173.3873 554.5133,-173.3873 554.5133,-173.3873 636.321,-173.3873 636.321,-173.3873 642.321,-173.3873 648.321,-179.3873 648.321,-185.3873 648.321,-185.3873 648.321,-214.5902 648.321,-214.5902 648.321,-220.5902 642.321,-226.5902 636.321,-226.5902"/>
+<text text-anchor="middle" x="595.4172" y="-209.8887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Referential</text>
+<text text-anchor="middle" x="595.4172" y="-196.6887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">continuity across</text>
+<text text-anchor="middle" x="595.4172" y="-183.4887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">a text</text>
+</g>
+<!-- c_referential_continuity&#45;&gt;c_processing_effort -->
+<g id="edge3" class="edge">
+<title>c_referential_continuity&#45;&gt;c_processing_effort</title>
+<path fill="none" stroke="#7b909f" d="M641.189,-226.8017C650.552,-232.2097 660.3602,-237.8192 669.5759,-242.9887 690.2491,-254.5852 713.0876,-267.0553 733.2341,-277.9411"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="732.0709,-280.0974 739.3946,-281.2659 734.3981,-275.7852 732.0709,-280.0974"/>
+<text text-anchor="middle" x="693.1919" y="-270.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">decreases</text>
+</g>
+<!-- c_referential_continuity&#45;&gt;c_situation_model -->
+<g id="edge12" class="edge">
+<title>c_referential_continuity&#45;&gt;c_situation_model</title>
+<path fill="none" stroke="#7b909f" d="M642.9341,-173.151C646.8592,-169.7341 650.4948,-166.0097 653.5759,-161.9887 667.5101,-143.8042 653.3683,-129.1799 669.5759,-112.9887 678.1719,-104.4015 701.8655,-95.925 725.9395,-89.0794"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="726.639,-91.4279 732.7274,-87.1931 725.327,-86.7068 726.639,-91.4279"/>
+<text text-anchor="middle" x="693.1919" y="-115.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">increases</text>
+</g>
+<!-- c_decoding_automaticity -->
+<g id="node4" class="node">
+<title>c_decoding_automaticity</title>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M265.3929,-157.289C265.3929,-157.289 193.1255,-157.289 193.1255,-157.289 187.1255,-157.289 181.1255,-151.289 181.1255,-145.289 181.1255,-145.289 181.1255,-102.6884 181.1255,-102.6884 181.1255,-96.6884 187.1255,-90.6884 193.1255,-90.6884 193.1255,-90.6884 265.3929,-90.6884 265.3929,-90.6884 271.3929,-90.6884 277.3929,-96.6884 277.3929,-102.6884 277.3929,-102.6884 277.3929,-145.289 277.3929,-145.289 277.3929,-151.289 271.3929,-157.289 265.3929,-157.289"/>
+<text text-anchor="middle" x="229.2592" y="-140.4887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Automaticity of</text>
+<text text-anchor="middle" x="229.2592" y="-127.2887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">print&#45;to&#45;sound</text>
+<text text-anchor="middle" x="229.2592" y="-114.0887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">mapping in the</text>
+<text text-anchor="middle" x="229.2592" y="-100.8887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">reader</text>
+</g>
+<!-- c_decoding_automaticity&#45;&gt;c_processing_effort -->
+<g id="edge4" class="edge">
+<title>c_decoding_automaticity&#45;&gt;c_processing_effort</title>
+<path fill="none" stroke="#7b909f" d="M267.6501,-157.6572C322.7907,-203.536 429.6686,-283.4731 537.2584,-313.9887 601.8388,-332.3056 679.493,-326.5353 731.409,-318.9566"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="732.0037,-321.3447 738.5597,-317.8775 731.2725,-316.4996 732.0037,-321.3447"/>
+<text text-anchor="middle" x="498.1964" y="-310.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">decreases</text>
+</g>
+<!-- c_text_provenance -->
+<g id="node11" class="node">
+<title>c_text_provenance</title>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M447.2002,-150.5902C447.2002,-150.5902 352.9372,-150.5902 352.9372,-150.5902 346.9372,-150.5902 340.9372,-144.5902 340.9372,-138.5902 340.9372,-138.5902 340.9372,-109.3873 340.9372,-109.3873 340.9372,-103.3873 346.9372,-97.3873 352.9372,-97.3873 352.9372,-97.3873 447.2002,-97.3873 447.2002,-97.3873 453.2002,-97.3873 459.2002,-103.3873 459.2002,-109.3873 459.2002,-109.3873 459.2002,-138.5902 459.2002,-138.5902 459.2002,-144.5902 453.2002,-150.5902 447.2002,-150.5902"/>
+<text text-anchor="middle" x="400.0687" y="-133.8887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">How a text came to</text>
+<text text-anchor="middle" x="400.0687" y="-120.6887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">have the</text>
+<text text-anchor="middle" x="400.0687" y="-107.4887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">properties it has</text>
+</g>
+<!-- c_decoding_automaticity&#45;&gt;c_text_provenance -->
+<g id="edge18" class="edge">
+<title>c_decoding_automaticity&#45;&gt;c_text_provenance</title>
+<path fill="none" stroke="#7b909f" d="M277.7495,-123.9887C295.0768,-123.9887 314.9145,-123.9887 333.4997,-123.9887"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="333.8259,-126.4388 340.8259,-123.9887 333.8259,-121.5388 333.8259,-126.4388"/>
+<text text-anchor="middle" x="309.1645" y="-126.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
+</g>
+<!-- c_decoding_automaticity&#45;&gt;c_situation_model -->
+<g id="edge13" class="edge">
+<title>c_decoding_automaticity&#45;&gt;c_situation_model</title>
+<path fill="none" stroke="#7b909f" d="M277.3565,-100.0702C336.7182,-72.0061 441.567,-27.1297 537.2584,-9.9887 616.1592,4.1446 643.5699,5.5886 716.8079,-26.9887 727.0344,-31.5376 737.4614,-37.4216 747.1053,-43.4777"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="745.7855,-45.5418 753,-47.2603 748.4318,-41.4178 745.7855,-45.5418"/>
+<text text-anchor="middle" x="498.1964" y="-26.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">increases</text>
+</g>
+<!-- c_verbal_working_memory -->
+<g id="node5" class="node">
+<title>c_verbal_working_memory</title>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M631.6462,-500.5902C631.6462,-500.5902 559.1881,-500.5902 559.1881,-500.5902 553.1881,-500.5902 547.1881,-494.5902 547.1881,-488.5902 547.1881,-488.5902 547.1881,-459.3873 547.1881,-459.3873 547.1881,-453.3873 553.1881,-447.3873 559.1881,-447.3873 559.1881,-447.3873 631.6462,-447.3873 631.6462,-447.3873 637.6462,-447.3873 643.6462,-453.3873 643.6462,-459.3873 643.6462,-459.3873 643.6462,-488.5902 643.6462,-488.5902 643.6462,-494.5902 637.6462,-500.5902 631.6462,-500.5902"/>
+<text text-anchor="middle" x="595.4172" y="-483.8887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Verbal working</text>
+<text text-anchor="middle" x="595.4172" y="-470.6887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">memory of the</text>
+<text text-anchor="middle" x="595.4172" y="-457.4887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">reader</text>
+</g>
+<!-- c_verbal_working_memory&#45;&gt;c_processing_effort -->
+<g id="edge6" class="edge">
+<title>c_verbal_working_memory&#45;&gt;c_processing_effort</title>
+<path fill="none" stroke="#7b909f" d="M636.8902,-447.2555C642.5274,-443.5157 648.2146,-439.6869 653.5759,-435.9887 682.1831,-416.2558 691.0848,-413.3572 716.8079,-389.9887 733.4803,-374.8425 750.271,-356.1568 763.501,-340.4498"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="765.6035,-341.7542 768.2073,-334.8099 761.8413,-338.6148 765.6035,-341.7542"/>
+<text text-anchor="middle" x="693.1919" y="-427.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">moderates</text>
+</g>
+<!-- c_inferential_resource -->
+<g id="node6" class="node">
+<title>c_inferential_resource</title>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M641.7351,-424.5902C641.7351,-424.5902 549.0992,-424.5902 549.0992,-424.5902 543.0992,-424.5902 537.0992,-418.5902 537.0992,-412.5902 537.0992,-412.5902 537.0992,-383.3873 537.0992,-383.3873 537.0992,-377.3873 543.0992,-371.3873 549.0992,-371.3873 549.0992,-371.3873 641.7351,-371.3873 641.7351,-371.3873 647.7351,-371.3873 653.7351,-377.3873 653.7351,-383.3873 653.7351,-383.3873 653.7351,-412.5902 653.7351,-412.5902 653.7351,-418.5902 647.7351,-424.5902 641.7351,-424.5902"/>
+<text text-anchor="middle" x="595.4172" y="-407.8887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Readiness to</text>
+<text text-anchor="middle" x="595.4172" y="-394.6887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">supply an unstated</text>
+<text text-anchor="middle" x="595.4172" y="-381.4887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">connection</text>
+</g>
+<!-- c_inferential_resource&#45;&gt;c_processing_effort -->
+<g id="edge7" class="edge">
+<title>c_inferential_resource&#45;&gt;c_processing_effort</title>
+<path fill="none" stroke="#7b909f" d="M653.5993,-379.779C673.9881,-372.6494 696.7845,-363.8147 716.8079,-353.9887 726.0606,-349.4482 735.6059,-344.0097 744.6127,-338.4882"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="746.1068,-340.444 750.7519,-334.6624 743.5152,-336.2854 746.1068,-340.444"/>
+<text text-anchor="middle" x="693.1919" y="-375.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">moderates</text>
+</g>
+<!-- c_spoken_rendition -->
+<g id="node7" class="node">
+<title>c_spoken_rendition</title>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M638.6177,-302.5902C638.6177,-302.5902 552.2166,-302.5902 552.2166,-302.5902 546.2166,-302.5902 540.2166,-296.5902 540.2166,-290.5902 540.2166,-290.5902 540.2166,-261.3873 540.2166,-261.3873 540.2166,-255.3873 546.2166,-249.3873 552.2166,-249.3873 552.2166,-249.3873 638.6177,-249.3873 638.6177,-249.3873 644.6177,-249.3873 650.6177,-255.3873 650.6177,-261.3873 650.6177,-261.3873 650.6177,-290.5902 650.6177,-290.5902 650.6177,-296.5902 644.6177,-302.5902 638.6177,-302.5902"/>
+<text text-anchor="middle" x="595.4172" y="-285.8887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Availability of a</text>
+<text text-anchor="middle" x="595.4172" y="-272.6887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">spoken rendition</text>
+<text text-anchor="middle" x="595.4172" y="-259.4887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">alongside the text</text>
+</g>
+<!-- c_spoken_rendition&#45;&gt;c_processing_effort -->
+<g id="edge8" class="edge">
+<title>c_spoken_rendition&#45;&gt;c_processing_effort</title>
+<path fill="none" stroke="#7b909f" d="M650.7524,-285.1158C676.0388,-289.2866 705.9891,-294.2267 731.5733,-298.4466"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="731.3606,-300.8945 738.6661,-299.6165 732.1581,-296.0598 731.3606,-300.8945"/>
+<text text-anchor="middle" x="693.1919" y="-297.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">moderates</text>
+</g>
+<!-- c_spoken_rendition&#45;&gt;c_situation_model -->
+<g id="edge14" class="edge">
+<title>c_spoken_rendition&#45;&gt;c_situation_model</title>
+<path fill="none" stroke="#7b909f" d="M643.7742,-249.3072C647.4767,-245.8747 650.8329,-242.1033 653.5759,-237.9887 675.1413,-205.64 646.8043,-183.5 669.5759,-151.9887 683.6111,-132.5669 696.5353,-138.7643 716.8079,-125.9887 727.1162,-119.4926 737.9379,-112.0851 747.9868,-104.9379"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="749.5418,-106.8377 753.8044,-100.7686 746.6874,-102.8549 749.5418,-106.8377"/>
+<text text-anchor="middle" x="693.1919" y="-154.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">increases</text>
+</g>
+<!-- c_accumulated_reading -->
+<g id="node8" class="node">
+<title>c_accumulated_reading</title>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M105.2741,-150.5902C105.2741,-150.5902 12.2413,-150.5902 12.2413,-150.5902 6.2413,-150.5902 .2413,-144.5902 .2413,-138.5902 .2413,-138.5902 .2413,-109.3873 .2413,-109.3873 .2413,-103.3873 6.2413,-97.3873 12.2413,-97.3873 12.2413,-97.3873 105.2741,-97.3873 105.2741,-97.3873 111.2741,-97.3873 117.2741,-103.3873 117.2741,-109.3873 117.2741,-109.3873 117.2741,-138.5902 117.2741,-138.5902 117.2741,-144.5902 111.2741,-150.5902 105.2741,-150.5902"/>
+<text text-anchor="middle" x="58.7577" y="-133.8887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Reading</text>
+<text text-anchor="middle" x="58.7577" y="-120.6887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">accumulated within</text>
+<text text-anchor="middle" x="58.7577" y="-107.4887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">the app</text>
+</g>
+<!-- c_accumulated_reading&#45;&gt;c_decoding_automaticity -->
+<g id="edge5" class="edge">
+<title>c_accumulated_reading&#45;&gt;c_decoding_automaticity</title>
+<path fill="none" stroke="#7b909f" d="M117.4346,-123.9887C135.7182,-123.9887 155.8136,-123.9887 173.8649,-123.9887"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="173.9365,-126.4388 180.9364,-123.9887 173.9364,-121.5388 173.9365,-126.4388"/>
+<text text-anchor="middle" x="149.3539" y="-126.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
+</g>
+<!-- c_experienced_difficulty -->
+<g id="node10" class="node">
+<title>c_experienced_difficulty</title>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M981.56,-334.5902C981.56,-334.5902 921.7721,-334.5902 921.7721,-334.5902 915.7721,-334.5902 909.7721,-328.5902 909.7721,-322.5902 909.7721,-322.5902 909.7721,-293.3873 909.7721,-293.3873 909.7721,-287.3873 915.7721,-281.3873 921.7721,-281.3873 921.7721,-281.3873 981.56,-281.3873 981.56,-281.3873 987.56,-281.3873 993.56,-287.3873 993.56,-293.3873 993.56,-293.3873 993.56,-322.5902 993.56,-322.5902 993.56,-328.5902 987.56,-334.5902 981.56,-334.5902"/>
+<text text-anchor="middle" x="951.6661" y="-317.8887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Difficulty the</text>
+<text text-anchor="middle" x="951.6661" y="-304.6887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">child reports</text>
+<text text-anchor="middle" x="951.6661" y="-291.4887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">having met</text>
+</g>
+<!-- c_processing_effort&#45;&gt;c_experienced_difficulty -->
+<g id="edge9" class="edge">
+<title>c_processing_effort&#45;&gt;c_experienced_difficulty</title>
+<path fill="none" stroke="#7b909f" d="M840.3139,-307.9887C860.1777,-307.9887 882.8635,-307.9887 902.5531,-307.9887"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="902.6608,-310.4388 909.6608,-307.9887 902.6607,-305.5388 902.6608,-310.4388"/>
+<text text-anchor="middle" x="877.8806" y="-310.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
+</g>
+<!-- c_text_provenance&#45;&gt;c_lexical_accessibility -->
+<g id="edge15" class="edge">
+<title>c_text_provenance&#45;&gt;c_lexical_accessibility</title>
+<path fill="none" stroke="#7b909f" d="M459.2098,-123.9887C483.5353,-123.9887 511.6582,-123.9887 536.0111,-123.9887"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="536.1055,-126.4388 543.1055,-123.9887 536.1054,-121.5388 536.1055,-126.4388"/>
+<text text-anchor="middle" x="498.1964" y="-126.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
+</g>
+<!-- c_text_provenance&#45;&gt;c_structural_integration_load -->
+<g id="edge16" class="edge">
+<title>c_text_provenance&#45;&gt;c_structural_integration_load</title>
+<path fill="none" stroke="#7b909f" d="M459.2098,-100.98C482.7159,-91.835 509.7678,-81.3105 533.5376,-72.0629"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="534.5138,-74.312 540.1491,-69.4907 532.7371,-69.7455 534.5138,-74.312"/>
+<text text-anchor="middle" x="498.1964" y="-95.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
+</g>
+<!-- c_text_provenance&#45;&gt;c_referential_continuity -->
+<g id="edge17" class="edge">
+<title>c_text_provenance&#45;&gt;c_referential_continuity</title>
+<path fill="none" stroke="#7b909f" d="M459.2098,-146.9975C483.4344,-156.422 511.425,-167.3117 535.7079,-176.759"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="535.0404,-179.1281 542.4524,-179.3829 536.8171,-174.5615 535.0404,-179.1281"/>
+<text text-anchor="middle" x="498.1964" y="-173.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
+</g>
+</g>
+</svg>
+
