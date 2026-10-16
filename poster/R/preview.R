@@ -3,12 +3,13 @@
 #
 # Run from the poster directory after `quarto render poster.qmd`:
 #   Rscript R/preview.R [dpi]
-# Writes poster-preview.png (72 dpi by default: 1,684 x 2,384 pixels). Stops if
-# the PDF has more than one page, since an overflowing poster is a layout error
-# and not something a preview should hide.
+# Writes img/poster-preview.png (72 dpi by default: 1,684 x 2,384 pixels). Stops
+# if the PDF has more than one page, since an overflowing poster is a layout
+# error and not something a preview should hide.
 
 args <- commandArgs(trailingOnly = TRUE)
 dpi <- if (length(args)) as.numeric(args[1]) else 72
+out <- "img/poster-preview.png"
 
 info <- pdftools::pdf_info("poster.pdf")
 if (info$pages != 1) stop("poster.pdf has ", info$pages, " pages; the layout overflows",
@@ -19,5 +20,5 @@ if (!identical(mm, c(594, 841))) stop("poster.pdf is ", mm[1], " x ", mm[2], " m
                                       call. = FALSE)
 
 bitmap <- pdftools::pdf_render_page("poster.pdf", page = 1, dpi = dpi)
-png::writePNG(bitmap, "poster-preview.png")
-cat("wrote poster-preview.png at", dpi, "dpi\n")
+png::writePNG(bitmap, out)
+cat("wrote", out, "at", dpi, "dpi\n")

@@ -25,17 +25,18 @@ message: |
   Research has asked whether screens help or hurt children's reading.\
   We ask how the language of on-screen stories shapes reading too.
 lang: en-GB
-# The works the poster cites, in the protocol's APA 7 style. The sheet prints
-# author-date citations only; R/references.R writes the full list into
-# README.md, which the QR code opens.
-bibliography: references.bib
-csl: ../preregistration/apa7.csl
+# The works the poster cites, in the protocol's APA 7 style (layout/apa7.csl is
+# a copy of ../preregistration/apa7.csl). The sheet prints author-date
+# citations only; R/references.R writes the full list into README.md, which the
+# QR code opens.
+bibliography: data/references.bib
+csl: layout/apa7.csl
 suppress-bibliography: true
 link-citations: false
 # cite-links.lua formats the citations itself and links each to its work's DOI.
 filters:
-  - typst-blocks.lua
-  - path: cite-links.lua
+  - layout/typst-blocks.lua
+  - path: layout/cite-links.lua
     at: post-render
 format:
   typst:
@@ -44,8 +45,8 @@ format:
     citeproc: true
     keep-typ: false
     template-partials:
-      - typst-template.typ
-      - typst-show.typ
+      - layout/typst-template.typ
+      - layout/typst-show.typ
 execute:
   echo: false
   warning: false
@@ -59,7 +60,7 @@ source("R/figures.R")
 source("R/references.R")
 
 # The body is two columns of (594 - 2 x 18 - 20) / 2 = 269 mm, set by the page
-# margins and column gutter in typst-template.typ. Figures are drawn at exactly
+# margins and column gutter in layout/typst-template.typ. Figures are drawn at exactly
 # that width, so their type prints at the size it was set.
 COL_MM <- 269
 dims <- list(
