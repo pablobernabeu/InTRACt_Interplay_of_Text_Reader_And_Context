@@ -27,6 +27,28 @@
 #let page-margin-x = 18mm
 #let col-gutter    = 20mm
 
+// Print bleed. Every background that runs to the sheet's edge runs 3 mm past
+// it. On the A1 page, poster.pdf, that overhang lies off the page and is not
+// shown. The print file, poster-print.pdf (rendered with -M bleed:true), adds a
+// 10 mm margin round the trim, so the overhang becomes the bleed and crop marks
+// sit just beyond it.
+#let bleed = 3mm
+#let slug  = 10mm
+
+#let crop-marks(off) = {
+  let len = off - bleed - 1mm
+  let s = 0.3pt + black
+  for (x, sx) in ((off, -1), (off + 594mm, 1)) {
+    for (y, sy) in ((off, -1), (off + 841mm, 1)) {
+      // On the trim lines, outward from each corner, clear of the bleed.
+      place(top + left, dx: if sx < 0 { x - bleed - len } else { x + bleed }, dy: y,
+        line(length: len, stroke: s))
+      place(top + left, dx: x, dy: if sy < 0 { y - bleed - len } else { y + bleed },
+        line(angle: 90deg, length: len, stroke: s))
+    }
+  }
+}
+
 // A short line above a heading names the part of the argument it belongs to.
 #let kicker(body, colour: green-ink) = text(size: 23pt, weight: "bold", fill: colour,
   tracking: 0.08em)[#upper(body)]
@@ -70,7 +92,7 @@
 // at the left and its content beside it. A note under the title says where the
 // study stands.
 #let band(title, body, note: none, fill: tint) = block(width: 100%, fill: fill,
-  outset: (x: page-margin-x), inset: (y: 5mm), above: 6mm, below: 0mm)[
+  outset: (x: page-margin-x + bleed), inset: (y: 5mm), above: 6mm, below: 0mm)[
   #grid(columns: (auto, 1fr), column-gutter: 12mm, align: (left + horizon, left + horizon),
     // A stack, not two paragraphs, so the note sits close under the title.
     stack(spacing: 5.5mm,
@@ -141,11 +163,14 @@
   authors: (),
   logo: none,
   message: none,
+  print-bleed: false,
   doc,
 ) = {
   set document(title: title, author: authors)
-  set page(width: 594mm, height: 841mm, numbering: none,
-    margin: (x: page-margin-x, top: 0mm, bottom: 12mm))
+  let off = if print-bleed { slug } else { 0mm }
+  set page(width: 594mm + 2 * off, height: 841mm + 2 * off, numbering: none,
+    margin: (x: page-margin-x + off, top: off, bottom: 12mm + off),
+    foreground: if print-bleed { crop-marks(off) })
   // Ragged lines are broken for the paragraph as a whole, as justified text is,
   // and a last line of a single word is made costly enough that a paragraph
   // rewraps before it leaves a word stranded.
@@ -172,8 +197,8 @@
   // authors at the left, and the department's logo at the right, which stands
   // in for a printed affiliation. The logo's navy is the band's own, and a thin
   // rule in the department's green closes the band.
-  block(width: 100%, fill: ox-blue, outset: (x: page-margin-x), inset: (top: 13mm, bottom: 12mm),
-    stroke: (bottom: 2mm + edu-green), below: 0mm)[
+  block(width: 100%, fill: ox-blue, outset: (x: page-margin-x + bleed, top: bleed),
+    inset: (top: 13mm, bottom: 12mm), stroke: (bottom: 2mm + edu-green), below: 0mm)[
     #grid(columns: (1fr, auto), column-gutter: 14mm, align: (left + horizon, right + horizon),
       [
         // Not upper-cased: the study's name carries its own capitals (InTRACt).
@@ -193,7 +218,7 @@
   ]
 
   // The message, in a band only as deep as its two lines.
-  block(width: 100%, fill: tint, outset: (x: page-margin-x), inset: (y: 6mm), below: 7mm)[
+  block(width: 100%, fill: tint, outset: (x: page-margin-x + bleed), inset: (y: 6mm), below: 7mm)[
     #set par(leading: 0.34em)
     #text(size: 46pt, weight: "semibold", fill: ox-blue)[#message]
   ]
