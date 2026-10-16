@@ -26,9 +26,10 @@ its first month, the feature logged 419,700 story sessions in 18 languages (Ratn
 The study tests whether text features that slow or speed reading in the laboratory do the same
 in everyday app use. The outcome is the time a child spends per word over a whole story,
 analysed on a log scale. The study is a Registered Report, in which the protocol is peer-reviewed
-before any outcome is seen. The logs are released only after in-principle acceptance, the text
-measures are fixed blind to the outcomes, and every decision rule is set in advance. Stage 1 is
-in preparation.
+before the logs are analysed. The only reading times seen so far are those of a 35-row structural
+sample, which the protocol discloses and which can test no hypothesis. The logs are released only
+after in-principle acceptance, the text measures are fixed blind to the outcomes, and every
+decision rule is set in advance. Stage 1 is in preparation.
 
 ### Hypotheses
 
@@ -54,9 +55,18 @@ readings of the same stories add less than new stories do. In the protocol's des
 simulated with the pilotr package (Bernabeu, 2026a), a main effect of 0.10 SD needs 630 to 740
 distinct stories for a 90% chance of a clear verdict. A verdict is clear when its 95% interval
 lies wholly outside ±0.05 SD. Under the registered Bayes-factor rule, which also asks for an
-interval Bayes factor of at least 10, it needs about 930. The simulation assumes one reading per child, 9% of the variance between
-stories and 20% between children, equal age bands and independent text measures, and it
-includes no language terms, covariates or priors.
+interval Bayes factor of at least 10, it needs about 930. The simulation assumes one reading
+per child, 9% of the variance between stories and 20% between children, equal age bands and
+independent text measures, and it includes no language terms, covariates or priors.
+
+The 9% between stories is an assumption, set before any reading time could be linked to a
+story. It sits just below the 10–13% between passages that published decompositions of
+children's reading rates report
+([Poncy et al., 2005](https://doi.org/10.1177/073428290502300403);
+[Francis et al., 2018](https://doi.org/10.1177/0741932518772904)). Re-run with 5% to 20% between
+stories, a main effect needs about 490 to 1,240 distinct stories, while the interactions need
+about 1,140 to 1,500 and change little, because comparing readers on the same stories cancels
+the story effect. The protocol's supplement (Section S5) gives the full table.
 
 ## What the evidence shows
 
