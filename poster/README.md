@@ -54,7 +54,7 @@ so the printed sheet is unchanged. The QR code is a link to the folder it encode
 
 Each figure is drawn at the width it is printed (269 mm, one column), so a point size in R is a
 point size on paper. Before a figure is written, `depictr::check_figure()` audits it at that
-width. It checks the smallest text (a 22 pt floor), colour separability with and without
+width. It checks the smallest text (a 23 pt floor), colour separability with and without
 simulated colour-vision deficiency, greyscale separability, contrast, and any distinction that
 colour alone carries. A figure that fails is not written, and the render stops. Nothing on the
 sheet is set below 22 pt. Ragged lines are broken for each paragraph as a whole, and a last line
