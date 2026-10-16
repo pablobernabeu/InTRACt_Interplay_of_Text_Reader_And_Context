@@ -12,7 +12,7 @@ Education, University of Oxford. Contact:
 <a href="poster.pdf"><img src="img/poster-preview.png" alt="Preview of the poster" width="560"></a>
 
 [Poster (PDF, A1)](poster.pdf) · [Print file with 3 mm bleed](poster-print.pdf) ·
-[Study protocol](../preregistration/) · [References](#references)
+[Study protocol](https://github.com/pablobernabeu/InTRACt_Interplay_of_Text_Reader_And_Context/tree/wip/bib-2026-07-21/preregistration) · [References](#references)
 
 ## The study in brief
 
@@ -64,9 +64,11 @@ story. It sits just below the 10–13% between passages that published decomposi
 children's reading rates report
 ([Poncy et al., 2005](https://doi.org/10.1177/073428290502300403);
 [Francis et al., 2018](https://doi.org/10.1177/0741932518772904)). Re-run with 5% to 20% between
-stories, a main effect needs about 490 to 1,240 distinct stories, while the interactions need
-about 1,140 to 1,500 and change little, because comparing readers on the same stories cancels
-the story effect. The protocol's supplement (Section S5) gives the full table.
+stories, a main effect needs about 490 to 1,240 distinct stories. The interactions need about
+1,140 to 1,500 and change little, because comparing readers on the same stories cancels the
+story effect. Section S5 of the protocol's
+[supplement](https://github.com/pablobernabeu/InTRACt_Interplay_of_Text_Reader_And_Context/blob/wip/bib-2026-07-21/preregistration/supplementary.pdf)
+gives the full table.
 
 ## What the evidence shows
 
@@ -128,12 +130,15 @@ the counts by year.
 ## Data and materials
 
 Everything on the poster is computed from the files in this folder, and nothing on it comes from
-the app's logs or its story texts.
+the app's logs or its story texts. The protocol, its supplement and its design analysis are
+developed on the branch [`wip/bib-2026-07-21`](https://github.com/pablobernabeu/InTRACt_Interplay_of_Text_Reader_And_Context/tree/wip/bib-2026-07-21/preregistration). The
+`preregistration/` folder on `main` holds an earlier draft, from June 2026.
 
 - `data/evidence.csv`: the evidence map, one row per finding, with its source and location.
 - `data/scopus_*`: the Scopus counts and the full search record, from 14 October 2026.
 - `data/design_analysis/`: the protocol's design-analysis outputs behind the precision figure,
-  copied on 15 October 2026 from `../preregistration/design_analysis/`.
+  copied on 15 October 2026 from its [`design_analysis/`](https://github.com/pablobernabeu/InTRACt_Interplay_of_Text_Reader_And_Context/tree/wip/bib-2026-07-21/preregistration/design_analysis)
+  folder.
 - `data/references.bib`: the works the poster cites, with fields checked against Crossref and CRAN.
 
 ## References
@@ -174,8 +179,10 @@ Wood, S. G., Moxley, J. H., Tighe, E. L., & Wagner, R. K. (2018). Does use of te
 <summary>Software, build steps and design notes</summary>
 
 The poster is written in Quarto with an R chunk that draws every figure, and Typst lays out the
-sheet. From this folder, render the print file first, because Quarto writes `poster.pdf` and
-then renames it:
+sheet. The source, `poster.qmd`, sits beside the two PDFs. `R/` holds the scripts, `data/` every
+input including the bibliography, `layout/` the Typst template, the two Lua filters and the
+citation style, `img/` the logos and the preview, and `fonts/` the typeface. From this folder,
+render the print file first, because Quarto writes `poster.pdf` and then renames it:
 
 ```bash
 quarto render poster.qmd -M bleed:true --output poster-print.pdf
@@ -184,13 +191,15 @@ Rscript R/preview.R                                 # img/poster-preview.png, 72
 Rscript --no-save --no-restore R/scopus_counts.R   # only to refresh the Scopus counts
 ```
 
-Rendering needs R (4.6.1 here) with ggplot2, patchwork, svglite, systemfonts, ragg, qrcode,
-scales, jsonlite, rmarkdown and depictr, and Quarto (1.10.19 here, which bundles Typst 0.15.1
-and Pandoc 3.10). Set `QUARTO_R` to R's `bin` folder if Quarto cannot find R. The render makes no
-network request, and everything it reads is in this folder, including `layout/apa7.csl`, a copy of
-the protocol's citation style. `R/preview.R` needs pdftools and png, and it stops on a PDF that is
-not a single A1 page. `R/scopus_counts.R` needs scopusflow 0.4.0 and a Scopus API key in the
-`SCOPUS_API_KEY` environment variable.
+Rendering needs R and Quarto. On 16 October 2026, the committed PDFs were reproduced pixel for
+pixel with R 4.6.1, ggplot2 4.0.3, patchwork 1.3.2, svglite 2.2.2, systemfonts 1.3.2, ragg 1.5.2,
+qrcode 0.3.0, scales 1.4.0, jsonlite 2.0.0, rmarkdown 2.31, knitr 1.51 and depictr 0.3.0, and
+Quarto 1.10.19, which bundles Typst 0.15.1 and Pandoc 3.10. There is no lockfile, so other
+versions may render differently. Set `QUARTO_R` to R's `bin` folder if Quarto cannot find R.
+The render makes no network request, and everything it reads is in this folder, including
+`layout/apa7.csl`, a copy of the protocol's citation style. `R/preview.R` needs pdftools (3.9.0
+here) and png (0.1.9), and it stops on a PDF that is not a single A1 page. `R/scopus_counts.R`
+needs scopusflow 0.4.0 and a Scopus API key in the `SCOPUS_API_KEY` environment variable.
 
 `R/figures.R` draws each figure at the width it is printed, 269 mm, so a point size in R is a
 point size on paper. `depictr::check_figure()` audits each figure at that width before it is
