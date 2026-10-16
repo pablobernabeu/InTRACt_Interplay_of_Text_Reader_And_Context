@@ -2,8 +2,8 @@
 // Quarto inserts this file before the body (template-partials in poster.qmd).
 //
 // The sheet is A1 portrait, 594 x 841 mm. Sizes are set for reading at one to
-// two metres: body 26 pt, section heads 36 pt, the message 46 pt, and nothing
-// smaller than 22 pt anywhere on the sheet.
+// two metres: body 27 pt, captions 23 pt, section heads 36 pt, the message
+// 46 pt, and nothing smaller than 22 pt anywhere on the sheet.
 
 // The theme takes its two colours from the department's lockup: Oxford blue,
 // and the green of the department's tree. That green clears only 2.8:1 against
@@ -34,12 +34,12 @@
 // One sentence the reader should leave with, set apart from the running text.
 #let takeaway(body) = block(width: 100%, inset: (left: 7mm, y: 3mm), above: 7mm, below: 7mm,
   stroke: (left: 2.4mm + edu-green))[
-  #set text(size: 27pt, weight: "semibold", fill: ink)
+  #set text(size: 28pt, weight: "semibold", fill: ink)
   #body
 ]
 
 #let caption(body) = block(above: 4mm, below: 6mm)[
-  #set text(size: 22pt, fill: ink-soft)
+  #set text(size: 23pt, fill: ink-soft)
   #set par(leading: 0.42em)
   #body
 ]
@@ -67,13 +67,18 @@
 }
 
 // A band across the full width of the sheet, bled to its edges, with its title
-// at the left and its content beside it.
-#let band(title, body, fill: tint) = block(width: 100%, fill: fill,
+// at the left and its content beside it. A note under the title says where the
+// study stands.
+#let band(title, body, note: none, fill: tint) = block(width: 100%, fill: fill,
   outset: (x: page-margin-x), inset: (y: 5mm), above: 6mm, below: 0mm)[
   #grid(columns: (auto, 1fr), column-gutter: 12mm, align: (left + horizon, left + horizon),
     block(width: 118mm)[
       #set par(leading: 0.3em)
       #text(size: 36pt, weight: "semibold", fill: ox-blue)[#title]
+      #if note != none [
+        #v(2.5mm)
+        #text(size: 23pt, weight: "semibold", fill: green-ink)[#note]
+      ]
     ],
     body)
 ]
@@ -148,7 +153,7 @@
   // Ragged lines are broken for the paragraph as a whole, as justified text is,
   // and a last line of a single word is made costly enough that a paragraph
   // rewraps before it leaves a word stranded.
-  set text(font: face, size: 26pt, fill: ink, lang: "en", region: "GB", hyphenate: false,
+  set text(font: face, size: 27pt, fill: ink, lang: "en", region: "GB", hyphenate: false,
     costs: (runt: 20000%))
   set par(justify: false, linebreaks: "optimized", leading: 0.46em, spacing: 0.85em)
   set image(width: 100%)

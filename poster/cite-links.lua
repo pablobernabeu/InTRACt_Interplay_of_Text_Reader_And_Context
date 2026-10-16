@@ -5,7 +5,15 @@
 -- Quarto's own citeproc pass, which then changes nothing, and the bibliography
 -- stays suppressed. The link takes no style of its own (the template sets
 -- none), so a citation reads as the text around it on paper and opens its
--- source in the PDF.
+-- source in the PDF. Each citation is also set in a Typst box, which a line
+-- cannot break, so that no citation is split across two lines.
+
+local function unbroken(inlines)
+  local out = pandoc.List({ pandoc.RawInline("typst", "#box[") })
+  out:extend(inlines)
+  out:insert(pandoc.RawInline("typst", "]"))
+  return out
+end
 
 local function target(ref)
   local doi = ref.DOI or ref.doi
@@ -27,9 +35,9 @@ function Pandoc(doc)
       -- formatted string, so it keeps its text unlinked; the poster has none.
       if #cite.citations == 1 then
         local url = url_of[cite.citations[1].id]
-        if url then return pandoc.Link(cite.content, url) end
+        if url then return unbroken({ pandoc.Link(cite.content, url) }) end
       end
-      return cite.content
+      return unbroken(cite.content)
     end,
   })
 end
