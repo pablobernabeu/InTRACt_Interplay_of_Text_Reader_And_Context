@@ -77,9 +77,9 @@ text use the same files on any machine.
 | Element | Source |
 |---|---|
 | Evidence map | `data/evidence.csv`. Each row holds a pooled effect from a published meta-analysis, or a finding that cannot share the g/d axis (a review's conclusion, or a correlation), read from the paper's full text in October 2026. The `location` column names the table or page of each value and records where a paper's text and tables disagree. |
-| Scopus figure and the '0 of 1,536' box | `data/scopus_*.csv`, written by `R/scopus_counts.R` with scopusflow 0.4.0 on 14 October 2026. `data/scopus_search_record.md` holds every query verbatim, the limits and the totals, which are the PRISMA-S items a count-only search can supply. |
+| Scopus figure and the count of records under both green topics | `data/scopus_*.csv`, written by `R/scopus_counts.R` with scopusflow 0.4.0 on 14 October 2026. `data/scopus_search_record.md` holds every query verbatim, the limits and the totals, which are the PRISMA-S items a count-only search can supply. |
 | Precision figure, its numbers and its assumptions | `data/design_analysis/`: `precision_sweep.csv`, `minimum_texts.csv` and `minimum_texts_bf10.csv`, copied on 15 October 2026 from the protocol's `../preregistration/design_analysis/`, so that the poster builds on a branch that lacks the protocol's latest files. Copy them again if the design analysis is re-run. The assumptions are those of the deposited specification (`tier1_developmental.json`) and of `run_design_analysis.R`, as the protocol's Design and precision analysis describes them. |
-| Hypotheses diagram | The protocol's six confirmatory hypotheses and their predicted signs, in `../preregistration/`. |
+| Hypotheses figure | The protocol's six confirmatory hypotheses and their predicted directions, in `../preregistration/`, one row each in their registered order. |
 | Logos | `img/`: the Department of Education and University of Oxford lockup, unaltered, in the header, where it stands in for a printed affiliation. In the footer, the LiFT project's logo, and the funder's Kinder and Ferrero logos stacked at one width, each trimmed to its artwork. |
 | References | `references.bib`, which holds only the works the poster cites. Most entries are copied from the protocol's `InTRACt references.bib`, whose fields were checked against Crossref. The rest are four meta-analyses the protocol does not cite and the CRAN releases of pilotr and scopusflow, checked against Crossref and CRAN. |
 
@@ -88,10 +88,11 @@ text use the same files on any machine.
 The evidence map shows where screens and apps cost children comprehension and where they help.
 It also shows the conditions that decide which way an effect goes: the genre of the text, an
 adult reading along, an add-on that serves the story, and a researcher-made or a standardised
-test. Each effect is
-coloured by its direction, and an interval that includes zero is grey. Correlational evidence
-on everyday screen time sits in a group of its own, because a correlation cannot share an axis
-with an experimental effect.
+test. Each effect is coloured by its direction, and an interval that includes zero is grey.
+Correlational evidence on everyday screen time sits in a group of its own, because a
+correlation cannot share an axis with an experimental effect. The effects are Hedges' g or
+Cohen's d. To keep the sheet light, it names each source and its children's ages but not how
+many comparisons or studies each effect pools; `data/evidence.csv` gives those counts.
 
 The rows come from a search for meta-analyses and systematic reviews of digital technology and
 children's reading, run in October 2026. Where several syntheses overlap, the map keeps the most
@@ -100,12 +101,24 @@ two or three studies or could not be checked against the published paper. The se
 meta-analysis of generative AI and children's reading, language or literacy. The closest ones
 pool mostly university students, so the poster states the gap and plots nothing for AI.
 
-The Scopus figures count the records that match a search, false positives included, and the
-'0 of 1,536' box counts the records that match two searches at once. Neither is a count of
-screened studies. The precision curves are the protocol's own simulation, and the caption also
-gives the requirement under the registered Bayes-factor rule, so that the poster agrees with
-Table 1 of the protocol. Nothing on the sheet is computed from the app's logs or from its story
-texts.
+The Scopus figure counts the records that match a search, false positives included, and its
+caption counts the records that match two searches at once, those on the language of the text
+and on log data. Neither is a count of screened studies.
+
+The protocol's outcome is reading time per word, on a log scale, so a feature that slows
+reading has a positive coefficient there. The hypotheses figure states each prediction on the
+reading-speed scale instead, as 'slower' or 'faster', because a reader takes a plus sign to
+mean faster. Log words per second is exactly the negative of log seconds per word, so each
+prediction keeps its registered meaning. Hypothesis 5 concerns the child's difficulty rating,
+on which the same features act the other way round, and its row says so in words.
+
+The precision curves are the protocol's own simulation. A verdict counts as decisive when the
+95% interval lies wholly outside ±0.05 standard deviations, and the caption also gives the
+requirement under the registered Bayes-factor rule, so that the poster agrees with Table 1 of
+the protocol. The simulation assumes one reading per child, 9% of the variance between stories
+and 20% between children, equal age bands and independent text measures, and it includes no
+language terms, covariates or priors. Nothing on the sheet is computed from the app's logs or
+from its story texts.
 
 ## References
 

@@ -64,9 +64,9 @@ source("R/references.R")
 COL_MM <- 269
 dims <- list(
   evidence  = c(COL_MM, evidence_height_mm()),
-  scopus    = c(COL_MM, 82),
-  model     = c(COL_MM, 142),
-  precision = c(COL_MM, 136)
+  scopus    = c(COL_MM, 87),
+  model     = c(COL_MM, model_height_mm()),
+  precision = c(COL_MM, 162)
 )
 
 # The QR code opens this folder on the main branch, where README.md shows the
@@ -82,7 +82,8 @@ write_references(bib = unlist(rmarkdown::metadata$bibliography),
 gap <- scopus_gap()
 fmt <- function(x) format(x, big.mark = ",", trim = TRUE)
 n_digital <- fmt(gap[["Digital reading"]])
-n_both    <- fmt(gap[["Digital reading × Language of the text × Log data"]])
+both      <- gap[["Digital reading × Language of the text × Log data"]]
+n_both    <- if (both == 0) "None" else fmt(both)
 req <- precision_requirements()
 ```
 
@@ -101,7 +102,7 @@ In 2025, more than one in five UK 8- to 18-year-olds read fiction on a screen at
 ```
 
 ::: {.caption}
-Italic rows give findings without a pooled g or d. In the other rows, k is the number of comparisons pooled.
+Italic rows give findings that cannot be placed on this scale.
 :::
 
 ::: {.takeaway}
@@ -117,31 +118,25 @@ Research on children's digital reading has studied devices and add-ons far more 
 ```
 
 ::: {.caption}
-Scopus records matching each search, counted on 14 October 2026 with the scopusflow package [@bernabeuScopusflowCRAN2026]. AI's share doubled, yet we found no meta-analysis of generative AI and children's reading.
+Scopus records, counted with the scopusflow package [@bernabeuScopusflowCRAN2026]. `r n_both` of the `r n_digital` records fell under both green topics, and we found no meta-analysis of generative AI and children's reading.
 :::
 
 ```{=typst}
 ],
 [
 #kicker[What we will test]
-#bignum[`r n_both`][of `r n_digital` records on children's digital reading matched both our #box[language-of-the-text] and #box[log-data] searches. This study brings the two together.]
+#question[Using _Let's Story_ reading logs in 18 languages, we test whether text features that slow or speed reading in the laboratory do the same in everyday app use.]
 ```
 
 ## *Let's Story*: AI stories, logged at scale
 
-In this app feature, a child picks a hero, companion, setting, plot and theme. A generative model then writes the story [@ratnerDidRobotWrite2025]. In its first month, *Let's Story* logged 419,700 sessions in 18 languages [@ratnerProductiveStruggleChildrens2026].
+In this app feature, a child picks a hero, companion, setting, plot and theme. A generative model then writes the story [@ratnerDidRobotWrite2025]. In its first month, *Let's Story* logged 419,700 sessions [@ratnerProductiveStruggleChildrens2026].
 
-## Six confirmatory hypotheses
-
-We test whether text features that slow or speed reading in the laboratory do the same in the app.
+## Six registered hypotheses
 
 ```{=typst}
 #image("figures/model.svg")
 ```
-
-::: {.caption}
-A plus sign predicts slower reading, a minus sign faster. H2 and H3 are `#box[two-sided]`{=typst} because rival accounts predict opposite signs. The analysis covers two age bands (7–8 and 9+) and ten of the app's languages.
-:::
 
 ## Precision comes from stories, not sessions
 
@@ -150,7 +145,7 @@ A plus sign predicts slower reading, a minus sign faster. H2 and H3 are `#box[tw
 ```
 
 ::: {.caption}
-Chance that a 0.10 SD effect is judged non-negligible (95% interval outside ±0.05 SD), simulated with the pilotr package [@bernabeuPilotrCRAN2026]. A main effect needs `r req$main_lo`–`r req$main_hi` distinct stories, or about `r req$bf_main` under the registered `#box[Bayes-factor]`{=typst} rule. Assumed: one reading per child, 9% of the variance between stories and 20% between children, equal age bands, independent text measures, and no language terms, covariates or priors.
+Chance of showing that a small effect (0.10 SD) is more than negligible, simulated with the pilotr package [@bernabeuPilotrCRAN2026]. A main effect needs `r req$main_lo`–`r req$main_hi` distinct stories, or about `r req$bf_main` under the stricter `#box[Bayes-factor]`{=typst} rule.
 :::
 
 ::: {.takeaway}
