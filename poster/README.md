@@ -188,15 +188,21 @@ Rscript R/preview.R                                 # img/poster-preview.png, 72
 Rscript --no-save --no-restore R/scopus_counts.R   # only to refresh the Scopus counts
 ```
 
-Rendering needs R and Quarto. On 16 October 2026, the committed PDFs were reproduced pixel for
-pixel with R 4.6.1, ggplot2 4.0.3, patchwork 1.3.2, svglite 2.2.2, systemfonts 1.3.2, ragg 1.5.2,
-qrcode 0.3.0, scales 1.4.0, jsonlite 2.0.0, rmarkdown 2.31, knitr 1.51 and depictr 0.3.0, and
-Quarto 1.10.19, which bundles Typst 0.15.1 and Pandoc 3.10. There is no lockfile, so other
-versions may render differently. Set `QUARTO_R` to R's `bin` folder if Quarto cannot find R.
-The render makes no network request, and everything it reads is in this folder, including
-`layout/apa7.csl`, a copy of the protocol's citation style. `R/preview.R` needs pdftools (3.9.0
-here) and png (0.1.9), and it stops on a PDF that is not a single A1 page. `R/scopus_counts.R`
-needs scopusflow 0.4.0 and a Scopus API key in the `SCOPUS_API_KEY` environment variable.
+Rendering needs R 4.6.1 and Quarto 1.10.19, which bundles Typst 0.15.1 and Pandoc 3.10.
+`renv.lock` pins every R package the poster uses, with its CRAN source. To build that
+environment in a separate library, leaving your own untouched, run from this folder:
+
+```bash
+Rscript -e 'renv::restore(lockfile = "renv.lock", library = "renv-library", prompt = FALSE)'
+R_LIBS=renv-library quarto render poster.qmd
+```
+
+On 16 October 2026, a library restored this way from `renv.lock` alone reproduced both PDFs
+pixel for pixel, the preview byte for byte and this page's generated sections unchanged. Set
+`QUARTO_R` to R's `bin` folder if Quarto cannot find R. The render makes no network request,
+and everything it reads is in this folder, including `layout/apa7.csl`, a copy of the protocol's
+citation style. `R/preview.R` stops on a PDF that is not a single A1 page. `R/scopus_counts.R`
+needs a Scopus API key in the `SCOPUS_API_KEY` environment variable.
 
 `R/figures.R` draws each figure at the width it is printed, 269 mm, so a point size in R is a
 point size on paper. `depictr::check_figure()` audits each figure at that width before it is

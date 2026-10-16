@@ -8,7 +8,7 @@
 
 How does the language of a story relate to how quickly a child reads it? And does that relation change with the child's age, or when the app reads the story aloud?
 
-InTRACt is a preregistered study of the behavioural logs of children aged 7 and older who read AI-generated stories in *Let's Story*, a feature of the *Applaydu* app developed by Gameloft and Ferrero International. Children use it in ten or more languages. The study combines computational measures of each story's language with Bayesian models of reading time, to test how lexical difficulty, grammatical load and referential continuity relate to children's reading pace outside the laboratory.
+InTRACt is a preregistered study of the behavioural logs of children aged 7 and older who read AI-generated stories in *Let's Story*, a feature of the *Applaydu* app developed by Gameloft and Ferrero International. Children use it in any of 19 languages. The study combines computational measures of each story's language with Bayesian models of reading time, to test how lexical difficulty, grammatical load and referential continuity relate to children's reading pace outside the laboratory.
 
 The project is hosted at the **[Department of Education, University of Oxford](https://www.education.ox.ac.uk/)**, and is embedded within the **[Learning in Families through Technology (LIFT)](https://www.education.ox.ac.uk/project/lift-learning-in-families-through-technology/)** project, which investigates how digital technologies shape learning within families. It is funded by **Kinder** and the **John Fell Fund** (University of Oxford).
 
@@ -57,10 +57,22 @@ All confirmatory analyses will use Bayesian crossed-effects models, in which rea
 ## Repository contents
 
 - `preregistration/`: the protocol, its supplement and cover letter, the theory object, the design analysis, the literature sizing and the count script supplied to the data controller. Its README explains how each reported number is produced and checked.
+- `poster/`: a conference poster on the study, with the code and data behind each of its figures.
 - `mindmap/`: the framework figure above and the Node script that renders it.
-- `private_InTRACt_literature_review/`: a link to the separate, private repository that holds the systematic review's extraction workflow, which a public clone cannot open. Within that repository, `batches/corrections.csv` is the single source of truth for corrections.
+
+The systematic review's extraction workflow lives in a separate, private repository, which this one does not link. Within it, `batches/corrections.csv` is the single source of truth for corrections.
 
 `ISSUES.md` records the open findings of the code audits, and `CHANGELOG.md` records changes to the code and documentation.
+
+## Reproducing the analyses
+
+`preregistration/` and `poster/` each pin their R packages, for R 4.6.1, in an `renv.lock` that records each package's version and the repository it comes from. To build either environment in a separate library, leaving your own untouched, run this from the folder and then run its scripts with `R_LIBS=renv-library`:
+
+```bash
+Rscript -e 'renv::restore(lockfile = "renv.lock", library = "renv-library", prompt = FALSE)'
+```
+
+On 16 October 2026, environments restored this way from the two lockfiles alone reproduced the poster pixel for pixel, and every table, figure and checked number of the protocol that can be rebuilt without re-running its simulations. The count script and its tests use only Python's standard library, and the mindmap's Node packages are pinned in `mindmap/source files/package-lock.json`.
 
 ---
 

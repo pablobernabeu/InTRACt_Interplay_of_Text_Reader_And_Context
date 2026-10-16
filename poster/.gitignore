@@ -6,3 +6,6 @@ poster.typ
 # The figures and the evidence map's link positions are rebuilt from data/ on
 # every render, and are embedded in poster.pdf, which is committed.
 figures/
+
+# A library restored from renv.lock, as the README describes.
+renv-library/
