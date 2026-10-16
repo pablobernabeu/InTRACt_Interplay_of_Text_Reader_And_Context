@@ -78,6 +78,7 @@ SHORT_URL <- "tinyurl.com/intract-poster"
 build_figures(dims, POSTER_URL)
 write_references(bib = unlist(rmarkdown::metadata$bibliography),
                  csl = rmarkdown::metadata$csl)
+write_evidence_table()
 
 gap <- scopus_gap()
 fmt <- function(x) format(x, big.mark = ",", trim = TRUE)
