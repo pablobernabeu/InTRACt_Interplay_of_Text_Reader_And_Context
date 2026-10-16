@@ -24,12 +24,15 @@ suppressPackageStartupMessages({
 })
 OUT <- "literature"
 
-# The archived CSV is never modified: the relabelling happens in memory.
+# The archived CSV is never modified: the relabelling happens in memory. The
+# names are the archived queries verbatim, so they stay whole on one line each.
+# nolint start: line_length_linter.
 short_names <- c(
   "(\"AI-generated\" OR \"LLM-generated\" OR \"machine-generated\" OR \"generative AI\")" = "Machine-generated text",
   "(\"reading app\" OR \"storybook app\" OR \"e-book\" OR \"ebook\" OR \"digital storybook\")" = "Reading apps and e-books",
   "(\"text-to-speech\" OR \"read-aloud\" OR \"audio narration\" OR \"reading while listening\")" = "Narration"
 )
+# nolint end
 
 # The package's default palette (viridis) fails depictr's contrast floor on
 # white, so both figures are recoloured with the design-analysis figure's four

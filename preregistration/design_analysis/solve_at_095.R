@@ -13,8 +13,9 @@ library(pilotr)
 OUT   <- "design_analysis"
 CACHE <- file.path(OUT, "sweeps")
 
-read_sweep <- function(key) utils::read.csv(file.path(CACHE, paste0(key, ".csv")),
-                                            stringsAsFactors = FALSE)
+read_sweep <- function(key) {
+  utils::read.csv(file.path(CACHE, paste0(key, ".csv")), stringsAsFactors = FALSE)
+}
 
 solve_one <- function(d, xname, target) {
   d <- d[order(d[[xname]]), ]

@@ -65,18 +65,25 @@ at_share <- function(spec, share) {
   spec
 }
 
-units_by_texts <- function(texts, per_text)
-  lapply(texts, function(k) list(subject = list(n = k * per_text),
-                                 item = list(n = k, per_subject = 1)))
+units_by_texts <- function(texts, per_text) {
+  lapply(texts, function(k) {
+    list(subject = list(n = k * per_text), item = list(n = k, per_subject = 1))
+  })
+}
 
 workers <- local({
   checked <- NULL
   function() {
     if (!is.null(checked)) return(checked)
-    if (WORKERS <= 1) { checked <<- 1L; return(1L) }
-    ok <- tryCatch({ cl <- parallel::makePSOCKcluster(WORKERS)
-                     parallel::stopCluster(cl); TRUE },
-                   error = function(e) FALSE)
+    if (WORKERS <= 1) {
+      checked <<- 1L
+      return(1L)
+    }
+    ok <- tryCatch({
+      cl <- parallel::makePSOCKcluster(WORKERS)
+      parallel::stopCluster(cl)
+      TRUE
+    }, error = function(e) FALSE)
     checked <<- if (ok) WORKERS else 1L
     checked
   }
@@ -161,7 +168,8 @@ for (d in sweeps) {
         text_share = e$text_share[1], model = e$model[1], param = prm, target = tg,
         criterion = c("interval", "bf10"),
         value = c(sim[["value"]], bf[["value"]]), lo = c(sim[["lo"]], NA),
-        hi = c(sim[["hi"]], NA), stringsAsFactors = FALSE)
+        hi = c(sim[["hi"]], NA), stringsAsFactors = FALSE
+      )
     }
   }
 }
@@ -173,10 +181,11 @@ msg("wrote ", file.path(OUT, "variance_sensitivity.csv"))
 
 writeLines("")
 writeLines("== distinct texts needed at 0.90, by share of variance between texts ==")
-wide <- stats::reshape(tab[tab$target == 0.90, c("model", "param", "criterion", "text_share",
-                                                   "value")],
-                       idvar = c("model", "param", "criterion"), timevar = "text_share",
-                       direction = "wide")
+wide <- stats::reshape(
+  tab[tab$target == 0.90, c("model", "param", "criterion", "text_share", "value")],
+  idvar = c("model", "param", "criterion"), timevar = "text_share",
+  direction = "wide"
+)
 print(wide, row.names = FALSE, digits = 4)
 
 sess <- utils::capture.output(utils::sessionInfo())

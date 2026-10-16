@@ -44,8 +44,9 @@ bf10_threshold <- function(scale, bf = 10) {
        z_star = stats::qnorm(1 - m_star))
 }
 
-read_sweep <- function(key) utils::read.csv(file.path(CACHE, paste0(key, ".csv")),
-                                            stringsAsFactors = FALSE)
+read_sweep <- function(key) {
+  utils::read.csv(file.path(CACHE, paste0(key, ".csv")), stringsAsFactors = FALSE)
+}
 
 # Replace each grid point's simulated decision probability by the analytic probability
 # of clearing z*, keeping the replicate count as the solver's weight.
@@ -75,9 +76,11 @@ solve_one <- function(d, xname, target) {
              prior_scale = prior_scale(d$param[1]), prior_rope = d$prior_rope[1],
              m_star = d$m_star[1], z_star = d$z_star[1],
              value = v_bf, value_at_196 = v_196,
-             note = if (is.na(v_bf)) paste0("not reached within ", min(d[[xname]]),
-                                            " to ", max(d[[xname]]))
-                    else "normal approximation from the archived mean interval widths",
+             note = if (is.na(v_bf)) {
+               paste0("not reached within ", min(d[[xname]]), " to ", max(d[[xname]]))
+             } else {
+               "normal approximation from the archived mean interval widths"
+             },
              stringsAsFactors = FALSE)
 }
 
@@ -112,14 +115,22 @@ utils::write.csv(calib, file.path(CACHE, "bf10_calibration.csv"), row.names = FA
 writeLines("== Bayes factor of 10 under the weakly informative prior: threshold per prior scale ==")
 for (s in c(0.5, 0.25)) {
   thr <- bf10_threshold(s)
+  # The console headings below are kept whole so that they print as one line each.
+  # nolint start: line_length_linter.
   writeLines(sprintf("  scale %.2f: prior mass in region %.4f, prior odds %.2f, posterior mass for BF10 = 10: %.4f, z* = %.3f",
                      s, thr$prior_rope, thr$prior_odds, thr$m_star, thr$z_star))
+  # nolint end
 }
 writeLines("")
+# nolint start: line_length_linter.
 writeLines("== calibration of the normal approximation at the simulation's own criterion (z = 1.96) ==")
-print(calib[, c("sweep", "param", "x", "p_simulated", "p_approx_196", "p_bf10")], row.names = FALSE, digits = 3)
+# nolint end
+print(calib[, c("sweep", "param", "x", "p_simulated", "p_approx_196", "p_bf10")],
+      row.names = FALSE, digits = 3)
 writeLines("")
+# nolint start: line_length_linter.
 writeLines("== swept value needed for a Bayes factor of at least 10 (value), and for the simulation's")
 writeLines("   own criterion under the same approximation (value_at_196), nine times in ten and 95 times in 100 ==")
+# nolint end
 print(solved[, c("param", "model", "axis", "target", "value", "value_at_196", "note")],
       row.names = FALSE, digits = 4)

@@ -68,7 +68,10 @@ CACHE    <- file.path(OUT, "sweeps")
 dir.create(CACHE, showWarnings = FALSE, recursive = TRUE)
 
 # Timestamped progress line on stdout.
-msg <- function(...) { cat(format(Sys.time(), "%H:%M:%S"), " ", ..., "\n", sep = ""); flush.console() }
+msg <- function(...) {
+  cat(format(Sys.time(), "%H:%M:%S"), " ", ..., "\n", sep = "")
+  flush.console()
+}
 
 spec0 <- load_spec(file.path(OUT, "tier1_reported_difficulty.json"))
 for (nm in names(spec0$fixed$coefficients))
@@ -104,11 +107,15 @@ one_rep <- function(spec, seed) {
   # summary() is inside the same handler because clmm reports an ill-conditioned
   # Hessian there and not at fitting time.
   warned <- FALSE
-  on_warning <- function(w) { warned <<- TRUE; invokeRestart("muffleWarning") }
+  on_warning <- function(w) {
+    warned <<- TRUE
+    invokeRestart("muffleWarning")
+  }
   fit <- withCallingHandlers(
     tryCatch(ordinal::clmm(y ~ LexPC + SynPC + CohPC + age + (1 | item),
                            data = d, Hess = TRUE), error = function(e) NULL),
-    warning = on_warning)
+    warning = on_warning
+  )
   if (is.null(fit)) return(NULL)
   co <- withCallingHandlers(tryCatch(summary(fit)$coefficients, error = function(e) NULL),
                             warning = on_warning)
@@ -123,7 +130,8 @@ one_rep <- function(spec, seed) {
     fit <- withCallingHandlers(
       tryCatch(ordinal::clm(y ~ LexPC + SynPC + CohPC + age, data = d),
                error = function(e) NULL),
-      warning = on_warning)
+      warning = on_warning
+    )
     if (is.null(fit)) return(NULL)
     co <- tryCatch(summary(fit)$coefficients, error = function(e) NULL)
     if (is.null(co)) return(NULL)
@@ -140,9 +148,10 @@ one_rep <- function(spec, seed) {
 # uncertainty of p_meaningful.
 wilson <- function(k, n) {
   if (n == 0) return(c(NA, NA))
-  z <- 1.959964; p <- k / n
-  c((p + z^2/(2*n) - z*sqrt(p*(1-p)/n + z^2/(4*n^2))) / (1 + z^2/n),
-    (p + z^2/(2*n) + z*sqrt(p*(1-p)/n + z^2/(4*n^2))) / (1 + z^2/n))
+  z <- 1.959964
+  p <- k / n
+  c((p + z^2 / (2 * n) - z * sqrt(p * (1 - p) / n + z^2 / (4 * n^2))) / (1 + z^2 / n),
+    (p + z^2 / (2 * n) + z * sqrt(p * (1 - p) / n + z^2 / (4 * n^2))) / (1 + z^2 / n))
 }
 
 # The replicate loop is embarrassingly parallel, and every replicate carries its
@@ -152,10 +161,16 @@ wilson <- function(k, n) {
 cl <- NULL
 if (WORKERS > 1) {
   cl <- tryCatch(parallel::makePSOCKcluster(WORKERS), error = function(e) {
-    msg("cluster setup failed, running serially: ", conditionMessage(e)); NULL })
+    msg("cluster setup failed, running serially: ", conditionMessage(e))
+    NULL
+  })
   if (!is.null(cl)) {
-    parallel::clusterEvalQ(cl, { suppressPackageStartupMessages({
-      library(pilotr); library(ordinal) }) })
+    parallel::clusterEvalQ(cl, {
+      suppressPackageStartupMessages({
+        library(pilotr)
+        library(ordinal)
+      })
+    })
     parallel::clusterExport(cl, c("one_rep", "RATED", "MIN_RATERS", "FOCAL"))
   }
 }
@@ -176,8 +191,11 @@ run_point <- function(k) {
   # Consecutive seeds, offset by grid point. Grid points 200 texts apart cannot
   # share a seed below 200,000 replicates.
   seeds <- 900000L + k * 1000L + seq_len(N_SIMS)
-  reps <- if (is.null(cl)) lapply(seeds, function(s) one_rep(spec, s))
-          else parallel::parLapply(cl, seeds, function(s) one_rep(spec, s))
+  reps <- if (is.null(cl)) {
+    lapply(seeds, function(s) one_rep(spec, s))
+  } else {
+    parallel::parLapply(cl, seeds, function(s) one_rep(spec, s))
+  }
   reps <- do.call(rbind, Filter(Negate(is.null), reps))
   if (is.null(reps)) return(NULL)
   rows <- list()
@@ -215,7 +233,8 @@ run_point <- function(k) {
       n_returned = nrow(r), n_boundary = sum(r$boundary), n_bad_se = n_bad,
       n_skipped = N_SIMS - nrow(r) - n_bad,
       n_warned = sum(r$warned), n_sims = N_SIMS,
-      stringsAsFactors = FALSE)
+      stringsAsFactors = FALSE
+    )
   }
   point <- do.call(rbind, rows)
   utils::write.csv(point, cached, row.names = FALSE)

@@ -148,7 +148,8 @@ save_plot(file.path(OUT, "fig_precision.pdf"), fig, width = 11, height = 5,
 narr <- prep(res[res$model == "narration", ], "texts", "narration")
 t2   <- prep(res[res$model == "within_child", ], "children", "within child")
 ps_a <- curve_panel(narr, "Distinct texts (log scale)", "Narration model")
-ps_b <- curve_panel(t2, "Children in tier 2 (log scale)", "Within-child model, five distinct texts each")
+ps_b <- curve_panel(t2, "Children in tier 2 (log scale)",
+                    "Within-child model, five distinct texts each")
 audit_panel(ps_a, "supplement panel a")
 audit_panel(ps_b, "supplement panel b")
 sup <- arrange_plots(ps_a, ps_b, ncol = 2, nrow = 1, guides = "collect") &

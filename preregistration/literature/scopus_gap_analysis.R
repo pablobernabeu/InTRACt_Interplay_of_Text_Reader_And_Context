@@ -34,17 +34,20 @@ concepts <- c(
     'TITLE-ABS-KEY("reading comprehension" OR "text comprehension"',
     'OR "passage comprehension" OR "reading fluency" OR "reading time")',
     'AND TITLE-ABS-KEY(child OR children OR pupils OR "primary school"',
-    'OR "elementary school")'),
+    'OR "elementary school")'
+  ),
   "Computational text features" = paste(
     'TITLE-ABS-KEY("word frequency" OR "lexical diversity" OR "syntactic complexity"',
     'OR "dependency distance" OR "text cohesion" OR "text coherence"',
     'OR readability OR surprisal OR "age of acquisition" OR concreteness)',
     'AND TITLE-ABS-KEY(computational OR corpus OR "natural language processing"',
-    'OR "language model" OR psycholinguistic)'),
+    'OR "language model" OR psycholinguistic)'
+  ),
   "Platform log data" = paste(
     'TITLE-ABS-KEY("log data" OR logfile OR "log file" OR "trace data"',
     'OR "learning analytics" OR "app data" OR "mobile application"',
-    'OR "digital platform" OR telemetry OR "behavioural logs" OR "behavioral logs")')
+    'OR "digital platform" OR telemetry OR "behavioural logs" OR "behavioral logs")'
+  )
 )
 
 abbrev <- c("Children's reading" = "Reading",
@@ -62,7 +65,8 @@ ints <- scopus_intersections(
     c("Computational text features", "Platform log data"),
     c("Children's reading", "Computational text features", "Platform log data")
   ),
-  abbrev = abbrev, years = YEARS, verbose = TRUE)
+  abbrev = abbrev, years = YEARS, verbose = TRUE
+)
 
 print(ints)
 utils::write.csv(as.data.frame(ints), file.path(OUT, "scopus_gap_sizes.csv"), row.names = FALSE)
@@ -79,12 +83,16 @@ cmp <- scopus_compare_topics(
   reference_query = paste('("reading comprehension" OR "text comprehension"',
                           'OR "reading fluency") AND (child OR children',
                           'OR "primary school" OR "elementary school")'),
+  # The comparison queries are kept whole, as scopusflow records them.
+  # nolint start: line_length_linter.
   comparison_terms = c(
     "AI-generated text"        = '("AI-generated" OR "LLM-generated" OR "machine-generated" OR "generative AI")',
     "reading apps"             = '("reading app" OR "storybook app" OR "e-book" OR "ebook" OR "digital storybook")',
     "text-to-speech narration" = '("text-to-speech" OR "read-aloud" OR "audio narration" OR "reading while listening")'
   ),
-  years = YEARS, field = "TITLE-ABS-KEY", verbose = TRUE)
+  # nolint end
+  years = YEARS, field = "TITLE-ABS-KEY", verbose = TRUE
+)
 
 print(cmp)
 utils::write.csv(as.data.frame(cmp), file.path(OUT, "scopus_topic_trends.csv"), row.names = FALSE)
@@ -117,7 +125,8 @@ rec <- c(
   "",
   "| Set | Records | Query |",
   "|---|---:|---|",
-  sprintf("| %s | %s | `%s` |", ints$label, format(ints$n, big.mark = ",", trim = TRUE), ints$query),
+  sprintf("| %s | %s | `%s` |", ints$label, format(ints$n, big.mark = ",", trim = TRUE),
+          ints$query),
   "",
   "## Publication trend, by year",
   "",
@@ -126,8 +135,8 @@ rec <- c(
 )
 
 trend_lab <- ifelse(grepl("AI-generated", cmp$abridged_query), "ai",
-              ifelse(grepl("reading app", cmp$abridged_query), "apps",
-              ifelse(grepl("text-to-speech", cmp$abridged_query), "narr", "ref")))
+                    ifelse(grepl("reading app", cmp$abridged_query), "apps",
+                           ifelse(grepl("text-to-speech", cmp$abridged_query), "narr", "ref")))
 tw <- stats::reshape(data.frame(year = cmp$year, lab = trend_lab, n = cmp$n),
                      idvar = "year", timevar = "lab", direction = "wide")
 names(tw) <- sub("^n[.]", "", names(tw))

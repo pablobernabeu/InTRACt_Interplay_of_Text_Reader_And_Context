@@ -54,6 +54,9 @@ group_titles <- c(reader = "The reader", session = "The session",
 
 # A signed claim carries its sign as a small glyph at the midpoint of its own
 # line, where lines are farthest apart, and the colour repeats the sign.
+# The Graphviz attribute strings below are kept whole, one per line, so that they
+# read as the DOT they write.
+# nolint start: line_length_linter.
 edge_attr <- function(claim, sign_col_plus = "#d55e00", sign_col_minus = "#0072b2") {
   switch(claim,
     increases = sprintf('[color="%s", label="+", fontcolor="%s", fontsize=16, penwidth=1.2]', sign_col_plus, sign_col_plus),
@@ -63,6 +66,7 @@ edge_attr <- function(claim, sign_col_plus = "#d55e00", sign_col_minus = "#0072b
     stop("unknown claim: ", claim)
   )
 }
+# nolint end
 
 node_line <- function(id, label) {
   sprintf('    "%s" [label="%s"]', id, label)
@@ -73,14 +77,19 @@ cluster <- function(key) {
   body <- paste(vapply(ids, function(i) {
     node_line(i, nodes$label_wrapped[nodes$id == i])
   }, character(1)), collapse = "\n")
+  # nolint start: line_length_linter.
   sprintf('  subgraph cluster_%s {\n    label="%s"; labeljust=l; fontsize=13; fontcolor="#5A6B78";\n    color="#C9D4DC"; style=rounded; margin=14;\n%s\n  }',
           key, group_titles[[key]], body)
+  # nolint end
 }
 
 edge_lines <- paste(sprintf('  "%s" -> "%s" %s', edges$from, edges$to,
                             vapply(edges$claim, edge_attr, character(1))),
                     collapse = "\n")
 
+# The DOT template is one string, laid out as the file it writes, so it keeps its
+# own indentation and its single quotes around double-quoted attributes.
+# nolint start: indentation_linter, line_length_linter, quotes_linter.
 styled <- paste0(
 'digraph nomological_net {
   graph [rankdir=TB, bgcolor="white", fontname="Helvetica", fontsize=12,
@@ -97,6 +106,7 @@ styled <- paste0(
 ', edge_lines, '
 }
 ')
+# nolint end
 writeLines(styled, "figures/nomological_net_styled.gv")
 
 # -- the assertion: restyled content identical to emitted content --------------
@@ -114,7 +124,7 @@ s_nodes  <- do.call(rbind, lapply(s_node_m[lengths(s_node_m) == 3],
                                   function(m) data.frame(id = m[2], label = m[3])))
 stopifnot(setequal(s_nodes$id, nodes$id))
 stopifnot(all(unwrap(s_nodes$label[order(s_nodes$id)]) ==
-              unwrap(nodes$label[order(nodes$id)])))
+                unwrap(nodes$label[order(nodes$id)])))
 writeLines("content assertion passed: 12 nodes, 18 edges, wording unchanged")
 
 # -- render --------------------------------------------------------------------

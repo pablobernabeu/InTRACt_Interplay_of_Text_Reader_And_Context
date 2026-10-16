@@ -50,7 +50,8 @@ register_poster_fonts <- function(dir = FONT_DIR) {
   systemfonts::register_font(
     FONT,
     plain = f("Figtree-Regular.ttf"), bold = f("Figtree-Bold.ttf"),
-    italic = f("Figtree-Italic.ttf"), bolditalic = f("Figtree-BoldItalic.ttf"))
+    italic = f("Figtree-Italic.ttf"), bolditalic = f("Figtree-BoldItalic.ttf")
+  )
   invisible(TRUE)
 }
 
@@ -105,7 +106,10 @@ audit <- function(p, width_mm, what) {
   # systemfonts, as svglite does) is opened for the duration of the check.
   tmp <- tempfile(fileext = ".png")
   ragg::agg_png(tmp, width = width_mm, height = 100, units = "mm", res = 72)
-  on.exit({ grDevices::dev.off(); unlink(tmp) }, add = TRUE)
+  on.exit({
+    grDevices::dev.off()
+    unlink(tmp)
+  }, add = TRUE)
   chk <- depictr::check_figure(p, width_cm = width_mm / 10, render_width_cm = width_mm / 10,
                                min_text_pt = MIN_PT)
   bad <- chk[chk$verdict == "fail", , drop = FALSE]
@@ -171,7 +175,9 @@ read_evidence <- function(file = "data/evidence.csv") {
 
 # Rows and group headings take fixed heights in mm, so the figure grows with the
 # file instead of squeezing its rows; poster.qmd asks for this height.
-EV_ROW_MM <- 17.4; EV_HEAD_MM <- 19.5; EV_FRAME_MM <- 40
+EV_ROW_MM <- 17.4
+EV_HEAD_MM <- 19.5
+EV_FRAME_MM <- 40
 evidence_height_mm <- function(file = "data/evidence.csv") {
   ev <- read_evidence(file)
   EV_FRAME_MM + EV_ROW_MM * nrow(ev) + EV_HEAD_MM * length(unique(ev$group))
@@ -190,12 +196,21 @@ fig_evidence <- function(width_mm, height_mm, file = "data/evidence.csv") {
   # A heading keeps its group's rows close below it and the previous group's
   # rows further above, so each heading reads as the start of what follows.
   groups <- unique(ev$group)
-  ROW <- 1.08; HEAD <- ROW * EV_HEAD_MM / EV_ROW_MM
-  LAB_DY <- 0.22; SRC_DY <- -0.27         # a row's label and citation, about its line
-  y <- 0; ev$y <- NA_real_; heads <- data.frame(group = groups, y = NA_real_)
+  ROW <- 1.08
+  HEAD <- ROW * EV_HEAD_MM / EV_ROW_MM
+  # A row's label and citation, about its line.
+  LAB_DY <- 0.22
+  SRC_DY <- -0.27
+  y <- 0
+  ev$y <- NA_real_
+  heads <- data.frame(group = groups, y = NA_real_)
   for (g in groups) {
-    y <- y + HEAD; heads$y[heads$group == g] <- -(y + ROW) + 0.95
-    for (i in which(ev$group == g)) { y <- y + ROW; ev$y[i] <- -y }
+    y <- y + HEAD
+    heads$y[heads$group == g] <- -(y + ROW) + 0.95
+    for (i in which(ev$group == g)) {
+      y <- y + ROW
+      ev$y[i] <- -y
+    }
   }
 
   # Each pooled effect takes the colour of its direction: crimson where the
@@ -284,8 +299,9 @@ fig_evidence <- function(width_mm, height_mm, file = "data/evidence.csv") {
     # Gridlines every 0.2, labelled every 0.4, which is as close as labels of
     # this size can sit without touching.
     scale_x_continuous(breaks = c(-0.4, -0.2, 0, 0.2, 0.4, 0.6),
-                       labels = function(x) ifelse(abs(round(x / 0.4) * 0.4 - x) < 1e-9,
-                                                   signed(x), ""),
+                       labels = function(x) {
+                         ifelse(abs(round(x / 0.4) * 0.4 - x) < 1e-9, signed(x), "")
+                       },
                        expand = expansion(add = 0)) +
     scale_y_continuous(limits = c(bottom, top + 0.75), expand = expansion(add = 0)) +
     coord_cartesian(xlim = c(xmin, xr[2]), clip = "off") +
@@ -302,7 +318,8 @@ fig_evidence <- function(width_mm, height_mm, file = "data/evidence.csv") {
   if (anyNA(url)) stop("data/references.bib gives no DOI or URL for ",
                        paste(unique(ev$bibkey[is.na(url)]), collapse = ", "), call. = FALSE)
   pm <- panel_mm(p, width_mm, height_mm)
-  xlim <- c(xmin, xr[2]); ylim <- c(bottom, top + 0.75)
+  xlim <- c(xmin, xr[2])
+  ylim <- c(bottom, top + 0.75)
   x_mm <- function(x) pm$left + (x - xlim[1]) / diff(xlim) * pm$width
   y_mm <- function(y) pm$top + (ylim[2] - y) / diff(ylim) * pm$height
   w <- pmax(text_mm(ev$label, MIN_PT + 1, widest = FALSE),
@@ -342,7 +359,10 @@ bib_urls <- function(file = unlist(rmarkdown::metadata$bibliography)) {
 panel_mm <- function(p, width_mm, height_mm) {
   tmp <- tempfile(fileext = ".png")
   ragg::agg_png(tmp, width = width_mm, height = height_mm, units = "mm", res = 72)
-  on.exit({ grDevices::dev.off(); unlink(tmp) }, add = TRUE)
+  on.exit({
+    grDevices::dev.off()
+    unlink(tmp)
+  }, add = TRUE)
   g <- ggplot2::ggplotGrob(p)
   w <- grid::convertWidth(g$widths, "mm", valueOnly = TRUE)
   h <- grid::convertHeight(g$heights, "mm", valueOnly = TRUE)
@@ -496,7 +516,8 @@ fig_precision <- function(width_mm, height_mm,
   # below, which are bold, so that the key is not read as a title.
   key_pt <- MIN_PT + 1
   key_mm <- 30                                  # height of the two-line key
-  sample_mm <- 16; pad_mm <- 3
+  sample_mm <- 16
+  pad_mm <- 3
   key_y <- c(main = 0.80, int = 0.38)           # 12.6 mm apart
   key <- ggplot() +
     coord_cartesian(xlim = c(0, width_mm), ylim = c(0, 1), expand = FALSE, clip = "off") +
@@ -555,40 +576,50 @@ model_height_mm <- function() {
 }
 
 fig_model <- function(width_mm, height_mm) {
-  W <- width_mm; H <- height_mm; L <- LADDER
+  W <- width_mm
+  H <- height_mm
+  L <- LADDER
   # Sizes are fixed, not tied to MIN_PT: the ladder's four columns are sized to
   # their text, and larger type would squeeze the outcome box below its words.
-  lab_pt <- 27; title_pt <- 26; sub_pt <- 23; row_pt <- 26
+  lab_pt <- 27
+  title_pt <- 26
+  sub_pt <- 23
+  row_pt <- 26
   col <- c(lex = PAL[["lexical"]], gram = PAL[["grammatical"]], cont = PAL[["continuity"]],
            ink = PAL[["ink"]], out = PAL[["ox_mid"]])
   y_at <- function(top) H - top                     # mm from the top to plot units
-  txt <- function(x, top, label, size, colour, face = "plain", hjust = 0, lineheight = 0.92)
+  txt <- function(x, top, label, size, colour, face = "plain", hjust = 0, lineheight = 0.92) {
     annotate("text", x = x, y = y_at(top), label = label, family = FONT, size = pt_mm(size),
              colour = colour, fontface = face, hjust = hjust, lineheight = lineheight)
+  }
   # A line of text set in parts, each in its own colour and weight, placed from
   # the parts' measured widths. The SVG drops a part's leading or trailing
   # space, so each part is drawn trimmed and its spaces become measured gaps.
   space_mm <- text_mm(" ", row_pt)
-  part_widths <- function(text, face, size = row_pt)
-    vapply(seq_along(text), function(i)
+  part_widths <- function(text, face, size = row_pt) {
+    vapply(seq_along(text), function(i) {
       text_mm(trimws(text[i]), size, bold = face[i] == "bold") +
-        space_mm * (nchar(text[i]) - nchar(trimws(text[i]))), 0)
+        space_mm * (nchar(text[i]) - nchar(trimws(text[i])))
+    }, 0)
+  }
   parts <- function(x, top, text, colour, face, size = row_pt) {
     w <- part_widths(text, face, size)
     lead <- space_mm * (nchar(text) - nchar(sub("^ +", "", text)))
     xs <- x + c(0, cumsum(w))[seq_along(text)] + lead
-    lapply(seq_along(text), function(i)
-      txt(xs[i], top, trimws(text[i]), size, colour[i], face[i]))
+    lapply(seq_along(text), function(i) {
+      txt(xs[i], top, trimws(text[i]), size, colour[i], face[i])
+    })
   }
   # An effect: a triangle pointing up for faster or down for slower (both for
   # either), and its word.
   effect <- function(x, top, dir, word, colour) {
     shapes <- c(up = 24, down = 25)[dir]
     dx <- seq(0, by = 6, length.out = length(shapes))
-    c(lapply(seq_along(shapes), function(i)
-        annotate("point", x = x + 2.5 + dx[i], y = y_at(top), shape = shapes[i], size = 5,
-                 colour = colour, fill = colour)),
-      list(txt(x + 2.5 + max(dx) + 5, top, word, row_pt, colour, "bold")))
+    c(lapply(seq_along(shapes), function(i) {
+      annotate("point", x = x + 2.5 + dx[i], y = y_at(top), shape = shapes[i], size = 5,
+               colour = colour, fill = colour)
+    }),
+    list(txt(x + 2.5 + max(dx) + 5, top, word, row_pt, colour, "bold")))
   }
 
   feat <- data.frame(
@@ -596,9 +627,10 @@ fig_model <- function(width_mm, height_mm) {
     title = c("Lexical difficulty", "Grammatical load", "Referential continuity"),
     sub = c("rare, long, unexpected words", "long, embedded sentences",
             "sentences that state their links"),
-    dir = c("down", "down", "up"), word = c("slower", "slower", "faster"))
+    dir = c("down", "down", "up"), word = c("slower", "slower", "faster")
+  )
 
-  x0 <- 20                                          # where the rows' content starts
+  x0 <- 20                                         # where the rows' content starts
   box_w <- max(text_mm(feat$title, title_pt, bold = TRUE), text_mm(feat$sub, sub_pt)) + 12
   x1 <- x0 + box_w
 
@@ -611,14 +643,14 @@ fig_model <- function(width_mm, height_mm) {
     list(h = "H3", lines = list(list(c("Continuity", " effect, by age band"),
                                      c("cont", "ink"), c("bold", "plain"))),
          eff = list(dir = c("up", "down"), word = "either way", col = "cont")),
-    list(h = "H4", lines = list(
-      list(c("Narration shrinks the ", "lexical", " effect"),
-           c("ink", "lex", "ink"), c("plain", "bold", "plain")),
-      list(c("more than the ", "continuity", " effect"),
-           c("ink", "cont", "ink"), c("plain", "bold", "plain")))),
-    list(h = "H5", lines = list(
-      list("Children rate a story harder", "ink", "plain"),
-      list("when its features slow reading", "ink", "plain"))),
+    list(h = "H4",
+         lines = list(list(c("Narration shrinks the ", "lexical", " effect"),
+                           c("ink", "lex", "ink"), c("plain", "bold", "plain")),
+                      list(c("more than the ", "continuity", " effect"),
+                           c("ink", "cont", "ink"), c("plain", "bold", "plain")))),
+    list(h = "H5",
+         lines = list(list("Children rate a story harder", "ink", "plain"),
+                      list("when its features slow reading", "ink", "plain"))),
     list(h = "H6", lines = list(list("More stories read so far", "ink", "plain")),
          eff = list(dir = "up", word = "faster", col = "out"))
   )
@@ -626,8 +658,9 @@ fig_model <- function(width_mm, height_mm) {
             all(vapply(rows, function(r) length(r$lines), 0) == LADDER_ROWS))
   # The effects form one column, clear of the boxes and of the longest row that
   # ends in an effect.
-  row_end <- max(vapply(rows, function(r) if (is.null(r$eff)) 0 else
-    x0 + sum(part_widths(r$lines[[1]][[1]], r$lines[[1]][[3]])), 0))
+  row_end <- max(vapply(rows, function(r) {
+    if (is.null(r$eff)) 0 else x0 + sum(part_widths(r$lines[[1]][[1]], r$lines[[1]][[3]]))
+  }, 0))
   eff_x <- max(x1, row_end) + 6
   brk_x <- eff_x + 2.5 + 5 + max(text_mm(feat$word, row_pt, bold = TRUE)) + 6
   out_x0 <- brk_x + 12
@@ -638,8 +671,10 @@ fig_model <- function(width_mm, height_mm) {
 
   p <- ggplot() + coord_cartesian(xlim = c(0, W), ylim = c(0, H), expand = FALSE, clip = "off") +
     theme_void() + theme(plot.background = element_rect(fill = PAL[["paper"]], colour = NA))
-  rule <- function(top) annotate("segment", x = 0, xend = W, y = y_at(top), yend = y_at(top),
-                                 colour = PAL[["grid"]], linewidth = 0.7)
+  rule <- function(top) {
+    annotate("segment", x = 0, xend = W, y = y_at(top), yend = y_at(top),
+             colour = PAL[["grid"]], linewidth = 0.7)
+  }
 
   # H1: the three features, each with its predicted effect, joined to the
   # reading-speed outcome.
@@ -658,7 +693,8 @@ fig_model <- function(width_mm, height_mm) {
       annotate("segment", x = brk_x - 4, xend = brk_x, y = y_at(mid[i]), yend = y_at(mid[i]),
                colour = col[["out"]], linewidth = 1.2)
   }
-  g_top <- top; g_bot <- top + 3 * L$box_h + 2 * L$box_gap
+  g_top <- top
+  g_bot <- top + 3 * L$box_h + 2 * L$box_gap
   p <- p +
     txt(0, mean(mid), "H1", lab_pt, PAL[["ox_blue"]], "bold") +
     annotate("segment", x = brk_x, xend = brk_x, y = y_at(mid[1]), yend = y_at(mid[3]),

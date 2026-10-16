@@ -46,8 +46,9 @@ write_references <- function(bib, csl, readme = "README.md",
   # The bibliography and style go on the command line, not in the YAML: Pandoc
   # reads metadata strings as Markdown, whose smart punctuation would turn a
   # "--" in a path into a dash.
-  opt_path <- function(flag, p)
+  opt_path <- function(flag, p) {
     shQuote(paste0(flag, normalizePath(p, winslash = "/", mustWork = TRUE)))
+  }
   # gfm without raw HTML drops citeproc's wrapping <div>s, which GitHub would
   # otherwise show as clutter, and keeps the italics and the DOI links.
   status <- system2(quarto, c("pandoc", shQuote(src), "--citeproc", "--wrap=none",
@@ -81,7 +82,8 @@ write_evidence_table <- function(readme = "README.md", file = "data/evidence.csv
   pooled <- vapply(parts, function(p) paste(p[-1][is_count(p[-1])], collapse = ""), "")
   # A source that gives no ages (they are in the finding's label) or no count
   # shows a dash, so that an empty cell is not read as missing data.
-  ages[!nzchar(ages)] <- "–"; pooled[!nzchar(pooled)] <- "–"
+  ages[!nzchar(ages)] <- "–"
+  pooled[!nzchar(pooled)] <- "–"
   effect <- ifelse(is.na(ev$estimate), paste0("*", ev$verdict, "*"),
                    sprintf("%s [%s, %s]", num(ev$estimate), num(ev$lo), num(ev$hi)))
   rows <- character(0)
@@ -100,7 +102,8 @@ write_evidence_table <- function(readme = "README.md", file = "data/evidence.csv
 # leaving the rest of the file as it is.
 splice_readme <- function(body, start, end, readme = "README.md") {
   md <- readLines(readme, encoding = "UTF-8", warn = FALSE)
-  i <- match(start, md); j <- match(end, md)
+  i <- match(start, md)
+  j <- match(end, md)
   if (is.na(i) || is.na(j) || j < i)
     stop(readme, " lacks the markers ", start, " and ", end, call. = FALSE)
   md <- c(md[seq_len(i)], "", body, md[j:length(md)])

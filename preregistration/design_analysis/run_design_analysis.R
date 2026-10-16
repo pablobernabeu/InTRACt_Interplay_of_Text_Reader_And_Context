@@ -58,13 +58,17 @@ F_T2   <- .y ~ LexPC + SynPC + CohPC + accum + (1 | subject) + (1 | item)
 
 # Grid points, expressed as whole `units` objects because a sweep over the number
 # of texts has to move the number of readers with it to hold readings per text.
-units_by_texts <- function(texts, per_text)
-  lapply(texts, function(k) list(subject = list(n = k * per_text),
-                                 item = list(n = k, per_subject = 1)))
+units_by_texts <- function(texts, per_text) {
+  lapply(texts, function(k) {
+    list(subject = list(n = k * per_text), item = list(n = k, per_subject = 1))
+  })
+}
 
-units_by_readings <- function(per_text, texts)
-  lapply(per_text, function(m) list(subject = list(n = texts * m),
-                                    item = list(n = texts, per_subject = 1)))
+units_by_readings <- function(per_text, texts) {
+  lapply(per_text, function(m) {
+    list(subject = list(n = texts * m), item = list(n = texts, per_subject = 1))
+  })
+}
 
 # Each sweep runs every coefficient at one effect size, so the specification's
 # signs are kept and its magnitudes replaced.
@@ -84,11 +88,18 @@ safe_workers <- local({
   checked <- NULL
   function(spec) {
     if (!is.null(checked)) return(checked)
-    if (WORKERS <= 1) { checked <<- 1L; return(1L) }
+    if (WORKERS <= 1) {
+      checked <<- 1L
+      return(1L)
+    }
     ok <- tryCatch({
-      cl <- parallel::makePSOCKcluster(WORKERS); parallel::stopCluster(cl); TRUE
-    }, error = function(e) { msg("cluster setup failed, running serially: ",
-                                 conditionMessage(e)); FALSE })
+      cl <- parallel::makePSOCKcluster(WORKERS)
+      parallel::stopCluster(cl)
+      TRUE
+    }, error = function(e) {
+      msg("cluster setup failed, running serially: ", conditionMessage(e))
+      FALSE
+    })
     checked <<- if (ok) WORKERS else 1L
     checked
   }
@@ -166,19 +177,22 @@ focal_dev_null <- c(LexPC = 0, SynPC = 0, CohPC = 0, SynPC_age = 0, CohPC_age = 
 all_rows$dev_texts <- run_sweep(
   "dev_texts", dev_alt, "units", units_by_texts(TEXTS, M_FIXED), focal_dev_alt,
   F_DEV, "texts", "texts", TEXTS,
-  list(per_text = M_FIXED, truth = "0.10", model = "developmental"))
+  list(per_text = M_FIXED, truth = "0.10", model = "developmental")
+)
 
 # The readings, null and tier-2 sweeps run a fixed 120 replicates and ignore
 # INTRACT_N_SIMS.
 all_rows$dev_readings <- run_sweep(
   "dev_readings", dev_alt, "units", units_by_readings(PER_TEXT, K_FIXED),
   focal_dev_alt, F_DEV, "readings", "per_text", PER_TEXT,
-  list(texts = K_FIXED, truth = "0.10", model = "developmental"), n_sims = 120)
+  list(texts = K_FIXED, truth = "0.10", model = "developmental"), n_sims = 120
+)
 
 all_rows$dev_texts_null <- run_sweep(
   "dev_texts_null", dev_null, "units", units_by_texts(TEXTS, M_FIXED),
   focal_dev_null, F_DEV, "texts", "texts", TEXTS,
-  list(per_text = M_FIXED, truth = "0.00", model = "developmental"), n_sims = 120)
+  list(per_text = M_FIXED, truth = "0.00", model = "developmental"), n_sims = 120
+)
 
 # ---- Hypothesis 4: selectivity of narration ----------------------------------
 
@@ -188,7 +202,8 @@ focal_narr <- c(LexPC = 0.10, CohPC = -0.10, LexPC_narr = 0.10)
 all_rows$narr_texts <- run_sweep(
   "narr_texts", narr_spec, "units", units_by_texts(TEXTS, M_FIXED), focal_narr,
   F_NARR, "texts", "texts", TEXTS,
-  list(per_text = M_FIXED, truth = "0.10", model = "narration"))
+  list(per_text = M_FIXED, truth = "0.10", model = "narration")
+)
 
 # ---- Hypothesis 6: accumulated reading, within child --------------------------
 
@@ -219,8 +234,12 @@ prep_t2 <- local({
     n_pos <- length(levels_pos)
     had_seed <- exists(".Random.seed", envir = globalenv(), inherits = FALSE)
     if (had_seed) old_seed <- get(".Random.seed", envir = globalenv())
+    # .Random.seed is R's own name for the generator's state, so it cannot follow
+    # the scripts' naming style.
+    # nolint start: object_name_linter.
     on.exit(if (had_seed) assign(".Random.seed", old_seed, envir = globalenv())
             else rm(".Random.seed", envir = globalenv()))
+    # nolint end
     set.seed(sum(as.numeric(d$item) * seq_len(nrow(d))) %% .Machine$integer.max)
     slot <- stats::ave(d$item, d$subject, FUN = function(v) match(v, unique(v)))
     subjects <- sort(unique(d$subject))
@@ -230,7 +249,8 @@ prep_t2 <- local({
   }
 })
 local({
-  probe <- t2; probe$units$subject$n <- 400
+  probe <- t2
+  probe$units$subject$n <- 400
   d <- prep_t2(simulate_design(probe))
   per_child <- table(d$subject)
   stopifnot(all(per_child == t2$units$item$per_subject),
@@ -243,7 +263,8 @@ all_rows$t2 <- run_sweep(
   "children", "children", CHILDREN,
   list(texts = t2$units$item$n, per_child = t2$units$item$per_subject,
        truth = "0.10", model = "within_child"),
-  n_sims = 120, prep = prep_t2)
+  n_sims = 120, prep = prep_t2
+)
 
 # ---- Bind, save, and solve each curve for the target -------------------------
 

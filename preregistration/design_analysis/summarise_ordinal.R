@@ -97,7 +97,8 @@ solved <- do.call(rbind, lapply(per_param, function(d) {
     projected_texts = round(unname(k_proj), -2),
     projected_qualifying_texts = round(unname(k_proj) * share_qualifying, -2),
     projected_texts_unattenuated = round(unname(project(w_raw)), -2),
-    stringsAsFactors = FALSE)
+    stringsAsFactors = FALSE
+  )
 }))
 rownames(solved) <- NULL
 utils::write.csv(solved, file.path(OUT, "minimum_texts_ordinal.csv"), row.names = FALSE)

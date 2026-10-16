@@ -54,8 +54,13 @@ bad <- character(0)
 for (p in th$predictions) {
   miss_d <- setdiff(unlist(p$derives_from), prop_ids)
   miss_a <- setdiff(unlist(p$diagnostic_vs), alt_ids)
-  if (length(miss_d)) bad <- c(bad, sprintf("%s derives from unknown %s", p$id, paste(miss_d, collapse = ", ")))
-  if (length(miss_a)) bad <- c(bad, sprintf("%s is diagnostic against unknown %s", p$id, paste(miss_a, collapse = ", ")))
+  if (length(miss_d)) {
+    bad <- c(bad, sprintf("%s derives from unknown %s", p$id, paste(miss_d, collapse = ", ")))
+  }
+  if (length(miss_a)) {
+    bad <- c(bad, sprintf("%s is diagnostic against unknown %s", p$id,
+                          paste(miss_a, collapse = ", ")))
+  }
 }
 writeLines("")
 if (length(bad)) {

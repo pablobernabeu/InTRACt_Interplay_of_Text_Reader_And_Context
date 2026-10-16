@@ -35,7 +35,8 @@ READING <- tak(paste(
   'OR "early literacy" OR "emergent literacy" OR "story comprehension" OR "word reading"',
   'OR "beginning reader*" OR "struggling reader*")',
   'AND (child* OR pupil* OR "primary school*" OR "elementary school*" OR kindergarten*',
-  'OR preschool* OR "first grade*" OR "young reader*")'))
+  'OR preschool* OR "first grade*" OR "young reader*")'
+))
 
 DIGITAL <- tak(paste(
   '(digital OR "e-book*" OR ebook* OR "electronic book*" OR "electronic storybook*" OR "e-reader*"',
@@ -44,42 +45,50 @@ DIGITAL <- tak(paste(
   'OR "computer-assisted" OR "computer-based" OR "educational technolog*" OR "technology-enhanced"',
   'OR multimedia OR "on screen" OR "on-screen" OR "screen time" OR "screen use" OR "screen-based"',
   'OR "artificial intelligence" OR chatbot* OR "conversational agent*" OR "text-to-speech"',
-  'OR "speech synthesis" OR "intelligent tutor*" OR "online reading" OR hypertext)'))
+  'OR "speech synthesis" OR "intelligent tutor*" OR "online reading" OR hypertext)'
+))
 
 # What a record on children's digital reading looks at. The first five are the
 # device and what is added to the text; the last two are what this study adds.
 FOCI <- c(
   "Screen time and media use" = tak(paste(
     '("screen time" OR "screen use" OR "screen exposure" OR "media use" OR "media exposure"',
-    'OR "digital media use" OR "technology use" OR "device use")')),
+    'OR "digital media use" OR "technology use" OR "device use")'
+  )),
   "Screen versus paper" = tak(paste(
     '("paper-based" OR "on paper" OR "printed book*" OR "print book*" OR "paper book*"',
     'OR "printed text*" OR "print-based" OR "print versus" OR "paper versus" OR "versus print"',
     'OR "versus paper" OR "reading medium" OR "reading media" OR "medium effect*"',
-    'OR "mode effect*" OR "screen inferiority")')),
+    'OR "mode effect*" OR "screen inferiority")'
+  )),
   "Multimedia and games" = tak(paste(
     '(multimedia OR animat* OR hotspot* OR "interactive feature*" OR "enhanced e-book*"',
     'OR "enhanced ebook*" OR "digital enhancement*" OR gamif* OR "game-based"',
-    'OR "educational game*" OR "video game*")')),
+    'OR "educational game*" OR "video game*")'
+  )),
   "Narration and text-to-speech" = tak(paste(
     '("text-to-speech" OR "speech synthesis" OR "synthetic speech" OR "audio narration"',
     'OR narrated OR "read-aloud tool*" OR "read-aloud feature*" OR "read-aloud function*"',
     'OR audiobook* OR "audio book*" OR "reading while listening" OR "reading-while-listening"',
-    'OR "audio support" OR "audio-assisted")')),
+    'OR "audio support" OR "audio-assisted")'
+  )),
   "AI and chatbots" = tak(paste(
     '("artificial intelligence" OR "generative AI" OR "large language model*" OR ChatGPT',
     'OR chatbot* OR "conversational agent*" OR "AI-generated" OR "intelligent tutor*"',
-    'OR "machine-generated")')),
+    'OR "machine-generated")'
+  )),
   "Language of the text" = tak(paste(
     '("text complexity" OR "text difficulty" OR readability OR "linguistic feature*"',
     'OR "linguistic complexity" OR "linguistic characteristic*" OR "syntactic complexity"',
     'OR "sentence complexity" OR "word frequency" OR "lexical difficulty"',
     'OR "lexical complexity" OR cohesion OR "text characteristic*" OR "text feature*"',
-    'OR "text propert*" OR "lexical feature*")')),
+    'OR "text propert*" OR "lexical feature*")'
+  )),
   "Log data and learning analytics" = tak(paste(
     '("log data" OR "log file*" OR logfile* OR "learning analytics" OR "trace data"',
     'OR "usage data" OR clickstream* OR "process data" OR telemetry OR "big data"',
-    'OR "app data" OR "behavioural logs" OR "behavioral logs" OR "data mining")'))
+    'OR "app data" OR "behavioural logs" OR "behavioral logs" OR "data mining")'
+  ))
 )
 
 READING_DT <- paste(READING, "AND", DOCTYPES)
@@ -102,7 +111,8 @@ if (identical(Sys.getenv("POSTER_SCOPUS_REFRESH"), "1") || !all(file.exists(FILE
   share <- scopus_compare_topics(
     reference_query = READING_DT,
     comparison_terms = c("Digital technology" = DIGITAL),
-    years = YEARS, field = NULL, verbose = TRUE)
+    years = YEARS, field = NULL, verbose = TRUE
+  )
   utils::write.csv(as.data.frame(share), FILES[["share"]], row.names = FALSE)
 
   # 2. Within that research, what each record looks at, by year.
@@ -110,7 +120,8 @@ if (identical(Sys.getenv("POSTER_SCOPUS_REFRESH"), "1") || !all(file.exists(FILE
   foci <- scopus_compare_topics(
     reference_query = DIGITAL_READING_DT,
     comparison_terms = FOCI,
-    years = YEARS, field = NULL, verbose = TRUE)
+    years = YEARS, field = NULL, verbose = TRUE
+  )
   utils::write.csv(as.data.frame(foci), FILES[["foci"]], row.names = FALSE)
 
   # 3. The cell this study occupies: the language of the text together with log data.
@@ -122,8 +133,10 @@ if (identical(Sys.getenv("POSTER_SCOPUS_REFRESH"), "1") || !all(file.exists(FILE
     intersections = list(
       c("Digital reading", "Language of the text"),
       c("Digital reading", "Log data"),
-      c("Digital reading", "Language of the text", "Log data")),
-    years = YEARS, field = NULL, verbose = TRUE)
+      c("Digital reading", "Language of the text", "Log data")
+    ),
+    years = YEARS, field = NULL, verbose = TRUE
+  )
   utils::write.csv(as.data.frame(gap), FILES[["gap"]], row.names = FALSE)
 
   writeLines(c(paste("run:", format(Sys.time(), "%Y-%m-%d %H:%M:%S %Z")),
@@ -190,7 +203,8 @@ rec <- c(
   "",
   "## Totals",
   "",
-  sprintf("- Children's reading development: %s records", fmt(tot(share, "Children's reading development"))),
+  sprintf("- Children's reading development: %s records",
+          fmt(tot(share, "Children's reading development"))),
   sprintf("- of which digital technology: %s records", fmt(tot(share, "Digital technology"))),
   sprintf("- %s: %s records", gap$label, fmt(gap$n))
 )

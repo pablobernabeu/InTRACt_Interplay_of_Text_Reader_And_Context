@@ -50,8 +50,9 @@ fmt <- function(x) formatC(round(x), format = "d", big.mark = ",")
 
 # A formatted number as a regular expression that cannot match inside a longer
 # number: no digit, comma or point before it, and no digit, ",d" or ".d" after it.
-num <- function(x) paste0("(?<![0-9.,])", gsub("[.]", "\\\\.", x),
-                          "(?![0-9]|[.,][0-9])")
+num <- function(x) {
+  paste0("(?<![0-9.,])", gsub("[.]", "\\\\.", x), "(?![0-9]|[.,][0-9])")
+}
 has <- function(rx) grepl(rx, qmd, perl = TRUE)
 has_text <- function(x) grepl(x, qmd, fixed = TRUE)
 
@@ -130,7 +131,8 @@ if (is.null(m95)) {
   if (nrow(ca) == 1 && is.na(ca$value)) {
     upper <- fmt(max_in_note(ca$note))
     expect("0.95 continuity x age band reported as not reached",
-           has_text(sprintf("the 0.95 target was not reached within the %s texts simulated", upper)),
+           has_text(sprintf("the 0.95 target was not reached within the %s texts simulated",
+                            upper)),
            paste("not reached within", upper))
   } else {
     check_interval(m95, "developmental", "CohPC_age", "0.95 continuity x age band")
@@ -159,8 +161,10 @@ if (is.null(mbf)) {
     r <- mbf[i, ]
     label <- sprintf("BF10 %s %s at %.2f", r$model, r$param, r$target)
     if (is.na(r$value)) {
-      expect(label, has_text("neither reaching 0.95 within the 1,600 texts simulated") ||
-                    has_text("not reaching 0.95 within 1,600"), "not reached within the grid")
+      expect(label,
+             has_text("neither reaching 0.95 within the 1,600 texts simulated") ||
+               has_text("not reaching 0.95 within 1,600"),
+             "not reached within the grid")
     } else {
       expect(label, has(num(ten(r$value))), ten(r$value))
     }
