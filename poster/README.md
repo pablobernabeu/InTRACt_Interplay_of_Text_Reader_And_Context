@@ -1,131 +1,130 @@
-# The language on the screen: InTRACt poster
+# The language on the screen: children's reading in a multilingual story app
 
-An A1 portrait conference poster (594 x 841 mm) on the InTRACt study, part of the
-[LiFT project](https://www.education.ox.ac.uk/project/lift-learning-in-families-through-technology/)
-at the Department of Education, University of Oxford. The left half sets out what meta-analyses
-and a bibliometric count show about digital technology and children's reading. The right half
-presents the study: its question, the *Let's Story* logs, the six confirmatory hypotheses, the
-design analysis and the Registered Report safeguards. The poster reports no data from the study
-itself.
+A conference poster on InTRACt (Interplay of Text, Reader And Context), a study of how the
+language of AI-written stories relates to children's reading in a story app. InTRACt is part of
+the [LiFT project](https://www.education.ox.ac.uk/project/lift-learning-in-families-through-technology/)
+(Learning in Families through Technology) at the Department of Education, University of Oxford.
 
-[`poster.pdf`](poster.pdf) is the A1 sheet, for screens and for printers that add their own
-bleed. [`poster-print.pdf`](poster-print.pdf) is the same sheet with 3 mm of bleed and crop
-marks, on a 614 x 861 mm page. [`poster-preview.png`](poster-preview.png) is a 72 dpi preview.
-The reference list is [at the end of this page](#references). The poster's QR code opens this
-folder, and so does the short address printed beside it,
-[tinyurl.com/intract-poster](https://tinyurl.com/intract-poster).
+Pablo Bernabeu, Riddhi Jain, Suzanna Dryden, Sara Ratner and Victoria A. Murphy, Department of
+Education, University of Oxford. Contact:
+[pablo.bernabeu@education.ox.ac.uk](mailto:pablo.bernabeu@education.ox.ac.uk).
 
-## Building it
+<a href="poster.pdf"><img src="poster-preview.png" alt="Preview of the poster" width="560"></a>
 
-From this folder, the print file first, because Quarto writes `poster.pdf` and then renames it:
+[Poster (PDF, A1)](poster.pdf) · [Print file with 3 mm bleed](poster-print.pdf) ·
+[Study protocol](../preregistration/) · [References](#references)
 
-```bash
-quarto render poster.qmd -M bleed:true --output poster-print.pdf
-quarto render poster.qmd
-Rscript R/preview.R                                 # poster-preview.png, 72 dpi
-Rscript --no-save --no-restore R/scopus_counts.R   # only to refresh the Scopus counts
-```
+## The study in brief
 
-Rendering needs R (4.6.1 here) with ggplot2, patchwork, svglite, systemfonts, ragg, qrcode,
-scales, jsonlite, rmarkdown and depictr, and Quarto (1.10.19 here, which bundles Typst 0.15.1 and Pandoc
-3.10). Set `QUARTO_R` to R's `bin` folder if Quarto cannot find R. The render makes no network
-request. Everything it reads is in this folder except the protocol's citation style,
-`../preregistration/apa7.csl`, so it runs in a clone of the repository on any branch. `R/preview.R`
-needs pdftools and png, and it stops on a PDF that is not a single A1 page, so an overflowing
-layout cannot pass unnoticed. `R/scopus_counts.R` needs scopusflow 0.4.0 and a Scopus API key
-in the `SCOPUS_API_KEY` environment variable, normally set in `~/.Renviron`, which the
-repository ignores.
+Research on children's reading on screens has mostly asked whether screens help or hurt. InTRACt
+asks how the language of the stories on the screen shapes reading. It draws on the reading logs
+of *Let's Story*, a feature of a children's app in which a child picks a hero, a companion, a
+setting, a plot and a theme. A generative model then writes the story (Ratner et al., 2025). In
+its first month, the feature logged 419,700 story sessions in 18 languages (Ratner & Murphy,
+2026).
 
-## How it is built
+The study tests whether text features that slow or speed reading in the laboratory do the same
+in everyday app use. The outcome is the time a child spends per word over a whole story,
+analysed on a log scale. The study is a Registered Report, in which the protocol is peer-reviewed
+before any outcome is seen. The logs are released only after in-principle acceptance, the text
+measures are fixed blind to the outcomes, and every decision rule is set in advance. Stage 1 is
+in preparation.
 
-Quarto runs the R chunk at the top of `poster.qmd`. The chunk calls `build_figures()` in
-`R/figures.R`, which writes every figure to `figures/` as SVG, and `write_references()` in
-`R/references.R`, which renders the reference list below with Pandoc's citeproc from the
-bibliography and style the poster cites with. Typst then lays out the sheet.
-`typst-template.typ` holds the page geometry, the type scale and the blocks the body calls, and
-`typst-show.typ` passes the YAML metadata to it. Captions are written as Markdown divs
-(`::: {.caption}`), which `typst-blocks.lua` turns into calls to the template's blocks, so that
-their citations pass through citeproc.
+### Hypotheses
 
-In the PDF, every citation opens its work's DOI, or its URL where it has none. Quarto runs
-citeproc after every Lua filter, too late to link what citeproc writes, so `cite-links.lua`
-runs citeproc itself and wraps each formatted citation in a link. The citations on the evidence
-map are SVG text, which keeps no links once Typst draws it. `R/figures.R` therefore writes
-`figures/evidence-links.json` beside the figure, giving each row's position in mm and its DOI,
-and the template lays an invisible link over each row. The links carry no colour or underline,
-so the printed sheet is unchanged. The QR code is a link to the folder it encodes.
+The six confirmatory hypotheses, in their registered order:
 
-Each figure is drawn at the width it is printed (269 mm, one column), so a point size in R is a
-point size on paper. Before a figure is written, `depictr::check_figure()` audits it at that
-width. It checks the smallest text (a 23 pt floor), colour separability with and without
-simulated colour-vision deficiency, greyscale separability, contrast, and any distinction that
-colour alone carries. A figure that fails is not written, and the render stops. Nothing on the
-sheet is set below 22 pt. Ragged lines are broken for each paragraph as a whole, and a last line
-of a single word is penalised, so a paragraph rewraps before it strands a word.
-
-The two theme colours come from the department's lockup: Oxford blue (#002147) and the green of
-the department's tree (#1dad89). That green clears only 2.8:1 against white, so it draws rules
-and bars, and a darker shade of the same hue (#127b61, 5.2:1) carries text and data. On the
-evidence map, crimson and blue mark the two directions of an effect, because they stay apart
-under every common colour-vision deficiency.
-
-The typeface is Figtree, kept in `fonts/` under the SIL Open Font License
-(`fonts/LICENSE-Figtree.txt`). It stands in for Abadi, which is licensed for Microsoft 365 apps
-only and so cannot be shared with the source. systemfonts finds the files in the working
-directory for the figures, and Typst reads them through `font-paths`, so the figures and the
-text use the same files on any machine.
-
-## Where the content comes from
-
-| Element | Source |
+| | Prediction |
 |---|---|
-| Evidence map | `data/evidence.csv`. Each row holds a pooled effect from a published meta-analysis, or a finding that cannot share the g/d axis (a review's conclusion, or a correlation), read from the paper's full text in October 2026. The `location` column names the table or page of each value and records where a paper's text and tables disagree. |
-| Scopus figure and the count of records under both green topics | `data/scopus_*.csv`, written by `R/scopus_counts.R` with scopusflow 0.4.0 on 14 October 2026. `data/scopus_search_record.md` holds every query verbatim, the limits and the totals, which are the PRISMA-S items a count-only search can supply. |
-| Precision figure, its numbers and its assumptions | `data/design_analysis/`: `precision_sweep.csv`, `minimum_texts.csv` and `minimum_texts_bf10.csv`, copied on 15 October 2026 from the protocol's `../preregistration/design_analysis/`, so that the poster builds on a branch that lacks the protocol's latest files. Copy them again if the design analysis is re-run. The assumptions are those of the deposited specification (`tier1_developmental.json`) and of `run_design_analysis.R`, as the protocol's Design and precision analysis describes them. |
-| Hypotheses figure | The protocol's six confirmatory hypotheses and their predicted directions, in `../preregistration/`, one row each in their registered order. |
-| Logos | `img/`: the Department of Education and University of Oxford lockup, unaltered, in the header, where it stands in for a printed affiliation. In the footer, the LiFT project's logo, and the funder's Kinder and Ferrero logos stacked at one width, each trimmed to its artwork. |
-| References | `references.bib`, which holds only the works the poster cites. Most entries are copied from the protocol's `InTRACt references.bib`, whose fields were checked against Crossref. The rest are four meta-analyses the protocol does not cite and the CRAN releases of pilotr and scopusflow, checked against Crossref and CRAN. |
+| H1 | Lexical difficulty (rare, long and unexpected words) and grammatical load (long, embedded sentences) slow reading, and referential continuity (sentences that state their links) speeds it. |
+| H2 | The effect of grammatical load differs between the two age bands, 7 to 8 and 9 and over. Rival accounts predict opposite directions, so the test is two-sided. |
+| H3 | The effect of referential continuity differs between the age bands, again tested two-sided. |
+| H4 | Narration shrinks the effect of lexical difficulty proportionally more than that of referential continuity, by more than 0.20. |
+| H5 | The features that slow reading make a child likelier to give the story a harder rating, and they rank by size as they do for reading time. |
+| H6 | Within a child, more reading in the app goes with faster reading. |
 
-## Choices behind the content
+The poster states these predictions as slower or faster reading. The protocol states them on log
+reading time per word, of which log reading speed is the exact negative, so a feature that slows
+reading has a positive coefficient there.
 
-The evidence map shows where screens and apps cost children comprehension and where they help.
-It also shows the conditions that decide which way an effect goes: the genre of the text, an
-adult reading along, an add-on that serves the story, and a researcher-made or a standardised
-test. Each effect is coloured by its direction, and an interval that includes zero is grey.
-Correlational evidence on everyday screen time sits in a group of its own, because a
-correlation cannot share an axis with an experimental effect. The effects are Hedges' g or
-Cohen's d. To keep the sheet light, it names each source and its children's ages but not how
-many comparisons or studies each effect pools; `data/evidence.csv` gives those counts.
+### Precision
 
-The rows come from a search for meta-analyses and systematic reviews of digital technology and
-children's reading, run in October 2026. Where several syntheses overlap, the map keeps the most
-recent one or the one with a child-specific estimate. It leaves out subgroup values that rest on
-two or three studies or could not be checked against the published paper. The search found no
+Precision comes from the number of distinct stories, not the number of sessions, because more
+readings of the same stories add less than new stories do. In the protocol's design analysis,
+simulated with the pilotr package (Bernabeu, 2026a), a main effect of 0.10 SD needs 630 to 740
+distinct stories for a 90% chance of a clear verdict. A verdict is clear when its 95% interval
+lies wholly outside ±0.05 SD. Under the registered Bayes-factor rule, which also asks for an
+interval Bayes factor of at least 10, it needs about 930. The simulation assumes one reading per child, 9% of the variance between
+stories and 20% between children, equal age bands and independent text measures, and it
+includes no language terms, covariates or priors.
+
+## What the evidence shows
+
+Reading a plain e-book in place of a print book costs children about 0.2 SD of comprehension,
+with no clear cost for narrative texts (Delgado et al., 2018; Furenes et al., 2021). Add-ons help
+when they serve the story (Furenes et al., 2021; Takacs et al., 2015), and narration helped
+children under 5 but showed no clear gain at 9 to 11 (Booton et al., 2023). Gains from
+educational technology are larger on researchers' own tests than on standardised ones
+(Silverman et al., 2025). Everyday screen time correlates weakly and negatively with language
+skills, and viewing with an adult positively (Madigan et al., 2020).
+
+The poster's evidence map draws on meta-analyses and systematic reviews of digital technology and
+children's reading, found in a search run in October 2026. Where syntheses overlap, it keeps the
+most recent one or the one with a child-specific estimate. It leaves out subgroup values that
+rest on two or three studies or could not be checked against the published paper. The table
+below gives every row. Effects are Hedges' g or Cohen's d, and a positive value favours the
+screen or the add-on. In the last column, k is the number of comparisons pooled. Rows in italics report findings that
+cannot share that scale, a review's conclusion or a correlation. The search found no
 meta-analysis of generative AI and children's reading, language or literacy. The closest ones
 pool mostly university students, so the poster states the gap and plots nothing for AI.
 
-The Scopus figure gives each topic's share of the records on children's digital reading,
-pooled over 2010 to 2025. It counts the records that match a search, false positives included,
-and its caption counts the records that match two searches at once, those on the language of
-the text and on log data. Neither is a count of screened studies. `data/scopus_focus_trends.csv`
-keeps the counts by year, for anyone who wants the trend.
+<!-- evidence:start -->
 
-The protocol's outcome is reading time per word, on a log scale, so a feature that slows
-reading has a positive coefficient there. The hypotheses figure states each prediction on the
-reading-speed scale instead, as 'slower' or 'faster', because a reader takes a plus sign to
-mean faster. Log words per second is exactly the negative of log seconds per word, so each
-prediction keeps its registered meaning. Hypothesis 5 concerns the child's difficulty rating,
-on which the same features act the other way round, and its row says so in words.
+| Finding | Source | Children | Effect [95% CI] | Pooled |
+|---|---|---|---|---|
+| **Reading on a screen instead of paper** | | | | |
+| Screen vs paper, grades 1–6 | [Delgado et al. (2018)](https://doi.org/10.1016/j.edurev.2018.09.003) | – | −0.19 [−0.35, −0.03] | k = 8 |
+| Narrative texts, all ages | [Delgado et al. (2018)](https://doi.org/10.1016/j.edurev.2018.09.003) | – | 0.01 [−0.20, 0.20] | k = 7 |
+| Plain e-book vs print book | [Furenes et al. (2021)](https://doi.org/10.3102/0034654321998074) | ages 1–8 | −0.20 [−0.33, −0.08] | k = 11 |
+| E-book alone vs print with an adult | [Furenes et al. (2021)](https://doi.org/10.3102/0034654321998074) | ages 1–8 | −0.22 [−0.38, −0.06] | k = 7 |
+| **What an app adds to the same story** | | | | |
+| Add-ons that serve the story | [Furenes et al. (2021)](https://doi.org/10.3102/0034654321998074) | ages 1–8 | 0.17 [0.01, 0.32] | k = 8 |
+| Animation, music and sound | [Takacs et al. (2015)](https://doi.org/10.3102/0034654314566989) | ages 3–10 | 0.39 [0.20, 0.59] | k = 21 |
+| Games, hotspots and questions | [Bus et al. (2026)](https://doi.org/10.1080/10409289.2025.2571978) | ages 2–8 | 0.01 [−0.11, 0.13] | 22 studies |
+| Narration vs reading alone | [Booton et al. (2023)](https://doi.org/10.1080/09588221.2021.1930057) | ages 3–11 | *no clear gain at 9–11; helped under-5s* | – |
+| Narration vs self-paced reading | [Clinton-Lisell (2023)](https://eric.ed.gov/?id=EJ1403866) | age 8 to adult | 0.06 [−0.07, 0.19] | – |
+| Text-to-speech, reading difficulties | [Wood et al. (2018)](https://doi.org/10.1177/0022219416688170) | grades 3–12 | 0.36 [0.13, 0.58] | – |
+| **Learning from ed-tech programmes** | | | | |
+| Comprehension, researchers’ tests | [Silverman et al. (2025)](https://doi.org/10.3102/00346543241261073) | K–5 | 0.37 [0.25, 0.50] | k = 20 |
+| Comprehension, standardised tests | [Silverman et al. (2025)](https://doi.org/10.3102/00346543241261073) | K–5 | 0.14 [0.08, 0.21] | k = 45 |
+| **Everyday screen use (correlational)** | | | | |
+| Screen time and language | [Madigan et al. (2020)](https://doi.org/10.1001/jamapediatrics.2020.0327) | age 12 or under | *r = −0.14; co-viewing, r = 0.16* | – |
 
-The precision curves are the protocol's own simulation. A verdict counts as clear, or
-decisive, when the 95% interval lies wholly outside ±0.05 standard deviations. Under the
-registered Bayes-factor rule, which also asks for an interval Bayes factor of at least 10, a
-main effect needs about 930 distinct stories in place of the 630 to 740 the sheet gives
-(`data/design_analysis/minimum_texts_bf10.csv`), in agreement with Table 1 of the protocol. The
-simulation assumes one reading per child, 9% of the variance between stories
-and 20% between children, equal age bands and independent text measures, and it includes no
-language terms, covariates or priors. Nothing on the sheet is computed from the app's logs or
-from its story texts.
+<!-- evidence:end -->
+
+`data/evidence.csv` records the table or page of the source each value was read from, and where
+a paper's text and tables disagree.
+
+## Where the research has looked
+
+The poster's second figure gives each topic's share of the Scopus records on children's digital
+reading from 2010 to 2025, counted with the scopusflow package (Bernabeu, 2026b). None of the
+1,536 records matched both the search on the language of the text and the search on log data.
+The counts include false positives and are not counts of screened studies.
+`data/scopus_search_record.md` gives every query verbatim, with the limits and the totals, which
+are the PRISMA-S items a count-only search can supply, and `data/scopus_focus_trends.csv` gives
+the counts by year.
+
+## Data and materials
+
+Everything on the poster is computed from the files in this folder, and nothing on it comes from
+the app's logs or its story texts.
+
+- `data/evidence.csv`: the evidence map, one row per finding, with its source and location.
+- `data/scopus_*`: the Scopus counts and the full search record, from 14 October 2026.
+- `data/design_analysis/`: the protocol's design-analysis outputs behind the precision figure,
+  copied on 15 October 2026 from `../preregistration/design_analysis/`.
+- `references.bib`: the works the poster cites, with fields checked against Crossref and CRAN.
 
 ## References
 
@@ -158,3 +157,44 @@ Takacs, Z. K., Swart, E. K., & Bus, A. G. (2015). Benefits and pitfalls of multi
 Wood, S. G., Moxley, J. H., Tighe, E. L., & Wagner, R. K. (2018). Does use of text-to-speech and related read-aloud tools improve reading comprehension for students with reading disabilities? A meta-analysis. *Journal of Learning Disabilities*, *51*(1), 73–84. <https://doi.org/10.1177/0022219416688170>
 
 <!-- references:end -->
+
+## Rebuilding the poster
+
+<details>
+<summary>Software, build steps and design notes</summary>
+
+The poster is written in Quarto with an R chunk that draws every figure, and Typst lays out the
+sheet. From this folder, render the print file first, because Quarto writes `poster.pdf` and
+then renames it:
+
+```bash
+quarto render poster.qmd -M bleed:true --output poster-print.pdf
+quarto render poster.qmd
+Rscript R/preview.R                                 # poster-preview.png, 72 dpi
+Rscript --no-save --no-restore R/scopus_counts.R   # only to refresh the Scopus counts
+```
+
+Rendering needs R (4.6.1 here) with ggplot2, patchwork, svglite, systemfonts, ragg, qrcode,
+scales, jsonlite, rmarkdown and depictr, and Quarto (1.10.19 here, which bundles Typst 0.15.1
+and Pandoc 3.10). Set `QUARTO_R` to R's `bin` folder if Quarto cannot find R. The render makes no
+network request, and everything it reads is in this folder except the protocol's citation style,
+`../preregistration/apa7.csl`. `R/preview.R` needs pdftools and png, and it stops on a PDF that is
+not a single A1 page. `R/scopus_counts.R` needs scopusflow 0.4.0 and a Scopus API key in the
+`SCOPUS_API_KEY` environment variable.
+
+`R/figures.R` draws each figure at the width it is printed, 269 mm, so a point size in R is a
+point size on paper. `depictr::check_figure()` audits each figure at that width before it is
+written.
+The audit covers the smallest text (23 pt), contrast, and separability of colours in greyscale
+and under simulated colour-vision deficiency. `R/references.R` writes the reference list and the
+evidence table on this page on every render. In the PDF, every citation links to its DOI.
+`cite-links.lua` adds the links in the text, and the template lays invisible link boxes over the
+evidence map's rows, whose positions `R/figures.R` writes with the figure.
+
+The colours are Oxford blue (#002147) and the green of the department's tree (#1dad89), with a
+darker shade of that green (#127b61) wherever it carries text or data. The typeface is Figtree,
+kept in `fonts/` under the SIL Open Font License, which stands in for Abadi, licensed for
+Microsoft 365 apps only. `poster.pdf` is exactly A1. `poster-print.pdf`, rendered with
+`-M bleed:true`, adds 3 mm of bleed and crop marks on a 614 x 861 mm page.
+
+</details>

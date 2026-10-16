@@ -1,10 +1,11 @@
-# InTRACt poster: the reference list, written into README.md.
+# InTRACt poster: the parts of README.md written from the poster's sources.
 #
 # The sheet carries author-date citations only, and the QR code opens this
-# folder on GitHub, where README.md shows the full APA 7 list. The list is
-# rendered by Pandoc's citeproc from the bibliography files and style the poster
-# itself cites with, so the README and the sheet cannot disagree. poster.qmd
-# calls write_references() on every render.
+# folder on GitHub, where README.md shows the full APA 7 list and a table of the
+# evidence map's numbers. The list is rendered by Pandoc's citeproc from the
+# bibliography files and style the poster itself cites with, and the table from
+# data/evidence.csv, so the README and the sheet cannot disagree. poster.qmd
+# calls write_references() and write_evidence_table() on every render.
 
 # Every key cited in poster.qmd, plus the source of every row on the evidence
 # map. Strings that look like keys but are not in the bibliography (the "@" of
@@ -56,14 +57,53 @@ write_references <- function(bib, csl, readme = "README.md",
   if (status != 0) stop("pandoc could not render the reference list", call. = FALSE)
   refs <- readLines(out, encoding = "UTF-8", warn = FALSE)
   refs <- refs[nzchar(trimws(refs))]
+  splice_readme(as.vector(rbind(refs, "")), start, end, readme)
+  invisible(keys)
+}
 
+# Writes the evidence map's numbers into the README as a table, between its two
+# marker comments, so that a reader can check every row without opening the
+# data file. Each source links to its DOI, or its URL where it has none.
+write_evidence_table <- function(readme = "README.md", file = "data/evidence.csv",
+                                 start = "<!-- evidence:start -->",
+                                 end = "<!-- evidence:end -->") {
+  ev <- read_evidence(file)
+  for (v in c("group", "label", "verdict")) ev[[v]] <- curly(ev[[v]])
+  url <- bib_urls()[ev$bibkey]
+  num <- function(x) sub("^-", "−", formatC(x, format = "f", digits = 2))
+  # A source line reads 'Authors, year · ages · k = n'; its parts become
+  # columns.
+  parts <- strsplit(ev$source, " · ", fixed = TRUE)
+  is_count <- function(x) grepl("^(k = [0-9]+|[0-9]+ studies)$", x)
+  who <- vapply(parts, `[`, "", 1)
+  cite <- sub("^(.*), ([0-9]{4}[a-z]?)$", "\\1 (\\2)", who)
+  ages <- vapply(parts, function(p) paste(p[-1][!is_count(p[-1])], collapse = ", "), "")
+  pooled <- vapply(parts, function(p) paste(p[-1][is_count(p[-1])], collapse = ""), "")
+  # A source that gives no ages (they are in the finding's label) or no count
+  # shows a dash, so that an empty cell is not read as missing data.
+  ages[!nzchar(ages)] <- "–"; pooled[!nzchar(pooled)] <- "–"
+  effect <- ifelse(is.na(ev$estimate), paste0("*", ev$verdict, "*"),
+                   sprintf("%s [%s, %s]", num(ev$estimate), num(ev$lo), num(ev$hi)))
+  rows <- character(0)
+  for (g in unique(ev$group)) {
+    rows <- c(rows, sprintf("| **%s** | | | | |", g))
+    for (i in which(ev$group == g))
+      rows <- c(rows, sprintf("| %s | [%s](%s) | %s | %s | %s |", ev$label[i], cite[i],
+                              url[i], ages[i], effect[i], pooled[i]))
+  }
+  splice_readme(c("| Finding | Source | Children | Effect [95% CI] | Pooled |",
+                  "|---|---|---|---|---|", rows, ""), start, end, readme)
+  invisible(nrow(ev))
+}
+
+# Replaces what lies between two marker comments in the README with `body`,
+# leaving the rest of the file as it is.
+splice_readme <- function(body, start, end, readme = "README.md") {
   md <- readLines(readme, encoding = "UTF-8", warn = FALSE)
   i <- match(start, md); j <- match(end, md)
-  if (is.na(i) || is.na(j) || j < i) stop(readme, " lacks the reference-list markers",
-                                         call. = FALSE)
-  body <- as.vector(rbind(refs, ""))
+  if (is.na(i) || is.na(j) || j < i)
+    stop(readme, " lacks the markers ", start, " and ", end, call. = FALSE)
   md <- c(md[seq_len(i)], "", body, md[j:length(md)])
   # Written as bytes, so the file stays UTF-8 with LF line ends on Windows too.
   writeBin(charToRaw(enc2utf8(paste0(paste(md, collapse = "\n"), "\n"))), readme)
-  invisible(keys)
 }
