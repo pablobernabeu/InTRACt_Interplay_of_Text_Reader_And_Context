@@ -101,9 +101,11 @@ two or three studies or could not be checked against the published paper. The se
 meta-analysis of generative AI and children's reading, language or literacy. The closest ones
 pool mostly university students, so the poster states the gap and plots nothing for AI.
 
-The Scopus figure counts the records that match a search, false positives included, and its
-caption counts the records that match two searches at once, those on the language of the text
-and on log data. Neither is a count of screened studies.
+The Scopus figure gives each topic's share of the records on children's digital reading,
+pooled over 2010 to 2025. It counts the records that match a search, false positives included,
+and its caption counts the records that match two searches at once, those on the language of
+the text and on log data. Neither is a count of screened studies. `data/scopus_focus_trends.csv`
+keeps the counts by year, for anyone who wants the trend.
 
 The protocol's outcome is reading time per word, on a log scale, so a feature that slows
 reading has a positive coefficient there. The hypotheses figure states each prediction on the
@@ -112,10 +114,12 @@ mean faster. Log words per second is exactly the negative of log seconds per wor
 prediction keeps its registered meaning. Hypothesis 5 concerns the child's difficulty rating,
 on which the same features act the other way round, and its row says so in words.
 
-The precision curves are the protocol's own simulation. A verdict counts as decisive when the
-95% interval lies wholly outside ±0.05 standard deviations, and the caption also gives the
-requirement under the registered Bayes-factor rule, so that the poster agrees with Table 1 of
-the protocol. The simulation assumes one reading per child, 9% of the variance between stories
+The precision curves are the protocol's own simulation. A verdict counts as clear, or
+decisive, when the 95% interval lies wholly outside ±0.05 standard deviations. Under the
+registered Bayes-factor rule, which also asks for an interval Bayes factor of at least 10, a
+main effect needs about 930 distinct stories in place of the 630 to 740 the sheet gives
+(`data/design_analysis/minimum_texts_bf10.csv`), in agreement with Table 1 of the protocol. The
+simulation assumes one reading per child, 9% of the variance between stories
 and 20% between children, equal age bands and independent text measures, and it includes no
 language terms, covariates or priors. Nothing on the sheet is computed from the app's logs or
 from its story texts.
@@ -139,8 +143,6 @@ Delgado, P., Vargas, C., Ackerman, R., & Salmerón, L. (2018). Don’t throw awa
 Furenes, M. I., Kucirkova, N., & Bus, A. G. (2021). A comparison of children’s reading on paper versus screen: A meta-analysis. *Review of Educational Research*, *91*(4), 483–517. <https://doi.org/10.3102/0034654321998074>
 
 Madigan, S., McArthur, B. A., Anhorn, C., Eirich, R., & Christakis, D. A. (2020). Associations between screen use and child language skills: A systematic review and meta-analysis. *JAMA Pediatrics*, *174*(7), 665–675. <https://doi.org/10.1001/jamapediatrics.2020.0327>
-
-Picton, I., & Clark, C. (2026). *Trends in children and young people’s reading in print and digital formats*. National Literacy Trust. <https://literacytrust.org.uk/research-services/research-reports/trends-in-children-and-young-peoples-reading-in-print-and-digital-formats/>
 
 Ratner, S., & Murphy, V. A. (2026). Productive struggle in children’s app-based digital reading. *Frontiers in Developmental Psychology*, *4*, 1816559. <https://doi.org/10.3389/fdpys.2026.1816559>
 

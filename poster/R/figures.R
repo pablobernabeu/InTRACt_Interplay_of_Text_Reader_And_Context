@@ -172,7 +172,7 @@ read_evidence <- function(file = "data/evidence.csv") {
 
 # Rows and group headings take fixed heights in mm, so the figure grows with the
 # file instead of squeezing its rows; poster.qmd asks for this height.
-EV_ROW_MM <- 16.5; EV_HEAD_MM <- 19; EV_FRAME_MM <- 39
+EV_ROW_MM <- 17; EV_HEAD_MM <- 19; EV_FRAME_MM <- 39
 evidence_height_mm <- function(file = "data/evidence.csv") {
   ev <- read_evidence(file)
   EV_FRAME_MM + EV_ROW_MM * nrow(ev) + EV_HEAD_MM * length(unique(ev$group))
@@ -342,24 +342,23 @@ panel_mm <- function(p, width_mm, height_mm) {
 # Where research on children's digital reading has looked (scopusflow counts)
 # ---------------------------------------------------------------------------
 
-scopus_periods <- function(foci, split = 2017) {
+# Each topic's share of the digital-reading records over the whole span,
+# 2010 to 2025, pooled across years.
+scopus_shares <- function(foci) {
   d <- foci[foci$query_type == "comparison", ]
-  d$period <- ifelse(d$year <= split, "early", "late")
-  a <- stats::aggregate(cbind(n, reference_n) ~ label + period, data = d, FUN = sum)
+  a <- stats::aggregate(cbind(n, reference_n) ~ label, data = d, FUN = sum)
   a$pct <- 100 * a$n / a$reference_n
-  w <- stats::reshape(a[c("label", "period", "n", "pct")], idvar = "label",
-                      timevar = "period", direction = "wide")
-  w[order(w$pct.late), ]
+  a[order(a$pct), ]
 }
 
 fig_scopus <- function(width_mm, height_mm, foci_file = "data/scopus_focus_trends.csv") {
   foci  <- utils::read.csv(foci_file, stringsAsFactors = FALSE, encoding = "UTF-8")
 
-  # One row per topic, ordered by its recent share. The two topics this study
-  # brings together are drawn in the accent colour and the rest in grey, so the
+  # One row per topic, ordered by its share. The two topics this study brings
+  # together are drawn in the accent colour and the rest in grey, so the
   # comparison the poster makes is the one the eye makes first. The labels form
   # a column of their own, sized to the longest, to the left of the shares.
-  w <- scopus_periods(foci)
+  w <- scopus_shares(foci)
   w$ours <- w$label %in% c("Language of the text", "Log data and learning analytics")
   w$row <- seq_len(nrow(w))
   w$name <- ifelse(w$label == "Log data and learning analytics", "Log data", w$label)
@@ -375,27 +374,16 @@ fig_scopus <- function(width_mm, height_mm, foci_file = "data/scopus_focus_trend
   xmin <- -xmax * lab_mm / (panel_mm - lab_mm)
 
   pb <- ggplot(w, aes(y = row, colour = group)) +
-    # The accent is carried by line type as well as hue (solid against dashed),
-    # so the two highlighted rows survive greyscale printing and colour-vision
-    # deficiency.
-    geom_segment(aes(x = pct.early, xend = pct.late, yend = row, linetype = group),
-                 linewidth = 1.6) +
-    geom_point(aes(x = pct.early), shape = 21, fill = PAL[["paper"]], size = 5.2, stroke = 1.6) +
-    geom_point(aes(x = pct.late, fill = group), shape = 21, size = 5.2, stroke = 1.6) +
+    # Each share is a bar drawn as a line from zero. The accent is carried by
+    # line type as well as hue (solid against dashed), so the two highlighted
+    # rows survive greyscale printing and colour-vision deficiency.
+    geom_segment(aes(x = 0, xend = pct, yend = row, linetype = group), linewidth = 1.8) +
+    geom_point(aes(x = pct, fill = group), shape = 21, size = 5.6, stroke = 1.6) +
     geom_text(aes(x = -0.6, label = name, fontface = ifelse(ours, "bold", "plain")),
               hjust = 1, family = FONT, size = pt_mm(MIN_PT + 1)) +
-    geom_text(aes(x = pmax(pct.late, pct.early) + 0.7, label = sprintf("%.0f%%", pct.late),
+    geom_text(aes(x = pct + 0.8, label = sprintf("%.0f%%", pct),
                   fontface = ifelse(ours, "bold", "plain")),
               hjust = 0, family = FONT, size = pt_mm(MIN_PT + 1)) +
-    # A key in the empty lower right, where the recent shares are smallest. Two
-    # single-fill annotations, because one annotation with two fills reads to
-    # check_figure() as a colour encoding, and its white as white on white.
-    annotate("point", x = 14.2, y = 2.25, shape = 21, size = 5.2, stroke = 1.6,
-             colour = PAL[["ink_soft"]], fill = PAL[["paper"]]) +
-    annotate("point", x = 14.2, y = 1.25, shape = 21, size = 5.2, stroke = 1.6,
-             colour = PAL[["ink_soft"]], fill = PAL[["ink_soft"]]) +
-    annotate("text", x = 15, y = c(2.25, 1.25), label = c("2010–17", "2018–25"), hjust = 0,
-             family = FONT, size = pt_mm(MIN_PT), colour = PAL[["ink_soft"]]) +
     scale_linetype_manual(values = c(ours = "solid", other = "22")) +
     scale_colour_manual(values = col) +
     scale_fill_manual(values = col) +
@@ -403,7 +391,8 @@ fig_scopus <- function(width_mm, height_mm, foci_file = "data/scopus_focus_trend
     scale_x_continuous(breaks = seq(0, 20, 5), labels = function(x) paste0(x, "%"),
                        expand = expansion(add = 0)) +
     coord_cartesian(xlim = c(xmin, xmax), clip = "off") +
-    labs(title = "Share of digital-reading records on each topic", x = NULL, y = NULL) +
+    labs(title = "Share of digital-reading records on each topic, 2010–2025", x = NULL,
+         y = NULL) +
     theme_poster() +
     theme(axis.text.y = element_blank(), panel.grid.major.y = element_blank())
 
@@ -440,9 +429,24 @@ fig_precision <- function(width_mm, height_mm,
   key_lab <- c(main = sprintf("%s main effects (H1)", words[n_line[["main"]]]),
                int  = sprintf("%s age-band differences (H2, H3)", words[n_line[["int"]]]))
 
-  panel <- function(d, x, title, xlab, breaks) {
+  # The distinct stories a main effect needs, shaded on the first panel so the
+  # number the caption gives can be found on the curves.
+  m <- utils::read.csv(file.path(DESIGN_DIR, "minimum_texts.csv"), stringsAsFactors = FALSE)
+  need <- range(m$value[m$model == "developmental" & !grepl("_age$", m$param)])
+  need_lab <- paste0(paste(format(round(need, -1), big.mark = ","), collapse = "–"),
+                     "\nstories")
+
+  panel <- function(d, x, title, xlab, breaks, ylab = NULL, band = NULL) {
     p <- ggplot(d, aes(.data[[x]], p_meaningful, colour = term, linetype = term,
-                       shape = term, group = param)) +
+                       shape = term, group = param))
+    if (!is.null(band))
+      p <- p +
+        annotate("rect", xmin = band[1], xmax = band[2], ymin = 0, ymax = 1,
+                 fill = PAL[["ox_mid"]], alpha = 0.12) +
+        annotate("text", x = band[1] / 1.08, y = 0.12, label = need_lab, hjust = 1,
+                 family = FONT, size = pt_mm(MIN_PT), colour = PAL[["ox_mid"]],
+                 lineheight = 0.92)
+    p <- p +
       # The 90% target is drawn in grey, apart from the two series' colours.
       annotate("rect", xmin = 0, xmax = Inf, ymin = 0.9, ymax = 1,
                fill = PAL[["grid"]], alpha = 0.8) +
@@ -457,12 +461,13 @@ fig_precision <- function(width_mm, height_mm,
       scale_colour_manual(values = cols, name = NULL) +
       scale_linetype_manual(values = ltys, name = NULL) +
       scale_shape_manual(values = shps, name = NULL) +
-      labs(title = title, x = xlab, y = NULL) +
+      labs(title = title, x = xlab, y = ylab) +
       theme_poster() +
       theme(panel.grid.major.x = element_blank())
     p
   }
-  pa <- panel(texts, "texts", "More distinct stories", "Distinct stories", c(50, 200, 800))
+  pa <- panel(texts, "texts", "More distinct stories", "Distinct stories", c(50, 200, 800),
+              ylab = "Chance of a clear verdict", band = need)
   pb <- panel(reads, "per_text", "More readings of 250 stories", "Readings per story",
               c(2, 5, 12, 30, 60))
   audit(pa, width_mm / 2, "precision panel a")
@@ -525,7 +530,7 @@ precision_requirements <- function(file = file.path(DESIGN_DIR, "minimum_texts.c
 # that feature's colour. H5's outcome is the child's difficulty rating, on
 # which the same features act the other way round, so its row says so in words
 # and draws no arrow.
-LADDER <- list(box_h = 22, box_gap = 4, group_gap = 8, row_h = 13, row2_h = 22,
+LADDER <- list(box_h = 24, box_gap = 4, group_gap = 8, row_h = 14, row2_h = 23,
                row_gap = 4, pad = 2)
 LADDER_ROWS <- c(1, 1, 2, 2, 1)          # lines in the rows for H2 to H6
 

@@ -64,9 +64,9 @@ source("R/references.R")
 COL_MM <- 269
 dims <- list(
   evidence  = c(COL_MM, evidence_height_mm()),
-  scopus    = c(COL_MM, 87),
+  scopus    = c(COL_MM, 92),
   model     = c(COL_MM, model_height_mm()),
-  precision = c(COL_MM, 162)
+  precision = c(COL_MM, 174)
 )
 
 # The QR code opens this folder on the main branch, where README.md shows the
@@ -95,8 +95,6 @@ req <- precision_requirements()
 
 ## Screens, apps and children's reading
 
-In 2025, more than one in five UK 8- to 18-year-olds read fiction on a screen at least monthly [@pictonTrendsChildrenYoung2026].
-
 ```{=typst}
 #linked-image("figures/evidence.svg", "figures/evidence-links.json")
 ```
@@ -111,14 +109,14 @@ Plain screens cost about 0.2 SD of comprehension, with no clear cost for narrati
 
 ### Where the research has looked
 
-Research on children's digital reading has studied devices and add-ons far more than the language of the text or log data.
+Studies of children's digital reading rarely look at the language of the text or at log data.
 
 ```{=typst}
 #image("figures/scopus.svg")
 ```
 
 ::: {.caption}
-Scopus records, counted with the scopusflow package [@bernabeuScopusflowCRAN2026]. `r n_both` of the `r n_digital` records fell under both green topics, and we found no meta-analysis of generative AI and children's reading.
+Scopus counts made with scopusflow [@bernabeuScopusflowCRAN2026]. `r n_both` of the `r n_digital` records fell under both green topics, and we found no meta-analysis of generative AI and children's reading.
 :::
 
 ```{=typst}
@@ -145,11 +143,11 @@ In this app feature, a child picks a hero, companion, setting, plot and theme. A
 ```
 
 ::: {.caption}
-Chance of showing that a small effect (0.10 SD) is more than negligible, simulated with the pilotr package [@bernabeuPilotrCRAN2026]. A main effect needs `r req$main_lo`–`r req$main_hi` distinct stories, or about `r req$bf_main` under the stricter `#box[Bayes-factor]`{=typst} rule.
+Simulated for a small effect (0.10 SD) with the pilotr package [@bernabeuPilotrCRAN2026]. A main effect needs `r req$main_lo`–`r req$main_hi` distinct stories.
 :::
 
 ::: {.takeaway}
-Effects that hold in the app could inform how AI stories are pitched to each age band, though faster reading is not better understanding. Effects that fade may reflect home reading conditions or the measure as much as the theory.
+Effects that hold could guide how AI stories are pitched to each age band, though speed is not comprehension.
 :::
 
 ```{=typst}
@@ -158,7 +156,7 @@ Effects that hold in the app could inform how AI stories are pitched to each age
 
 ```{=typst}
 #v(1fr)
-#band[A Registered Report on sealed data][
+#band(note: [Stage 1 in preparation])[A Registered Report][
   #steps(
     [Peer review before any outcome is seen],
     [Logs released only after acceptance],
