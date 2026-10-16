@@ -125,8 +125,16 @@ run_sweep <- function(key, spec, path, values, focal, formula, label,
 
 # Grid values. M_FIXED is the mean number of readings per text: each simulated
 # reader draws one text at random, so individual texts receive more or fewer.
-# The source of these values, and of the fixed 120 replicates the secondary
-# sweeps below use, is not recorded. TODO: justify.
+# These are design choices, not estimates. The texts grid doubles from 50 to
+# 1,600, spreading the points evenly on a log scale and bracketing every
+# reading-time requirement, and the children grid spans the tier-2 requirement
+# in the same way. Twelve readings per text is the middle of the readings grid,
+# and 250 texts lies where a main effect's verdict is still uncertain, so each
+# sweep holds the other quantity at a moderate value; the readings sweep
+# shows how far the requirements move with readings per text. The texts and
+# narration sweeps use N_SIMS replicates and the secondary sweeps 120, which
+# keeps the Monte Carlo standard error of a decision probability near 0.90 at
+# about 0.02 and 0.03; each grid point's Wilson interval reports it.
 TEXTS    <- c(50, 100, 200, 400, 800, 1600)
 PER_TEXT <- c(2, 5, 12, 30, 60)
 M_FIXED  <- 12

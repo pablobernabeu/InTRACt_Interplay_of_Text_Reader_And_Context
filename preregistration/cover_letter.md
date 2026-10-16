@@ -11,7 +11,7 @@ Dear Editors,
 We submit for Stage 1 consideration our Registered Report protocol, "Text properties and
 children's reading pace in a multilingual storytelling app", a secondary analysis of
 behavioural logs from *Let's Story*, a storytelling feature of the *Applaydu* application in
-which children aged 7 and older read machine-generated stories in ten or more languages.
+which children aged 7 and older read machine-generated stories in any of 19 languages.
 
 **The scientific case.** Whether the text properties that govern reading under laboratory
 control still govern it in unsupervised, multilingual reading of machine-generated stories is
@@ -45,12 +45,15 @@ within-child term requires was not in the summaries. The window does not overlap
 study will use, which opens on 1 January 2026, and the summaries concern an age range beginning
 three years below this study's youngest band, so nothing reported there is an input to what we
 propose. We take this history as evidence that the sequestration described below is real and of
-long standing: no author of this submission has at any point held a session-level record from
-this platform.
+long standing: apart from the 35-row structural sample disclosed below, no author of this
+submission has held a session-level record from this platform.
 
-**Support in place.** [Confirm that all necessary support (funding, facilities, personnel) is
-in place for the proposed research, naming the funder and grant number, and that the study can
-commence immediately on acceptance in principle.] The data controller has agreed to build the
+**Support in place.** The research is funded by Ferrero International [grant reference] and by
+the John Fell Fund, University of Oxford [grant reference], neither of which has a role in the
+design, analysis, interpretation or decision to publish. Ferrero International develops the
+*Applaydu* app with the data controller, a relationship the protocol's competing-interests
+statement declares. [Confirm that the facilities and personnel are in place and that the study
+can commence immediately on acceptance in principle.] The data controller has agreed to build the
 session-level export on its own release cycle and hold it under the sequestration arrangement
 described below, so analysis can begin as soon as in-principle acceptance is confirmed.
 
@@ -64,9 +67,10 @@ Section S7). / The data-access certification sent to the data controller on 7 Au
 an owner and deputy for the held file and confirming that no analysis relating story text to
 reading time has been conducted or reported to us, is reproduced in Supplementary Section S7,
 with the fields still open at submission marked.] We disclose in the protocol what was received in advance: a 35-row structural
-sample with the data dictionary and the story texts, [and the file manifest and provider-computed
-aggregate counts, received on DATE / with the file manifest and provider-computed aggregate counts
-to follow before in-principle acceptance]. The arrangement was put to the editorial office and
+sample with the data dictionary and the English story texts, [and the texts in the other
+languages, the file manifest and provider-computed aggregate counts, received on DATE / with the
+texts in the other languages, the file manifest and provider-computed aggregate counts to follow
+before in-principle acceptance]. The arrangement was put to the editorial office and
 confirmed as appropriate by the Chief Editor on 3 August 2026, including the direction, which we
 have followed, not to run the dimension reduction before submission. Beyond that material, the
 only quantities from this platform any author has seen are the summaries described above, which
