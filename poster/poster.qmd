@@ -64,9 +64,9 @@ source("R/references.R")
 COL_MM <- 269
 dims <- list(
   evidence  = c(COL_MM, evidence_height_mm()),
-  scopus    = c(COL_MM, 92),
+  scopus    = c(COL_MM, 93),
   model     = c(COL_MM, model_height_mm()),
-  precision = c(COL_MM, 174)
+  precision = c(COL_MM, 186)
 )
 
 # The QR code opens this folder on the main branch, where README.md shows the

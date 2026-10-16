@@ -56,9 +56,9 @@ register_poster_fonts <- function(dir = FONT_DIR) {
 }
 
 # Text sizes on an A1 sheet read at one to two metres. Body text on the poster is
-# 26 pt; nothing in a figure is drawn below 22 pt.
-BASE_PT <- 26
-MIN_PT  <- 22
+# 28 pt; nothing in a figure is drawn below 23 pt.
+BASE_PT <- 27
+MIN_PT  <- 23
 pt_mm   <- function(pt) pt / ggplot2::.pt  # geom_text() sizes are in mm
 
 # Width of a label as drawn, in mm, so a label column can be sized to its
@@ -172,7 +172,7 @@ read_evidence <- function(file = "data/evidence.csv") {
 
 # Rows and group headings take fixed heights in mm, so the figure grows with the
 # file instead of squeezing its rows; poster.qmd asks for this height.
-EV_ROW_MM <- 17; EV_HEAD_MM <- 19; EV_FRAME_MM <- 39
+EV_ROW_MM <- 17.4; EV_HEAD_MM <- 19.5; EV_FRAME_MM <- 40
 evidence_height_mm <- function(file = "data/evidence.csv") {
   ev <- read_evidence(file)
   EV_FRAME_MM + EV_ROW_MM * nrow(ev) + EV_HEAD_MM * length(unique(ev$group))
@@ -236,11 +236,18 @@ fig_evidence <- function(width_mm, height_mm, file = "data/evidence.csv") {
     # starts 0.8 mm inside its white label, which may overlap its neighbour's.
     gap  <- text_mm(" ", MIN_PT, italic = TRUE) + 0.4
     total <- sum(w) + gap * (length(w) - 1)
-    if (total / 2 > (0 - xr[1]) / per_mm - 2)
+    room <- (0 - xr[1]) / per_mm - 2              # mm free left of zero
+    if (total / 2 <= room) {
+      left <- -total / 2 + c(0, cumsum(w + gap))[seq_along(w)]
+      return(data.frame(y = told$y[i], x = left * per_mm, label = txt,
+                        direction = factor(dirs, levels = names(DIR))))
+    }
+    # Too wide for one line: the parts stack, each centred on zero, on the
+    # lines the row's label and citation take.
+    if (length(w) != 2 || max(w) / 2 > room)
       stop("the verdict '", told$verdict[i], "' is too wide to centre on zero",
            call. = FALSE)
-    left <- -total / 2 + c(0, cumsum(w + gap))[seq_along(w)]
-    data.frame(y = told$y[i], x = left * per_mm, label = txt,
+    data.frame(y = told$y[i] + c(LAB_DY, SRC_DY), x = -w / 2 * per_mm, label = txt,
                direction = factor(dirs, levels = names(DIR)))
   }))
 
@@ -269,12 +276,16 @@ fig_evidence <- function(width_mm, height_mm, file = "data/evidence.csv") {
     annotate("text", x = -0.015, y = top + 0.15, label = "← favours paper\nor no add-on",
              hjust = 1, family = FONT, size = pt_mm(MIN_PT), colour = DIR[["negative"]],
              lineheight = 0.95) +
-    annotate("text", x = 0.015, y = top + 0.15, label = "favours the screen\nor add-on →",
+    annotate("text", x = 0.015, y = top + 0.15, label = "favours screen\nor add-on →",
              hjust = 0, family = FONT, size = pt_mm(MIN_PT), colour = DIR[["positive"]],
              lineheight = 0.95) +
     scale_colour_manual(values = DIR, guide = "none") +
     scale_shape_manual(values = c(negative = 16, neutral = 21, positive = 16), guide = "none") +
-    scale_x_continuous(breaks = c(-0.4, -0.2, 0, 0.2, 0.4, 0.6), labels = signed,
+    # Gridlines every 0.2, labelled every 0.4, which is as close as labels of
+    # this size can sit without touching.
+    scale_x_continuous(breaks = c(-0.4, -0.2, 0, 0.2, 0.4, 0.6),
+                       labels = function(x) ifelse(abs(round(x / 0.4) * 0.4 - x) < 1e-9,
+                                                   signed(x), ""),
                        expand = expansion(add = 0)) +
     scale_y_continuous(limits = c(bottom, top + 0.75), expand = expansion(add = 0)) +
     coord_cartesian(xlim = c(xmin, xr[2]), clip = "off") +
@@ -541,7 +552,9 @@ model_height_mm <- function() {
 
 fig_model <- function(width_mm, height_mm) {
   W <- width_mm; H <- height_mm; L <- LADDER
-  lab_pt <- MIN_PT + 5; title_pt <- MIN_PT + 4; sub_pt <- MIN_PT + 1; row_pt <- MIN_PT + 4
+  # Sizes are fixed, not tied to MIN_PT: the ladder's four columns are sized to
+  # their text, and larger type would squeeze the outcome box below its words.
+  lab_pt <- 27; title_pt <- 26; sub_pt <- 23; row_pt <- 26
   col <- c(lex = PAL[["lexical"]], gram = PAL[["grammatical"]], cont = PAL[["continuity"]],
            ink = PAL[["ink"]], out = PAL[["ox_mid"]])
   y_at <- function(top) H - top                     # mm from the top to plot units
