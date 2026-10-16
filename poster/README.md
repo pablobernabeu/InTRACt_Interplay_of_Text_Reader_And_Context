@@ -12,7 +12,7 @@ Education, University of Oxford. Contact:
 <a href="poster.pdf"><img src="img/poster-preview.png" alt="Preview of the poster" width="560"></a>
 
 [Poster (PDF, A1)](poster.pdf) · [Print file with 3 mm bleed](poster-print.pdf) ·
-[Study protocol](https://github.com/pablobernabeu/InTRACt_Interplay_of_Text_Reader_And_Context/tree/wip/bib-2026-07-21/preregistration) · [References](#references)
+[Study protocol](../preregistration/) · [References](#references)
 
 ## The study in brief
 
@@ -66,9 +66,8 @@ children's reading rates report
 [Francis et al., 2018](https://doi.org/10.1177/0741932518772904)). Re-run with 5% to 20% between
 stories, a main effect needs about 490 to 1,240 distinct stories. The interactions need about
 1,140 to 1,500 and change little, because comparing readers on the same stories cancels the
-story effect. Section S5 of the protocol's
-[supplement](https://github.com/pablobernabeu/InTRACt_Interplay_of_Text_Reader_And_Context/blob/wip/bib-2026-07-21/preregistration/supplementary.pdf)
-gives the full table.
+story effect. Section S5 of the protocol's [supplement](../preregistration/supplementary.pdf) gives
+the full table.
 
 ## What the evidence shows
 
@@ -130,15 +129,13 @@ the counts by year.
 ## Data and materials
 
 Everything on the poster is computed from the files in this folder, and nothing on it comes from
-the app's logs or its story texts. The protocol, its supplement and its design analysis are
-developed on the branch [`wip/bib-2026-07-21`](https://github.com/pablobernabeu/InTRACt_Interplay_of_Text_Reader_And_Context/tree/wip/bib-2026-07-21/preregistration). The
-`preregistration/` folder on `main` holds an earlier draft, from June 2026.
+the app's logs or its story texts. The protocol, its supplement and its design analysis are in
+[`../preregistration/`](../preregistration/).
 
 - `data/evidence.csv`: the evidence map, one row per finding, with its source and location.
 - `data/scopus_*`: the Scopus counts and the full search record, from 14 October 2026.
 - `data/design_analysis/`: the protocol's design-analysis outputs behind the precision figure,
-  copied on 15 October 2026 from its [`design_analysis/`](https://github.com/pablobernabeu/InTRACt_Interplay_of_Text_Reader_And_Context/tree/wip/bib-2026-07-21/preregistration/design_analysis)
-  folder.
+  copied on 15 October 2026 from [`../preregistration/design_analysis/`](../preregistration/design_analysis/).
 - `data/references.bib`: the works the poster cites, with fields checked against Crossref and CRAN.
 
 ## References
