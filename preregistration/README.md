@@ -35,13 +35,25 @@ with those artefacts. Run each script from this directory.
 
 ## Requirements
 
-The committed outputs were produced with R 4.6.1 (see `design_analysis/session_info.txt`),
-with pilotr 0.3.0, theoryforge 0.6.0, depictr 0.3.0 and scopusflow 0.4.0. The repository does
-not yet hold an R lockfile, so other package versions are not pinned, and the sources the four
-study packages were installed from are not recorded. The 2026-09-05 draft was rendered with
-Quarto 1.10.18 and LuaTeX 1.24.0 (TeX Live 2026). The count script needs Python 3.8 or later
-and nothing outside the standard library. Regenerating the framework figure in
-`../mindmap/source files` needs Node.js and network access.
+The committed outputs were produced with R 4.6.1 (see `design_analysis/session_info.txt`).
+`renv.lock` pins every R package the scripts use, at the versions installed, with the
+repository each comes from. It takes pilotr 0.3.0, theoryforge 0.6.0, depictr 0.3.0 and
+scopusflow 0.4.0 from CRAN, whose releases match the local builds that produced the committed
+outputs in every function the scripts call. To build that environment in a separate library,
+leaving your own untouched:
+
+```bash
+Rscript -e 'renv::restore(lockfile = "renv.lock", library = "renv-library", prompt = FALSE)'
+export R_LIBS=renv-library   # then run the steps below as written
+```
+
+On 16 October 2026, a library restored this way reproduced every table, figure and theory
+output of the steps below that does not need the Scopus API or a fresh simulation, and both
+checks passed. The R scripts follow `../.lintr.R`, and `Rscript -e 'lintr::lint_dir()'` reports
+no lints. The 2026-10-16 draft was rendered with Quarto 1.10.19 and LuaTeX 1.24.0 (TeX Live
+2026). The count script needs Python 3.8 or later and nothing outside the standard library.
+Regenerating the framework figure in `../mindmap/source files` needs Node.js and network
+access.
 
 ## Pipeline
 
@@ -55,6 +67,7 @@ write, apart from the Scopus step, which queries the API.
 | 3 | `Rscript design_analysis/run_design_analysis.R` | `tier1_developmental.json`, `tier1_narration.json`, `tier2_within_child.json` | `sweeps/dev_texts.csv`, `dev_readings.csv`, `dev_texts_null.csv`, `narr_texts.csv`, `t2_children.csv`, then `precision_sweep.csv`, `minimum_texts.csv`, `session_info.txt` |
 | 4 | `Rscript design_analysis/solve_at_095.R` | `sweeps/dev_texts.csv`, `narr_texts.csv`, `t2_children.csv` | `minimum_texts_095.csv` |
 | 4b | `Rscript design_analysis/solve_at_bf10.R` | the same three sweeps | `minimum_texts_bf10.csv`, `sweeps/bf10_calibration.csv` |
+| 4c | `Rscript design_analysis/run_variance_sensitivity.R` | `tier1_developmental.json`, `tier1_narration.json`, `sweeps/dev_texts.csv`, `narr_texts.csv` | `sweeps/sens_text{05,13,20}_{dev,narr}_texts.csv`, `variance_sensitivity.csv`, `session_info_variance_sensitivity.txt` |
 | 5 | `Rscript design_analysis/run_ordinal_analysis.R` | `tier1_reported_difficulty.json` | `sweeps/ordinal_<texts>.csv`, `sweeps/ordinal_texts.csv`, `minimum_texts_ordinal.csv` |
 | 6 | `Rscript design_analysis/summarise_ordinal.R` | `sweeps/ordinal_<texts>.csv` | `sweeps/ordinal_texts.csv` and `minimum_texts_ordinal.csv`, with the projection columns |
 | 7 | `Rscript figures/make_precision_figure.R` | `design_analysis/precision_sweep.csv` | `figures/fig_precision.{png,pdf}`, `fig_precision_supplement.{png,pdf}` |
@@ -64,8 +77,9 @@ write, apart from the Scopus step, which queries the API.
 | 11 | `quarto render` | both documents | the dated protocol draft, `supplementary.{pdf,html}` |
 
 Step 6 must follow step 5, because both write `minimum_texts_ordinal.csv` and only step 6
-adds the projection the protocol quotes. Steps 3 and 5 are slow, and their runtimes are not
-recorded. A six-worker ordinal run at 3,200 texts exhausted memory, which is why that point is
+adds the projection the protocol quotes. Steps 3, 4c and 5 are slow. A sweep of step 4c took 7
+to 14 minutes with six to eight workers, and the other runtimes are not recorded. A six-worker
+ordinal run at 3,200 texts exhausted memory, which is why that point is
 absent from the default grid.
 
 ## Checking the manuscript against its artefacts
@@ -138,6 +152,8 @@ The precision analysis, built on portable design specifications.
 | `solve_at_095.R` | Re-solves the cached curves at 0.95 assurance, the floor Nature Human Behaviour names for frequentist plans, without re-simulating anything. Writes `minimum_texts_095.csv`. The protocol registers 0.90 and reports these figures beside it. |
 | `solve_at_bf10.R` | Prices the Bayes-factor criterion for a non-negligible verdict (interval Bayes factor of at least 10 under the reference prior) from the cached curves by a normal approximation: each grid point's mean interval width gives its standard error, the probability that a 0.10 effect clears the criterion is `pnorm(0.05/SE - z*)`, and the same solver inverts the curve at 0.90 and 0.95. Writes `minimum_texts_bf10.csv` (with `value_at_196`, the same approximation at the simulation's own criterion, for comparison) and `sweeps/bf10_calibration.csv`, the approximation against the simulated probability at every grid point. The re-run at the observed inputs computes the criterion by simulation and supersedes these figures. |
 | `run_ordinal_analysis.R` | The same question for the ordinal outcome behind Hypothesis 5. The general routine fits a linear mixed model, which would answer a different question about a three-category response, so pilotr still generates the data and `ordinal::clmm` fits the cumulative logit the protocol specifies. |
+| `run_variance_sensitivity.R` | Re-derives the tier-1 requirements with the share of variance between texts at 5, 13 and 20 per cent, under the simulation's criterion and the Bayes-factor criterion, and reads the registered 9 per cent rows from the cached sweeps (Supplementary Section S5). Writes `variance_sensitivity.csv` and `session_info_variance_sensitivity.txt`. |
+| `session_info_variance_sensitivity_arc.txt` | The session record of the University of Oxford cluster run that simulated the 20 per cent sweeps, where a re-run of both 5 per cent sweeps reproduced the local ones. |
 | `summarise_ordinal.R` | Pools the cached ordinal grid points, attempts the 0.90 solve, and projects the requirement from the fitted width scaling where the target lies beyond the simulated range. The projection starts from the coefficient as attenuated by the omitted child intercept, computed analytically and checked against the mean fitted estimates. Writes `session_info_ordinal.txt`. Run it after `run_ordinal_analysis.R`. |
 
 Each sweep and each ordinal grid point is cached under `design_analysis/sweeps/` as soon as it
@@ -148,11 +164,12 @@ the ordinal grid points, which are far slower to regenerate than the rest.
 
 | Variable | Default | Read by | Effect |
 |---|---|---|---|
-| `INTRACT_N_SIMS` | 200 | `run_design_analysis.R` | Replicates for the developmental and narration texts sweeps. The readings, null and tier-2 sweeps are fixed at 120. |
-| `INTRACT_WORKERS` | 6 | both simulation scripts | Worker processes. Each script falls back to serial if its first cluster will not start. |
+| `INTRACT_N_SIMS` | 200 | `run_design_analysis.R`, `run_variance_sensitivity.R` | Replicates for the developmental and narration texts sweeps. The readings, null and tier-2 sweeps are fixed at 120. |
+| `INTRACT_WORKERS` | 6 | the three simulation scripts | Worker processes. Each script falls back to serial if its first cluster will not start. |
 | `INTRACT_ORD_SIMS` | 60 | `run_ordinal_analysis.R` | Replicates per ordinal grid point. |
 | `INTRACT_ORD_TEXTS` | `200,400,800,1600` | `run_ordinal_analysis.R` | The ordinal grid, comma-separated. |
 | `INTRACT_RATED_RATE` | 0.30 | `run_ordinal_analysis.R` | The share of readings carrying a rating, rounded from the 10 of 35 rated sessions in the structural sample. |
+| `INTRACT_SHARES` | `0.05,0.13,0.20` | `run_variance_sensitivity.R` | The shares of variance between texts to sweep, comma-separated. Shares already cached are read, not re-simulated. |
 | `INTRACT_ALLOW_SKIP` | unset | `check_reported_numbers.R` | Set to 1 to let a check with skipped blocks exit 0. |
 | `SCOPUS_API_KEY` | unset | `scopus_gap_analysis.R`, through scopusflow | The Scopus API key. |
 

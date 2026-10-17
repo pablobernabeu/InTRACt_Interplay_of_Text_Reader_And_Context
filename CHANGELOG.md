@@ -8,6 +8,49 @@ date and rationale.
 
 ## [Unreleased]
 
+### 15 to 17 October 2026: poster, languages, variance sensitivity, merge into main, lockfiles and style
+
+No registered threshold changes. The protocol gains a sensitivity analysis of its design-analysis
+requirements, and every output rebuilt in this period was compared with the committed one.
+
+- Poster: a conference poster, its source and the data behind its figures are in `poster/` (15
+  October). Two superseded drafts were removed, the build files moved to `layout/`, the
+  bibliography to `data/` and the preview to `img/`, and the folder now builds without
+  `../preregistration/`. Both PDFs re-render pixel for pixel.
+- Design analysis: the 9 per cent of variance between texts and the 20 per cent between children
+  are stated as assumptions and compared with published decompositions of children's reading
+  rates. `design_analysis/run_variance_sensitivity.R` re-derives the tier-1 requirements at text
+  shares of 5, 13 and 20 per cent (Supplementary Section S5). The 20 per cent sweeps ran on the
+  university cluster, where a re-run of the 5 per cent sweeps reproduced the local ones exactly.
+  The ordinal model's latent-scale shares and placeholder thresholds are stated, and the grid
+  choices in `run_design_analysis.R` are explained.
+- Languages: the protocol registers every language the app offers, 19, with resources and script
+  rules for the nine beyond the structural sample (Supplementary Table 4, so the later
+  supplementary tables are renumbered) and placements by orthographic depth.
+- The data controller's October answers are applied: the narration flag is treated as
+  availability, so Hypothesis 4 is an intention-to-treat comparison, the age band is
+  family-reported, the texts outside English are machine translations, and the English texts are
+  held. The acknowledgements, competing interests and cover letter name Ferrero International and
+  the John Fell Fund as funders.
+- Repository: the protocol branch was merged into `main` on 17 October. The thirteen publisher
+  PDFs from a Zotero library and the link to the private literature-review repository are no
+  longer tracked, and both remain in history. `main`'s render workflow now runs only when started
+  by hand, because on every push it re-rendered the protocol on the runner and committed the result
+  over the draft rendered and checked locally.
+- Environment: `poster/renv.lock` and `preregistration/renv.lock` pin every R package. pilotr,
+  theoryforge and scopusflow, previously installed from local builds, are taken from CRAN at the
+  same versions. The CRAN release of pilotr 0.3.0 differs from the local build only in functions
+  the scripts never call. Libraries restored from the lockfiles reproduced the poster pixel for
+  pixel, and every table, figure and theory output of the protocol that does not need the Scopus
+  API or a fresh simulation.
+- Figures: the protocol's PNG figures name `ragg::agg_png`, because `ggsave()` otherwise falls back
+  to a device that rasterises text differently when ragg is absent. The PNGs are unchanged.
+- `design_analysis/precision_sweep.csv`, and its copy under `poster/data/`, was regenerated from the
+  cached sweeps. Its last column is no longer quoted, and every value is unchanged.
+  `session_info.txt` was kept as the record of the September simulations.
+- Style: `.lintr.R` records the R style, and every R script passes with no lints. The edits change
+  layout only, and every edited file parses to the same code.
+
 ### 25 September 2026 (later): count script assessed, priors aligned, open literature items closed
 
 No further request can go to the data controller before submission, so the count script it has
