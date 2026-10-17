@@ -21,6 +21,15 @@ suppressPackageStartupMessages({
 OUT <- "figures"
 res <- utils::read.csv("design_analysis/precision_sweep.csv", stringsAsFactors = FALSE)
 
+# Both figures are saved at this size, and each panel is half the width. In the
+# journal, each half of a double-column figure occupies Nature's single-column
+# width of 8.9 cm. The protocol embeds the figures at its full text width of
+# 468 pt, which leaves each panel 8.26 cm. The text has to survive the narrower.
+FIG_W_IN        <- 11
+FIG_H_IN        <- 5
+PANEL_RENDER_CM <- FIG_W_IN * 2.54 / 2
+PANEL_PRINT_CM  <- min(8.9, 468 / 2 / 72 * 2.54)
+
 # Five series distinguished by hue alone failed the greyscale check, so the figure
 # carries two encodings instead of one: hue for which construct a coefficient
 # belongs to, and line type for whether it is a main effect or its interaction
@@ -28,18 +37,43 @@ res <- utils::read.csv("design_analysis/precision_sweep.csv", stringsAsFactors =
 construct_of <- c(LexPC = "Lexical difficulty", SynPC = "Grammatical load",
                   CohPC = "Referential continuity",
                   SynPC_age = "Grammatical load", CohPC_age = "Referential continuity",
-                  LexPC_narr = "Lexical difficulty", CohPC_narr = "Referential continuity",
+                  LexPC_narr = "Lexical difficulty",
                   accum = "Accumulated reading")
 term_of <- c(LexPC = "Main effect", SynPC = "Main effect", CohPC = "Main effect",
              SynPC_age = "Interaction", CohPC_age = "Interaction",
-             LexPC_narr = "Interaction", CohPC_narr = "Interaction",
+             LexPC_narr = "Interaction",
              accum = "Main effect")
 
-# An empty panel composes into an unreadable figure rather than an error, so the
-# subset is checked here where the mistake is still visible.
+# The rows of one sweep. which() keeps a missing value in a filter column from
+# selecting a row of NAs.
+rows_of <- function(model, sweep, truth = NULL) {
+  keep <- res$model == model & res$sweep == sweep
+  if (!is.null(truth)) keep <- keep & res$truth == truth
+  res[which(keep), , drop = FALSE]
+}
+
+# Each subtitle states the value a sweep holds fixed, so the CSV is checked to hold
+# it there; a re-run at other settings would otherwise keep the old wording.
+held_at <- function(d, col, value, what) {
+  if (!all(d[[col]] == value) || anyNA(d[[col]]))
+    stop("the ", what, " is labelled as holding ", col, " at ", value, " but the CSV has ",
+         paste(sort(unique(d[[col]])), collapse = ", "), call. = FALSE)
+  invisible(d)
+}
+
+# An empty panel composes into an unreadable figure rather than an error, and a
+# coefficient missing from the lookups would be drawn in no series, so both are
+# checked here where the mistake is still visible.
 prep <- function(d, xcol, what) {
-  d <- d[!is.na(d[[xcol]]), ]
-  if (!nrow(d)) stop("no rows for panel '", what, "' on axis '", xcol, "'", call. = FALSE)
+  if (!nrow(d)) stop("no rows for panel '", what, "'", call. = FALSE)
+  if (anyNA(d[[xcol]])) stop("missing values on axis '", xcol, "' in panel '", what, "'",
+                             call. = FALSE)
+  unknown <- setdiff(d$param, names(construct_of))
+  if (length(unknown)) stop("no series for ", paste(unknown, collapse = ", "), " in panel '",
+                            what, "'", call. = FALSE)
+  if (anyDuplicated(d[c("param", xcol)]))
+    stop("more than one row per coefficient and grid point in panel '", what, "'",
+         call. = FALSE)
   data.frame(
     x         = d[[xcol]],
     power     = d$p_meaningful,
@@ -67,11 +101,11 @@ SERIES_COLOURS <- c("Lexical difficulty"     = "#0072b2",
                     "Referential continuity" = "#333333",
                     "Accumulated reading"    = "#8e2c6b")
 
-curve_panel <- function(d, x_lab, subtitle, log_x = TRUE) {
+curve_panel <- function(d, x_lab, subtitle) {
   d$construct <- droplevels(d$construct)
   d$term <- droplevels(d$term)
-  p <- ggplot(d, aes(x = x, y = power, colour = construct, fill = construct,
-                     linetype = term, shape = term)) +
+  ggplot(d, aes(x = x, y = power, colour = construct, fill = construct,
+                linetype = term, shape = term)) +
     geom_hline(yintercept = 0.90, linetype = "dashed", linewidth = 0.5,
                colour = "grey40") +
     geom_ribbon(aes(ymin = lower, ymax = upper, group = interaction(construct, term)),
@@ -88,21 +122,26 @@ curve_panel <- function(d, x_lab, subtitle, log_x = TRUE) {
          linetype = NULL, shape = NULL) +
     theme_depictr(base_size = BASE_SIZE) +
     theme(legend.position = "bottom", legend.box = "horizontal",
-          legend.margin = margin(t = 0, b = 0))
-  if (log_x) p <- p + scale_x_log10() else p
-  p
+          legend.margin = margin(t = 0, b = 0)) +
+    scale_x_log10()
 }
 
-# run_design_analysis.R writes `truth` as the string "0.10", which read.csv turns
-# into a number. The conversion keeps the comparison numeric if the column ever
-# arrives as text, where "0.10" == 0.10 would select nothing and prep() would stop.
-res$truth <- suppressWarnings(as.numeric(res$truth))
+# read.csv reads `truth` as a number. A value it could not read as one would
+# otherwise drop out of the comparison below, so the conversion is checked.
+truth <- suppressWarnings(as.numeric(res$truth))
+if (any(is.na(truth) & !is.na(res$truth)))
+  stop("precision_sweep.csv has non-numeric truth values: ",
+       paste(unique(res$truth[is.na(truth) & !is.na(res$truth)]), collapse = ", "),
+       call. = FALSE)
+res$truth <- truth
+# The sweeps at the alternative, every coefficient at twice the region's
+# half-width; the null sweep has truth 0.
 ALT <- 0.10
 
-dev_texts <- prep(res[res$model == "developmental" & res$sweep == "texts" &
-                        res$truth == ALT, ], "texts", "texts sweep")
-dev_read  <- prep(res[res$model == "developmental" & res$sweep == "readings", ],
-                  "per_text", "readings sweep")
+dev_texts <- prep(held_at(rows_of("developmental", "texts", ALT), "per_text", 12,
+                          "texts sweep"), "texts", "texts sweep")
+dev_read  <- prep(held_at(rows_of("developmental", "readings"), "texts", 250,
+                          "readings sweep"), "per_text", "readings sweep")
 
 pa <- curve_panel(dev_texts, "Distinct texts (log scale)",
                   "Twelve readings per text on average")
@@ -115,13 +154,24 @@ pb <- curve_panel(dev_read, "Readings per text (log scale)",
 fig <- arrange_plots(pa, pb, ncol = 2, nrow = 1, guides = "collect") &
   theme(legend.position = "bottom", legend.box = "horizontal")
 
-# A figure destined for print is checked rather than eyeballed. The composed
-# figure is saved 11 inches wide, so each panel is drawn at 13.97 cm and will be
-# printed at about 8.9 cm as half of a double-column figure. Those are the two
-# widths the check needs: text that is comfortable on screen can still reach the
-# page below the six-point floor.
+# The narration and within-child curves go in the supplement, where they are read
+# against the design effect for an unbalanced narration flag.
+narr <- prep(rows_of("narration", "texts"), "texts", "narration")
+t2   <- prep(held_at(rows_of("within_child", "children"), "per_child", 5, "within-child sweep"),
+             "children", "within child")
+ps_a <- curve_panel(narr, "Distinct texts (log scale)", "Narration model")
+ps_b <- curve_panel(t2, "Children in tier 2 (log scale)",
+                    "Within-child model, five distinct texts each")
+sup <- arrange_plots(ps_a, ps_b, ncol = 2, nrow = 1, guides = "collect") &
+  theme(legend.position = "bottom", legend.box = "horizontal")
+
+# A figure destined for print is checked rather than eyeballed, at the two widths
+# set at the top: the width each panel is drawn at and the width it is printed at.
+# Text that is comfortable on screen can still reach the page below the six-point
+# floor. Every panel is checked before either figure is saved, so a failure
+# cannot leave one figure new and the other old.
 audit_panel <- function(p, what) {
-  chk <- check_figure(p, width_cm = 8.9, render_width_cm = 13.97)
+  chk <- check_figure(p, width_cm = PANEL_PRINT_CM, render_width_cm = PANEL_RENDER_CM)
   print(chk)
   failed <- chk[chk$verdict == "fail", , drop = FALSE]
   if (nrow(failed)) {
@@ -133,30 +183,20 @@ audit_panel <- function(p, what) {
 }
 audit_panel(pa, "main panel a")
 audit_panel(pb, "main panel b")
+audit_panel(ps_a, "supplement panel a")
+audit_panel(ps_b, "supplement panel b")
 
 # The manuscript embeds the PDF, where the type stays selectable text, and
 # cairo_pdf embeds the fonts. Neither document uses the PNG. ggsave() draws a PNG
 # with ragg only when ragg is installed and otherwise falls back to a device that
 # rasterises text differently, so ragg is named here and the dependency is declared.
-save_plot(file.path(OUT, "fig_precision.png"), fig, width = 11, height = 5, dpi = 300,
-          device = ragg::agg_png)
-save_plot(file.path(OUT, "fig_precision.pdf"), fig, width = 11, height = 5,
-          device = grDevices::cairo_pdf)
-
-# The narration and within-child curves go in the supplement, where they are read
-# against the design effect for an unbalanced narration flag.
-narr <- prep(res[res$model == "narration", ], "texts", "narration")
-t2   <- prep(res[res$model == "within_child", ], "children", "within child")
-ps_a <- curve_panel(narr, "Distinct texts (log scale)", "Narration model")
-ps_b <- curve_panel(t2, "Children in tier 2 (log scale)",
-                    "Within-child model, five distinct texts each")
-audit_panel(ps_a, "supplement panel a")
-audit_panel(ps_b, "supplement panel b")
-sup <- arrange_plots(ps_a, ps_b, ncol = 2, nrow = 1, guides = "collect") &
-  theme(legend.position = "bottom", legend.box = "horizontal")
-save_plot(file.path(OUT, "fig_precision_supplement.png"), sup, width = 11, height = 5, dpi = 300,
-          device = ragg::agg_png)
-save_plot(file.path(OUT, "fig_precision_supplement.pdf"), sup, width = 11, height = 5,
-          device = grDevices::cairo_pdf)
+save_both <- function(p, name) {
+  save_plot(file.path(OUT, paste0(name, ".png")), p, width = FIG_W_IN, height = FIG_H_IN,
+            dpi = 300, device = ragg::agg_png)
+  save_plot(file.path(OUT, paste0(name, ".pdf")), p, width = FIG_W_IN, height = FIG_H_IN,
+            device = grDevices::cairo_pdf)
+}
+save_both(fig, "fig_precision")
+save_both(sup, "fig_precision_supplement")
 
 writeLines("wrote figures/fig_precision{,_supplement}.{png,pdf}")

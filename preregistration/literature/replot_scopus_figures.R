@@ -24,6 +24,12 @@ suppressPackageStartupMessages({
 })
 OUT <- "literature"
 
+# Both figures are saved at this size and embedded at 90 per cent of the text
+# width, about 14 cm, which is the width the type-size floor is checked at.
+FIG_W_IN   <- 7.5
+FIG_H_IN   <- 4.6
+PRINT_W_CM <- 14
+
 # The archived CSV is never modified: the relabelling happens in memory. The
 # names are the archived queries verbatim, so they stay whole on one line each.
 # nolint start: line_length_linter.
@@ -50,52 +56,73 @@ strip_chrome <- function(p) {
   )
 }
 
-# Both figures are embedded at 90 to 100 per cent of the text width, about
-# 14 cm, which is the width the type-size floor is checked at. A failure is
-# printed and reported rather than fatal here, because the plot geometry is the
-# package's and the remaining check (colour joined by a second encoding) needs a
-# change to the package's geoms; the figures' groups are also labelled in text.
+# Every check is fatal except one. Colour joined by a second encoding needs a
+# change to the package's geoms, so that failure is reported and the run goes
+# on; the figures' groups are also labelled in text. Both figures are checked
+# before either is saved.
+WARN_ONLY <- "redundant_encoding"
 audit <- function(p, what) {
-  chk <- check_figure(p, width_cm = 14, render_width_cm = 19.05)
+  chk <- check_figure(p, width_cm = PRINT_W_CM, render_width_cm = FIG_W_IN * 2.54)
   print(chk)
   failed <- chk[chk$verdict == "fail", , drop = FALSE]
   if (nrow(failed)) {
     print(failed)
+    fatal <- setdiff(failed$check, WARN_ONLY)
+    if (length(fatal))
+      stop("figure check failed for ", what, ": ", paste(fatal, collapse = ", "), call. = FALSE)
     warning("figure check reported failures for ", what, ": ",
             paste(failed$check, collapse = ", "), call. = FALSE)
   }
   invisible(chk)
 }
 
-ints <- utils::read.csv(file.path(OUT, "scopus_gap_sizes.csv"),
-                        stringsAsFactors = FALSE, check.names = FALSE)
+# Reads one archive and stops on a missing value, which the package would
+# otherwise drop from the chart or draw as a gap.
+read_archive <- function(name) {
+  d <- utils::read.csv(file.path(OUT, name), stringsAsFactors = FALSE, check.names = FALSE)
+  holes <- names(d)[colSums(is.na(d)) > 0]
+  if (!nrow(d) || length(holes))
+    stop(name, " is empty or has missing values in: ", paste(holes, collapse = ", "),
+         call. = FALSE)
+  d
+}
+
+# The package drops the intersection with no records from the log axis and says
+# so in its caption, which is removed here; the manuscript's caption says it.
+ints <- read_archive("scopus_gap_sizes.csv")
 class(ints) <- c("scopus_intersections", "data.frame")
 p <- strip_chrome(plot_scopus_intersections(ints))
-audit(p, "gap intersections")
-# ragg is named because ggsave() otherwise draws the PNG with whichever device is
-# installed, and the fallback rasterises text differently.
-ggplot2::ggsave(file.path(OUT, "scopus_gap_intersections.png"), p,
-                width = 7.5, height = 4.6, dpi = 300, bg = "white", device = ragg::agg_png)
-ggplot2::ggsave(file.path(OUT, "scopus_gap_intersections.pdf"), p,
-                width = 7.5, height = 4.6, bg = "white", device = grDevices::cairo_pdf)
 
-cmp <- utils::read.csv(file.path(OUT, "scopus_topic_trends.csv"),
-                       stringsAsFactors = FALSE, check.names = FALSE)
-hit <- cmp$abridged_query %in% names(short_names)
-cmp$abridged_query[hit] <- unname(short_names[cmp$abridged_query[hit]])
+cmp <- read_archive("scopus_topic_trends.csv")
+# A comparison query that matches no key would keep its full expression as its
+# label, and a key that matches no query would mean the archive has changed.
+series <- unique(cmp$abridged_query[cmp$query_type != "reference"])
+if (length(setdiff(series, names(short_names))) || length(setdiff(names(short_names), series)))
+  stop("the short names do not match the archived comparison queries", call. = FALSE)
+cmp$abridged_query <- ifelse(cmp$abridged_query %in% names(short_names),
+                             unname(short_names[cmp$abridged_query]), cmp$abridged_query)
 class(cmp) <- c("scopus_comparison", "data.frame")
 # The series are labelled at their right-hand ends, so the x axis is expanded
 # to leave room for the labels inside the panel and clipping is switched off.
 pc <- suppressMessages(
   strip_chrome(plot_scopus_comparison(cmp)) +
     coord_cartesian(clip = "off") +
-    scale_x_continuous(breaks = seq(2018, 2026, 2),
+    scale_x_continuous(breaks = as.numeric(seq(min(cmp$year), max(cmp$year), by = 2)),
                        expand = expansion(mult = c(0.02, 0.46)))
 )
+
+audit(p, "gap intersections")
 audit(pc, "topic trends")
-ggplot2::ggsave(file.path(OUT, "scopus_topic_trends.png"), pc,
-                width = 7.5, height = 4.6, dpi = 300, bg = "white", device = ragg::agg_png)
-ggplot2::ggsave(file.path(OUT, "scopus_topic_trends.pdf"), pc,
-                width = 7.5, height = 4.6, bg = "white", device = grDevices::cairo_pdf)
+
+# ragg is named because ggsave() otherwise draws the PNG with whichever device is
+# installed, and the fallback rasterises text differently.
+save_both <- function(p, name) {
+  ggplot2::ggsave(file.path(OUT, paste0(name, ".png")), p, width = FIG_W_IN,
+                  height = FIG_H_IN, dpi = 300, bg = "white", device = ragg::agg_png)
+  ggplot2::ggsave(file.path(OUT, paste0(name, ".pdf")), p, width = FIG_W_IN,
+                  height = FIG_H_IN, bg = "white", device = grDevices::cairo_pdf)
+}
+save_both(p, "scopus_gap_intersections")
+save_both(pc, "scopus_topic_trends")
 
 writeLines("redrew the Scopus figures (png and pdf) from the archived counts")
