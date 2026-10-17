@@ -24,17 +24,20 @@
 # 6, where a larger child share and a smaller residual, as the published
 # decompositions report, would lower the requirement.
 #
-# Each sweep is cached in design_analysis/sweeps/ under its share, as in
-# run_design_analysis.R, and the 9 per cent rows are read from that script's own
+# Each sweep is cached in design_analysis/sweeps/ under its share, with a key
+# file as in run_design_analysis.R, and the 9 per cent rows are read from that script's own
 # cached sweeps, so the table puts the registered figures beside the sensitivity
 # figures without re-running them.
 
 library(pilotr)
+source("design_analysis/helpers.R")
+need_package(requireNamespace("lme4", quietly = TRUE), "lme4",
+             "pilotr fits every replicate with it")
 
-N_SIMS  <- as.integer(Sys.getenv("INTRACT_N_SIMS", "200"))
-WORKERS <- as.integer(Sys.getenv("INTRACT_WORKERS", "6"))
+N_SIMS  <- env_number("INTRACT_N_SIMS", "200")
+WORKERS <- env_number("INTRACT_WORKERS", "6")
 ROPE    <- 0.05
-EFFECT  <- 0.10
+EFFECT  <- 2 * ROPE
 OUT     <- "design_analysis"
 CACHE   <- file.path(OUT, "sweeps")
 dir.create(CACHE, showWarnings = FALSE, recursive = TRUE)
@@ -42,21 +45,9 @@ dir.create(CACHE, showWarnings = FALSE, recursive = TRUE)
 CHILD_VAR <- 0.45^2                  # as in every reading-time specification
 # The registered value, 0.09, is read from cache. INTRACT_SHARES restricts the run
 # to a subset, for example "0.05,0.13" to tabulate sweeps already cached.
-SHARES    <- as.numeric(strsplit(Sys.getenv("INTRACT_SHARES", "0.05,0.13,0.20"), ",")[[1]])
+SHARES    <- env_numbers("INTRACT_SHARES", "0.05,0.13,0.20", min = 0, max = 1 - CHILD_VAR)
 TEXTS     <- c(50, 100, 200, 400, 800, 1600)
 M_FIXED   <- 12
-
-msg <- function(...) {
-  cat(format(Sys.time(), "%H:%M:%S"), " ", ..., "\n", sep = "")
-  flush.console()
-}
-
-at_effect <- function(spec, value) {
-  co <- spec$fixed$coefficients
-  for (nm in names(co)) co[[nm]] <- sign(co[[nm]]) * value
-  spec$fixed$coefficients <- co
-  spec
-}
 
 # Set the text share, keeping the child variance and the total variance of 1.
 at_share <- function(spec, share) {
@@ -65,57 +56,38 @@ at_share <- function(spec, share) {
   spec
 }
 
-units_by_texts <- function(texts, per_text) {
-  lapply(texts, function(k) {
-    list(subject = list(n = k * per_text), item = list(n = k, per_subject = 1))
-  })
-}
+workers <- make_worker_probe(WORKERS)
+computed <- FALSE
 
-workers <- local({
-  checked <- NULL
-  function() {
-    if (!is.null(checked)) return(checked)
-    if (WORKERS <= 1) {
-      checked <<- 1L
-      return(1L)
-    }
-    ok <- tryCatch({
-      cl <- parallel::makePSOCKcluster(WORKERS)
-      parallel::stopCluster(cl)
-      TRUE
-    }, error = function(e) FALSE)
-    checked <<- if (ok) WORKERS else 1L
-    checked
-  }
-})
-
+# Runs one texts sweep, or reads it from design_analysis/sweeps/ if a sweep with
+# the same settings is cached there.
 run_sweep <- function(key, spec, focal, formula, model) {
   cached <- file.path(CACHE, paste0(key, ".csv"))
-  if (file.exists(cached)) {
-    msg("cached: ", key)
-    return(utils::read.csv(cached, stringsAsFactors = FALSE))
-  }
+  values <- units_by_texts(TEXTS, M_FIXED)
+  settings <- cache_key(sweep = key, spec = spec, path = "units", values = values,
+                        focal = as.list(focal), formula = deparse1(formula), rope = ROPE,
+                        n_sims = N_SIMS)
+  res <- cache_read(cached, settings)
+  if (!is.null(res)) return(res)
   msg("sweep: ", key, " (", length(TEXTS), " grid points, ", N_SIMS, " replicates each)")
-  res <- sweep_spec(spec, "units", units_by_texts(TEXTS, M_FIXED), precision_design,
+  res <- sweep_spec(spec, "units", values, precision_design,
                     focal = focal, formula = formula, rope = ROPE, n_sims = N_SIMS,
                     workers = workers())
-  per_point <- nrow(res) / length(TEXTS)
-  stopifnot(per_point == as.integer(per_point))
-  res$texts <- rep(TEXTS, each = per_point)
+  res$texts <- label_grid(res, values, TEXTS, focal)
   res$model <- model
   res$n_sims <- N_SIMS
-  utils::write.csv(res, cached, row.names = FALSE)
-  msg("  wrote ", cached)
+  res <- cache_write(res, cached, settings)
+  computed <<- TRUE
   res
 }
 
 F_DEV  <- .y ~ LexPC + SynPC + CohPC + age + SynPC_age + CohPC_age + (1 | item)
 F_NARR <- .y ~ LexPC + CohPC + narr + LexPC_narr + CohPC_narr + (1 | item)
-focal_dev  <- c(LexPC = 0.10, SynPC = 0.10, CohPC = -0.10, SynPC_age = 0.10, CohPC_age = 0.10)
-focal_narr <- c(LexPC = 0.10, CohPC = -0.10, LexPC_narr = 0.10)
 
 dev_spec  <- at_effect(load_spec(file.path(OUT, "tier1_developmental.json")), EFFECT)
 narr_spec <- at_effect(load_spec(file.path(OUT, "tier1_narration.json")), EFFECT)
+focal_dev  <- focal_from(dev_spec, c("LexPC", "SynPC", "CohPC", "SynPC_age", "CohPC_age"))
+focal_narr <- focal_from(narr_spec, c("LexPC", "CohPC", "LexPC_narr"))
 
 sweeps <- list()
 for (s in SHARES) {
@@ -146,14 +118,9 @@ z_star <- function(scale, bf = 10) {
   p0 <- stats::pt(ROPE / scale, 3) - stats::pt(-ROPE / scale, 3)
   stats::qnorm(1 - 1 / (1 + bf * (1 - p0) / p0))
 }
-
-solve_at <- function(x, p, n, target) {
-  out <- tryCatch(solve_curve(data.frame(x = x, p_meaningful = p, n_returned = n),
-                              target = target), error = function(e) NULL)
-  if (is.null(out)) c(value = NA_real_, lo = NA_real_, hi = NA_real_)
-  else c(value = out$value, lo = out$lo, hi = out$hi)
-}
-
+REACH <- paste0("not reached within ", format(min(TEXTS), big.mark = ","), " to ",
+                format(max(TEXTS), big.mark = ","), " texts")
+note_of <- function(s) switch(s$status, solved = "", "not reached" = REACH, s$note)
 rows <- list()
 for (d in sweeps) {
   for (prm in unique(d$param)) {
@@ -167,14 +134,13 @@ for (d in sweeps) {
       rows[[length(rows) + 1]] <- data.frame(
         text_share = e$text_share[1], model = e$model[1], param = prm, target = tg,
         criterion = c("interval", "bf10"),
-        value = c(sim[["value"]], bf[["value"]]), lo = c(sim[["lo"]], NA),
-        hi = c(sim[["hi"]], NA), stringsAsFactors = FALSE
+        value = c(sim$value, bf$value), lo = c(sim$lo, NA),
+        hi = c(sim$hi, NA), note = c(note_of(sim), note_of(bf)), stringsAsFactors = FALSE
       )
     }
   }
 }
 tab <- do.call(rbind, rows)
-tab$note <- ifelse(is.na(tab$value), "not reached within 50 to 1,600 texts", "")
 tab <- tab[order(tab$model, tab$param, tab$target, tab$criterion, tab$text_share), ]
 utils::write.csv(tab, file.path(OUT, "variance_sensitivity.csv"), row.names = FALSE)
 msg("wrote ", file.path(OUT, "variance_sensitivity.csv"))
@@ -188,9 +154,9 @@ wide <- stats::reshape(
 )
 print(wide, row.names = FALSE, digits = 4)
 
-sess <- utils::capture.output(utils::sessionInfo())
-writeLines(c(paste("run:", format(Sys.time(), "%Y-%m-%d %H:%M:%S")),
-             paste("replicates per grid point:", N_SIMS),
-             paste("text shares:", paste(c(0.09, SHARES), collapse = ", ")), "", sess),
-           file.path(OUT, "session_info_variance_sensitivity.txt"))
+if (computed) {
+  write_session(file.path(OUT, "session_info_variance_sensitivity.txt"),
+                c(paste("replicates per grid point:", N_SIMS),
+                  paste("text shares:", paste(c(0.09, SHARES), collapse = ", "))))
+}
 msg("done")

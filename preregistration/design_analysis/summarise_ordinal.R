@@ -2,12 +2,12 @@
 # where the target lies beyond the range simulated, project the requirement from
 # the observed scaling of the standard error.
 #
-# Run from the preregistration directory, after run_ordinal_analysis.R:
+# run_ordinal_analysis.R runs this script at its end. It can also be run on its
+# own from the preregistration directory, on the cached grid points:
 #   Rscript design_analysis/summarise_ordinal.R
 #
 # Reads design_analysis/sweeps/ordinal_<k>.csv. Writes sweeps/ordinal_texts.csv
-# and minimum_texts_ordinal.csv, overwriting the versions run_ordinal_analysis.R
-# wrote, and adds the projection columns the protocol quotes.
+# and minimum_texts_ordinal.csv, with the projection columns the protocol quotes.
 #
 # solve_curve refuses to extrapolate, which is right: a preregistration should
 # not quote a crossing the simulation never reached. What can be reported
@@ -32,18 +32,34 @@
 # the projection from the true value as projected_texts_unattenuated.
 
 suppressPackageStartupMessages(library(pilotr))
+source("design_analysis/helpers.R")
 
-OUT   <- "design_analysis"
-CACHE <- file.path(OUT, "sweeps")
-ROPE  <- log(1.05)
-Z95   <- 1.959964
-Z90   <- stats::qnorm(0.90)
+OUT    <- "design_analysis"
+CACHE  <- file.path(OUT, "sweeps")
+TARGET <- 0.90
+Z95    <- 1.959964
+Z90    <- stats::qnorm(TARGET)
 
+# Grid points cached before the thinned and failed counts were recorded lack
+# those columns, so every file is given the union of the columns before binding.
 files <- list.files(CACHE, pattern = "^ordinal_[0-9]+\\.csv$", full.names = TRUE)
 stopifnot(length(files) >= 3)
-res <- do.call(rbind, lapply(files, utils::read.csv))
+parts <- lapply(files, utils::read.csv, stringsAsFactors = FALSE)
+cols <- unique(unlist(lapply(parts, names)))
+res <- do.call(rbind, lapply(parts, function(p) {
+  for (nm in setdiff(cols, names(p))) p[[nm]] <- NA
+  p[, cols]
+}))
 res <- res[order(res$param, res$texts), ]
 stopifnot(all(c("mean_est", "n_boundary", "n_skipped") %in% names(res)))
+# The pooled points must come from one design: one rating rate, one rater floor,
+# one replicate count and one effect size, and the region they were scored
+# against, where recorded, must be the one the projection uses.
+single <- function(x) length(unique(x)) == 1
+stopifnot(single(res$rated_rate), single(res$min_raters), single(res$n_sims),
+          single(abs(res$true)))
+ROPE <- ORD_ROPE
+if ("rope" %in% names(res)) stopifnot(all(is.na(res$rope) | abs(res$rope - ROPE) < 1e-12))
 utils::write.csv(res, file.path(CACHE, "ordinal_texts.csv"), row.names = FALSE)
 
 # A determinate verdict nine times in ten requires the 95 per cent interval to
@@ -58,9 +74,7 @@ ATTENUATION <- 1 / sqrt(1 + (16 * sqrt(3) / (15 * pi))^2 * SD_CHILD^2)
 per_param <- split(res, res$param)
 
 solved <- do.call(rbind, lapply(per_param, function(d) {
-  frame <- data.frame(x = d$texts, p_meaningful = d$p_meaningful,
-                      n_returned = d$n_returned)
-  out <- tryCatch(solve_curve(frame, target = 0.90), error = function(e) NULL)
+  s <- solve_at(d$texts, d$p_meaningful, d$n_returned, TARGET)
 
   # The expectation of the fitted estimate does not depend on the number of
   # texts, so the grid points are pooled for the check, each weighted by the
@@ -81,12 +95,11 @@ solved <- do.call(rbind, lapply(per_param, function(d) {
 
   data.frame(
     param = d$param[1], model = "reported_difficulty", axis = "texts",
-    target = 0.90,
-    value = if (is.null(out)) NA_real_ else out$value,
-    lo    = if (is.null(out)) NA_real_ else out$lo,
-    hi    = if (is.null(out)) NA_real_ else out$hi,
-    note  = if (is.null(out))
-      sprintf("not reached within %d to %d", min(d$texts), max(d$texts)) else "",
+    target = TARGET,
+    value = s$value,
+    lo    = s$lo,
+    hi    = s$hi,
+    note  = s$note,
     true = d$true[1],
     attenuated_estimate = round(b_att, 4),
     attenuation = round(ATTENUATION, 4),
@@ -111,12 +124,6 @@ writeLines("")
 writeLines("== solved or projected requirement ==")
 print(solved, row.names = FALSE)
 
-# The ordinal sweep's own software record, beside the one run_design_analysis.R
-# writes, because the ordinal package behind these figures is not loaded there.
-suppressPackageStartupMessages(library(ordinal))
-writeLines(c(paste("summarised:", format(Sys.time(), "%Y-%m-%d %H:%M:%S")),
-             paste("grid points:", paste(sort(unique(res$texts)), collapse = ", ")),
-             paste("replicates per grid point:", paste(unique(res$n_sims), collapse = ", ")),
-             paste("rating availability:", paste(unique(res$rated_rate), collapse = ", ")),
-             "", utils::capture.output(utils::sessionInfo())),
-           file.path(OUT, "session_info_ordinal.txt"))
+# session_info_ordinal.txt is written by run_ordinal_analysis.R when it computes
+# a grid point, so that summarising cached points cannot overwrite the record of
+# the session that produced them.

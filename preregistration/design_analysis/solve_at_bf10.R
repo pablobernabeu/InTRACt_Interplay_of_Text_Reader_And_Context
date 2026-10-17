@@ -24,6 +24,7 @@
 # criterion by simulation from the brms refit and supersedes these figures.
 
 library(pilotr)
+source("design_analysis/helpers.R")
 OUT   <- "design_analysis"
 CACHE <- file.path(OUT, "sweeps")
 
@@ -44,6 +45,7 @@ bf10_threshold <- function(scale, bf = 10) {
        z_star = stats::qnorm(1 - m_star))
 }
 
+# Reads one cached sweep written by run_design_analysis.R.
 read_sweep <- function(key) {
   utils::read.csv(file.path(CACHE, paste0(key, ".csv")), stringsAsFactors = FALSE)
 }
@@ -65,22 +67,15 @@ approximate <- function(d) {
 # simulation's own criterion, so that the two can be compared on the same footing.
 solve_one <- function(d, xname, target) {
   d <- d[order(d[[xname]]), ]
-  solve_p <- function(p) {
-    frame <- data.frame(x = d[[xname]], p_meaningful = p, n_returned = d$n_returned)
-    out <- tryCatch(solve_curve(frame, target = target), error = function(e) NULL)
-    if (is.null(out)) NA_real_ else out$value
-  }
-  v_bf  <- solve_p(d$p_bf10)
-  v_196 <- solve_p(d$p_approx)
+  solve_p <- function(p) solve_at(d[[xname]], p, d$n_returned, target)
+  bf  <- solve_p(d$p_bf10)
+  sim <- solve_p(d$p_approx)
   data.frame(param = d$param[1], model = d$model[1], axis = xname, target = target,
              prior_scale = prior_scale(d$param[1]), prior_rope = d$prior_rope[1],
              m_star = d$m_star[1], z_star = d$z_star[1],
-             value = v_bf, value_at_196 = v_196,
-             note = if (is.na(v_bf)) {
-               paste0("not reached within ", min(d[[xname]]), " to ", max(d[[xname]]))
-             } else {
-               "normal approximation from the archived mean interval widths"
-             },
+             value = bf$value, value_at_196 = sim$value,
+             note = if (is.na(bf$value)) bf$note else
+               "normal approximation from the archived mean interval widths",
              stringsAsFactors = FALSE)
 }
 

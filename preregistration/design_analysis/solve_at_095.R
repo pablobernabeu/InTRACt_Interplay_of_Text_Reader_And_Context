@@ -10,25 +10,20 @@
 # the cached sweeps are read and the same solver is applied with one input changed.
 
 library(pilotr)
+source("design_analysis/helpers.R")
 OUT   <- "design_analysis"
 CACHE <- file.path(OUT, "sweeps")
 
+# Reads one cached sweep written by run_design_analysis.R.
 read_sweep <- function(key) {
   utils::read.csv(file.path(CACHE, paste0(key, ".csv")), stringsAsFactors = FALSE)
 }
 
+# Solves one parameter's curve for the swept value that reaches the target.
 solve_one <- function(d, xname, target) {
-  d <- d[order(d[[xname]]), ]
-  frame <- data.frame(x = d[[xname]], p_meaningful = d$p_meaningful,
-                      n_returned = d$n_returned)
-  out <- tryCatch(solve_curve(frame, target = target), error = function(e) NULL)
-  base <- data.frame(param = d$param[1], model = d$model[1], axis = xname,
-                     target = target, stringsAsFactors = FALSE)
-  if (is.null(out))
-    return(cbind(base, value = NA_real_, lo = NA_real_, hi = NA_real_,
-                 note = paste0("not reached within ", min(d[[xname]]), " to ",
-                               max(d[[xname]]))))
-  cbind(base, value = out$value, lo = out$lo, hi = out$hi, note = "")
+  s <- solve_at(d[[xname]], d$p_meaningful, d$n_returned, target)
+  data.frame(param = d$param[1], model = d$model[1], axis = xname, target = target,
+             value = s$value, lo = s$lo, hi = s$hi, note = s$note, stringsAsFactors = FALSE)
 }
 
 dev  <- read_sweep("dev_texts")
