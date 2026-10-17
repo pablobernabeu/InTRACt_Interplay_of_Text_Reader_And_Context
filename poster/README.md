@@ -138,6 +138,10 @@ the app's logs or its story texts. The protocol, its supplement and its design a
   copied on 15 October 2026 from [`../preregistration/design_analysis/`](../preregistration/design_analysis/).
 - `data/references.bib`: the works the poster cites, with fields checked against Crossref and CRAN.
 
+The poster, its figures and its data are released under CC BY-NC 4.0, and the code under the MIT
+License. The logos belong to their owners and are not licensed for reuse.
+[`LICENSE-content.md`](../LICENSE-content.md) gives the details.
+
 ## References
 
 <!-- references:start -->

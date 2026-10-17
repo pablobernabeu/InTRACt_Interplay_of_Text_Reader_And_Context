@@ -10,7 +10,7 @@ How does the language of a story relate to how quickly a child reads it? And doe
 
 InTRACt is a preregistered study of the behavioural logs of children aged 7 and older who read AI-generated stories in *Let's Story*, a feature of the *Applaydu* app developed by Gameloft and Ferrero International. Children use it in any of 19 languages. The study combines computational measures of each story's language with Bayesian models of reading time, to test how lexical difficulty, grammatical load and referential continuity relate to children's reading pace outside the laboratory.
 
-The project is hosted at the **[Department of Education, University of Oxford](https://www.education.ox.ac.uk/)**, and is embedded within the **[Learning in Families through Technology (LIFT)](https://www.education.ox.ac.uk/project/lift-learning-in-families-through-technology/)** project, which investigates how digital technologies shape learning within families. It is funded by **Kinder** and the **John Fell Fund** (University of Oxford).
+The project is hosted at the **[Department of Education, University of Oxford](https://www.education.ox.ac.uk/)**, and is embedded within the **[Learning in Families through Technology (LIFT)](https://www.education.ox.ac.uk/project/lift-learning-in-families-through-technology/)** project, which investigates how digital technologies shape learning within families. It is funded by **Ferrero International** (Kinder) and the **John Fell Fund** (University of Oxford). Neither funder has a role in the design, analysis, interpretation or decision to publish.
 
 ---
 
@@ -73,6 +73,12 @@ Rscript -e 'renv::restore(lockfile = "renv.lock", library = "renv-library", prom
 ```
 
 On 16 October 2026, environments restored this way from the two lockfiles alone reproduced the poster pixel for pixel, and every table, figure and checked number of the protocol that can be rebuilt without re-running its simulations. The count script and its tests use only Python's standard library, and the mindmap's Node packages are pinned in `mindmap/source files/package-lock.json`.
+
+---
+
+## Licence
+
+The code is released under the MIT License (`LICENSE`), copyright the University of Oxford. Everything else the authors made, including the protocol, the poster, the figures and the data files, is released under CC BY-NC 4.0, copyright the InTRACt authors. `LICENSE-content.md` says which files fall under each, and lists the third-party material that keeps its own licence.
 
 ---
 
