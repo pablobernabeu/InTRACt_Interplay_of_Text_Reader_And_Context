@@ -1,33 +1,19 @@
-# Auto-renders the preregistration (preregistration/preregistration.qmd) to two
+# Renders the preregistration (preregistration/preregistration.qmd) to two
 # standalone files - a self-contained HTML and a PDF, date-stamped by the
 # project's _rename-output.R post-render script - and commits them into the
 # preregistration/ folder.
 #
-# Runs on every push to main and on manual dispatch (these commit the rendered
-# files back). Pull requests to main render the document as a build check only,
-# without committing. The rendered .html/.pdf are excluded from the trigger
-# paths and the auto-commit carries [skip ci], so the auto-commit never
-# re-triggers the workflow.
+# Runs only when started by hand (Actions > Render preregistration > Run
+# workflow). It used to run on every push to main that touched preregistration/,
+# which re-rendered the protocol on this runner's fonts and TeX and committed the
+# result over the dated draft rendered and checked locally. The drafts are
+# committed with the change that produces them, so a render here is an
+# occasional cross-check, not part of each push. The auto-commit carries
+# [skip ci].
 
 name: Render preregistration
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'preregistration/**'
-      - '!preregistration/*.html'
-      - '!preregistration/*.pdf'
-      - 'mindmap/mindmap.png'
-      - '.github/workflows/render-preregistration.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'preregistration/**'
-      - '!preregistration/*.html'
-      - '!preregistration/*.pdf'
-      - 'mindmap/mindmap.png'
-      - '.github/workflows/render-preregistration.yml'
   workflow_dispatch:
 
 permissions:
@@ -75,7 +61,6 @@ jobs:
         run: quarto render
 
       - name: Commit rendered drafts to preregistration/
-        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
