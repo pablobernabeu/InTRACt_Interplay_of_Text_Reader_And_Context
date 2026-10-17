@@ -8,6 +8,44 @@ date and rationale.
 
 ## [Unreleased]
 
+### 17 October 2026 (later): licence, and the simulation, figure and theory code hardened
+
+No reported number, table or figure changes. A library restored from
+`preregistration/renv.lock` reproduced every output byte for byte, and the PDFs pixel for pixel.
+
+- Licence: the code is under the MIT licence (`LICENSE`, copyright the University of Oxford) and
+  everything else under CC BY-NC 4.0 (`LICENSE-content.md`, copyright the InTRACt authors), which
+  also lists the third-party files kept under their own licences. `mindmap/source
+  files/node_modules` is no longer tracked, since `npm ci` rebuilds it from the lockfile.
+- Design analysis: the functions the scripts share are in `design_analysis/helpers.R`. Each cached
+  sweep has a key file recording the settings that produced it, and a run with other settings
+  stops instead of reusing it. Settings read from the environment are validated, the secondary
+  sweeps' 120 replicates became a setting (`INTRACT_N_SIMS_2`), and the focal effects are read
+  from the specifications. A curve that reaches the target but cannot be solved is reported as not
+  determined, where it used to be reported as not reached. A freshly computed sweep is passed on
+  as read back from its file, so a fresh run and a cached run write identical tables, and a
+  session record is written only by a run that computed something. The ordinal script records why
+  each failed replicate failed, then runs `summarise_ordinal.R`, which alone writes the ordinal
+  tables.
+- Environment: pilotr fits with lme4 but only suggests it, so the lockfile, built from the
+  scripts' own dependencies, had left lme4 out and a fresh simulation from a restored library
+  failed. The simulation scripts now check for lme4 by name, and `preregistration/renv.lock`
+  includes it and its dependencies (98 packages).
+- Figures: the precision figure checks the CSV against its panel subtitles, and checks every
+  panel before saving either figure, at the narrower of the journal's column width and half the
+  protocol's text width. The Scopus figures stop on a missing value, on short names that match no
+  archived query and on any failed check but the redundant-encoding one. The script for Figure 2
+  checks its print size, 6.23 point at the protocol's width, and its colour contrast: the dashed
+  moderation lines, at 2.86:1 against white, fall short of 3:1 and are reported.
+- Scopus counts: `literature/scopus_gap_analysis.R` checks the counts for coherence before
+  archiving them, matches the trend queries by their whole strings, and draws the figures through
+  `replot_scopus_figures.R`. It was verified without the API, with its three calls replaced by the
+  archived counts, which it reproduced apart from the run date.
+- Theory: `build_theory.R` exits with an error if validation, the rigour checklist's gate or
+  acyclicity fails, and an error while it writes the report now reaches the console.
+- `preregistration/README.md` documents the cache keys, the new settings, the order of the ordinal
+  steps and the retention of every dated draft, and `ISSUES.md` records what this pass resolved.
+
 ### 15 to 17 October 2026: poster, languages, variance sensitivity, merge into main, lockfiles and style
 
 No registered threshold changes. The protocol gains a sensitivity analysis of its design-analysis

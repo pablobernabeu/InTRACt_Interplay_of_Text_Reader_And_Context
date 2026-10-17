@@ -67,7 +67,21 @@ Findings DA-04 to DA-07, DA-27, CR-04. The projection ignores the attenuation ca
 
 ### Hardening the simulation and figure code
 
+**Done on 17 October 2026** at the author's sign-off, on the condition that every committed output be reproduced (see the section of that date below). Held back because they would change an output: DA-22, DA-29 and FL-03, listed with recommendations in the next section. FL-32 is partly resolved. DA-24 was resolved on 17 September. The original text follows.
+
 Findings DA-03, DA-08, DA-10 to DA-16, DA-22 to DA-24, DA-29, DA-33, DA-36, TH-06 to TH-09, TH-17, FL-01, FL-03, FL-04, FL-08 to FL-15, ST-06, ST-24, CR-03. These guard against stale caches, relabelled solver errors, unvalidated settings and assertions that can pass on a wrong figure. Most would change no current number, but all edit code behind reported numbers.
+
+### Output-changing fixes held back (17 October 2026)
+
+Each of these would change a committed output, so none was applied. A recommendation follows each.
+
+- **FL-03**, Figure 1's legend reads "grp" with lowercase codes. Recommended: the proposed fix, labels "Concept" and "Intersection" and no legend title. Only the legend changes.
+- **FL-24**, the precision figures tag their panels A and B while both captions say a and b. Recommended: lowercase tags (`tag_levels = "a"`), the form Nature journals use. Only the tags change.
+- **FL-05**, the search record omits the trend queries. Recommended: write them into `scopus_search_record.md` from the query column of the archived `scopus_topic_trends.csv`, which needs no API request.
+- **CR-04**, `precision_sweep.csv` drops the attempt and warning counts. Recommended: add `n_attempted`, `n_warning` and `p_meaningful_mcse`. No reported number changes, but the CSV and its poster copy do.
+- **DA-29**, the simulated outcome's standard deviation is about 2 per cent above 1 once the fixed effects are counted. Recommended: one sentence in Supplementary Section S5, since a re-run would move every requirement by a negligible amount.
+- **DA-22**, the theory object's `formal_model.spec_ref` names a file that does not exist. Pointing it at `design_analysis/tier1_developmental.json` was tested and changes no output, the score staying at 90.7. Recommended: that change. Whether `type: "sem"` describes the model is the author's call.
+- **TH-29**, the dashed moderation lines in Figure 2 have a contrast of 2.86:1 against white, below the 3:1 floor the other figures meet. Recommended: darken `#8A9BA8` to `#7A8B98` (3.52:1). Only the line colour changes.
 
 ### A reissue of the count script
 
@@ -79,9 +93,13 @@ Findings CS-01 to CS-16, CS-19 to CS-28. Four BLOCKING defects affect the suppli
 
 ### The R environment
 
+**Resolved on 16 October 2026** (RP-01, RP-02, TH-07): both lockfiles pin every package with its source. On 17 October lme4, which the protocol lockfile had left out, was added (LS-05). The original text follows.
+
 Findings RP-01, RP-02, TH-07. There is no lockfile, and the four study packages were installed from local builds with no recorded source, so the environment cannot be rebuilt and the rebuild-and-compare gate cannot be run.
 
 ### Before the branch is pushed or made public
+
+**Updated on 17 October 2026:** node_modules is no longer tracked (RS-04), the code is under MIT and the rest under CC BY-NC 4.0 (RS-11), and every dated draft is kept by the author's decision (RS-06, RS-19). Only RS-10 remains open.
 
 **Updated on 16 October 2026:** the branch is pushed and merged into main. RS-02 and RS-03 are resolved and RS-12 partly, and DC-55 now holds, since the code is public. Still open: node_modules is tracked (RS-04), dated drafts accumulate (RS-06), main's render workflow, now started only by hand, runs no checks (RS-10), and there is no licence (RS-11). The original text follows.
 
@@ -94,6 +112,8 @@ Findings RS-02, RS-03, RS-04, RS-06, RS-10 to RS-12, RS-15, DC-55. The Code avai
 Findings DA-17, DA-19, DA-25, DA-28, DA-30, RP-10, DC-19, CS-18, TH-16, TH-21, FL-05, FL-06, FL-16, CR-01, CR-07. Proposed corrections to the protocol, supplement and bibliography. For example, the simulated models were fitted by REML where the text says maximum likelihood, and four auxiliary assumptions name a data-controller question where the text says five.
 
 ### Facts only the author holds
+
+**Updated on 17 October 2026:** DC-49 is resolved, since the author confirmed the funding. The rest remain.
 
 Findings DC-44, DC-46, DC-49, CR-06, TH-11. The source of the session, country and language figures removed from the root README, which framework figure it should show, the funding arrangement against the competing-interests statement, the reference style, and whether diagram_theory.R can be deleted.
 
@@ -123,6 +143,11 @@ The lockfiles were verified by restoring each into an empty library and rebuildi
 | LS-02 | MINOR | `preregistration/design_analysis/precision_sweep.csv` | The committed file writes its last column quoted ("0.1"); the current script, from any library, writes it unquoted. Every value is identical |  | Resolved 17 October 2026, on the author's delegation: the file and its poster copy were regenerated from the cached sweeps, every value identical. session_info.txt was kept as the record of the September simulations. The poster and the precision figures re-render identically, and check_reported_numbers.R passes. |
 | LS-03 | MINOR | `preregistration/` | Re-running the figure scripts leaves an Rplots.pdf from R's default device; .gitignore already excludes it |  | Deferred: harmless, and finding which call opens the default device is not worth a change to code behind the figures. |
 | LS-04 | MINOR | `.lintr.R` | The style configuration covers R only. The count script (Python) and the mindmap's Node script have none |  | Deferred: the count script is a version supplied to the data controller, so restyling it waits for any new version. |
+| LS-05 | BLOCKING | `preregistration/renv.lock` | pilotr fits every replicate with lme4 but lists it only as a suggested package, so the lockfile, built from the scripts' own dependencies, left lme4 out. A fresh simulation from a restored library stopped at its first fit. Found on 17 October 2026, when the fresh-simulation paths were first run from a restored library |  | Resolved 17 October 2026: `run_design_analysis.R` and `run_variance_sensitivity.R` check for lme4 by name, and the regenerated lockfile includes it and its five dependencies (98 packages). Verified by a fresh simulation from the restored library. |
+
+## HIGH-RISK pass under verification, 17 October 2026
+
+The author signed off the HIGH-RISK findings whose fixes cannot change a reported number, on the condition that each fix reproduce every committed output, and otherwise come back unapplied. A library restored from `preregistration/renv.lock` ran every step that needs neither the Scopus API nor a fresh simulation, on a scratch copy, and every table and CSV matched byte for byte and every PDF pixel for pixel. The committed outputs cannot exercise the fresh-simulation paths, so those were run at two replicates per grid point. A changed or mistyped setting stopped the run, the grid labels came out right, a fresh run and a re-run from its cache wrote identical tables, and only computing runs wrote session records. `scopus_gap_analysis.R` was run with its three API calls replaced by the archived counts: it reproduced every archive, figure and record apart from the run date, and sent no request. On altered copies, the precision figure's new checks, the cache keys, the setting readers and the error path of `build_theory.R`'s report each failed as intended; the Scopus and Figure 2 checks were confirmed only to pass on the real inputs. Every R script passes lintr. Fixes that would change an output are listed under Decisions needed. The statuses in the register below carry the detail.
 
 ## Register
 
@@ -134,7 +159,7 @@ Findings are ordered by severity, then by area. Details follow the table for eve
 |---|---|---|---|---|---|
 | DA-01 | Design analysis | `preregistration/design_analysis/tier2_within_child.json:11` | Tier-2 simulation gives each child 25 readings, each text read at all five session positions, not five readings on distinct texts | yes | Resolved 17 September 2026: each child now reads five distinct texts in a random order, one per session position, with guards; the tier-2 sweep was re-run (609 children at 0.90, 731 at 0.95) and the protocol and supplement updated. |
 | DA-02 | Design analysis | `preregistration/design_analysis/tier2_within_child.json:12` | Accumulated-reading contrast has SD 0.45, so the simulated coefficient is not on the per-SD unit the protocol registers | yes | Resolved 17 September 2026 with DA-01: the contrast has a population SD of 1, so the coefficient is per SD. |
-| DA-03 | Design analysis | `preregistration/design_analysis/run_design_analysis.R:90` | Sweep caches are keyed only on file name, so edited specs, replicate counts, ROPE or rating rate silently reuse stale results | yes | Partly resolved: the file-name-only cache is stated in both script headers and the README. Deferred: a cache key that stops on a mismatch is a logic change in code behind reported numbers, so it awaits sign-off. |
+| DA-03 | Design analysis | `preregistration/design_analysis/run_design_analysis.R:90` | Sweep caches are keyed only on file name, so edited specs, replicate counts, ROPE or rating rate silently reuse stale results | yes | Resolved 17 October 2026 at the author's sign-off: every cached sweep and ordinal grid point has a key file recording the settings that produced it. A mismatch stops the run, and a missing key stops it unless INTRACT_ADOPT_CACHE=1. Verified: a changed replicate count stopped the run at the first cached sweep, and every output reproduced byte for byte. |
 | DA-04 | Design analysis | `preregistration/design_analysis/summarise_ordinal.R:31` | Ordinal projection ignores the attenuation caused by the omitted child intercept, understating the quoted requirement by about 12 per cent | yes | Resolved 17 September 2026: the projection uses the analytic attenuation factor (Zeger, Liang and Albert, 1988), checked against the mean fitted estimates; it is now 9,300 to 10,300 generated texts. |
 | DA-05 | Design analysis | `preregistration/design_analysis/run_ordinal_analysis.R:144` | Ordinal fits with non-finite SEs are boundary fits, not a random subset, and their share falls from 23 to 2 per cent across the grid | yes | Resolved 17 September 2026: boundary replicates are refitted as the fixed-effects cumulative logit and kept; none is discarded. |
 | DA-18 | Design analysis | `preregistration/check_reported_numbers.R:41` | The number-check gate covers a few design-analysis figures and matches bare substrings, so it can pass while quoted numbers are wrong |  | Partly resolved: the gate anchors numbers and now covers the 0.95 requirements and the main effects. Deferred: it does not read the supplement or check the null, readings and ordinal sweep tables; choosing that coverage needs the maintainer. |
@@ -143,9 +168,9 @@ Findings are ordered by severity, then by area. Details follow the table for eve
 | TH-03 | Theory object and checks | `preregistration/check_reported_numbers.R:73` | has(fmt(n)) passes when the number appears anywhere as a substring, and all zero counts share one phrase |  | Resolved: numbers are matched with digit boundaries, and precision figures, intersections and theory counts inside their phrases; the three Scopus concept sizes are matched by digits alone. |
 | TH-04 | Theory object and checks | `preregistration/check_reported_numbers.R:10` | check_reported_numbers.R leaves most quoted precision numbers and the whole supplement unchecked |  | Partly resolved: the 0.95 requirements and the grammatical and continuity main effects are now checked. Deferred: the supplement is not read. |
 | TH-05 | Theory object and checks | `preregistration/check_reported_numbers.R:88` | Missing theoryforge or a missing ordinal CSV is skipped and the script still reports a full match with exit 0 |  | Resolved: a skipped block exits 1 unless INTRACT_ALLOW_SKIP=1 is set; verified by removing the ordinal CSV in a scratch copy. |
-| TH-06 | Theory object and checks | `preregistration/theory/make_figure1.R:93` | Figure 2 content assertion ignores the rank and invisible-edge lines, so a stale id draws a phantom node while the assertion passes | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
+| TH-06 | Theory object and checks | `preregistration/theory/make_figure1.R:93` | Figure 2 content assertion ignores the rank and invisible-edge lines, so a stale id draws a phantom node while the assertion passes | yes | Resolved 17 October 2026: every construct id anywhere in the restyled DOT, the rank hints and the invisible edge included, must be one the object emitted. |
 | TH-07 | Theory object and checks | `preregistration/theory/build_theory.R:7` | The quoted rigour score depends on an unpinned, locally built theoryforge with no lockfile or version assertion | yes | Resolved 16 October 2026 at the author's request (3400784): `preregistration/renv.lock` pins theoryforge 0.6.0 from CRAN, whose release matches the local build in every object, and a library restored from the lockfile reproduces `tf_check.txt`, `tf_severity.csv` and `tf_redundancy.csv` byte for byte. |
-| FL-01 | Figures and literature sizing | `preregistration/literature/replot_scopus_figures.R:37` | replot_scopus_figures.R strips the plot caption that reports omitted counts and never checks the archived CSVs for missing values | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
+| FL-01 | Figures and literature sizing | `preregistration/literature/replot_scopus_figures.R:37` | replot_scopus_figures.R strips the plot caption that reports omitted counts and never checks the archived CSVs for missing values | yes | Resolved 17 October 2026: replot_scopus_figures.R stops on an empty archive or a missing value. The caption that is stripped reported the zero-count intersection, which the manuscript's caption states. |
 | CS-01 | Count script | `preregistration/count_script/lets_story_summary.py:1265` | Float-formatted user_id values silently merge or split accounts, with no detection or warning | yes | Resolved 17 September 2026 in version 2026-09-17: identifiers in scientific notation are counted and reported, the account figures are marked unreliable, and the instruction sheet asks for integers or text. The lost digits cannot be recovered. |
 | CS-02 | Count script | `preregistration/count_script/lets_story_summary.py:1764` | A part without a header row has its first data row, including a reading time and a user_id, written to the summary data file as column names | yes | Resolved 17 September 2026 in version 2026-09-17: a file whose first line is not a header stops the run, named, with nothing written. |
 | CS-03 | Count script | `preregistration/count_script/lets_story_summary.py:1675` | If one part lacks time_spent_reading, the reading-time verdict reports all sessions usable while covering only a subset, and the absence is not recorded | yes | Resolved 17 September 2026 in version 2026-09-17: the verdict names the sessions the check could not cover, and the per-file record states whether each file carries the column. |
@@ -168,22 +193,22 @@ Findings are ordered by severity, then by area. Details follow the table for eve
 |---|---|---|---|---|---|
 | DA-06 | Design analysis | `preregistration/design_analysis/run_ordinal_analysis.R:90` | n_warned cannot register the ordinal failure mode: summary.clmm warnings fall outside the handler and no convergence field is read | yes | Resolved 17 September 2026: summary() runs inside the warning handler. |
 | DA-07 | Design analysis | `preregistration/design_analysis/run_ordinal_analysis.R:78` | Discarded ordinal replicates (NULL returns) are not counted, and their 50-row and 10-text floors are undocumented | yes | Resolved 17 September 2026: n_skipped is recorded and the floors are justified in the script. |
-| DA-08 | Design analysis | `preregistration/design_analysis/run_design_analysis.R:191` | Every solve_curve error is recorded as 'not reached within X to Y', whatever its cause | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
-| DA-09 | Design analysis | `preregistration/design_analysis/run_ordinal_analysis.R:190` | run_ordinal_analysis.R and summarise_ordinal.R write the same two files in different schemas, and the run order is nowhere stated | yes | Partly resolved: the run order is documented in both scripts and the README. Deferred: giving the two scripts distinct outputs changes files the protocol quotes and awaits sign-off. |
-| DA-10 | Design analysis | `preregistration/design_analysis/run_design_analysis.R:226` | session_info.txt is rewritten on cached runs with the wrong replicate count, and no session is recorded for the ordinal, summary or 0.95 scripts |  | Deferred: it changes what run_design_analysis.R writes and belongs with the cache-key change in DA-03. |
-| DA-11 | Design analysis | `preregistration/design_analysis/run_design_analysis.R:142` | Secondary sweeps hard-code 120 replicates and ignore INTRACT_N_SIMS | yes | Partly resolved: the fixed 120 replicates are documented in the script and the README. Deferred: reading them from a variable changes code behind reported numbers and awaits sign-off. |
-| DA-12 | Design analysis | `preregistration/design_analysis/run_design_analysis.R:31` | Environment variables are parsed without validation, and a zero replicate count yields cached NA rows reported as 'not reached' |  | Deferred: validating the environment variables is a code edit in a script behind reported numbers, held back so this pass changed only comments there, and belongs with the sign-off on DA-03. |
-| DA-13 | Design analysis | `preregistration/design_analysis/run_design_analysis.R:66` | safe_workers comment misdescribes the fallback, has an unused argument, and the resume claim holds per sweep only |  | Partly resolved: the cluster comment now describes the probe. Deferred: removing the unused argument is a code edit, held back so this pass changed comments only in scripts behind reported numbers. |
+| DA-08 | Design analysis | `preregistration/design_analysis/run_design_analysis.R:191` | Every solve_curve error is recorded as 'not reached within X to Y', whatever its cause | yes | Resolved 17 October 2026: solve_at() in helpers.R reports 'not reached' only where no grid point reaches the target, and 'not determined', with pilotr's reason and a warning, where the fit cannot place the crossing. Verified at two replicates per point, where several curves were not determined; every committed curve still solves. |
+| DA-09 | Design analysis | `preregistration/design_analysis/run_ordinal_analysis.R:190` | run_ordinal_analysis.R and summarise_ordinal.R write the same two files in different schemas, and the run order is nowhere stated | yes | Resolved 17 October 2026: run_ordinal_analysis.R writes only its grid points and its session record and then runs summarise_ordinal.R, the one writer of ordinal_texts.csv and minimum_texts_ordinal.csv. Both tables reproduced. |
+| DA-10 | Design analysis | `preregistration/design_analysis/run_design_analysis.R:226` | session_info.txt is rewritten on cached runs with the wrong replicate count, and no session is recorded for the ordinal, summary or 0.95 scripts |  | Resolved 17 October 2026: each simulation script writes its session record only when it computed something, so a run from cache leaves the record of the run that produced the results; the ordinal record moved to run_ordinal_analysis.R. The solve and summary scripts simulate nothing and write none. |
+| DA-11 | Design analysis | `preregistration/design_analysis/run_design_analysis.R:142` | Secondary sweeps hard-code 120 replicates and ignore INTRACT_N_SIMS | yes | Resolved 17 October 2026: the readings, null and tier-2 sweeps read INTRACT_N_SIMS_2 (default 120), which the cache key records. |
+| DA-12 | Design analysis | `preregistration/design_analysis/run_design_analysis.R:31` | Environment variables are parsed without validation, and a zero replicate count yields cached NA rows reported as 'not reached' |  | Resolved 17 October 2026: env_number() and env_numbers() validate every setting and stop with its name. Verified with INTRACT_N_SIMS=2OO. |
+| DA-13 | Design analysis | `preregistration/design_analysis/run_design_analysis.R:66` | safe_workers comment misdescribes the fallback, has an unused argument, and the resume claim holds per sweep only |  | Resolved 17 October 2026: one probe, make_worker_probe() in helpers.R, with no unused argument and a comment stating that only the first cluster is probed. |
 | DA-14 | Design analysis | `preregistration/design_analysis/tier1_developmental.json:17` | The deposited JSON specifications do not hold the values actually simulated |  | Resolved: script headers and the README now state what each sweep substitutes for the specifications. |
-| DA-15 | Design analysis | `preregistration/design_analysis/run_design_analysis.R:130` | Focal vectors restate effect sizes and signs that should be derived from the spec | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
-| DA-16 | Design analysis | `preregistration/design_analysis/summarise_ordinal.R:19` | summarise_ordinal.R re-declares ROPE, TRUE_B and the 0.90 target instead of reading them from the sweep | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
+| DA-15 | Design analysis | `preregistration/design_analysis/run_design_analysis.R:130` | Focal vectors restate effect sizes and signs that should be derived from the spec | yes | Resolved 17 October 2026: the focal effects are read from the modified specification by focal_from(), which stops on a name the specification lacks. |
+| DA-16 | Design analysis | `preregistration/design_analysis/summarise_ordinal.R:19` | summarise_ordinal.R re-declares ROPE, TRUE_B and the 0.90 target instead of reading them from the sweep | yes | Resolved 17 October 2026: the ordinal region is defined once in helpers.R, which both ordinal scripts read. summarise_ordinal.R takes the true effect from the cached grid points and stops unless they agree on it, on the replicate count, the rating rate and the minimum raters, and on the region where they record it. |
 | DA-17 | Design analysis | `preregistration/supplementary.qmd:137` | Protocol and supplement say the simulated models were fitted by maximum likelihood; pilotr fits REML with derivative checks switched off |  | Resolved 17 September 2026: the protocol and S5 say restricted maximum likelihood. |
 | DA-19 | Design analysis | `preregistration/supplementary.qmd:141` | How the crossing and its 95 per cent interval are computed is not described anywhere in the protocol or supplement |  | Resolved 17 September 2026: S5 describes the probit-on-square-root solve, the weights, the heterogeneity factor and the refusal to extrapolate. |
 | DA-20 | Design analysis | `preregistration/README.md:62` | README design_analysis section omits the run order, INTRACT_RATED_RATE, the outputs, and caveats about the cache and the 120 replicates |  | Resolved: the README gives the run order, every environment variable, the fixed 120 replicates and the cache caveat. |
 | DA-21 | Design analysis | `preregistration/README.md:70` | README claims every analysis script is run against simulated data, but the repository has no analysis scripts |  | Resolved: the README now says the analysis scripts will be run against simulated data before the transfer. |
-| DA-22 | Design analysis | `preregistration/theory/intract.theory.yaml:496` | The theory object's formal_model points to a design_analysis file that does not exist |  | Deferred: the theory object's formal_model entry feeds the rigour score the manuscript quotes, so correcting it can move that score. |
-| TH-08 | Theory object and checks | `preregistration/theory/build_theory.R:12` | build_theory.R sinks output and messages with no on.exit or finally, so an error is hidden in a truncated tf_check.txt | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
-| TH-09 | Theory object and checks | `preregistration/theory/build_theory.R:32` | build_theory.R fails open: a cyclic graph, a failed diagram or a non-data-frame result still exits 0 | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
+| DA-22 | Design analysis | `preregistration/theory/intract.theory.yaml:496` | The theory object's formal_model points to a design_analysis file that does not exist |  | Deferred, tested 17 October 2026: pointing spec_ref at an existing specification left tf_check.txt byte-identical and the score at 90.7, so the formalisation item passes either way. Which file the theory's formal model should name, and whether 'sem' describes it, is the author's decision. |
+| TH-08 | Theory object and checks | `preregistration/theory/build_theory.R:12` | build_theory.R sinks output and messages with no on.exit or finally, so an error is hidden in a truncated tf_check.txt | yes | Resolved 17 October 2026: the report goes to a temporary file, an error is caught and raised again after the sinks are removed, and tf_check.txt is replaced only when every step has run. Verified by injecting an error. |
+| TH-09 | Theory object and checks | `preregistration/theory/build_theory.R:32` | build_theory.R fails open: a cyclic graph, a failed diagram or a non-data-frame result still exits 0 | yes | Resolved 17 October 2026: build_theory.R exits with an error if validation, the rigour checklist's gate or acyclicity fails, if a screen returns no table or if the diagram fails, after writing the report. |
 | TH-10 | Theory object and checks | `preregistration/theory/build_theory.R:5` | build_theory.R header lists tf_implications.txt, which nothing writes, and the README omits the SVG it does write |  | Resolved: build_theory.R's header lists what it writes. |
 | TH-11 | Theory object and checks | `preregistration/theory/diagram_theory.R:1` | diagram_theory.R is an unreferenced one-off probe with no header |  | Deferred: whether diagram_theory.R is dead is uncertain; the README now describes it, and deleting it needs the maintainer. |
 | TH-12 | Theory object and checks | `preregistration/theory/report_theory.R:14` | report_theory.R has no header, duplicates check_manuscript_claims.R and prints each conditioning set twice |  | Resolved: report_theory.R has a header and prints each conditioning set once; verified by running it. |
@@ -191,27 +216,27 @@ Findings are ordered by severity, then by area. Details follow the table for eve
 | TH-14 | Theory object and checks | `preregistration/README.md:37` | README quotes the superseded rigour score 90.9 |  | Resolved: the README quotes 90.7 and points to tf_check.txt. |
 | TH-15 | Theory object and checks | `preregistration/theory/intract.theory.yaml:496` | formal_model.spec_ref points at a file that has never existed, and the formalisation item passes regardless |  | Duplicate of DA-22 (deferred). |
 | TH-16 | Theory object and checks | `preregistration/theory/intract.theory.yaml:11` | Four auxiliary assumptions name a data-controller question, while the yaml, supplement and protocol say every one or five do |  | Resolved 17 September 2026: the within-window assumption now names question (l), so five is correct in the yaml, the protocol and S1. |
-| TH-17 | Theory object and checks | `preregistration/theory/make_figure1.R:33` | make_figure1.R hard-codes 12 nodes and 18 edges instead of deriving them from the theory object | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
+| TH-17 | Theory object and checks | `preregistration/theory/make_figure1.R:33` | make_figure1.R hard-codes 12 nodes and 18 edges instead of deriving them from the theory object | yes | Resolved 17 October 2026: the expected counts are the object's construct and proposition counts, and the message reports them. |
 | TH-18 | Theory object and checks | `preregistration/theory/make_figure1.R:121` | Figure 2 layout depends on the Graphviz 2.40.1 bundled inside DiagrammeR, which is neither documented nor pinned |  | Duplicate of RP-05 (resolved). |
 | TH-19 | Theory object and checks | `preregistration/check_reported_numbers.R:23` | Title check assumes a double-quoted one-line YAML title and crashes with an uninformative error otherwise |  | Resolved: the title is read from the YAML front matter and a missing abstract stops the script; verified at 78 characters and 148 words. |
 | TH-20 | Theory object and checks | `preregistration/check_reported_numbers.R:8` | The check scripts are not wired into rendering, a hook or CI, despite claims that drift cannot happen |  | Duplicate of RS-10 (deferred). |
 | TH-21 | Theory object and checks | `preregistration/supplementary.qmd:33` | The supplement credits build_theory.R with outputs it does not produce |  | Resolved 17 September 2026: S1 credits build_theory.R, check_manuscript_claims.R and make_figure1.R for their own outputs. |
 | FL-02 | Figures and literature sizing | `preregistration/downloaded_papers_zotero_keys/download_report.csv:1` | Thirteen publisher PDFs, two with no licence evidence, are committed on a branch due to become public |  | Duplicate of RS-12 (deferred). |
 | FL-03 | Figures and literature sizing | `preregistration/literature/replot_scopus_figures.R:39` | Figure 1 legend shows the internal column name 'grp' because strip_chrome replaces the package's labelled colour scale | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
-| FL-04 | Figures and literature sizing | `preregistration/literature/scopus_gap_analysis.R:65` | scopus_gap_analysis.R writes default-styled PNGs and no PDFs, leaving a mixed state unless replot is run afterwards | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
+| FL-04 | Figures and literature sizing | `preregistration/literature/scopus_gap_analysis.R:65` | scopus_gap_analysis.R writes default-styled PNGs and no PDFs, leaving a mixed state unless replot is run afterwards | yes | Resolved 17 October 2026: scopus_gap_analysis.R no longer draws default-styled PNGs and instead runs replot_scopus_figures.R on the files it has written. Verified without the API, its three calls replaced by the archived counts: every archive, figure and record reproduced apart from the run date. |
 | FL-05 | Figures and literature sizing | `preregistration/literature/scopus_gap_analysis.R:117` | The search record omits the trend queries, and its 'Children's reading' column is a different, narrower query than the concept set | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
 | FL-06 | Figures and literature sizing | `preregistration/literature/scopus_gap_analysis.R:22` | Year window includes 2026, which was incomplete at the search date, and nothing says so |  | Resolved 17 September 2026: the protocol, Figure 1 caption and the S4 caption mark 2026 as counted to 26 August. |
 | FL-07 | Figures and literature sizing | `preregistration/literature/scopus_gap_analysis.R:135` | Run stamp and figure scripts record almost no environment, contrary to the protocol's claim |  | Deferred: recording the environment changes what the Scopus script writes, and is best done with its next run. |
-| FL-08 | Figures and literature sizing | `preregistration/literature/scopus_gap_analysis.R:63` | No missing-value or coherence assertions before the Scopus counts are archived | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
-| FL-09 | Figures and literature sizing | `preregistration/literature/replot_scopus_figures.R:23` | replot_scopus_figures.R retypes the comparison queries by hand as lookup keys and never checks that they matched | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
-| FL-10 | Figures and literature sizing | `preregistration/literature/scopus_gap_analysis.R:123` | The record's trend table picks columns by substring matching and silently loses any unmatched term | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
-| FL-11 | Figures and literature sizing | `preregistration/literature/replot_scopus_figures.R:81` | Year breaks and label expansion in the trend figure are hard-coded | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
-| FL-13 | Figures and literature sizing | `preregistration/figures/make_precision_figure.R:101` | Design constants in the precision figure are typed into subtitles and code instead of read from the CSVs and specs | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
-| FL-14 | Figures and literature sizing | `preregistration/figures/make_precision_figure.R:118` | Figure-check widths are hard-coded, not derived from the save width, and not the width the manuscript prints at | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
-| FL-15 | Figures and literature sizing | `preregistration/figures/make_precision_figure.R:98` | Panel subsets and series lookups rely on unchecked assumptions about precision_sweep.csv | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
+| FL-08 | Figures and literature sizing | `preregistration/literature/scopus_gap_analysis.R:63` | No missing-value or coherence assertions before the Scopus counts are archived | yes | Resolved 17 October 2026: before archiving, the counts are checked for missing or negative values, one row per set and intersection, no intersection above its smallest set, one row per query and year, and no comparison count above the reference. The archived counts pass. |
+| FL-09 | Figures and literature sizing | `preregistration/literature/replot_scopus_figures.R:23` | replot_scopus_figures.R retypes the comparison queries by hand as lookup keys and never checks that they matched | yes | Resolved 17 October 2026: the script stops unless the short names and the archived comparison queries match one to one. |
+| FL-10 | Figures and literature sizing | `preregistration/literature/scopus_gap_analysis.R:123` | The record's trend table picks columns by substring matching and silently loses any unmatched term | yes | Resolved 17 October 2026: the record's trend columns are matched on the whole query strings the script defines, and an unmatched query stops it. Verified with the stubbed run: the record reproduced apart from its date. |
+| FL-11 | Figures and literature sizing | `preregistration/literature/replot_scopus_figures.R:81` | Year breaks and label expansion in the trend figure are hard-coded | yes | Resolved 17 October 2026: the year breaks come from the archived years. The label expansion is a layout constant with its reason stated. |
+| FL-13 | Figures and literature sizing | `preregistration/figures/make_precision_figure.R:101` | Design constants in the precision figure are typed into subtitles and code instead of read from the CSVs and specs | yes | Resolved 17 October 2026: the values the subtitles state (12 readings per text, 250 texts, five texts per child) are checked against the CSV, and ALT's role is stated. Verified by altering a scratch copy. |
+| FL-14 | Figures and literature sizing | `preregistration/figures/make_precision_figure.R:118` | Figure-check widths are hard-coded, not derived from the save width, and not the width the manuscript prints at | yes | Resolved 17 October 2026: the render width is derived from the save width, and the print width is the narrower of Nature's 8.9 cm column and half the protocol's 468 pt text width, 8.26 cm, at which every panel also passes. |
+| FL-15 | Figures and literature sizing | `preregistration/figures/make_precision_figure.R:98` | Panel subsets and series lookups rely on unchecked assumptions about precision_sweep.csv | yes | Resolved 17 October 2026: the subsets use which(), and each panel stops on no rows, a missing axis value, a coefficient with no series or a repeated grid point. Verified by altering a scratch copy. |
 | FL-16 | Figures and literature sizing | `preregistration/supplementary.qmd:133` | Supplementary trend caption does not explain the shaded bands, and the replot comment overstates what the captions carry |  | Resolved 17 September 2026: the S4 caption explains the Wilson bands. |
 | FL-17 | Figures and literature sizing | `preregistration/check_reported_numbers.R:66` | The search date and trend counts quoted by hand in the protocol are not checked against the archived Scopus files |  | Duplicate of TH-04 (partly). |
-| FL-27 | Figures and literature sizing | `preregistration/literature/replot_scopus_figures.R:50` | Scopus figure dimensions and check widths are duplicated and hand-computed | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
+| FL-27 | Figures and literature sizing | `preregistration/literature/replot_scopus_figures.R:50` | Scopus figure dimensions and check widths are duplicated and hand-computed | yes | Resolved 17 October 2026: each figure script defines its dimensions and check widths once, deriving the render width from the save width. |
 | CS-05 | Count script | `preregistration/count_script/lets_story_summary.py:1243` | An equal-field-count shift puts reading-time values into read_language labels crossed with age band, and the shape anchors cannot catch it in the export's real column order | yes | Resolved 17 September 2026 in version 2026-09-17: the shape test uses four anchors (date, speech flag, both page counts, language) and needs two failures. |
 | CS-07 | Count script | `preregistration/count_script/lets_story_summary.py:955` | Folder input reads every .txt and .tsv file too, so a README in the export folder is counted as sessions; the docs say 'every CSV inside' | yes | Resolved 17 September 2026 in version 2026-09-17: folder input reads .csv, .tsv, .csv.gz, .tsv.gz and .zip only. |
 | CS-08 | Count script | `preregistration/count_script/lets_story_summary.py:961` | Twin-file detection covers only .gz beside a plain file in folder mode; .zip twins and pattern inputs are counted twice, and duplicates stay in every count | yes | Resolved 17 September 2026 in version 2026-09-17: a repeat is detected by checksum whatever its name or input mode, and the script skips its own two outputs. |
@@ -225,13 +250,13 @@ Findings are ordered by severity, then by area. Details follow the table for eve
 | CS-27 | Count script | `preregistration/count_script/lets_story_summary.py:956` | Folder globbing is case-sensitive on POSIX, so files with upper-case extensions are silently skipped on macOS and Linux | yes | Resolved 17 September 2026 in version 2026-09-17: folder listing is case-insensitive, so an upper-case extension is not skipped. |
 | RS-01 | Repository structure | `preregistration/_rename-output.R:8` | Post-render rename ignores failure, so a stale dated draft can look current |  | Resolved: the hook stops with an error when the rename fails; verified with the dated draft held open. |
 | RS-03 | Repository structure | `private_InTRACt_literature_review:1` | Literature-review gitlink has no .gitmodules and points at a private repository |  | Resolved 16 October 2026 at the author's choice: the gitlink is no longer tracked (f350ac5). The local folder and the private repository are untouched. |
-| RS-04 | Repository structure | `mindmap/source files/node_modules:1` | mindmap/source files/node_modules is tracked: 4,375 files, 41 MiB, 63 per cent of tracked bytes |  | Deferred: untracking node_modules (git rm -r --cached) changes what later clones receive. |
+| RS-04 | Repository structure | `mindmap/source files/node_modules:1` | mindmap/source files/node_modules is tracked: 4,375 files, 41 MiB, 63 per cent of tracked bytes |  | Resolved 17 October 2026 at the author's choice (1d9f200): node_modules is no longer tracked, and a .gitignore beside package-lock.json excludes it. |
 | RS-05 | Repository structure | `.gitignore:1` | No root .gitignore; .claude is excluded only by a local exclude file |  | Resolved: a root .gitignore exists; it untracks nothing. |
-| RS-06 | Repository structure | `preregistration/InTRACt preregistration draft - 2026-09-04.pdf:1` | Dated protocol drafts accumulate with no retention policy; the public branch's newest draft is a superseded design |  | Deferred. The fix edits an end product (the protocol, supplement, cover letter, bibliography, a figure or results file, or the supplied count script), so it is a proposal only. |
+| RS-06 | Repository structure | `preregistration/InTRACt preregistration draft - 2026-09-04.pdf:1` | Dated protocol drafts accumulate with no retention policy; the public branch's newest draft is a superseded design |  | Resolved 17 October 2026 by the author's decision: every dated draft is kept as the record of each version, and the README states the policy. |
 | RS-07 | Repository structure | `preregistration/preregistration.qmd:40` | Dated HTML drafts are not snapshots: they load today's figures and libraries by relative path and link a PDF that no longer exists |  | Deferred. The fix edits an end product (the protocol, supplement, cover letter, bibliography, a figure or results file, or the supplied count script), so it is a proposal only. |
 | RS-09 | Repository structure | `preregistration/_rename-output.R:1` | _rename-output.R has no header and the renaming convention is undocumented |  | Resolved: the hook has a header and the README explains the dated drafts. |
 | RS-10 | Repository structure | `.github/workflows/render-preregistration.yml:1` | No CI on this branch; the manuscript-number gates are never run, and the main-branch workflow targets the old layout |  | Partly resolved 17 October 2026, on the author's delegation: the render workflow runs only when started by hand, so a push no longer re-renders the protocol on the runner and commits over the locally checked draft. Deferred: wiring the check scripts and a lockfile restore into CI. |
-| RS-11 | Repository structure | `LICENSE:1` | No LICENSE for a repository the protocol says will be public |  | Deferred: the licence must be chosen by the author. |
+| RS-11 | Repository structure | `LICENSE:1` | No LICENSE for a repository the protocol says will be public |  | Resolved 17 October 2026 at the author's choice (9ab03ac): MIT for the code (LICENSE, copyright the University of Oxford) and CC BY-NC 4.0 for the rest (LICENSE-content.md, copyright the InTRACt authors). |
 | RS-12 | Repository structure | `preregistration/downloaded_papers_zotero_keys/download_report.csv:1` | Thirteen publisher PDFs from a Zotero library are tracked and referenced by nothing |  | Partly resolved 16 October 2026 at the author's choice: the folder is no longer tracked and is ignored (f350ac5), and the merge kept it off main. The PDFs remain in history, public on the protocol branch since 24 September 2026; purging them would rewrite both branches. |
 | RS-13 | Repository structure | `README.md:35` | Root README describes a superseded study and embeds a superseded framework figure |  | Partly resolved: the root README's text now matches the protocol. Deferred: the framework figure (DC-46) and the funder line (DC-49) need the author. |
 | RS-14 | Repository structure | `preregistration/README.md:37` | preregistration/README.md quotes a stale rigour score and omits the checker, the render hook and several outputs |  | Resolved: the README quotes the current score and describes the checker, the hook and the SVG. |
@@ -260,13 +285,13 @@ Findings are ordered by severity, then by area. Details follow the table for eve
 | DC-10 | Documentation and comments | `preregistration/README.md:19` | The README never mentions check_reported_numbers.R, the script that gates the manuscript's numbers |  | Resolved: the README has a section on checking the manuscript. |
 | DC-11 | Documentation and comments | `preregistration/README.md:58` | No ordered end-to-end run order with inputs and outputs, and the stated dependencies are partly wrong |  | Resolved: the README has an ordered pipeline table. |
 | DC-12 | Documentation and comments | `preregistration/README.md:64` | Environment variables are incompletely and partly inaccurately documented |  | Duplicate of DA-20 (resolved). |
-| DC-13 | Documentation and comments | `preregistration/README.md:125` | The README gives no environment setup: R version, package versions and sources, Quarto, fonts or Python |  | Partly resolved: the README has a Requirements section. Deferred: an R lockfile (RP-01) is still missing. |
+| DC-13 | Documentation and comments | `preregistration/README.md:125` | The README gives no environment setup: R version, package versions and sources, Quarto, fonts or Python |  | Partly resolved 16 and 17 October 2026: the Requirements section gives R, the lockfile, Quarto, LuaTeX and Python, and RP-01 added the lockfile. Deferred: the fonts the documents use are not listed. |
 | DC-14 | Documentation and comments | `preregistration/README.md:66` | No expected runtime or memory footprint documented, although a known out-of-memory failure exists |  | Partly resolved: the README says runtimes are not recorded and names the known out-of-memory point. Deferred: measuring runtimes needs a full run of the simulations. |
 | DC-15 | Documentation and comments | `preregistration/README.md:19` | No map from a reported number to the script, file and column that produce it |  | Resolved: the README maps each quoted number to its artefact and script. |
 | DC-20 | Documentation and comments | `preregistration/README.md:111` | README says rerunning the count script reproduces its output line for line, but the output carries the run date |  | Duplicate of CS-17 (resolved). |
 | DC-21 | Documentation and comments | `preregistration/supplementary.qmd:185` | The supplement repeats the line-for-line reproduction claim for the count script |  | Duplicate of CS-18 (deferred). |
 | DC-25 | Documentation and comments | `preregistration/design_analysis/run_design_analysis.R:66` | Stale comment: the worker-cluster fallback does not attempt the first grid point as described |  | Duplicate of DA-13 (partly). |
-| DC-29 | Documentation and comments | `preregistration/design_analysis/run_design_analysis.R:111` | Design-analysis grid constants have no stated source, and the tier-2 labels copy the spec instead of reading it | yes | Partly resolved: a TODO marks the grid constants' unrecorded source. Deferred: deriving the tier-2 labels from the specification is a code change behind reported numbers. |
+| DC-29 | Documentation and comments | `preregistration/design_analysis/run_design_analysis.R:111` | Design-analysis grid constants have no stated source, and the tier-2 labels copy the spec instead of reading it | yes | Resolved by 17 October 2026: the script explains the grid choices (15 to 17 October), and the tier-2 rows take their texts and readings per child from the specification, under a column of their own, per_child (DA-24). |
 | DC-35 | Documentation and comments | `preregistration/theory/make_figure1.R:33` | make_figure1.R hard-codes the node and edge counts it asserts and reports | yes | Duplicate of TH-17 (deferred). |
 | DC-36 | Documentation and comments | `mindmap/source files/capture.js:1` | capture.js has no header, and package.json gives no way to run it |  | Resolved: capture.js has a header and package.json a capture script. |
 | DC-38 | Documentation and comments | `mindmap/source files/capture.js:10` | The Chromium sandbox is disabled with no justification |  | Partly resolved: a TODO marks the undocumented sandbox flags. Deferred: the reason for disabling the sandbox is not recorded anywhere. |
@@ -278,16 +303,16 @@ Findings are ordered by severity, then by area. Details follow the table for eve
 | DC-46 | Documentation and comments | `README.md:29` | The root README's framework figure (mindmap.png) is superseded by the protocol's nomological net |  | Deferred: which figure the root README shows is the author's choice. |
 | DC-47 | Documentation and comments | `README.md:51` | Root README says the data are nested and effects judged educationally meaningful; the protocol says crossed, with a conventional region of practical equivalence |  | Resolved: the root README describes crossed effects and the registered regions of practical equivalence. |
 | DC-48 | Documentation and comments | `README.md:45` | Root README says all text indices, sentiment included, are reduced to composites; the protocol keeps affect separate and reduces within three families |  | Resolved: the root README describes the three components and the covariates. |
-| DC-49 | Documentation and comments | `README.md:13` | Root README names Kinder as a funder, which conflicts with the draft competing-interests option denying Ferrero funding |  | Deferred: the funding arrangement and the competing-interests statement need the author. |
+| DC-49 | Documentation and comments | `README.md:13` | Root README names Kinder as a funder, which conflicts with the draft competing-interests option denying Ferrero funding |  | Resolved by 17 October 2026: the author confirmed that Ferrero International funds the research, and the root README, the acknowledgements, the competing-interests statement and the cover letter say so. |
 | DC-50 | Documentation and comments | `README.md:57` | Root README's contents section points to a private gitlink as an active area and omits the reproducible parts of the repository |  | Resolved: the root README describes the gitlink as a link to a private repository. |
 | DC-53 | Documentation and comments | `preregistration/preregistration.qmd:439` | Code availability says session records beside every output record the versions used, but most outputs have none |  | Duplicate of RP-10 (deferred). |
 | DC-54 | Documentation and comments | `preregistration/supplementary.qmd:137` | The supplement and protocol say the simulated models were fitted by maximum likelihood, but pilotr fits them by REML |  | Duplicate of DA-17 (resolved 17 September 2026). |
-| DC-55 | Documentation and comments | `preregistration/cover_letter.md:77` | The cover letter says all analysis code is already public; the protocol says it will be public at submission, and the branch is unpushed |  | Deferred. The fix edits an end product (the protocol, supplement, cover letter, bibliography, a figure or results file, or the supplied count script), so it is a proposal only. |
+| DC-55 | Documentation and comments | `preregistration/cover_letter.md:77` | The cover letter says all analysis code is already public; the protocol says it will be public at submission, and the branch is unpushed |  | Resolved 16 October 2026: with the branch merged into main and public, the cover letter's statement holds, and no edit was needed. |
 | DC-56 | Documentation and comments | `CHANGELOG.md:0` | No changelog records what changed between the dated protocol drafts |  | Duplicate of RS-18 (resolved). |
 | DC-57 | Documentation and comments | `preregistration/README.md:1` | No glossary maps variable names across the Python, R, JSON, theory and manuscript layers |  | Duplicate of ST-22 (deferred). |
 | ST-04 | Style and naming | `preregistration/design_analysis/solve_at_095.R:19` | Solver wrapper, progress logger and constants duplicated across the design-analysis scripts | yes | Duplicate of DA-33 (deferred). |
 | ST-05 | Style and naming | `preregistration/design_analysis/run_ordinal_analysis.R:190` | run_ordinal_analysis.R and summarise_ordinal.R overwrite the same outputs with different schemas; run order undocumented | yes | Duplicate of DA-09 (partly). |
-| ST-06 | Style and naming | `preregistration/design_analysis/run_ordinal_analysis.R:86` | Ordinal replicate fitter swallows errors without recording their cause, and an all-failed grid point vanishes | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
+| ST-06 | Style and naming | `preregistration/design_analysis/run_ordinal_analysis.R:86` | Ordinal replicate fitter swallows errors without recording their cause, and an all-failed grid point vanishes | yes | Resolved 17 October 2026: every thinned or failed ordinal replicate is recorded with its cause, each grid point's CSV counts them (n_thin, n_fit_error), and a grid point with no estimate stops the run. A fresh grid wrote the new columns; its replicates all fitted, so the failure path was checked by reading the code. |
 | ST-07 | Style and naming | `preregistration/theory/build_theory.R:39` | build_theory.R can leave stale theory outputs in place without a message and diverts errors into tf_check.txt | yes | Duplicate of TH-09 (deferred). |
 | ST-08 | Style and naming | `preregistration/_rename-output.R:8` | Quarto post-render hook ignores file.rename failure and still logs 'Renamed' |  | Duplicate of RS-01 (resolved). |
 | ST-09 | Style and naming | `preregistration/theory/report_theory.R:1` | Three R scripts have no header saying what they do, how to run them, or what they write |  | Partly resolved: report_theory.R and _rename-output.R have headers. Deferred: diagram_theory.R waits on the decision in TH-11. |
@@ -306,7 +331,7 @@ Findings are ordered by severity, then by area. Details follow the table for eve
 
 | ID | Area | Location | Finding | HIGH-RISK | Status |
 |---|---|---|---|---|---|
-| DA-23 | Design analysis | `preregistration/design_analysis/run_design_analysis.R:137` | A cached re-run does not byte-reproduce precision_sweep.csv or minimum_texts.csv | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
+| DA-23 | Design analysis | `preregistration/design_analysis/run_design_analysis.R:137` | A cached re-run does not byte-reproduce precision_sweep.csv or minimum_texts.csv | yes | Resolved 17 October 2026: precision_sweep.csv was regenerated from the cached sweeps (LS-02), and cache_write() now passes on each fresh sweep as read back from its file, so a fresh run and a cached re-run write identical tables. Verified: both files byte-identical after a fresh run and a re-run from its cache. |
 | DA-24 | Design analysis | `preregistration/design_analysis/run_design_analysis.R:167` | The tier-2 sweep labels readings per child as per_text and hard-codes 250 texts | yes | Resolved 17 September 2026: the tier-2 CSV records texts from the specification and per_child. |
 | DA-25 | Design analysis | `preregistration/design_analysis/run_ordinal_analysis.R:132` | Ordinal script bypasses pilotr's replicate seeds and the JSON seed despite claiming 'the same seed discipline' |  | Resolved 17 September 2026: S5 describes the per-replicate seeding. |
 | DA-26 | Design analysis | `preregistration/design_analysis/run_design_analysis.R:144` | Replicate seeds are shared across grid points and between the null and alternative sweeps, which is undocumented |  | Resolved: the shared replicate seeds are documented in run_design_analysis.R and the README. |
@@ -316,10 +341,10 @@ Findings are ordered by severity, then by area. Details follow the table for eve
 | DA-30 | Design analysis | `preregistration/design_analysis/run_design_analysis.R:46` | The protocol says the tier-2 model 'added' terms to the tier-1 model, but F_T2 drops the age band and its interactions |  | Resolved 17 September 2026: the tier-2 model is described as simulated. |
 | DA-31 | Design analysis | `preregistration/design_analysis/run_ordinal_analysis.R:43` | Magic numbers without a stated source: rated rate, replicate floors, seed offsets, grids and repeated 1.959964 literals |  | Resolved: the rating rate, rater floor, replicate floors and seed offsets carry their source or a TODO; the 1.959964 literals are left, as the fix advised. |
 | DA-32 | Design analysis | `preregistration/design_analysis/summarise_ordinal.R:10` | summarise_ordinal.R header claims the grid tests the inverse-square-root law and omits prerequisites and outputs |  | Resolved: summarise_ordinal.R's header states its prerequisite, outputs and what the grid estimates. |
-| DA-33 | Design analysis | `preregistration/design_analysis/solve_at_095.R:19` | The solver helper is copied into four scripts, and a Wilson interval is re-implemented without clamping | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
-| DA-34 | Design analysis | `preregistration/design_analysis/run_ordinal_analysis.R:122` | Several helper functions lack a one-line purpose comment |  | Partly resolved: msg, wilson and run_point have purpose comments. Deferred: read_sweep in solve_at_095.R and run_sweep's argument list remain. |
+| DA-33 | Design analysis | `preregistration/design_analysis/solve_at_095.R:19` | The solver helper is copied into four scripts, and a Wilson interval is re-implemented without clamping | yes | Resolved 17 October 2026: one solver, one clamped Wilson interval and the other shared functions are in design_analysis/helpers.R, sourced by all six scripts. |
+| DA-34 | Design analysis | `preregistration/design_analysis/run_ordinal_analysis.R:122` | Several helper functions lack a one-line purpose comment |  | Resolved 17 October 2026: read_sweep and every shared function have a purpose comment. |
 | DA-35 | Design analysis | `preregistration/design_analysis/run_ordinal.log:9` | The ignored run_ordinal.log is stale: it records an unfinished 3,200-text sweep from a superseded default grid |  | Deferred: run_ordinal.log is an ignored local file, and deleting it is the maintainer's call. |
-| DA-36 | Design analysis | `preregistration/design_analysis/run_design_analysis.R:61` | at_effect silently leaves a zero coefficient at zero when the sign is kept |  | Deferred: the zero-coefficient assertion is a code edit in a script behind reported numbers, held back so this pass changed only comments there, and belongs with the sign-off on DA-03. |
+| DA-36 | Design analysis | `preregistration/design_analysis/run_design_analysis.R:61` | at_effect silently leaves a zero coefficient at zero when the sign is kept |  | Resolved 17 October 2026: at_effect() stops on a zero coefficient when asked to keep the signs. |
 | TH-22 | Theory object and checks | `preregistration/theory/intract.theory.yaml:501` | The yaml provenance log does not record the twelfth construct or propositions p15 to p18 |  | Deferred: the provenance entries for the twelfth construct and propositions p15 to p18 need the author's dates. |
 | TH-23 | Theory object and checks | `preregistration/theory/make_figure1.R:1` | The nomological net is called Figure 1 in the script, the yaml and the file names, but it is Figure 2 |  | Resolved: script, yaml and README call the net Figure 2; the fig1_ file names are unchanged. |
 | TH-24 | Theory object and checks | `preregistration/theory/build_theory.R:41` | theory/intract_nomological_net.svg is regenerated on every build but consumed by nothing |  | Resolved: the README describes the SVG and says the manuscript does not use it. |
@@ -327,14 +352,14 @@ Findings are ordered by severity, then by area. Details follow the table for eve
 | TH-26 | Theory object and checks | `preregistration/theory/make_figure1.R:124` | The regenerated Figure 2 PDF differs from the committed one on every run because cairo embeds CreationDate |  | Duplicate of RP-19 (deferred). |
 | TH-27 | Theory object and checks | `preregistration/theory/build_theory.R:11` | Line endings of theory outputs and scripts depend on the platform and core.autocrlf, with no .gitattributes |  | Duplicate of RS-26 (deferred). |
 | TH-28 | Theory object and checks | `preregistration/theory/make_figure1.R:57` | Styling constants in make_figure1.R carry no reason, and the minus glyph is a raw non-ASCII literal |  | Deferred: the reasons for the styling constants are not recoverable from the code or its history. |
-| TH-29 | Theory object and checks | `preregistration/theory/make_figure1.R:121` | Figure 2 gets no text-size or colour check, unlike the other manuscript figures | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
+| TH-29 | Theory object and checks | `preregistration/theory/make_figure1.R:121` | Figure 2 gets no text-size or colour check, unlike the other manuscript figures | yes | Partly resolved 17 October 2026: make_nomological_net.R stops if the smallest type would print below 6 point at the protocol's embedding width (it prints at 6.23) and checks every colour's contrast, 4.5:1 for words and 3:1 for marks. Decision needed: the dashed moderation lines are at 2.86:1 and are reported; darkening them changes Figure 2. |
 | TH-30 | Theory object and checks | `preregistration/check_reported_numbers.R:32` | Helper named get masks base::get in check_reported_numbers.R |  | Resolved: the helper is now row_of. |
-| FL-12 | Figures and literature sizing | `preregistration/literature/replot_scopus_figures.R:55` | The figure check in replot_scopus_figures.R only warns, for every check, so failures never stop it | yes | Partly resolved: the README says the Scopus figure checks only warn. Deferred: making them fatal changes figure code and awaits sign-off. |
+| FL-12 | Figures and literature sizing | `preregistration/literature/replot_scopus_figures.R:55` | The figure check in replot_scopus_figures.R only warns, for every check, so failures never stop it | yes | Resolved 17 October 2026: every check is fatal except redundant_encoding, which warns for the reason given. Every other check passes. |
 | FL-18 | Figures and literature sizing | `preregistration/literature/scopus_gap_analysis.R:3` | API key handling is sound, but the variable name is undocumented and a project .Renviron is not ignored |  | Resolved: the script header and README name SCOPUS_API_KEY, and the root .gitignore excludes .Renviron. |
-| FL-20 | Figures and literature sizing | `preregistration/figures/make_precision_figure.R:28` | Dead lookup entries for CohPC_narr | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
-| FL-21 | Figures and literature sizing | `preregistration/figures/make_precision_figure.R:87` | Unused log_x argument with a no-op else branch |  | Deferred: although the rewrite cannot change the figure, it is a code edit in a figure script, held back so this pass changed only comments there. |
+| FL-20 | Figures and literature sizing | `preregistration/figures/make_precision_figure.R:28` | Dead lookup entries for CohPC_narr | yes | Resolved 17 October 2026: the dead entries are removed, and a coefficient with no entry now stops the script. |
+| FL-21 | Figures and literature sizing | `preregistration/figures/make_precision_figure.R:87` | Unused log_x argument with a no-op else branch |  | Resolved 17 October 2026: the argument is removed and every panel takes the log axis. |
 | FL-22 | Figures and literature sizing | `preregistration/figures/make_precision_figure.R:91` | Stale comment on the numeric conversion of 'truth' |  | Resolved: the comment describes the conversion as it happens. |
-| FL-23 | Figures and literature sizing | `preregistration/figures/make_precision_figure.R:133` | Main figure is saved before the supplement panels are checked | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
+| FL-23 | Figures and literature sizing | `preregistration/figures/make_precision_figure.R:133` | Main figure is saved before the supplement panels are checked | yes | Resolved 17 October 2026: all four panels are checked before either figure is saved. |
 | FL-24 | Figures and literature sizing | `preregistration/figures/make_precision_figure.R:109` | Figure panel tags are uppercase, while both captions refer to lowercase panels | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
 | FL-25 | Figures and literature sizing | `preregistration/figures/make_precision_figure.R:53` | Magic numbers in the precision figure have no stated rationale |  | Deferred: the rationale for the figure constants is not recorded. |
 | FL-26 | Figures and literature sizing | `preregistration/figures/make_precision_figure.R:56` | Palette comments misdescribe the colours as three, all taken from the Okabe-Ito set |  | Resolved: the palette comment lists the four colours and which are Okabe-Ito. |
@@ -342,7 +367,7 @@ Findings are ordered by severity, then by area. Details follow the table for eve
 | FL-29 | Figures and literature sizing | `preregistration/figures/make_precision_figure.R:134` | The regenerated PDFs never match the committed files byte for byte, because cairo stamps a creation date |  | Duplicate of RP-19 (deferred). |
 | FL-30 | Figures and literature sizing | `preregistration/downloaded_papers_zotero_keys/download_report.csv:1` | downloaded_papers_zotero_keys is an orphaned output with no generator, adding about 18 MB to history |  | Duplicate of RS-12 (deferred). |
 | FL-31 | Figures and literature sizing | `preregistration/downloaded_papers_zotero_keys/download_report.csv:4` | download_report.csv exposes local filesystem paths and Zotero storage keys |  | Duplicate of RS-12 (deferred). |
-| FL-32 | Figures and literature sizing | `preregistration/literature/replot_scopus_figures.R:66` | The three R scripts save, load and log in inconsistent ways | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
+| FL-32 | Figures and literature sizing | `preregistration/literature/replot_scopus_figures.R:66` | The three R scripts save, load and log in inconsistent ways | yes | Partly resolved 17 October 2026: each figure script saves both formats through one function, and the design-analysis scripts share helpers.R. Deferred: the figure, theory and Scopus scripts still log in their own ways, a matter of style. |
 | CS-15 | Count script | `preregistration/count_script/lets_story_summary.py:626` | Missing-value tokens are inconsistent: blank() treats NA and NULL as empty, time_class() calls them 'not a number', and nan, None and N/A count as values | yes | Resolved 17 September 2026 in version 2026-09-17: MISSING_TOKENS is used by blank() and by time_class(), so NA, NULL, N/A, NaN, None and a lone dash count as empty everywhere. |
 | CS-16 | Count script | `preregistration/count_script/lets_story_summary.py:687` | parse_when reads any 10-digit number in the epoch range as Unix seconds, and mixes UTC epochs with as-logged ISO times | yes | Partly resolved 17 September 2026: the format each file's dates were read in is recorded per file, so a mix of as-logged timestamps and UTC epochs is visible. Reading a 10-digit number as an epoch is unchanged. |
 | CS-17 | Count script | `preregistration/README.md:111` | README says a re-run reproduces the 6 August output 'line for line', but the run date is embedded, so one line always differs |  | Resolved: the README says one line, the run date, differs. |
@@ -356,7 +381,7 @@ Findings are ordered by severity, then by area. Details follow the table for eve
 | CS-26 | Count script | `preregistration/count_script/lets_story_summary.py:1838` | Redundant logic: band lists written inline in emit alongside a _bands helper, Counters used as sets, and an always-true length check | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
 | CS-28 | Count script | `preregistration/count_script/lets_story_summary.py:966` | Files skipped as twins, zip archives with no CSV, and empty files are reported only on stdout, not in the summary data file | yes | Resolved 17 September 2026 in version 2026-09-17: every note about a skipped, empty or duplicate file is written into the summary data file as well as printed. |
 | RS-08 | Repository structure | `preregistration/_rename-output.R:5` | Supplement outputs are overwritten undated while protocol outputs are dated |  | Partly resolved: the hook header and README state that the supplement is overwritten. Deferred: whether to date the supplement too is a maintainer decision. |
-| RS-19 | Repository structure | `preregistration/preregistration_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css:1` | Quarto HTML libraries are tracked, including superseded CSS hashes that old drafts still load |  | Deferred. The fix edits an end product (the protocol, supplement, cover letter, bibliography, a figure or results file, or the supplied count script), so it is a proposal only. |
+| RS-19 | Repository structure | `preregistration/preregistration_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css:1` | Quarto HTML libraries are tracked, including superseded CSS hashes that old drafts still load |  | Resolved 17 October 2026 by the author's decision: the libraries stay tracked because the dated HTML drafts load them, as the README says. |
 | RS-20 | Repository structure | `mindmap/source files/capture_output.txt:2` | capture_output.txt records a save path in a different checkout |  | Deferred: capture_output.txt is a stale log; removing or regenerating it is the maintainer's call. |
 | RS-23 | Repository structure | `preregistration/InTRACt references.bib:1` | Spaces and mixed naming conventions in paths |  | Deferred. The fix edits an end product (the protocol, supplement, cover letter, bibliography, a figure or results file, or the supplied count script), so it is a proposal only. |
 | RS-24 | Repository structure | `preregistration/check_reported_numbers.R:1` | Checker and render hook sit at the preregistration root, apart from the other scripts |  | Deferred: moving the scripts changes every documented command. |
@@ -404,7 +429,7 @@ Findings are ordered by severity, then by area. Details follow the table for eve
 | ST-21 | Style and naming | `preregistration/check_reported_numbers.R:32` | R naming inconsistencies and local names that mask base or graphics functions |  | Partly resolved: the helper that masked base::get was renamed. Deferred: the remaining naming lints belong to the formatting pass (ST-15). |
 | ST-22 | Style and naming | `preregistration/design_analysis/tier1_developmental.json:18` | The same entities carry different names across the export, specs, R code, theory object and manuscript, with no glossary |  | Deferred: the canonical names need the author's choice; the proposed glossary is in the fix below. |
 | ST-23 | Style and naming | `preregistration/literature/replot_scopus_figures.R:55` | Mixed failure and logging idioms: stop, quit, warning and NULL-returning tryCatch; cat to stdout for progress |  | Duplicate of FL-32 (deferred). |
-| ST-24 | Style and naming | `preregistration/figures/make_precision_figure.R:93` | Figure script coerces the truth column with warnings suppressed; a partial coercion failure drops rows without notice | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
+| ST-24 | Style and naming | `preregistration/figures/make_precision_figure.R:93` | Figure script coerces the truth column with warnings suppressed; a partial coercion failure drops rows without notice | yes | Resolved 17 October 2026: a truth value that cannot be read as a number stops the script and is named. Verified by altering a scratch copy. |
 | ST-25 | Style and naming | `mindmap/source files/capture.js:9` | capture.js passes the legacy headless: 'new' value and disables the Chromium sandbox |  | Deferred: changing the headless value or the sandbox flags needs a capture run with network access to confirm the figure is unchanged. |
 | ST-26 | Style and naming | `mindmap/source files/capture.js:17` | capture.js comment says the page is loaded as a data URL; the code uses page.setContent |  | Duplicate of DC-37 (resolved). |
 | ST-27 | Style and naming | `mindmap/source files/capture.js:29` | process.exit(1) inside try bypasses the finally block that closes the browser |  | Resolved: capture.js sets process.exitCode so the finally block runs; node --check passes. |
@@ -412,7 +437,7 @@ Findings are ordered by severity, then by area. Details follow the table for eve
 | ST-29 | Style and naming | `mindmap/source files/capture_output.txt:2` | capture_output.txt records an old repository path and carries a byte-order mark |  | Duplicate of RS-20 (deferred). |
 | ST-30 | Style and naming | `mindmap/source files/package.json:5` | Mindmap package.json keeps npm init placeholders and has no script for the capture |  | Resolved: package.json names capture.js and adds npm run capture. |
 | ST-31 | Style and naming | `preregistration/design_analysis/run_ordinal_analysis.R:100` | Several script-local R helpers have no purpose comment |  | Duplicate of DA-34 (partly). |
-| CR-03 | Completeness critic | `preregistration/design_analysis/run_design_analysis.R:100` | run_design_analysis.R labels grid points by row count and discards pilotr's own grid column, which would label them directly | yes | Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off. |
+| CR-03 | Completeness critic | `preregistration/design_analysis/run_design_analysis.R:100` | run_design_analysis.R labels grid points by row count and discards pilotr's own grid column, which would label them directly | yes | Resolved 17 October 2026: label_grid() labels the rows from pilotr's own grid column after checking the result's shape. Verified on fresh sweeps. |
 | CR-04 | Completeness critic | `preregistration/design_analysis/run_design_analysis.R:172` | Singular and non-converged fits at two readings per text are counted in the quoted precision without disclosure, and the pooled grid drops the warning and attempt counts | yes | Partly resolved 17 September 2026: S5 discloses the four singular fits at two readings per text. Deferred: the pooled CSV still omits the attempt and warning columns. |
 | CR-06 | Completeness critic | `preregistration/README.md:5` | The reference-style record in journal.json contradicts the README and the manuscript's APA 7 setting, and nature.csl is used by nothing |  | Deferred: journal.json records the journal's own style, and reverting to APA 7 was a deliberate decision. |
 | CR-07 | Completeness critic | `preregistration/InTRACt references.bib:1` | Over half the bibliography is uncited: 322 of 591 entries appear in neither the protocol, the supplement nor the cover letter |  | Deferred. The fix edits an end product (the protocol, supplement, cover letter, bibliography, a figure or results file, or the supplied count script), so it is a proposal only. |
@@ -454,7 +479,7 @@ Impact: preregistration.qmd:308 registers re-runs at observed inputs: rating ava
 
 Proposed fix: Store a key file beside each cache file. For run_sweep, deparse the spec, n_sims, ROPE, values, focal, formula and packageVersion('pilotr'). For run_point, include RATED, MIN_RATERS, TRUE_B, ROPE, N_SIMS and the spec. Reuse the cache only when the key matches, and otherwise stop with a message saying which file to delete. In summarise_ordinal.R, stop unless rated_rate, min_raters and n_sims each take a single value. Until then, state in both headers and in the README that sweeps/ must be cleared after any change to a spec or setting.
 
-Status: Partly resolved: the file-name-only cache is stated in both script headers and the README. Deferred: a cache key that stops on a mismatch is a logic change in code behind reported numbers, so it awaits sign-off.
+Status: Resolved 17 October 2026 at the author's sign-off: every cached sweep and ordinal grid point has a key file recording the settings that produced it. A mismatch stops the run, and a missing key stops it unless INTRACT_ADOPT_CACHE=1. Verified: a changed replicate count stopped the run at the first cached sweep, and every output reproduced byte for byte.
 
 </details>
 
@@ -526,7 +551,7 @@ Impact: Renaming a construct can produce a plausible-looking Figure 2 with an ex
 
 Proposed fix: After building styled, extract every quoted construct id from the whole DOT string, invisible and rank lines included: ids <- unique(gsub('"', '', regmatches(styled, gregexpr('"c_[A-Za-z0-9_]+"', styled))[[1]])); stopifnot(setequal(ids, nodes$id)). Build the rank rows and the invisible edge from named vectors checked with stopifnot(all(c(rank_ids, invis_ids) %in% nodes$id)). Guards only, since the current figure is unchanged, but it is figure code and needs sign-off.
 
-Status: Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off.
+Status: Resolved 17 October 2026: every construct id anywhere in the restyled DOT, the rank hints and the invisible edge included, must be one the object emitted.
 
 </details>
 
@@ -550,7 +575,7 @@ Impact: After any rerun where a year-topic count comes back missing, the supplem
 
 Proposed fix: In replot_scopus_figures.R, after line 62 add stopifnot('gap counts contain NA' = !anyNA(ints$n)). After line 72 add stopifnot('trend counts or shares contain NA' = !anyNA(cmp$n), !anyNA(cmp$reference_n), !anyNA(cmp$comparison_percentage[cmp$query_type == 'comparison'])). The last condition also catches a zero reference count. Add the same guard at the source in scopus_gap_analysis.R (see FL-08). Neither changes the current figures.
 
-Status: Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off.
+Status: Resolved 17 October 2026: replot_scopus_figures.R stops on an empty archive or a missing value. The caption that is stripped reported the zero-count intersection, which the manuscript's caption states.
 
 </details>
 
@@ -670,7 +695,7 @@ Impact: A future solve that fails for a numerical reason would be reported as a 
 
 Proposed fix: Capture the condition with `error = function(e) e`. Write 'not reached within X to Y' only when max(d$p_meaningful) < target, and otherwise write conditionMessage(e). The current notes stay byte-identical.
 
-Status: Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off.
+Status: Resolved 17 October 2026: solve_at() in helpers.R reports 'not reached' only where no grid point reaches the target, and 'not determined', with pilotr's reason and a warning, where the fit cannot place the crossing. Verified at two replicates per point, where several curves were not determined; every committed curve still solves.
 
 </details>
 
@@ -682,7 +707,7 @@ Impact: Running the scripts in the listed order silently deletes the projection 
 
 Proposed fix: Stating the order (run_design_analysis.R, solve_at_095.R, run_ordinal_analysis.R, summarise_ordinal.R) in both ordinal headers and in the README is documentation-only and safe. Removing the solve-and-write block from run_ordinal_analysis.R, or sourcing summarise_ordinal.R at its end, is a code change for the maintainer to approve.
 
-Status: Partly resolved: the run order is documented in both scripts and the README. Deferred: giving the two scripts distinct outputs changes files the protocol quotes and awaits sign-off.
+Status: Resolved 17 October 2026: run_ordinal_analysis.R writes only its grid points and its session record and then runs summarise_ordinal.R, the one writer of ordinal_texts.csv and minimum_texts_ordinal.csv. Both tables reproduced.
 
 </details>
 
@@ -694,7 +719,7 @@ Impact: The environment record can silently come to describe a session that fitt
 
 Proposed fix: Write session information only when at least one sweep was computed, preferably one file per cache entry, and do the same in run_ordinal_analysis.R. Record packageDescription('pilotr')[c('Packaged','Built')] and the versions of ordinal and lme4.
 
-Status: Deferred: it changes what run_design_analysis.R writes and belongs with the cache-key change in DA-03.
+Status: Resolved 17 October 2026: each simulation script writes its session record only when it computed something, so a run from cache leaves the record of the run that produced the results; the ordinal record moved to run_ordinal_analysis.R. The solve and summary scripts simulate nothing and write none.
 
 </details>
 
@@ -706,7 +731,7 @@ Impact: Setting INTRACT_N_SIMS for a quick or more precise run changes two of th
 
 Proposed fix: Introduce N_SIMS_2 <- as.integer(Sys.getenv('INTRACT_N_SIMS_SECONDARY', '120')). Use it in the three calls and in the session string, and document it in the README. The default reproduces the current numbers.
 
-Status: Partly resolved: the fixed 120 replicates are documented in the script and the README. Deferred: reading them from a variable changes code behind reported numbers and awaits sign-off.
+Status: Resolved 17 October 2026: the readings, null and tier-2 sweeps read INTRACT_N_SIMS_2 (default 120), which the cache key records.
 
 </details>
 
@@ -718,7 +743,7 @@ Impact: Mistyped settings produce either cryptic errors or cached NA sweeps that
 
 Proposed fix: Validate the raw strings before conversion, for example stopifnot(grepl('^[0-9]+$', Sys.getenv('INTRACT_N_SIMS', '200'))), and then check stopifnot(N_SIMS >= 1, WORKERS >= 1). Use >= 1, not >= 2, so quick cached checks with 1 replicate still run. In run_ordinal_analysis.R also check stopifnot(!is.na(RATED), RATED > 0, RATED <= 1, all(!is.na(TEXTS)), all(TEXTS > 0), all(TEXTS == round(TEXTS))).
 
-Status: Deferred: validating the environment variables is a code edit in a script behind reported numbers, held back so this pass changed only comments there, and belongs with the sign-off on DA-03.
+Status: Resolved 17 October 2026: env_number() and env_numbers() validate every setting and stop with its name. Verified with INTRACT_N_SIMS=2OO.
 
 </details>
 
@@ -730,7 +755,7 @@ Impact: A reader or maintainer is misled about failure behaviour, and a long run
 
 Proposed fix: Rewrite the comment at lines 66-68 to describe the probe cluster, and note that precision_design starts a fresh cluster at each grid point with no fallback. Remove the unused `spec` argument and change the call at line 96 to safe_workers(). Caching per grid point is a separate decision.
 
-Status: Partly resolved: the cluster comment now describes the probe. Deferred: removing the unused argument is a code edit, held back so this pass changed comments only in scripts behind reported numbers.
+Status: Resolved 17 October 2026: one probe, make_worker_probe() in helpers.R, with no unused argument and a comment stating that only the first cluster is probed.
 
 </details>
 
@@ -742,7 +767,7 @@ Impact: If a sign changes in a JSON spec, the simulation follows the spec while 
 
 Proposed fix: Define ALT <- 2 * ROPE, and derive each focal vector from the modified spec, mapping ':' to '_' in names. Derive the truth labels from ALT. Assert that the result matches the current literals, so the numbers stay unchanged.
 
-Status: Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off.
+Status: Resolved 17 October 2026: the focal effects are read from the modified specification by focal_from(), which stops on a name the specification lacks.
 
 </details>
 
@@ -754,7 +779,7 @@ Impact: If TRUE_B or ROPE changes in the sweep script, as the protocol's sixth a
 
 Proposed fix: Read TRUE_B as unique(abs(res$true)) with a length-one assertion. Write rope into each cached point and read it back, and define TARGET once. If DA-04 is adopted, project from the recorded mean estimate.
 
-Status: Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off.
+Status: Resolved 17 October 2026: the ordinal region is defined once in helpers.R, which both ordinal scripts read. summarise_ordinal.R takes the true effect from the cached grid points and stops unless they agree on it, on the replicate count, the rating rate and the minimum raters, and on the region where they record it.
 
 </details>
 
@@ -790,7 +815,7 @@ Impact: A dangling reference. If theoryforge credits the presence of a formal mo
 
 Proposed fix: Maintainer decision. Point spec_ref at an existing specification, for example design_analysis/tier1_developmental.json, which leaves the score unchanged because only the type is scored. Reconsider type 'sem'. Then re-run theory/build_theory.R and theory/check_manuscript_claims.R on a copy to confirm the score is still 90.7.
 
-Status: Deferred: the theory object's formal_model entry feeds the rigour score the manuscript quotes, so correcting it can move that score.
+Status: Deferred, tested 17 October 2026: pointing spec_ref at an existing specification left tf_check.txt byte-identical and the score at 90.7, so the formalisation item passes either way. Which file the theory's formal model should name, and whether 'sem' describes it, is the author's decision.
 
 </details>
 
@@ -802,7 +827,7 @@ Impact: Whoever runs the documented command sees no error message. The deposited
 
 Proposed fix: Write to a temporary file and move it only on success: tmp <- tempfile(fileext = '.txt'); out <- file(tmp, open = 'wt', encoding = 'UTF-8'); sink(out); tryCatch({ ...body... }, finally = { sink(); close(out) }); file.copy(tmp, 'theory/tf_check.txt', overwrite = TRUE). Do not sink messages, so errors reach stderr. This was verified to leave tf_check.txt byte-identical on success. Write the CSVs and the SVG only after the body completes.
 
-Status: Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off.
+Status: Resolved 17 October 2026: the report goes to a temporary file, an error is caught and raised again after the sinks are removed, and tf_check.txt is replaced only when every step has run. Verified by injecting an error.
 
 </details>
 
@@ -814,7 +839,7 @@ Impact: The documented reproduction step reports success on an object that no lo
 
 Proposed fix: After line 21 capture chk <- tf_check(theory), and stop if !identical(chk$gate, 'pass') || chk$n_blockers_failed > 0. Replace the tryCatch at line 32 with imp <- tf_implications(theory); stopifnot(isTRUE(imp$acyclic)); print(imp), which leaves the output unchanged for an acyclic object. Replace the is.data.frame guards with stopifnot(is.data.frame(sev), is.data.frame(red)). Let tf_render_diagram errors propagate instead of silently keeping a stale SVG.
 
-Status: Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off.
+Status: Resolved 17 October 2026: build_theory.R exits with an error if validation, the rigour checklist's gate or acyclicity fails, if a screen returns no table or if the diagram fails, after writing the report.
 
 </details>
 
@@ -850,7 +875,7 @@ Impact: Any legitimate change to the theory object breaks figure generation unti
 
 Proposed fix: stopifnot(nrow(nodes) == length(th$constructs), nrow(edges) == length(th$propositions)), and writeLines(sprintf('content assertion passed: %d nodes, %d edges, wording unchanged', nrow(nodes), nrow(edges))). Derive the counts from the parsed yaml, not from the DOT parse, so the guard against a missed regex match stays meaningful.
 
-Status: Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off.
+Status: Resolved 17 October 2026: the expected counts are the object's construct and proposition counts, and the message reports them.
 
 </details>
 
@@ -886,7 +911,7 @@ Impact: Following the README rerun instructions leaves PNGs with titles, caption
 
 Proposed fix: Remove the two ggsave calls from scopus_gap_analysis.R (lines 65-67 and 87-89), leaving that script to archive counts only. State in both headers and in the README literature section that literature/replot_scopus_figures.R must be run after it. Optionally end the analysis script with a message saying so, or with source('literature/replot_scopus_figures.R').
 
-Status: Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off.
+Status: Resolved 17 October 2026: scopus_gap_analysis.R no longer draws default-styled PNGs and instead runs replot_scopus_figures.R on the files it has written. Verified without the API, its three calls replaced by the archived counts: every archive, figure and record reproduced apart from the run date.
 
 </details>
 
@@ -934,7 +959,7 @@ Impact: A partly failed run would archive a plausible CSV and record, and the pr
 
 Proposed fix: After line 60: stopifnot(!anyNA(ints$n)); then for each intersection row, stopifnot(ints$n[i] <= min(ints$n[match(strsplit(ints$members[i], '; ')[[1]], ints$label)])). After line 82: cmpc <- cmp[cmp$query_type == 'comparison', ]; stopifnot(!anyNA(cmp$n), !anyNA(cmp$reference_n), all(cmpc$n <= cmpc$reference_n)). Place the checks before any write.
 
-Status: Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off.
+Status: Resolved 17 October 2026: before archiving, the counts are checked for missing or negative values, one row per set and intersection, no intersection above its smallest set, one row per query and year, and no comparison count above the reference. The archived counts pass.
 
 </details>
 
@@ -946,7 +971,7 @@ Impact: Any edit to a query in the analysis script would silently leave the full
 
 Proposed fix: After line 73: stopifnot(all(cmp$abridged_query[cmp$query_type == 'comparison'] %in% names(short_names))). Better, define the term-to-label map once in a sourced file used by both scopus_gap_analysis.R and replot_scopus_figures.R.
 
-Status: Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off.
+Status: Resolved 17 October 2026: the script stops unless the short names and the archived comparison queries match one to one.
 
 </details>
 
@@ -958,7 +983,7 @@ Impact: The supplementary record's trend table can lose a series without any err
 
 Proposed fix: Label rows from cmp$query_type plus the shared term map (FL-09), with no substring fall-through. Before writing, assert stopifnot(!anyDuplicated(data.frame(cmp$year, lab)), all(c('ref', 'narr', 'apps', 'ai') %in% names(tw)), nrow(tw) == length(YEARS)). Build the header row from the same map.
 
-Status: Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off.
+Status: Resolved 17 October 2026: the record's trend columns are matched on the whole query strings the script defines, and an unmatched query stops it. Verified with the stubbed run: the record reproduced apart from its date.
 
 </details>
 
@@ -970,7 +995,7 @@ Impact: Rerunning with a different window would produce wrong or missing year br
 
 Proposed fix: yrs <- range(cmp$year); use breaks = seq(yrs[1], yrs[2], by = 2). Either derive the right-hand room from max(nchar(labels)), as the package does, or have the maintainer record in a comment how 0.46 was chosen. Do not invent a rationale.
 
-Status: Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off.
+Status: Resolved 17 October 2026: the year breaks come from the archived years. The label expansion is a layout constant with its reason stated.
 
 </details>
 
@@ -982,7 +1007,7 @@ Impact: If the design analysis is rerun with different grid constants (the proto
 
 Proposed fix: Keep the subtitle wording unchanged and add assertions tying it to the sources: stopifnot(unique(res$per_text[res$model == 'developmental' & res$sweep == 'texts']) == 12, unique(res$texts[res$sweep == 'readings']) == 250, unique(utils::read.csv('design_analysis/minimum_texts.csv')$target) == 0.90). Take the tier-2 readings per child from the spec JSON, not from the CSV per_text column. Change the subtitle text only with sign-off.
 
-Status: Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off.
+Status: Resolved 17 October 2026: the values the subtitles state (12 readings per text, 250 texts, five texts per child) are checked against the CSV, and ALT's role is stated. Verified by altering a scratch copy.
 
 </details>
 
@@ -994,7 +1019,7 @@ Impact: The check passes today at either scale, but it measures a print scale th
 
 Proposed fix: FIG_W_IN <- 11; use it in all four save_plot calls, and pass render_width_cm = FIG_W_IN * 2.54 / 2 to check_figure. Keep width_cm = 8.9 as the journal print width unless the maintainer decides otherwise, and have the maintainer record its source in a comment. Do not switch the target to the manuscript's 16.51/2 cm without sign-off.
 
-Status: Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off.
+Status: Resolved 17 October 2026: the render width is derived from the save width, and the print width is the narrower of Nature's 8.9 cm column and half the protocol's 468 pt text width, 8.26 cm, at which every panel also passes.
 
 </details>
 
@@ -1006,7 +1031,7 @@ Impact: Adding a null or second-effect sweep for readings, narration or tier 2 (
 
 Proposed fix: Add 'res$truth == ALT' and the sweep condition to the readings, narration ('texts') and within_child ('children') subsets. In prep() add stopifnot(!anyDuplicated(d[c('param', xcol)]), all(d$param %in% names(construct_of))). Replace line 93 with res$truth <- as.numeric(res$truth); stopifnot(!anyNA(res$truth)).
 
-Status: Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off.
+Status: Resolved 17 October 2026: the subsets use which(), and each panel stops on no rows, a missing axis value, a coefficient with no series or a repeated grid point. Verified by altering a scratch copy.
 
 </details>
 
@@ -1030,7 +1055,7 @@ Impact: Changing the size in one of the four places would not update the check o
 
 Proposed fix: Define FIG_W_IN <- 7.5 and FIG_H_IN <- 4.6 once, pass render_width_cm = FIG_W_IN * 2.54, and keep width_cm = 14 unless the maintainer changes the target. Remove the duplicate sizes from scopus_gap_analysis.R by dropping its plotting (FL-04). Have the maintainer record where the height and the margin values come from.
 
-Status: Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off.
+Status: Resolved 17 October 2026: each figure script defines its dimensions and check widths once, deriving the render width from the save width.
 
 </details>
 
@@ -1186,7 +1211,7 @@ Impact: Every clone and OneDrive sync carries 41 MiB and 4,375 files for a one-o
 
 Proposed fix: Correct the title to about 60 per cent of tracked bytes. Fix as proposed: git rm -r --cached "mindmap/source files/node_modules", ignore node_modules/, keep package-lock.json and document npm ci. A history purge is a separate decision.
 
-Status: Deferred: untracking node_modules (git rm -r --cached) changes what later clones receive.
+Status: Resolved 17 October 2026 at the author's choice (1d9f200): node_modules is no longer tracked, and a .gitignore beside package-lock.json excludes it.
 
 </details>
 
@@ -1198,7 +1223,7 @@ Impact: A visitor to the public repository opens the 2026-06-15 draft as the lat
 
 Proposed fix: Maintainer decision: keep in the tree only the draft for each tagged milestone (or none), publish renders as GitHub release assets or on OSF, and state the policy in preregistration/README.md. Proposal only for end products: `git rm` superseded drafts once the policy is agreed.
 
-Status: Deferred. The fix edits an end product (the protocol, supplement, cover letter, bibliography, a figure or results file, or the supplied count script), so it is a proposal only.
+Status: Resolved 17 October 2026 by the author's decision: every dated draft is kept as the record of each version, and the README states the policy.
 
 </details>
 
@@ -1234,7 +1259,7 @@ Impact: Without a licence the scripts are all rights reserved by default: review
 
 Proposed fix: Maintainer decision: add a root LICENSE (for example MIT or GPL-3 for code, with CC BY 4.0 for text and figures stated in the README), noting that apa7.csl and nature.csl stay under CC BY-SA 3.0 and that third-party PDFs (RS-12) are excluded.
 
-Status: Deferred: the licence must be chosen by the author.
+Status: Resolved 17 October 2026 at the author's choice (9ab03ac): MIT for the code (LICENSE, copyright the University of Oxford) and CC BY-NC 4.0 for the rest (LICENSE-content.md, copyright the InTRACt authors).
 
 </details>
 
@@ -1342,7 +1367,7 @@ Impact: A reader cannot rebuild the environment the reported numbers came from, 
 
 Proposed fix: Add a 'Requirements' section: R 4.6.1; install commands with exact versions and sources for theoryforge 0.6.0, pilotr 0.3.0, scopusflow 0.4.0 and depictr 0.3.0 (for example remotes::install_github("<owner>/pilotr@v0.3.0") or the Zenodo tarball); lme4 2.0-1, ordinal 2026.7-26, ggplot2 4.0.3, DiagrammeR 1.0.12, DiagrammeRsvg 0.1, rsvg 2.7.0, patchwork 1.3.2; Quarto 1.10.18 with a LaTeX engine and Times New Roman; Python 3.8 or later for count_script. Point to the renv.lock once it exists. The maintainer must confirm the install sources.
 
-Status: Partly resolved: the README has a Requirements section. Deferred: an R lockfile (RP-01) is still missing.
+Status: Partly resolved 16 and 17 October 2026: the Requirements section gives R, the lockfile, Quarto, LuaTeX and Python, and RP-01 added the lockfile. Deferred: the fonts the documents use are not listed.
 
 </details>
 
@@ -1366,7 +1391,7 @@ Impact: A change to the tier-2 JSON would leave mislabelled rows in precision_sw
 
 Proposed fix: Add WHY comments for the grid constants (maintainer to supply). Derive texts = t2$units$item$n. Record the tier-2 value under a correctly named column (readings_per_child) only with sign-off, because that changes precision_sweep.csv. Drop the truth-sign claim.
 
-Status: Partly resolved: a TODO marks the grid constants' unrecorded source. Deferred: deriving the tier-2 labels from the specification is a code change behind reported numbers.
+Status: Resolved by 17 October 2026: the script explains the grid choices (15 to 17 October), and the tier-2 rows take their texts and readings per child from the specification, under a column of their own, per_child (DA-24).
 
 </details>
 
@@ -1402,7 +1427,7 @@ Impact: If the README is right, the first competing-interests option would be an
 
 Proposed fix: The author must confirm the funder and grant. If Kinder or Ferrero funds the work, use the second competing-interests option describing that relationship and name it in the Acknowledgements and cover letter. Otherwise correct README.md:13.
 
-Status: Deferred: the funding arrangement and the competing-interests statement need the author.
+Status: Resolved by 17 October 2026: the author confirmed that Ferrero International funds the research, and the root README, the acknowledgements, the competing-interests statement and the cover letter say so.
 
 </details>
 
@@ -1414,7 +1439,7 @@ Impact: The two submission documents disagree, and the remote cannot currently h
 
 Proposed fix: Commit and push the branch before submission, then align the wording, for example cover letter: 'All analysis code is version-controlled at <url> and will be public and complete at submission'.
 
-Status: Deferred. The fix edits an end product (the protocol, supplement, cover letter, bibliography, a figure or results file, or the supplied count script), so it is a proposal only.
+Status: Resolved 16 October 2026: with the branch merged into main and public, the cover letter's statement holds, and no edit was needed.
 
 </details>
 
@@ -1426,7 +1451,7 @@ Impact: If clmm starts failing, through a package update or a renamed simulated 
 
 Proposed fix: Have one_rep return a one-row status frame instead of NULL, for example `data.frame(param = NA_character_, status = "thin")` or `status = paste("fit_error:", conditionMessage(e))`, with successful rows carrying status = "ok". In run_point, count n_thin and n_fit_error, write them to the cache, and `stopifnot(n_returned + n_bad_se + n_thin + n_fit_error == N_SIMS)` for each param. After :172 add `missing <- setdiff(TEXTS, res$texts); if (length(missing)) warning("no replicates returned at ", paste(missing, collapse = ", "))`. Any change in cache columns needs a check that summarise_ordinal.R still reproduces the archived numbers.
 
-Status: Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off.
+Status: Resolved 17 October 2026: every thinned or failed ordinal replicate is recorded with its cause, each grid point's CSV counts them (n_thin, n_fit_error), and a grid point with no estimate stops the run. A fresh grid wrote the new columns; its replicates all fitted, so the failure path was checked by reading the code.
 
 </details>
 
@@ -1474,7 +1499,7 @@ Impact: A rebuild-and-compare gate that compares bytes fails even though the val
 
 Proposed fix: Write truth as numeric on both paths, and make any rebuild-and-compare gate compare numerically with a tolerance rather than byte for byte. Correct the figure comment.
 
-Status: Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off.
+Status: Resolved 17 October 2026: precision_sweep.csv was regenerated from the cached sweeps (LS-02), and cache_write() now passes on each fresh sweep as read back from its file, so a fresh run and a cached re-run write identical tables. Verified: both files byte-identical after a fresh run and a re-run from its cache.
 
 </details>
 
@@ -1558,7 +1583,7 @@ Impact: Drift risk: one copy has already diverged in its output schema (DA-09).
 
 Proposed fix: Move solve_one, msg and wilson into design_analysis/helpers.R and source it from each script. Verify byte-identical outputs on a copy afterwards.
 
-Status: Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off.
+Status: Resolved 17 October 2026: one solver, one clamped Wilson interval and the other shared functions are in design_analysis/helpers.R, sourced by all six scripts.
 
 </details>
 
@@ -1570,7 +1595,7 @@ Impact: Readers have to infer each helper's contract.
 
 Proposed fix: Add a one-line purpose comment above msg, read_sweep, wilson and run_point, and describe run_sweep's arguments and returned frame. units_by_readings can share the existing comment.
 
-Status: Partly resolved: msg, wilson and run_point have purpose comments. Deferred: read_sweep in solve_at_095.R and run_sweep's argument list remain.
+Status: Resolved 17 October 2026: read_sweep and every shared function have a purpose comment.
 
 </details>
 
@@ -1594,7 +1619,7 @@ Impact: A future spec with a placeholder zero would silently simulate no effect 
 
 Proposed fix: In at_effect, add `if (keep_sign) stopifnot(all(unlist(spec$fixed$coefficients) != 0))`, which leaves the null sweep with keep_sign = FALSE unaffected. Add the same check before the loop at run_ordinal_analysis.R:60.
 
-Status: Deferred: the zero-coefficient assertion is a code edit in a script behind reported numbers, held back so this pass changed only comments there, and belongs with the sign-off on DA-03.
+Status: Resolved 17 October 2026: at_effect() stops on a zero coefficient when asked to keep the signs.
 
 </details>
 
@@ -1642,7 +1667,7 @@ Impact: The figure whose text is densest could fall below the journal's minimum 
 
 Proposed fix: In make_figure1.R, after export_svg, parse the svg width attribute in pt and assert min_font_pt * (render_width_pt / svg_width_pt) >= 6. Take render_width_pt from the same 17.78 cm the other figures use, and min_font_pt from the smallest fontsize in styled (12). Alternatively record the computed print size in README.md next to the depictr note.
 
-Status: Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off.
+Status: Partly resolved 17 October 2026: make_nomological_net.R stops if the smallest type would print below 6 point at the protocol's embedding width (it prints at 6.23) and checks every colour's contrast, 4.5:1 for words and 3:1 for marks. Decision needed: the dashed moderation lines are at 2.86:1 and are reported; darkening them changes Figure 2.
 
 </details>
 
@@ -1654,7 +1679,7 @@ Impact: A later presentation change that pushed text below 6 pt or broke contras
 
 Proposed fix: Keep the warning for redundant_encoding only. For any other failed check, stop: hard <- failed[failed$check != 'redundant_encoding', , drop = FALSE]; if (nrow(hard)) stop('figure check failed for ', what, ': ', paste(hard$check, collapse = ', '), call. = FALSE). Say in README.md:93 that redundant_encoding is tolerated and why.
 
-Status: Partly resolved: the README says the Scopus figure checks only warn. Deferred: making them fatal changes figure code and awaits sign-off.
+Status: Resolved 17 October 2026: every check is fatal except redundant_encoding, which warns for the reason given. Every other check passes.
 
 </details>
 
@@ -1666,7 +1691,7 @@ Impact: The mapping suggests a series that the figure never draws. Removing it w
 
 Proposed fix: Maintainer choice: keep the entries with a comment saying they are unused until CohPC_narr becomes focal in run_design_analysis.R, or delete them.
 
-Status: Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off.
+Status: Resolved 17 October 2026: the dead entries are removed, and a coefficient with no entry now stops the script.
 
 </details>
 
@@ -1678,7 +1703,7 @@ Impact: Misleading control flow. Output is unaffected.
 
 Proposed fix: Replace line 87 with 'if (log_x) p <- p + scale_x_log10()'. Do not remove the argument in the same change.
 
-Status: Deferred: although the rewrite cannot change the figure, it is a code edit in a figure script, held back so this pass changed only comments there.
+Status: Resolved 17 October 2026: the argument is removed and every panel takes the log axis.
 
 </details>
 
@@ -1690,7 +1715,7 @@ Impact: If a supplement panel fails, the run stops after the main figure has bee
 
 Proposed fix: Build pa, pb, ps_a and ps_b and call audit_panel on all four before the first save_plot, then save both figures. No output changes when the checks pass.
 
-Status: Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off.
+Status: Resolved 17 October 2026: all four panels are checked before either figure is saved.
 
 </details>
 
@@ -1726,7 +1751,7 @@ Impact: Minor friction for maintenance, with no effect on output.
 
 Proposed fix: Unify the loading pattern and move msg() into a shared sourced helper, neither of which touches output. Switch the saving helper only with a before-and-after raster comparison (see FL-29) and maintainer sign-off.
 
-Status: Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off.
+Status: Partly resolved 17 October 2026: each figure script saves both formats through one function, and the design-analysis scripts share helpers.R. Deferred: the figure, theory and Scopus scripts still log in their own ways, a matter of style.
 
 </details>
 
@@ -1882,7 +1907,7 @@ Impact: Generated libraries are versioned beside the sources and gain a copy per
 
 Proposed fix: After RS-07 is decided (embed-resources: true), untrack both *_files/ directories and ignore `preregistration/*_files/`. Until then leave them, since each hash is referenced.
 
-Status: Deferred. The fix edits an end product (the protocol, supplement, cover letter, bibliography, a figure or results file, or the supplied count script), so it is a proposal only.
+Status: Resolved 17 October 2026 by the author's decision: the libraries stay tracked because the dated HTML drafts load them, as the README says.
 
 </details>
 
@@ -2066,7 +2091,7 @@ Impact: If a future sweep wrote truth as, for example, "0.10 (twice ROPE)" for s
 
 Proposed fix: `truth_num <- suppressWarnings(as.numeric(res$truth)); bad <- is.na(truth_num) & !is.na(res$truth); if (any(bad)) stop("non-numeric truth values: ", paste(unique(res$truth[bad]), collapse = ", "), call. = FALSE); res$truth <- truth_num`. In prep(), also check that every param has the same number of distinct x values, e.g. `stopifnot(length(unique(table(d$param))) == 1)`, rather than typing a grid size. Afterwards, render on copies and confirm the figures are unchanged.
 
-Status: Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off.
+Status: Resolved 17 October 2026: a truth value that cannot be read as a number stops the script and is named. Verified by altering a scratch copy.
 
 </details>
 
@@ -2090,7 +2115,7 @@ Impact: If precision_design ever returns fewer focal rows at some grid points, t
 
 Proposed fix: In run_sweep, replace lines 100-103 with an exact-shape assertion and a label taken from the lead column: stopifnot(nrow(res) == length(values) * length(focal), all(table(res[[1]]) == length(focal))); res[[axis_name]] <- if (is.list(values)) axis_values[res[[1]]] else res[[1]]. Optionally add the lead column to KEEP. Needs sign-off as design_analysis logic; verify by re-solving from the committed caches that minimum_texts*.csv are unchanged.
 
-Status: Deferred. HIGH-RISK. It changes code behind a reported number or the count script already supplied to the data controller, so it awaits maintainer sign-off.
+Status: Resolved 17 October 2026: label_grid() labels the rows from pilotr's own grid column after checking the result's shape. Verified on fresh sweeps.
 
 </details>
 
