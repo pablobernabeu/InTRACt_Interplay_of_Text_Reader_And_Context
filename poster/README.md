@@ -146,9 +146,9 @@ License. The logos belong to their owners and are not licensed for reuse.
 
 <!-- references:start -->
 
-Bernabeu, P. (2026a). *pilotr: Simulate experimental and behavioural data from a portable design specification* (Version 0.3.0) \[Computer software\]. Comprehensive R Archive Network. <https://doi.org/10.32614/CRAN.package.pilotr>
+Bernabeu, P. (2026a). *pilotr: Simulate experimental and behavioural data from a portable design specification* (Version 0.3.0) \[Computer software\]. Comprehensive R Archive Network (CRAN). <https://doi.org/10.32614/CRAN.package.pilotr>
 
-Bernabeu, P. (2026b). *scopusflow: A reproducible workflow layer for Scopus bibliographic searches* (Version 0.4.0) \[Computer software\]. Comprehensive R Archive Network. <https://doi.org/10.32614/CRAN.package.scopusflow>
+Bernabeu, P. (2026b). *scopusflow: A reproducible workflow layer for Scopus bibliographic searches* (Version 0.4.0) \[Computer software\]. Comprehensive R Archive Network (CRAN). <https://doi.org/10.32614/CRAN.package.scopusflow>
 
 Booton, S. A., Hodgkiss, A., & Murphy, V. A. (2023). The impact of mobile application features on children’s language and literacy learning: A systematic review. *Computer Assisted Language Learning*, *36*(3), 400–429. <https://doi.org/10.1080/09588221.2021.1930057>
 
