@@ -1,0 +1,128 @@
+# Runs the repository's checks on every push and pull request. None of them
+# renders a document or writes to the repository.
+#
+#   numbers       check_reported_numbers.R and theory/check_manuscript_claims.R,
+#                 which compare the numbers the protocol quotes with the artefacts
+#                 they came from (register item RS-10). The three packages they
+#                 load are restored from preregistration/renv.lock.
+#   lint          lintr over every R script, with the repository's .lintr.R.
+#   docs          every relative link in the Markdown files resolves, every
+#                 citation key in the protocol, the supplement and the poster is
+#                 in its bibliography (tools/check_links.py, check_citations.py),
+#                 and CITATION.cff is valid.
+#   count-script  both count-script versions run through the synthetic test
+#                 scenarios, on the oldest and the newest Python the README
+#                 promises, and the outcomes are compared with the recorded ones.
+#
+# Every action is pinned to a full commit SHA, so a moved or compromised tag
+# cannot change what runs here; Dependabot proposes new releases as pull requests.
+
+name: Check
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # The Posit Package Manager snapshot of 16 October 2026, the day the lockfile
+  # was written. Packages the lockfile does not pin (lintr, renv) are taken from
+  # it, so they stay at the versions current then: lintr 3.4.0, the version the
+  # style pass of that day used.
+  PPM_SNAPSHOT: https://packagemanager.posit.co/cran/__linux__/noble/2026-10-16
+
+jobs:
+  numbers:
+    name: Reported numbers
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: preregistration
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: r-lib/actions/setup-r@f9a764fea8d5c63df6ef9a5c7795bf7deb5d7e05 # v2.14.0
+        with:
+          r-version: '4.6.1'
+          use-public-rspm: true
+
+      - name: Restore jsonlite, yaml and theoryforge from renv.lock
+        run: |
+          Rscript -e 'install.packages("renv", repos = Sys.getenv("PPM_SNAPSHOT"))'
+          Rscript -e 'renv::restore(lockfile = "renv.lock", library = "renv-library", packages = c("jsonlite", "yaml", "theoryforge"), prompt = FALSE)'
+
+      - name: Compare the protocol's numbers with their artefacts
+        env:
+          R_LIBS: ${{ github.workspace }}/preregistration/renv-library
+        run: Rscript check_reported_numbers.R
+
+      - name: Check the theory object's cross-references
+        env:
+          R_LIBS: ${{ github.workspace }}/preregistration/renv-library
+        run: Rscript theory/check_manuscript_claims.R
+
+  lint:
+    name: R style
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: r-lib/actions/setup-r@f9a764fea8d5c63df6ef9a5c7795bf7deb5d7e05 # v2.14.0
+        with:
+          r-version: '4.6.1'
+          use-public-rspm: true
+
+      - name: Install lintr from the snapshot
+        run: |
+          Rscript -e 'install.packages("lintr", repos = Sys.getenv("PPM_SNAPSHOT"))' \
+                  -e 'stopifnot(packageVersion("lintr") == "3.4.0")'
+
+      - name: Lint every R script
+        run: Rscript -e 'l <- lintr::lint_dir("."); print(l); quit(status = length(l) > 0)'
+
+  docs:
+    name: Links and citations
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.13'
+
+      - name: Every relative link in the Markdown files resolves
+        run: python tools/check_links.py
+
+      - name: Every citation key is in its bibliography
+        run: python tools/check_citations.py
+
+      # GitHub's "Cite this repository" and Zenodo both read CITATION.cff, and
+      # GitHub only flags an invalid file on the repository page.
+      - name: CITATION.cff follows the Citation File Format schema
+        run: |
+          pip install --quiet cffconvert==2.0.0
+          cffconvert --validate
+
+  count-script:
+    name: Count script on Python ${{ matrix.python }}
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        # The README promises Python 3.8 or later. The official Python images
+        # run both ends of that range on the same runner image.
+        python: ['3.8', '3.13']
+    container: python:${{ matrix.python }}-slim
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Run the test scenarios and compare them with the recorded outcomes
+        working-directory: preregistration/count_script/tests
+        run: python check_expected.py

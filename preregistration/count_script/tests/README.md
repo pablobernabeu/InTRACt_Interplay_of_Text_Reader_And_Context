@@ -15,6 +15,16 @@ above. Each scenario writes its synthetic export into its own folder here, which
 root `.gitignore` excludes. No real reading time is used: `synth_export.py` invents
 them.
 
+The two scripts describe what each version does with each input and assert nothing.
+`check_expected.py` runs both, drops the timing fields and compares every scenario
+with the reports recorded in `expected/` on 18 October 2026, exiting 1 if any outcome
+has changed. The Check workflow runs it on Python 3.8 and 3.13 on every push.
+
+```
+python check_expected.py             # compare with expected/
+python check_expected.py --update    # re-record, after a deliberate change
+```
+
 To include the two scenarios that need real material, pass the paths:
 
 ```

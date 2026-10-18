@@ -1,0 +1,162 @@
+{
+ "1. real 35-row sample": "skipped: the real sample was not given",
+ "2a. clean single file": {
+  "exit": 0,
+  "truth": {
+   "sessions": 43226,
+   "accounts": 20000,
+   "texts": 3000
+  },
+  "v2": [
+   "43226",
+   "20000",
+   "3000"
+  ],
+  "lines not accounted for": "0",
+  "verdict": [
+   "All 43,226 sessions carry a usable number."
+  ]
+ },
+ "2b. clean three parts, one gzipped": {
+  "exit": 0,
+  "truth": {
+   "sessions": 43226,
+   "accounts": 20000,
+   "texts": 3000
+  },
+  "v2": [
+   "43226",
+   "20000",
+   "3000"
+  ],
+  "lines not accounted for": "0"
+ },
+ "2c. titles with commas, quotes and line breaks": {
+  "exit": 0,
+  "truth": {
+   "sessions": 10936,
+   "accounts": 5000,
+   "texts": 800
+  },
+  "v2": [
+   "10936",
+   "5000",
+   "800"
+  ],
+  "misaligned": "0",
+  "rows set aside as over-long": "0",
+  "lines not accounted for": "0"
+ },
+ "3. account ids as 1.23457E+18 (50,000 accounts)": {
+  "true accounts": 50000,
+  "v1 distinct accounts": "48767",
+  "v2 distinct accounts": "48767",
+  "v1 said anything?": false,
+  "v2 rows flagged": "108364",
+  "v2 'account figures reliable'": "no - identifiers in scientific notation cannot be told apart",
+  "v2 warning": [
+   "Warning: 108,364 of 108,364 rows carry an account identifier in scientific notation, such as 1.23457E+18. That form keeps only six significant digits, so different accounts cannot be told apart and every account figure in these files is a lower bound. This usually happens when a file has been opened and saved in a spreadsheet. Please re-export the identifier as a plain integer or as text."
+  ]
+ },
+ "4. second part has no header row": {
+  "v1 exit": 0,
+  "v2 exit": 1,
+  "v1 wrote a deliverable": true,
+  "v2 wrote a deliverable": false,
+  "v1 leaked into the summary CSV": [
+   "131",
+   "2026-03-04 20:46:00",
+   "2286375362034356342"
+  ],
+  "v2 leaked into the summary CSV": [],
+  "v2 message": [
+   "Computing the checksum of part2.csv...",
+   "Reading part1.csv...",
+   "Reading part2.csv...",
+   "part2.csv does not begin with a header row: none of the expected column names was found in its first line, which has 30 fields.",
+   "Every file needs the header, including each part of a split export. Please re-export with the header row in every part, or add it, and run the script again.",
+   "Nothing was written."
+  ]
+ },
+ "5. one part lacks time_spent_reading": {
+  "total sessions": "4322",
+  "rows with the column": 2161,
+  "v1 verdict": [
+   "All 2,161 sessions carry a usable number."
+  ],
+  "v2 verdict": [
+   "All 2,161 checked sessions carry a usable number. A further 2,161 sessions are in files that do not carry the column, so the check does not cover them."
+  ],
+  "v2 uncovered count": "2161",
+  "v2 per-file column present": [
+   "yes",
+   "no"
+  ],
+  "v2 warning": [
+   "Note: part2.csv has no time_spent_reading column, so its rows cannot enter the reading-time check."
+  ]
+ },
+ "6. one unclosed quote at line 200": {
+  "truth sessions": 4233,
+  "v1 sessions reported": "199",
+  "v1 skipped": "1",
+  "v1 exit": 0,
+  "v2 exit": 1,
+  "v2 wrote a deliverable": false,
+  "v2 sessions reported": null,
+  "v2 rows set aside as over-long": null,
+  "v2 lines those rows had swallowed": null,
+  "v2 lines not accounted for": null,
+  "v2 message": [
+   "This is what an unclosed quote does: the parser reads on past the end of the row, taking whole lines with it, so the counts would describe only part of the export.",
+   "Please check that every field containing a quote character, a comma or a line break is quoted and escaped, re-export, and run the script again. Send us this message if it is not clear what to change."
+  ]
+ },
+ "7. story_id blank on 5 per cent of rows": {
+  "truth blank rows": 554,
+  "truth distinct story_ids": 800,
+  "v1 'no story identifier'": "0",
+  "v1 distinct texts": "802",
+  "v2 'no story identifier'": "554",
+  "v2 distinct texts": "800",
+  "v2 blank-with-title count": "554"
+ },
+ "8a. semicolon-separated with decimal commas": {
+  "v1 'not a number'": "6578",
+  "v2 'not a number'": "0",
+  "v1 verdict": [
+   "No session carries a usable number."
+  ],
+  "v2 verdict": [
+   "All 6,578 sessions carry a usable number."
+  ],
+  "v2 decimal mark recorded": "comma"
+ },
+ "8b. age band written 'age 7 - 8'": {
+  "sessions that should reach Part 2": 3178,
+  "v1 Part 2 sessions": "1537",
+  "v2 Part 2 sessions": "3178",
+  "v2 labels recorded": {
+   "Age 9+": "1537",
+   "age 7 - 8": "1641"
+  }
+ },
+ "8c. folder with a duplicate copy and a README.txt (v1)": {
+  "truth sessions": 4247,
+  "v1 sessions": "8495",
+  "v1 duplicate rows reported": "4247"
+ },
+ "8c. folder with a duplicate copy and a README.txt (v2)": {
+  "truth sessions": 4247,
+  "v2 sessions": "4247",
+  "v2 notes": [
+   "export_copy.csv skipped - identical to export.csv (same checksum)."
+  ]
+ },
+ "9. --manifest-from": {
+  "exit": 0,
+  "wrote a separate file": true,
+  "original manifest untouched": true,
+  "rebuilt page identical to the original": true
+ }
+}

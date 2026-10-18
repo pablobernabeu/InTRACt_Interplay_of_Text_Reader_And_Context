@@ -1,0 +1,48 @@
+{
+ "single file with no header row": {
+  "exit": 1,
+  "wrote anything": false,
+  "message": [
+   "export.csv does not begin with a header row: none of the expected column names was found in its first line, which has 30 fields.",
+   "Every file needs the header, including each part of a split export. Please re-export with the header row in every part, or add it, and run the script again.",
+   "Nothing was written."
+  ]
+ },
+ "reading-time column absent everywhere": {
+  "exit": 0,
+  "verdict in the manifest": true,
+  "uncovered count": "1033",
+  "sessions": "1033"
+ },
+ "NA in the reading-time column": {
+  "rows written NA": 218,
+  "v1 counted as 'not a number'": "218",
+  "v1 counted as 'empty'": "0",
+  "v2 counted as 'not a number'": "0",
+  "v2 counted as 'empty'": "218"
+ },
+ "--manifest-from on the 7 August output": "skipped: the 7 August output was not given",
+ "folder run twice": {
+  "truth sessions": 1720,
+  "first run": "1720",
+  "second run": "1720"
+ },
+ "large export (259280 rows)": {
+  "v1 sessions/accounts/texts": [
+   "259280",
+   "120000",
+   "8000"
+  ],
+  "v2 sessions/accounts/texts": [
+   "259280",
+   "120000",
+   "8000"
+  ],
+  "truth": {
+   "sessions": 259280,
+   "accounts": 120000,
+   "texts": 8000
+  },
+  "figures v1 reported that v2 changed": {}
+ }
+}

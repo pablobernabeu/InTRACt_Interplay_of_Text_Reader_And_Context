@@ -1,0 +1,10 @@
+# The workflows pin every action to a full commit SHA, so a moved or compromised
+# tag cannot change what CI runs without a commit here. Dependabot proposes each
+# new release, SHA and version comment together, as a pull request, which the
+# Check and Guard workflows then run on before anything is merged.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
