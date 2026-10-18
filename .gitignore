@@ -36,6 +36,12 @@ preregistration/preregistration.tex
 lets_story_summary_data_for_oxford.csv
 lets_story_manifest_for_oxford.html
 
+# The story-text delivery as received, with the data controller's viewer, and the
+# extraction's working outputs stay on the local disk. The texts are published,
+# compressed, in preregistration/story_texts/data/.
+preregistration/Oxford-40k-stories/
+preregistration/story_texts/data/**/*.tmp
+
 # The count script's test scenarios write a synthetic export into a folder each
 preregistration/count_script/tests/v2_*/
 preregistration/count_script/tests/v3_*/

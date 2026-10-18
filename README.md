@@ -10,7 +10,7 @@ How does the language of a story relate to how quickly a child reads it? And doe
 
 InTRACt is a preregistered study of the behavioural logs of children aged 7 and older who read AI-generated stories in *Let's Story*, a feature of the *Applaydu* app developed by Gameloft and Ferrero International. Children use it in any of 19 languages. The study combines computational measures of each story's language with Bayesian models of reading time, to test how lexical difficulty, grammatical load and referential continuity relate to children's reading pace outside the laboratory.
 
-The project is hosted at the **[Department of Education, University of Oxford](https://www.education.ox.ac.uk/)**, and is embedded within the **[Learning in Families through Technology (LIFT)](https://www.education.ox.ac.uk/project/lift-learning-in-families-through-technology/)** project, which investigates how digital technologies shape learning within families. It is funded by **Ferrero International** (Kinder) and the **John Fell Fund** (University of Oxford), as [Funding](#funding) acknowledges below.
+The project is hosted at the **[Department of Education, University of Oxford](https://www.education.ox.ac.uk/)**, and is embedded within the **[Learning in Families through Technology (LIFT)](https://www.education.ox.ac.uk/project/lift-learning-in-families-through-technology/)** project, which investigates how digital technologies shape learning within families. It is funded by **Ferrero International** (Kinder) and the **John Fell Fund** (University of Oxford), whose support is acknowledged under [Funding](#funding).
 
 ---
 
@@ -42,6 +42,8 @@ Hypothesis 4 predicts that when the app narrates the story, the lexical associat
 
 Data come from the *Let's Story* feature of *Applaydu*, in which a family chooses a setting, a hero, a companion, a plot and a theme, and a generative model writes the story. The logs were recorded passively, with no experimental manipulation. The session-level extract stays with the data controller until the preregistration is accepted in principle.
 
+The story texts themselves are public. `preregistration/story_texts/` holds the 40,559 US English texts delivered on 1 October 2026, with the scripts that extract and check them. The texts are released under CC BY-NC 4.0, copyright Ferrero International and Gameloft, and the texts in the app's other languages will be added as they are delivered.
+
 The first tier of the sample will take every eligible completed reading by a child recorded in the 7 to 8 or 9 and older age band, excluding readings faster than 400 or slower than 10 words per minute. The second tier, for the within-child hypothesis, will take children with at least three eligible sessions on distinct texts. The primary outcome is log reading time per word, and Hypothesis 5 uses the child's optional post-reading difficulty rating.
 
 For each text, the study will compute lexical, grammatical and discourse features. Each of those families will be reduced, blind to outcomes, to one component score: lexical difficulty, grammatical load and referential continuity. Valence, arousal, narrativity and text length will enter the models as covariates.
@@ -56,7 +58,7 @@ All confirmatory analyses will use Bayesian crossed-effects models, in which rea
 
 ## Repository contents
 
-- `preregistration/`: the protocol, its supplement and cover letter, the theory object, the design analysis, the literature sizing and the count script supplied to the data controller. Its README explains how each reported number is produced and checked. The dated draft in that folder is the current protocol, and `preregistration/drafts/` keeps every earlier one.
+- `preregistration/`: the protocol, its supplement and cover letter, the theory object, the design analysis, the literature sizing, the count script supplied to the data controller and the story texts. Its README explains how each reported number is produced and checked. The dated draft in that folder is the current protocol, and `preregistration/drafts/` keeps every earlier one.
 - `poster/`: a conference poster on the study, with the code and data behind each of its figures.
 - `mindmap/`: the framework figure above and the Node script that renders it.
 - `tools/`: the repository-wide checks the workflows below run, which can also be run locally.
@@ -102,7 +104,7 @@ We gratefully acknowledge the funding of this research by Ferrero International,
 
 ## Licence
 
-The code is released under the MIT License (`LICENSE`), copyright the University of Oxford. Everything else the authors made, including the protocol, the poster, the figures and the data files, is released under CC BY-NC 4.0, copyright the InTRACt authors. `LICENSE-content.md` says which files fall under each, and lists the third-party material that keeps its own licence.
+The code is released under the MIT License (`LICENSE`), copyright the University of Oxford. Everything else the authors made, including the protocol, the poster, the figures and the data files, is released under CC BY-NC 4.0, copyright the InTRACt authors. The story texts are released under CC BY-NC 4.0 too, copyright Ferrero International and Gameloft, who agreed to their release. `LICENSE-content.md` says which files fall under each, and lists the third-party material that keeps its own licence.
 
 ---
 

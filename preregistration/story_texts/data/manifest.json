@@ -1,0 +1,22 @@
+{
+  "languages": {
+    "en-us": {
+      "file": "en-us/stories.csv.xz",
+      "stories": 40559,
+      "bytes": 17020476,
+      "sha256": "46870e49a7a044da535cc24f2680943347dc6c4d37961d8b1bc305189d72011f",
+      "uncompressed_bytes": 119538819,
+      "uncompressed_sha256": "5950c99ae97dba8591133b07a3bf7eb44311bfe96691ae6a60dc3d1f8cb953cc"
+    }
+  },
+  "files": {
+    "anomalies.csv": {
+      "bytes": 2097,
+      "sha256": "9dbf6ba0e23579e4424cf4d24bfa8a19ece71936520d1fa97efa6aee5ce8757a"
+    },
+    "extraction_record.json": {
+      "bytes": 13207,
+      "sha256": "130078a3b070e065bcb69fe3a046c7b8257373d735608a1fcc2265d6f900ae4d"
+    }
+  }
+}

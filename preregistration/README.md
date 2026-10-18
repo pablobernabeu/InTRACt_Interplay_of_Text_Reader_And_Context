@@ -63,9 +63,9 @@ below that does not need the Scopus API or a fresh simulation, and both checks p
 fresh-simulation paths were run at two replicates per grid point, and the Scopus step with its
 API calls replaced by the archived counts, which it reproduced apart from the run date. The R scripts follow `../.lintr.R`, and `Rscript -e 'lintr::lint_dir()'` reports
 no lints. The 2026-10-16 draft was rendered with Quarto 1.10.19 and LuaTeX 1.24.0 (TeX Live
-2026). The count script needs Python 3.8 or later and nothing outside the standard library.
-Regenerating the framework figure in `../mindmap/source` needs Node.js and network
-access.
+2026). The count script and the two story-text scripts need Python 3.8
+or later and nothing outside the standard library. Regenerating the framework figure in
+`../mindmap/source` needs Node.js and network access.
 
 ## Pipeline
 
@@ -315,6 +315,64 @@ reproduces every line of that output except the run date in the "summary produce
 "either hypothesis", wording from when the protocol had two hypotheses. The statement applies
 equally to all six.
 
+## story_texts/
+
+| File | What it is |
+|---|---|
+| `data/en-us/stories.csv.xz` | The 40,559 story texts in US English, xz-compressed, one row per story: the viewer's Story ID, the folder the text came from, the seven metadata fields, the title, the page and word counts, and the text exactly as delivered, page markers included. |
+| `data/anomalies.csv` | The 16 texts whose page markers skip or repeat a number, or that contain an empty page. |
+| `data/extraction_record.json` | The extraction's record: the size and SHA-256 checksum of every file read from the delivery, and the counts. |
+| `data/manifest.json` | The size and checksum of every file in `data/`, and the story count and checksum of each table uncompressed. |
+| `extract_story_texts.py` | Reads the story texts out of the data controller's StoryReview viewer and writes them as tables: one row per story, one row per page, a list of structurally unusual texts and a record of every file read with its SHA-256 checksum. Standard library only. |
+| `publish_story_texts.py` | Writes `data/` from the extraction's tables, one compressed table per language, and with `--check` confirms that `data/` matches its manifest and the extraction record. Standard library only. |
+
+The story texts are copyright Ferrero International and Gameloft, who have agreed to their
+release here under CC BY-NC 4.0 (see `../LICENSE-content.md`). The texts in the app's other
+languages will be added in the same form, in a folder per language, as they are delivered.
+
+R and Python read a compressed table directly:
+
+```r
+stories <- read.csv("story_texts/data/en-us/stories.csv.xz", encoding = "UTF-8")
+```
+
+```python
+import pandas as pd
+stories = pd.read_csv("story_texts/data/en-us/stories.csv.xz")
+```
+
+The data controller delivered the texts on 1 October 2026 as StoryReview, a browser viewer that
+shows one story at a time. Its data files are JSON wrapped in a JavaScript call, so the
+extraction script removes the wrapper and reads every text directly, in about a minute. The
+delivery is kept in `Oxford-40k-stories/`, which the root `.gitignore` excludes, because it
+holds the data controller's viewer software as well as the texts. The extraction writes into
+`Oxford-40k-stories/extracted/` by default, and the publishing script reads from there.
+
+```bash
+python story_texts/extract_story_texts.py
+python story_texts/publish_story_texts.py
+```
+
+Before writing anything, the extraction script checks that every chunk file the index declares is
+present, that the index and the texts correspond one to one, and that its own page and word
+counts reproduce the viewer's. It stops with exit status 1 on any failure. Texts whose page
+markers skip or repeat a number, or that contain an empty page, are listed in `anomalies.csv`
+and kept, because they may be what the app served.
+
+The delivery of 1 October 2026 holds 40,559 texts, all in US English. 40,500 are generated:
+every combination of 10 heroes, 10 worlds, 5 themes, 3 plot types and 9 sidekicks, each in a
+young, a mid and an old version. The other 59 are public-domain classics, mostly in a young and
+an old version. The script lists 16 of the texts as unusual.
+
+Before writing, the publishing script confirms that rewriting the extraction's table row by row
+reproduces it byte for byte, so each language's table holds its rows exactly as extracted. The
+pages table is not published, because it holds the same texts split at their page markers,
+which `split_pages()` in the extraction script reproduces. The published record leaves out one
+field of the extraction's, the data controller's path to the folder it built the viewer from.
+A delivery is expected to hold every language, English included, since the record and the
+list of unusual texts describe a single extraction. The Check workflow runs
+`publish_story_texts.py --check` on every push.
+
 ## priors/
 
 | File | What it is |
@@ -367,7 +425,9 @@ The session-level extract is not in this repository and is not in the research t
 possession. It is held by the data controller and is released only on written confirmation of
 in-principle acceptance, under the sequestration arrangement the manuscript describes. What
 this repository does hold is the protocol, the theory object, the design specifications, the
-literature search, the count script and the frozen prior-derivation rules. The provider-computed aggregate counts and the file
+literature search, the count script, the story texts with the scripts that extract and
+publish them, and the frozen prior-derivation rules. The texts in the app's other languages
+will be added as they are delivered (see story_texts/). The provider-computed aggregate counts and the file
 manifest, which contain no record of any individual, are deposited on receipt at the
 repository the Data availability statement names. The 35-row structural sample that
 Supplementary Section S8 reports carries real reading times and is likewise not in the

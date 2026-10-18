@@ -89,7 +89,10 @@ study materials, computer code and laboratory log for all published results. All
 is version-controlled at
 <https://github.com/pablobernabeu/InTRACt_Interplay_of_Text_Reader_And_Context>, public from
 submission, including the theory object, the design specifications, the precision analysis,
-both versions of the count script and the frozen rules for deriving the priors. One restriction applies
+both versions of the count script and the frozen rules for deriving the priors. The English story
+texts are public there too, under CC BY-NC 4.0 with the agreement of their rights holders,
+Ferrero International and Gameloft, and the texts in the other languages will be added as they
+are delivered. One restriction applies
 for legal reasons: the session-level extract is governed by a data-sharing agreement between
 the University of Oxford and the data controller, and where a field cannot be released we will
 state the reason and deposit a derived form sufficient to reproduce every reported analysis,

@@ -4,14 +4,12 @@
 # keeps most of these out of `git add`, and this list also stops a forced add, a
 # copy under another folder and a commit by a tool that ignores .gitignore.
 
-# The data controller's story-text delivery, its viewer and what the extraction
-# script writes from it (preregistration/story_texts/).
+# The data controller's story-text delivery as received, which includes its viewer
+# software, and the extraction's working outputs. The texts themselves are published
+# in compressed form under preregistration/story_texts/data/, written by
+# story_texts/publish_story_texts.py.
 *Oxford-40k-stories/*
 *StoryReview*
-*stories.csv
-*pages.csv
-*anomalies.csv
-*extraction_record.json
 
 # Correspondence and open-item trackers exchanged with the data controller.
 *InTRACt_open_items*

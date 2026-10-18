@@ -20,9 +20,9 @@ purpose, remove its pattern from tools/frozen.txt in the same commit, so the
 decision shows in the diff. The list is read from the state being checked.
 
 Confidential patterns (tools/confidential.txt) name material that must never enter
-this public repository: the data controller's deliveries, the count script's
-outputs, publisher PDFs and credentials. A staged or pushed file matching one fails,
-and so does any file larger than MAX_BYTES.
+this public repository: the data controller's deliveries as received, the count
+script's outputs, publisher PDFs and credentials. A staged or pushed file matching
+one fails, and so does any file larger than MAX_BYTES, or than its limit in LARGER.
 
 In both lists, one pattern per line in fnmatch syntax, matched against the path from
 the repository root, where * also matches across folders. Text after # is a comment.
@@ -36,6 +36,9 @@ import subprocess
 import sys
 
 MAX_BYTES = 10 * 1024 * 1024  # GitHub warns at 50 MB; nothing here should near 10 MB
+# The published story texts, one compressed table per language, are the exception.
+# English takes 17 MB, and the limit keeps every language below GitHub's warning.
+LARGER = {"preregistration/story_texts/data/*/stories.csv.xz": 50 * 1024 * 1024}
 FROZEN = "tools/frozen.txt"
 CONFIDENTIAL = "tools/confidential.txt"
 
@@ -87,9 +90,10 @@ def check(pairs, frozen, confidential, size_of):
             for p in matches(path, confidential):
                 problems.append(f"CONFIDENTIAL  {path}: matches {p}")
             size = size_of(path)
-            if size > MAX_BYTES:
+            limit = next((n for p, n in LARGER.items() if fnmatch.fnmatchcase(path, p)), MAX_BYTES)
+            if size > limit:
                 problems.append(f"TOO LARGE     {path}: {size / 2**20:.1f} MB, the limit is "
-                                f"{MAX_BYTES / 2**20:.0f} MB")
+                                f"{limit / 2**20:.0f} MB")
     return problems
 
 

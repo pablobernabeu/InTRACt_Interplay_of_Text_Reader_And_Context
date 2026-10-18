@@ -8,6 +8,27 @@ date and rationale.
 
 ## [Unreleased]
 
+### 18 October 2026 (evening, later): English story texts published
+
+No reported number changes. The rights holders, Ferrero International and Gameloft, agreed to
+the texts' release under CC BY-NC 4.0, so the exclusion of 1 October below gives way to a
+published, checked form.
+
+- `preregistration/story_texts/data/en-us/stories.csv.xz` holds the 40,559 US English texts, one
+  row per story, exactly as extracted, xz-compressed to 17 MB. `anomalies.csv`, the extraction
+  record and a manifest with the checksum of every file sit beside it. The pages table is not
+  published, because the text column carries the same pages with their markers.
+- `story_texts/publish_story_texts.py` writes `data/` from the extraction, one table per
+  language, and checks it. The Check workflow runs the check on every push. The texts in the
+  app's other languages will be added in the same form as they are delivered.
+- The published extraction record leaves out the data controller's path to the folder it built
+  the viewer from. The delivery as received, with the viewer, and the open-items tracker stay
+  on the local disk, still excluded by `.gitignore` and `tools/confidential.txt`.
+- `tools/guard.py` allows each compressed table up to 50 MB, below GitHub's warning, and keeps
+  the 10 MB limit for every other file. `.gitattributes` stores `data/` byte for byte.
+- The protocol's Data availability statement, its Code availability statement and the cover
+  letter say that the English texts are public, and the licence files name the rights holders.
+
 ### 18 October 2026 (evening): attempt and warning counts pooled, funding acknowledged
 
 No reported number changes.
@@ -154,6 +175,23 @@ requirements, and every output rebuilt in this period was compared with the comm
   `session_info.txt` was kept as the record of the September simulations.
 - Style: `.lintr.R` records the R style, and every R script passes with no lints. The edits change
   layout only, and every edited file parses to the same code.
+
+### 1 October 2026: story texts received and made readable by script
+
+The data controller delivered the story texts as StoryReview, a browser viewer that shows one
+story at a time. No reported number changes.
+
+- `preregistration/story_texts/extract_story_texts.py` reads all 40,559 texts out of the viewer's
+  data files and writes one table of stories, one of pages, a list of structurally unusual texts
+  (16) and a record of every file read with its checksum. It stops without writing anything if
+  the files are incomplete or its page and word counts disagree with the viewer's. Tested on the
+  delivery and on synthetic viewers with a wrong word count, a missing chunk file and a broken
+  wrapper.
+- `.gitignore` excludes `preregistration/Oxford-40k-stories/`, the delivery and the script's
+  outputs, because the texts are the data controller's property and this repository is public.
+  The auto-sync commits untracked files, so without the exclusion it would have published them.
+- Every text in the delivery is US English. The structural sample shows readings in ten
+  languages.
 
 ### 25 September 2026 (later): count script assessed, priors aligned, open literature items closed
 

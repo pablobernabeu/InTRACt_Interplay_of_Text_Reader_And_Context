@@ -24,6 +24,15 @@ letter, the theory object, the poster and its page, the figures, the data and re
 bibliography and the documentation. You may share and adapt them for non-commercial purposes,
 provided you give appropriate credit, link to the licence and indicate any changes.
 
+## The story texts: CC BY-NC 4.0, copyright Ferrero International and Gameloft
+
+The *Let's Story* texts in `preregistration/story_texts/data/` are copyright Ferrero
+International and Gameloft, who have agreed to their release under the same Creative Commons
+Attribution-NonCommercial 4.0 International License. When you share or adapt them, credit
+Ferrero International and Gameloft as the source of the texts, link to the licence and indicate
+any changes. The tables that hold them, and the files that describe them, are covered by the
+section above.
+
 ## Third-party material, under its own terms
 
 - The citation styles `preregistration/layout/apa7.csl`, `preregistration/layout/nature.csl` and

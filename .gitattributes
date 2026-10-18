@@ -5,3 +5,8 @@ preregistration/priors/prior_derivation.md text eol=lf
 # Git hooks run under sh, which reads a carriage return as part of a command, so
 # they stay LF even in a Windows checkout.
 .githooks/* text eol=lf
+
+# The published story texts are checked against the SHA-256 checksums in their
+# manifest, so git stores and checks them out byte for byte. anomalies.csv keeps
+# the CRLF line endings Python's csv module writes on every platform.
+preregistration/story_texts/data/** -text

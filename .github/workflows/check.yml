@@ -9,7 +9,8 @@
 #   docs          every relative link in the Markdown files resolves, every
 #                 citation key in the protocol, the supplement and the poster is
 #                 in its bibliography (tools/check_links.py, check_citations.py),
-#                 and CITATION.cff is valid.
+#                 the published story texts match their manifest, and
+#                 CITATION.cff is valid.
 #   count-script  both count-script versions run through the synthetic test
 #                 scenarios, on the oldest and the newest Python the README
 #                 promises, and the outcomes are compared with the recorded ones.
@@ -103,6 +104,9 @@ jobs:
 
       - name: Every citation key is in its bibliography
         run: python tools/check_citations.py
+
+      - name: The published story texts match their manifest and extraction record
+        run: python preregistration/story_texts/publish_story_texts.py --check
 
       # GitHub's "Cite this repository" and Zenodo both read CITATION.cff, and
       # GitHub only flags an invalid file on the repository page.
