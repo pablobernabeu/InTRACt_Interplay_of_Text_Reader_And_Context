@@ -72,7 +72,7 @@ The systematic review's extraction workflow lives in a separate, private reposit
 Rscript -e 'renv::restore(lockfile = "renv.lock", library = "renv-library", prompt = FALSE)'
 ```
 
-On 16 October 2026, environments restored this way from the two lockfiles alone reproduced the poster pixel for pixel, and every table, figure and checked number of the protocol that can be rebuilt without re-running its simulations. The count script and its tests use only Python's standard library, and the mindmap's Node packages are pinned in `mindmap/source files/package-lock.json`.
+On 16 October 2026, environments restored this way from the two lockfiles alone reproduced the poster pixel for pixel, and every table, figure and checked number of the protocol that can be rebuilt without re-running its simulations. The count script and its tests use only Python's standard library, and the mindmap's Node packages are pinned in `mindmap/source/package-lock.json`.
 
 ---
 

@@ -64,7 +64,7 @@ fresh-simulation paths were run at two replicates per grid point, and the Scopus
 API calls replaced by the archived counts, which it reproduced apart from the run date. The R scripts follow `../.lintr.R`, and `Rscript -e 'lintr::lint_dir()'` reports
 no lints. The 2026-10-16 draft was rendered with Quarto 1.10.19 and LuaTeX 1.24.0 (TeX Live
 2026). The count script needs Python 3.8 or later and nothing outside the standard library.
-Regenerating the framework figure in `../mindmap/source files` needs Node.js and network
+Regenerating the framework figure in `../mindmap/source` needs Node.js and network
 access.
 
 ## Pipeline

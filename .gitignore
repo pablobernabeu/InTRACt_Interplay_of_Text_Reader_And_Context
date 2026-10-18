@@ -18,9 +18,8 @@ __pycache__/
 *.pyc
 .venv/
 
-# Node dependencies are restored from package-lock.json with npm ci. The copy
-# already tracked under mindmap/source files/ stays tracked until it is removed
-# from the index (see ISSUES.md).
+# Node dependencies are restored from mindmap/source/package-lock.json with
+# npm ci, so the installed copy is never tracked.
 node_modules/
 
 # Local Claude Code state

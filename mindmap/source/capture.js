@@ -1,7 +1,7 @@
 // Renders mindmap.html in headless Chromium and saves the .mindmap-container
 // element as ../mindmap.png, the framework figure the root README embeds.
 //
-// Run from mindmap/source files:
+// Run from mindmap/source:
 //   npm ci
 //   npm run capture
 //
@@ -25,8 +25,9 @@ const fs = require('fs');
     // Wide viewport so flexbox renders horizontally; 2x for retina-quality PNG
     await page.setViewport({ width: 1600, height: 1200, deviceScaleFactor: 2 });
 
-    // Inject the HTML with setContent, so the space in "source files" cannot
-    // break a file:// URL. The page has no local assets, only the remote font.
+    // Inject the HTML with setContent, so spaces in the checkout's path (such as
+    // "OneDrive - Nexus365") cannot break a file:// URL. The page has no local
+    // assets, only the remote font.
     const htmlPath = path.resolve(__dirname, 'mindmap.html');
     const html = fs.readFileSync(htmlPath, 'utf8');
     await page.setContent(html, { waitUntil: 'networkidle0' });
