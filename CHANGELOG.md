@@ -35,6 +35,11 @@ No reported number, table or figure changes. Rendered before and after the moves
   `stage` publishes a GitHub release for Zenodo to archive under a DOI.
 - Poster: the two CRAN entries in `poster/data/references.bib` name the Comprehensive R Archive
   Network (CRAN), so the README's generated reference list keeps the wording added on `main`.
+- Drafts: eleven drafts of 17 June to 29 July 2026, rendered on the `code-based-diagram`
+  branch and never on this line, are archived in `preregistration/drafts/`. That branch, two
+  superseded branches of Riddhi's and six merged or superseded ones were deleted on GitHub.
+- Protocol: the Priors paragraph cites Lewandowski et al. (2009) for the LKJ prior, so the next
+  rendered draft gains one reference.
 
 ### 17 October 2026 (later): licence, and the simulation, figure and theory code hardened
 
