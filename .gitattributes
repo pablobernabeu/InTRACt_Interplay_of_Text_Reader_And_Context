@@ -1,3 +1,7 @@
 # The deposited prior-derivation rules are cited by SHA-256 of their LF form
 # (preregistration/README.md), so keep them LF in every checkout.
 preregistration/priors/prior_derivation.md text eol=lf
+
+# Git hooks run under sh, which reads a carriage return as part of a command, so
+# they stay LF even in a Windows checkout.
+.githooks/* text eol=lf

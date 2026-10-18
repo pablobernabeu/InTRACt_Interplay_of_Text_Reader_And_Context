@@ -1,0 +1,33 @@
+# Files that must stay as they were issued. tools/guard.py refuses a change that
+# modifies, deletes or moves one; adding a file under a pattern is allowed. To change
+# a frozen file on purpose, delete its line here in the same commit. Patterns are
+# fnmatch, from the repository root, and * also matches across folders.
+
+# The poster as printed on 16 October 2026, and every file its render reads apart
+# from README.md, data/evidence.csv and data/references.bib, which feed only the
+# README's generated sections.
+poster/poster.qmd
+poster/poster.pdf
+poster/poster-print.pdf
+poster/renv.lock
+poster/R/*
+poster/layout/*
+poster/fonts/*
+poster/img/*
+poster/data/design_analysis/*
+poster/data/scopus_*
+
+# The archived protocol drafts, the record of what each version said. A render
+# adds to drafts/ and never changes what is already there.
+preregistration/drafts/InTRACt preregistration draft - *
+preregistration/drafts/preregistration_files/*
+
+# The count-script versions supplied to the data controller on 7 August and
+# 18 September 2026, and the instruction sheet sent with the first, kept as sent.
+preregistration/count_script/lets_story_summary_2026-08-05.py
+preregistration/count_script/lets_story_summary.py
+preregistration/count_script/HOW_TO_RUN.md
+
+# The frozen prior-derivation rules, cited by SHA-256 in preregistration/README.md.
+# A change before in-principle acceptance is recorded there with a new checksum.
+preregistration/priors/prior_derivation.md

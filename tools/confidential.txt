@@ -1,0 +1,33 @@
+# Material that must never enter this public repository. tools/guard.py refuses a
+# staged or pushed file whose path matches a pattern here. Patterns are fnmatch,
+# from the repository root, and * also matches across folders. The root .gitignore
+# keeps most of these out of `git add`; this list also stops a forced add, a copy
+# under another folder and a commit made by a tool that ignores .gitignore.
+
+# The data controller's story-text delivery, its viewer and what the extraction
+# script writes from it (preregistration/story_texts/).
+*Oxford-40k-stories/*
+*StoryReview*
+*stories.csv
+*pages.csv
+*anomalies.csv
+*extraction_record.json
+
+# Correspondence and open-item trackers exchanged with the data controller.
+*InTRACt_open_items*
+
+# The count script's deliverables, computed from the data controller's export.
+*lets_story_summary_data_for_oxford.csv
+*lets_story_manifest_for_oxford.html
+
+# Publisher PDFs fetched from a personal Zotero library (register item RS-12).
+*downloaded_papers_zotero_keys/*
+
+# Credentials.
+*.Renviron
+*.env
+*.pem
+*.pfx
+*.p12
+*id_rsa*
+*credentials.json

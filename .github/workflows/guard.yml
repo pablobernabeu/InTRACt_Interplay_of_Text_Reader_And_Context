@@ -1,0 +1,56 @@
+# Checks every push and pull request with tools/guard.py: no frozen file
+# (tools/frozen.txt) is modified, deleted or moved, and no confidential
+# (tools/confidential.txt) or oversized file is added. Each pushed commit is
+# checked on its own, so a file added and removed again within one push, which
+# the push's net diff would hide but its history keeps, still fails.
+#
+# This repository is public, so by the time this workflow runs, a pushed file is
+# already published. The pre-commit hook in .githooks/ runs the same check before
+# the commit exists; this workflow is the backstop for a clone without the hook.
+
+name: Guard
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  guard:
+    name: Frozen and confidential files
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.13'
+
+      - name: No confidential or oversized file is tracked
+        run: python tools/guard.py --tree HEAD
+
+      - name: No pushed commit changes a frozen file or adds a confidential one
+        env:
+          EVENT: ${{ github.event_name }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PUSH_BEFORE: ${{ github.event.before }}
+        run: |
+          set -eu
+          if [ "$EVENT" = pull_request ]; then base="$PR_BASE"; else base="${PUSH_BEFORE:-}"; fi
+          # A new branch has no "before" commit, and a hand-started run has
+          # neither, so those compare with where the branch left main.
+          if [ -z "$base" ] || ! git cat-file -e "$base^{commit}" 2>/dev/null; then
+            base=$(git merge-base origin/main HEAD)
+            echo "Comparing with the merge base with main, $base"
+          fi
+          status=0
+          for c in $(git rev-list --reverse "$base..HEAD"); do
+            echo "== $(git log -1 --format='%h %s' "$c")"
+            python tools/guard.py --range "$c^" "$c" --confidential-from HEAD || status=1
+          done
+          exit $status

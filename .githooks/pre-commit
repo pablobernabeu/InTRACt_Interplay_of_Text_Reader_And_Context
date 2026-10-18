@@ -1,0 +1,20 @@
+#!/bin/sh
+# Refuses a commit that edits a frozen file or stages a confidential or oversized
+# one, by running tools/guard.py --staged (its docstring gives the rules). The Guard
+# workflow repeats the check on GitHub, but only after a push has made the files
+# public, so this hook is the check that comes in time.
+#
+# Enable it once per clone, from the repository root:
+#   git config core.hooksPath .githooks
+# Bypass it for one commit with git commit --no-verify; the workflow still runs.
+
+# The first interpreter that is Python 3.8 or later. On Windows, "python3" can be a
+# Microsoft Store stub that only prints a message, so each candidate is tried, not
+# merely looked up.
+for py in python3 python py; do
+  if "$py" -c 'import sys; sys.exit(sys.version_info < (3, 8))' >/dev/null 2>&1; then
+    exec "$py" tools/guard.py --staged
+  fi
+done
+echo "pre-commit: no Python 3.8 or later found, so tools/guard.py could not check this commit" >&2
+exit 1
