@@ -30,9 +30,9 @@ format:
     toc: false
     number-sections: false
 bibliography: "InTRACt references.bib"
-csl: apa7.csl
+csl: layout/apa7.csl
 filters:
-  - breakable-code.lua
+  - layout/breakable-code.lua
 ---
 
 # Abstract {.unnumbered}

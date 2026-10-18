@@ -2,14 +2,15 @@
 
 `preregistration.qmd` is the protocol and `supplementary.qmd` the supplementary material.
 Both render to PDF and HTML with Quarto and cite `InTRACt references.bib` in APA 7 style
-through `apa7.csl`. `nature.csl` is kept alongside it for the numbered-superscript variant
-Nature Human Behaviour uses at Stage 2. The protocol follows the journal's Stage 1 template
+through `layout/apa7.csl`. `layout/nature.csl` is kept beside it for the numbered-superscript
+variant Nature Human Behaviour uses at Stage 2, and `layout/breakable-code.lua` lets long inline
+code, such as a file path, break across lines in the PDF. The protocol follows the journal's Stage 1 template
 section by section (`journal.json` records the limits and the date they were read). The
 hypotheses therefore sit inside the Introduction with no subheadings, the Design Table is Table 1 with
 the template's five columns, and there is no Discussion or Conclusion. The supplement labels its
 display items through Quarto's `crossref` options, so a caption there must not repeat the
 "Supplementary Table" prefix by hand. The protocol carries no author block: the Stage 1
-submission is anonymised, so the YAML header holds the title alone. `title.tex` is a Quarto
+submission is anonymised, so the YAML header holds the title alone. `layout/title.tex` is a Quarto
 title partial kept for the de-anonymised version, where it prints the numbered affiliations and
 the corresponding author's email from a YAML author block, which Quarto's stock PDF template
 drops. To use it, restore the author block and list the partial under `template-partials`. Its

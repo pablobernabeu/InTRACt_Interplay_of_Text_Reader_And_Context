@@ -26,7 +26,7 @@ provided you give appropriate credit, link to the licence and indicate any chang
 
 ## Third-party material, under its own terms
 
-- The citation styles `preregistration/apa7.csl`, `preregistration/nature.csl` and
+- The citation styles `preregistration/layout/apa7.csl`, `preregistration/layout/nature.csl` and
   `poster/layout/apa7.csl` come from the Citation Style Language project, under the Creative
   Commons Attribution-ShareAlike 3.0 License their headers name.
 - The Figtree fonts in `poster/fonts/` are under the SIL Open Font License 1.1, in
