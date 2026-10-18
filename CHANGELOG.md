@@ -8,6 +8,27 @@ date and rationale.
 
 ## [Unreleased]
 
+### 18 October 2026 (later): held-back figure and record fixes applied, citation completed
+
+No reported number changes. Figures 1, 2 and 3 and the supplementary precision panels change
+in presentation only, and reach a rendered draft at the next render.
+
+- Figure 1: the legend names the groups Concept and Intersection, where it showed the package's
+  internal column name, grp (FL-03).
+- Figure 3 and the supplementary panels: the panels are tagged a and b, as the captions call
+  them (FL-24).
+- Figure 2: the dashed moderation lines are darker, at 3.52:1 against white, and meet the 3:1
+  floor (TH-29).
+- Theory object: `formal_model.spec_ref` names `design_analysis/tier1_developmental.json`, a
+  file that exists. Every theory output is unchanged and the score stays at 90.7 (DA-22).
+- Search record: `scopus_gap_analysis.R` writes the trend queries into the record, and the
+  archived record of 26 August 2026 gains them from the archived counts, with no new search
+  (FL-05).
+- Supplementary Section S5 states that the simulated outcome's standard deviation is 1.01 to
+  1.02, which made the simulated test slightly stricter than the registered criterion (DA-29).
+- `CITATION.cff` carries the authors' ORCID iDs. Dependabot's update of
+  `actions/upload-artifact` to 7.0.2 was merged after the checks passed on it.
+
 ### 18 October 2026: folders grouped, checks on every push, releases archivable
 
 No reported number, table or figure changes. Rendered before and after the moves with a fixed

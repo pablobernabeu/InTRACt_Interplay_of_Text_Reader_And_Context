@@ -3,7 +3,8 @@
 # Zenodo archives the repository at every published release and gives it a DOI,
 # taking the title, authors and licences from CITATION.cff. The release also
 # carries the current protocol draft and the supplement as PDFs, for a reader who
-# wants only those.
+# wants only those. An archived record names the authors, so while the Stage 1
+# review is anonymised, a tag is best pushed at in-principle acceptance.
 #
 # Tag the commit to archive with an annotated tag, whose message becomes the
 # release notes, for example at Stage 1 submission:
