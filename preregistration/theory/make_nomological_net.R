@@ -57,13 +57,15 @@ group_titles <- c(reader = "The reader", session = "The session",
 # A signed claim carries its sign as a small glyph at the midpoint of its own
 # line, where lines are farthest apart, and the colour repeats the sign.
 # The Graphviz attribute strings below are kept whole, one per line, so that they
-# read as the DOT they write.
+# read as the DOT they write. The dashed moderation lines were #8A9BA8, 2.86:1
+# against white; #7A8B98, the same grey-blue a shade darker, meets the 3:1 floor
+# for marks that the other figures meet (register item TH-29).
 # nolint start: line_length_linter.
 edge_attr <- function(claim, sign_col_plus = "#d55e00", sign_col_minus = "#0072b2") {
   switch(claim,
     increases = sprintf('[color="%s", label="+", fontcolor="%s", fontsize=16, penwidth=1.2]', sign_col_plus, sign_col_plus),
     decreases = sprintf('[color="%s", label="−", fontcolor="%s", fontsize=16, penwidth=1.2]', sign_col_minus, sign_col_minus),
-    moderates = '[color="#8A9BA8", style=dashed, penwidth=1.1]',
+    moderates = '[color="#7A8B98", style=dashed, penwidth=1.1]',
     causes    = '[color="#3A4A58", penwidth=1.2]',
     stop("unknown claim: ", claim)
   )
@@ -169,9 +171,8 @@ if (printed_pt < MIN_PRINT_PT)
 # the floors the other figures are held to: 4.5 for words (node and group
 # labels) and 3 for marks (lines, node borders and the sign glyphs). The group
 # borders are decorative, since the group titles name the groups. A word below
-# its floor stops the script. A mark below it is reported as a warning: the
-# dashed moderation lines are at 2.86, and darkening them would change the
-# figure, which is the author's decision.
+# its floor stops the script. A mark below it is reported as a warning, since a
+# change of colour changes the figure and is the author's decision.
 luminance <- function(hex) {
   v <- grDevices::col2rgb(hex)[, 1] / 255
   v <- ifelse(v <= 0.04045, v / 12.92, ((v + 0.055) / 1.055)^2.4)

@@ -46,15 +46,26 @@ short_names <- c(
 # followed by Okabe-Ito green and orange. ggplot takes as many as a scale needs.
 PAIR <- c("#0072b2", "#d55e00", "#333333", "#8e2c6b", "#009e73", "#e69f00")
 
-strip_chrome <- function(p) {
+strip_chrome <- function(p, colour = scale_colour_manual(values = PAIR)) {
   p$labels$title <- NULL
   p$labels$subtitle <- NULL
   p$labels$caption <- NULL
   suppressMessages(
-    p + scale_fill_manual(values = PAIR) + scale_colour_manual(values = PAIR) +
+    p + scale_fill_manual(values = PAIR) + colour +
       theme(plot.margin = margin(t = 6, r = 12, b = 6, l = 6))
   )
 }
+
+# The intersections plot colours its points by the package's internal column,
+# grp, and a bare colour scale would title Figure 1's legend "grp" and list the
+# raw codes (register item FL-03). This scale names the groups and drops the
+# title. The colours are those the bare scale gave each level by position, and
+# the third level, highlight, has no rows in this search.
+GROUP_SCALE <- scale_colour_manual(
+  values = c(concept = PAIR[1], intersection = PAIR[2], highlight = PAIR[3]),
+  breaks = c("concept", "intersection"), labels = c("Concept", "Intersection"),
+  name = NULL
+)
 
 # Every check is fatal except one. Colour joined by a second encoding needs a
 # change to the package's geoms, so that failure is reported and the run goes
@@ -91,7 +102,7 @@ read_archive <- function(name) {
 # so in its caption, which is removed here; the manuscript's caption says it.
 ints <- read_archive("scopus_gap_sizes.csv")
 class(ints) <- c("scopus_intersections", "data.frame")
-p <- strip_chrome(plot_scopus_intersections(ints))
+p <- strip_chrome(plot_scopus_intersections(ints), colour = GROUP_SCALE)
 
 cmp <- read_archive("scopus_topic_trends.csv")
 # A comparison query that matches no key would keep its full expression as its

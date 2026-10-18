@@ -109,8 +109,8 @@
 <!-- c_verbal_working_memory&#45;&gt;c_processing_effort -->
 <g id="edge7" class="edge">
 <title>c_verbal_working_memory&#45;&gt;c_processing_effort</title>
-<path fill="none" stroke="#8a9ba8" stroke-width="1.1" stroke-dasharray="5,2" d="M473.2143,-750.3998C492.9671,-726.6802 515.745,-691.5012 515.745,-655.4 515.745,-655.4 515.745,-655.4 515.745,-339.6 515.745,-293.3278 492.7088,-244.698 473.8556,-212.6467"/>
-<polygon fill="#8a9ba8" stroke="#8a9ba8" stroke-width="1.1" points="476.0162,-211.1456 469.9058,-206.0658 471.5147,-213.8474 476.0162,-211.1456"/>
+<path fill="none" stroke="#7a8b98" stroke-width="1.1" stroke-dasharray="5,2" d="M473.2143,-750.3998C492.9671,-726.6802 515.745,-691.5012 515.745,-655.4 515.745,-655.4 515.745,-655.4 515.745,-339.6 515.745,-293.3278 492.7088,-244.698 473.8556,-212.6467"/>
+<polygon fill="#7a8b98" stroke="#7a8b98" stroke-width="1.1" points="476.0162,-211.1456 469.9058,-206.0658 471.5147,-213.8474 476.0162,-211.1456"/>
 </g>
 <!-- c_inferential_resource -->
 <g id="node4" class="node">
@@ -124,8 +124,8 @@
 <!-- c_inferential_resource&#45;&gt;c_processing_effort -->
 <g id="edge8" class="edge">
 <title>c_inferential_resource&#45;&gt;c_processing_effort</title>
-<path fill="none" stroke="#8a9ba8" stroke-width="1.1" stroke-dasharray="5,2" d="M574.745,-743.1987C574.745,-718.3913 574.745,-684.9276 574.745,-655.4 574.745,-655.4 574.745,-655.4 574.745,-339.6 574.745,-293.4029 547.8347,-288.0761 519.745,-251.4 518.0004,-249.1222 500.3213,-230.1319 483.1686,-211.807"/>
-<polygon fill="#8a9ba8" stroke="#8a9ba8" stroke-width="1.1" points="484.9232,-209.8403 477.8805,-206.1606 481.0913,-213.4291 484.9232,-209.8403"/>
+<path fill="none" stroke="#7a8b98" stroke-width="1.1" stroke-dasharray="5,2" d="M574.745,-743.1987C574.745,-718.3913 574.745,-684.9276 574.745,-655.4 574.745,-655.4 574.745,-655.4 574.745,-339.6 574.745,-293.4029 547.8347,-288.0761 519.745,-251.4 518.0004,-249.1222 500.3213,-230.1319 483.1686,-211.807"/>
+<polygon fill="#7a8b98" stroke="#7a8b98" stroke-width="1.1" points="484.9232,-209.8403 477.8805,-206.1606 481.0913,-213.4291 484.9232,-209.8403"/>
 </g>
 <!-- c_spoken_rendition -->
 <g id="node5" class="node">
@@ -140,8 +140,8 @@
 <!-- c_spoken_rendition&#45;&gt;c_processing_effort -->
 <g id="edge9" class="edge">
 <title>c_spoken_rendition&#45;&gt;c_processing_effort</title>
-<path fill="none" stroke="#8a9ba8" stroke-width="1.1" stroke-dasharray="5,2" d="M638.117,-295.5329C626.4463,-280.301 612.1461,-263.9293 596.745,-251.4 571.4277,-230.8035 539.5545,-213.6533 511.9642,-200.9577"/>
-<polygon fill="#8a9ba8" stroke="#8a9ba8" stroke-width="1.1" points="512.9636,-198.5288 505.0485,-197.8266 510.7982,-203.3114 512.9636,-198.5288"/>
+<path fill="none" stroke="#7a8b98" stroke-width="1.1" stroke-dasharray="5,2" d="M638.117,-295.5329C626.4463,-280.301 612.1461,-263.9293 596.745,-251.4 571.4277,-230.8035 539.5545,-213.6533 511.9642,-200.9577"/>
+<polygon fill="#7a8b98" stroke="#7a8b98" stroke-width="1.1" points="512.9636,-198.5288 505.0485,-197.8266 510.7982,-203.3114 512.9636,-198.5288"/>
 </g>
 <!-- c_spoken_rendition&#45;&gt;c_situation_model -->
 <g id="edge15" class="edge">

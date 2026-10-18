@@ -150,8 +150,9 @@ pb <- curve_panel(dev_read, "Readings per text (log scale)",
 
 # arrange_plots collects the guides into the patchwork's own theme, which would
 # otherwise park them to the right of the panels. One horizontal strip along the
-# bottom returns that width to the data.
-fig <- arrange_plots(pa, pb, ncol = 2, nrow = 1, guides = "collect") &
+# bottom returns that width to the data. The panels are tagged a and b, as the
+# captions call them and as Nature journals label panels (register item FL-24).
+fig <- arrange_plots(pa, pb, ncol = 2, nrow = 1, guides = "collect", tag_levels = "a") &
   theme(legend.position = "bottom", legend.box = "horizontal")
 
 # The narration and within-child curves go in the supplement, where they are read
@@ -162,7 +163,7 @@ t2   <- prep(held_at(rows_of("within_child", "children"), "per_child", 5, "withi
 ps_a <- curve_panel(narr, "Distinct texts (log scale)", "Narration model")
 ps_b <- curve_panel(t2, "Children in tier 2 (log scale)",
                     "Within-child model, five distinct texts each")
-sup <- arrange_plots(ps_a, ps_b, ncol = 2, nrow = 1, guides = "collect") &
+sup <- arrange_plots(ps_a, ps_b, ncol = 2, nrow = 1, guides = "collect", tag_levels = "a") &
   theme(legend.position = "bottom", legend.box = "horizontal")
 
 # A figure destined for print is checked rather than eyeballed, at the two widths
