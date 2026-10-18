@@ -10,7 +10,7 @@ How does the language of a story relate to how quickly a child reads it? And doe
 
 InTRACt is a preregistered study of the behavioural logs of children aged 7 and older who read AI-generated stories in *Let's Story*, a feature of the *Applaydu* app developed by Gameloft and Ferrero International. Children use it in any of 19 languages. The study combines computational measures of each story's language with Bayesian models of reading time, to test how lexical difficulty, grammatical load and referential continuity relate to children's reading pace outside the laboratory.
 
-The project is hosted at the **[Department of Education, University of Oxford](https://www.education.ox.ac.uk/)**, and is embedded within the **[Learning in Families through Technology (LIFT)](https://www.education.ox.ac.uk/project/lift-learning-in-families-through-technology/)** project, which investigates how digital technologies shape learning within families. It is funded by **Ferrero International** (Kinder) and the **John Fell Fund** (University of Oxford). Neither funder has a role in the design, analysis, interpretation or decision to publish.
+The project is hosted at the **[Department of Education, University of Oxford](https://www.education.ox.ac.uk/)**, and is embedded within the **[Learning in Families through Technology (LIFT)](https://www.education.ox.ac.uk/project/lift-learning-in-families-through-technology/)** project, which investigates how digital technologies shape learning within families. It is funded by **Ferrero International** (Kinder) and the **John Fell Fund** (University of Oxford), as [Funding](#funding) acknowledges below.
 
 ---
 
@@ -91,6 +91,12 @@ Guard runs after a push, when the files are already public, so the same check al
 ```bash
 git config core.hooksPath .githooks
 ```
+
+---
+
+## Funding
+
+We gratefully acknowledge the funding of this research by Ferrero International, through Kinder, and by the John Fell Fund of the University of Oxford. Neither funder has a role in the design, analysis, interpretation or decision to publish.
 
 ---
 

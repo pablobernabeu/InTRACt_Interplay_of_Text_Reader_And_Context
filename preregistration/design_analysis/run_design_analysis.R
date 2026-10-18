@@ -221,10 +221,13 @@ all_rows$t2 <- run_sweep(
 
 # ---- Bind, save, and solve each curve for the target -------------------------
 
+# The last four columns were added on 18 October 2026, after the poster copied
+# this table, so they come last and the poster's copy matches the first twenty.
 KEEP <- c("model", "sweep", "param", "true", "texts", "per_text", "per_child", "children",
           "mean_ci_width", "p_meaningful", "p_meaningful_lo", "p_meaningful_hi",
           "p_equivalent", "p_equivalent_lo", "p_equivalent_hi",
-          "n_returned", "n_converged", "n_singular", "n_sims", "truth")
+          "n_returned", "n_converged", "n_singular", "n_sims", "truth",
+          "p_meaningful_mcse", "p_equivalent_mcse", "n_attempted", "n_warning")
 
 res <- do.call(rbind, lapply(all_rows, function(d) {
   for (nm in setdiff(KEEP, names(d))) d[[nm]] <- NA

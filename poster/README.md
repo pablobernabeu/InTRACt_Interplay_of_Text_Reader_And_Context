@@ -136,6 +136,8 @@ the app's logs or its story texts. The protocol, its supplement and its design a
 - `data/scopus_*`: the Scopus counts and the full search record, from 14 October 2026.
 - `data/design_analysis/`: the protocol's design-analysis outputs behind the precision figure,
   copied on 15 October 2026 from [`../preregistration/design_analysis/`](../preregistration/design_analysis/).
+  The protocol's `precision_sweep.csv` has since gained four columns at the end, the Monte Carlo
+  standard errors and the attempt and warning counts. Its other columns are identical to this copy.
 - `data/references.bib`: the works the poster cites, with fields checked against Crossref and CRAN.
 
 The poster, its figures and its data are released under CC BY-NC 4.0, and the code under the MIT

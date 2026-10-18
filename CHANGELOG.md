@@ -8,6 +8,18 @@ date and rationale.
 
 ## [Unreleased]
 
+### 18 October 2026 (evening): attempt and warning counts pooled, funding acknowledged
+
+No reported number changes.
+
+- `design_analysis/precision_sweep.csv` gains four columns at the end: the Monte Carlo standard
+  error on each decision probability, and the number of fits attempted and of fits that raised
+  warnings (CR-04). The table was rebuilt from the cached sweeps, with no new simulation, and its
+  other twenty columns are unchanged. The poster's frozen copy keeps the table as printed, and
+  matches the new one in every column it has. Supplementary Section S5 now points to the pooled
+  table for these counts.
+- `README.md` acknowledges the funders in a section of its own.
+
 ### 18 October 2026 (later): held-back figure and record fixes applied, citation completed
 
 No reported number changes. Figures 1, 2 and 3 and the supplementary precision panels change
