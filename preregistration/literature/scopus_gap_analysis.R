@@ -145,7 +145,7 @@ rec <- c(
   "",
   "## Publication trend, by year",
   "",
-  "| Year | Children's reading | with narration | with apps or e-books | with AI-generated text |",
+  "| Year | Reference set | with narration | with apps or e-books | with AI-generated text |",
   "|---:|---:|---:|---:|---:|"
 )
 
@@ -163,6 +163,24 @@ names(tw) <- sub("^n[.]", "", names(tw))
 tw <- tw[order(tw$year), ]
 rec <- c(rec, sprintf("| %d | %d | %d | %d | %d |",
                       tw$year, tw$ref, tw$narr, tw$apps, tw$ai))
+
+# The trend's queries are not the concept sets above, so they are written out
+# too, which lets a reader rerun the supplementary trend figure from the record
+# alone (register item FL-05).
+trend_role <- c(ref = "Reference set", narr = "with narration",
+                apps = "with apps or e-books", ai = "with AI-generated text")
+tq <- unique(data.frame(lab = trend_lab, query = cmp$query))
+check_counts(nrow(tq) == length(trend_role) && setequal(tq$lab, names(trend_role)),
+             "one full query per column of the trend table")
+tq <- tq[match(names(trend_role), tq$lab), ]
+rec <- c(rec, "",
+         "Each yearly count is the count of the query below for that publication year. The",
+         "reference set is the trend's own query, not the Children's reading concept set above,",
+         "and each comparison query is the reference query narrowed by a further term.",
+         "",
+         "| Column | Query |",
+         "|---|---|",
+         sprintf("| %s | `%s` |", trend_role[tq$lab], tq$query))
 
 writeLines(rec, file.path(OUT, "scopus_search_record.md"))
 

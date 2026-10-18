@@ -24,7 +24,7 @@ systematic review that accompanies this protocol, not to this search.
 
 ## Publication trend, by year
 
-| Year | Children's reading | with narration | with apps or e-books | with AI-generated text |
+| Year | Reference set | with narration | with apps or e-books | with AI-generated text |
 |---:|---:|---:|---:|---:|
 | 2018 | 348 | 6 | 2 | 0 |
 | 2019 | 324 | 5 | 4 | 0 |
@@ -35,3 +35,17 @@ systematic review that accompanies this protocol, not to this search.
 | 2024 | 400 | 8 | 2 | 2 |
 | 2025 | 490 | 16 | 6 | 6 |
 | 2026 | 337 | 5 | 1 | 4 |
+
+Each yearly count is the count of the query below for that publication year. The
+reference set is the trend's own query, not the Children's reading concept set above,
+and each comparison query is the reference query narrowed by a further term.
+
+| Column | Query |
+|---|---|
+| Reference set | `TITLE-ABS-KEY(("reading comprehension" OR "text comprehension" OR "reading fluency") AND (child OR children OR "primary school" OR "elementary school"))` |
+| with narration | `TITLE-ABS-KEY(("reading comprehension" OR "text comprehension" OR "reading fluency") AND (child OR children OR "primary school" OR "elementary school")) AND TITLE-ABS-KEY(("text-to-speech" OR "read-aloud" OR "audio narration" OR "reading while listening"))` |
+| with apps or e-books | `TITLE-ABS-KEY(("reading comprehension" OR "text comprehension" OR "reading fluency") AND (child OR children OR "primary school" OR "elementary school")) AND TITLE-ABS-KEY(("reading app" OR "storybook app" OR "e-book" OR "ebook" OR "digital storybook"))` |
+| with AI-generated text | `TITLE-ABS-KEY(("reading comprehension" OR "text comprehension" OR "reading fluency") AND (child OR children OR "primary school" OR "elementary school")) AND TITLE-ABS-KEY(("AI-generated" OR "LLM-generated" OR "machine-generated" OR "generative AI"))` |
+
+The table of trend queries was added on 18 October 2026, from the query column of the archived
+`scopus_topic_trends.csv`. No search was run again, and no count changed.
