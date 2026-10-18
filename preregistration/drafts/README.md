@@ -10,5 +10,7 @@ The PDFs are the faithful record. The HTML drafts load Quarto's styles and scrip
 Each HTML draft also names its figures and its PDF by paths relative to the folder it was
 rendered in, so here those links do not resolve. Before the move, they showed whichever
 version of each figure was current when the draft was opened (register item RS-07 in
-`../../ISSUES.md`). The drafts of June 2026 embed everything they need and are
-unaffected.
+`../../ISSUES.md`). Every draft from 7 June to 29 July 2026 apart from that of 21 July
+embeds everything it needs, so only its link to the PDF fails. Eleven of those, dated 17 June
+to 29 July, were rendered on a parallel branch, `code-based-diagram`, and joined the others
+here on 18 October 2026.
