@@ -1,0 +1,46 @@
+# Publishes a GitHub release when a version tag is pushed. Once the repository
+# is switched on in Zenodo's GitHub settings (zenodo.org/account/settings/github),
+# Zenodo archives the repository at every published release and gives it a DOI,
+# taking the title, authors and licences from CITATION.cff. The release also
+# carries the current protocol draft and the supplement as PDFs, for a reader who
+# wants only those.
+#
+# Tag the commit to archive with an annotated tag, whose message becomes the
+# release notes, for example at Stage 1 submission:
+#   git tag -a stage1-submission -m "Stage 1 Registered Report as submitted"
+#   git push origin stage1-submission
+
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+      - 'stage*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Publish the release
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Create the release with the protocol and supplement attached
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          # The current draft is the one dated draft left in preregistration/.
+          shopt -s nullglob
+          drafts=(preregistration/"InTRACt preregistration draft - "*.pdf)
+          if [ "${#drafts[@]}" -ne 1 ]; then
+            echo "Expected one current draft in preregistration/, found ${#drafts[@]}"
+            exit 1
+          fi
+          gh release create "$TAG" --verify-tag --title "$TAG" --notes-from-tag \
+            "${drafts[0]}#Protocol, current draft (PDF)" \
+            "preregistration/supplementary.pdf#Supplementary material (PDF)"

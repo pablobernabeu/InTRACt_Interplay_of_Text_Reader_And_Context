@@ -1,0 +1,39 @@
+# GitHub shows this as "Cite this repository", and Zenodo takes the title,
+# authors and licences of an archived release from it (.github/workflows/release.yml).
+cff-version: 1.2.0
+message: If you use these materials, please cite them as below.
+title: "InTRACt: Interplay of Text, Reader And Context in children's digital reading comprehension"
+abstract: >-
+  The Stage 1 Registered Report protocol of a study of how the language of
+  machine-generated stories relates to children's reading pace in a multilingual
+  storytelling app, with the theory object, design analysis, literature search and
+  count script behind every number the protocol reports, and a conference poster
+  on the study.
+type: software
+authors:
+  - given-names: Pablo
+    family-names: Bernabeu
+    affiliation: Department of Education, University of Oxford
+  - given-names: Riddhi
+    family-names: Jain
+    affiliation: Department of Education, University of Oxford
+  - given-names: Suzanna
+    family-names: Dryden
+    affiliation: Department of Education, University of Oxford
+  - given-names: Sara
+    family-names: Ratner
+    affiliation: Department of Education, University of Oxford
+  - given-names: Victoria A.
+    family-names: Murphy
+    affiliation: Department of Education, University of Oxford
+repository-code: https://github.com/pablobernabeu/InTRACt_Interplay_of_Text_Reader_And_Context
+license:
+  - MIT
+  - CC-BY-NC-4.0
+keywords:
+  - children's reading
+  - reading time
+  - registered report
+  - text complexity
+  - digital reading
+  - machine-generated text
