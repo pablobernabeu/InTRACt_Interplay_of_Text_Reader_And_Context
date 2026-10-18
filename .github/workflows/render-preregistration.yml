@@ -1,20 +1,30 @@
-# Renders the preregistration (preregistration/preregistration.qmd) to two
-# standalone files - a self-contained HTML and a PDF, date-stamped by the
-# project's _rename-output.R post-render script - and commits them into the
-# preregistration/ folder.
+# Renders the protocol (preregistration/preregistration.qmd) and its supplement
+# on GitHub's runner, as a check that both build from a clean checkout with the
+# pinned toolchain, and offers the PDFs and HTML files as a downloadable
+# artefact of the run.
 #
 # Runs only when started by hand (Actions > Render preregistration > Run
-# workflow). It used to run on every push to main that touched preregistration/,
-# which re-rendered the protocol on this runner's fonts and TeX and committed the
-# result over the dated draft rendered and checked locally. The drafts are
-# committed with the change that produces them, so a render here is an
-# occasional cross-check, not part of each push. The auto-commit carries
-# [skip ci].
+# workflow). The drafts of record are rendered and checked locally and committed
+# with the change that produces them, so by default this run commits nothing.
+# It used to commit on every push, which put a render made with this runner's
+# fonts and TeX over the draft checked locally. Tick "commit" to commit the
+# render: the new dated draft, the supplement, and the draft it supersedes,
+# which _rename-output.R moves into preregistration/drafts/. The guard runs on
+# the staged render before the commit is made.
+#
+# Quarto 1.10.19 and R 4.6.1 are the versions the 2026-10-16 draft was rendered
+# with (preregistration/README.md). TinyTeX installs the current TeX Live, so the
+# TeX side is not pinned. Every action is pinned to a full commit SHA.
 
 name: Render preregistration
 
 on:
   workflow_dispatch:
+    inputs:
+      commit:
+        description: Commit the render to the branch it ran on
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -26,10 +36,9 @@ concurrency:
 jobs:
   render:
     name: Render PDF + HTML
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Install Times New Roman (msttcorefonts)
         run: |
@@ -44,32 +53,48 @@ jobs:
             || { echo "ERROR: Times New Roman was not installed"; exit 1; }
 
       - name: Set up R (for the _rename-output.R post-render script)
-        uses: r-lib/actions/setup-r@v2
+        uses: r-lib/actions/setup-r@f9a764fea8d5c63df6ef9a5c7795bf7deb5d7e05 # v2.14.0
         with:
-          r-version: release
+          r-version: '4.6.1'
           use-public-rspm: true
 
       - name: Set up Quarto and TinyTeX
-        uses: quarto-dev/quarto-actions/setup@v2
+        uses: quarto-dev/quarto-actions/setup@8a96df13519ee81fd526f2dfca5962811136661b # v2.2.0
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          version: 1.10.19
           tinytex: true
 
-      - name: Render preregistration (PDF + self-contained HTML)
+      - name: Render both documents
         working-directory: preregistration
         run: quarto render
 
-      - name: Commit rendered drafts to preregistration/
+      - name: Offer the render as an artefact of this run
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: preregistration-render
+          path: |
+            preregistration/InTRACt preregistration draft - *
+            preregistration/preregistration_files/
+            preregistration/supplementary.pdf
+            preregistration/supplementary.html
+            preregistration/supplementary_files/
+          if-no-files-found: error
+
+      - name: Commit the render
+        if: inputs.commit
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add "preregistration/InTRACt preregistration draft - "*.pdf \
-                  "preregistration/InTRACt preregistration draft - "*.html
+          # The whole folder, so the drafts _rename-output.R moved into drafts/
+          # are recorded as moves; .gitignore keeps Quarto's intermediates out.
+          git add -A -- preregistration/
           if git diff --cached --quiet; then
             echo "No rendered changes to commit."
           else
-            git commit -m "Auto-render preregistration drafts [skip ci]"
+            python3 tools/guard.py --staged
+            git commit -m "Render the protocol and supplement on the runner"
             git push origin "HEAD:${{ github.ref_name }}"
           fi
