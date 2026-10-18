@@ -495,7 +495,7 @@ evidence:
 
 formal_model:
   type: "sem"
-  spec_ref: "design_analysis/intract_processing_model.json"
+  spec_ref: "design_analysis/tier1_developmental.json"
 
 provenance:
   - step: "1"
