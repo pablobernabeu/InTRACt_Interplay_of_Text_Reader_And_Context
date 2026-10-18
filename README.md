@@ -56,7 +56,7 @@ All confirmatory analyses will use Bayesian crossed-effects models, in which rea
 
 ## Repository contents
 
-- `preregistration/`: the protocol, its supplement and cover letter, the theory object, the design analysis, the literature sizing and the count script supplied to the data controller. Its README explains how each reported number is produced and checked.
+- `preregistration/`: the protocol, its supplement and cover letter, the theory object, the design analysis, the literature sizing and the count script supplied to the data controller. Its README explains how each reported number is produced and checked. The dated draft in that folder is the current protocol, and `preregistration/drafts/` keeps every earlier one.
 - `poster/`: a conference poster on the study, with the code and data behind each of its figures.
 - `mindmap/`: the framework figure above and the Node script that renders it.
 

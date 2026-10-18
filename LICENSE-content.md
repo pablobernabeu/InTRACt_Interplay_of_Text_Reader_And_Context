@@ -31,7 +31,8 @@ provided you give appropriate credit, link to the licence and indicate any chang
   Commons Attribution-ShareAlike 3.0 License their headers name.
 - The Figtree fonts in `poster/fonts/` are under the SIL Open Font License 1.1, in
   `poster/fonts/LICENSE-Figtree.txt`.
-- The JavaScript, CSS and font files that Quarto copies into `preregistration/*_files/libs/` keep
-  their upstream licences.
+- The JavaScript, CSS and font files that Quarto copies into `preregistration/*_files/libs/`, and
+  their copies in `preregistration/drafts/preregistration_files/libs/`, keep their upstream
+  licences.
 - The logos in `poster/img/` (the University of Oxford, LiFT, Kinder and Ferrero) belong to their
   owners and are not licensed for reuse.
