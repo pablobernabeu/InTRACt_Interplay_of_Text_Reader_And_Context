@@ -8,10 +8,10 @@ attributes, and checks each relative target against the tracked files. Web links
 mail links and in-page anchors are not checked, and neither is anything inside a
 code block or a code span. A target with a #fragment is checked for the file alone.
 
-Targets are resolved against tracked files rather than the disk, so a link that
-works only because of an untracked local file (a delivery kept outside version
-control, for example) still fails, as it would for a reader on GitHub. A leading
-slash means the repository root, as on GitHub.
+Targets are resolved against the tracked files alone. A link that works only because
+of an untracked local file, such as a delivery kept outside version control,
+therefore fails here as it would for a reader on GitHub. A leading slash means the
+repository root, as on GitHub.
 
 Exit status 1 if any link is broken, 0 otherwise. Standard library only.
 """

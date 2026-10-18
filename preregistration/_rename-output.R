@@ -72,9 +72,11 @@ if (renamed) {
     for (lib in draft_libraries(html)) {
       to <- file.path(archive, lib)
       if (file.exists(to)) next
+      # On Windows, R cannot see a file whose full path passes 260 characters,
+      # so a checkout in a deeply nested folder reports a present file missing.
       if (!file.exists(lib)) {
-        stop(html, " loads ", lib, ", which is missing, so it was not archived",
-             call. = FALSE)
+        stop(html, " loads ", lib, ", which is missing (or, on Windows, whose full ",
+             "path exceeds 260 characters), so it was not archived", call. = FALSE)
       }
       dir.create(dirname(to), recursive = TRUE, showWarnings = FALSE)
       if (!file.copy(lib, to)) stop("could not copy ", lib, " to ", to, call. = FALSE)

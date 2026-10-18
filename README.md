@@ -59,6 +59,7 @@ All confirmatory analyses will use Bayesian crossed-effects models, in which rea
 - `preregistration/`: the protocol, its supplement and cover letter, the theory object, the design analysis, the literature sizing and the count script supplied to the data controller. Its README explains how each reported number is produced and checked. The dated draft in that folder is the current protocol, and `preregistration/drafts/` keeps every earlier one.
 - `poster/`: a conference poster on the study, with the code and data behind each of its figures.
 - `mindmap/`: the framework figure above and the Node script that renders it.
+- `tools/`: the repository-wide checks the workflows below run, which can also be run locally.
 
 The systematic review's extraction workflow lives in a separate, private repository, which this one does not link. Within it, `batches/corrections.csv` is the single source of truth for corrections.
 
@@ -73,6 +74,23 @@ Rscript -e 'renv::restore(lockfile = "renv.lock", library = "renv-library", prom
 ```
 
 On 16 October 2026, environments restored this way from the two lockfiles alone reproduced the poster pixel for pixel, and every table, figure and checked number of the protocol that can be rebuilt without re-running its simulations. The count script and its tests use only Python's standard library, and the mindmap's Node packages are pinned in `mindmap/source/package-lock.json`.
+
+## Checks and automation
+
+Four workflows in `.github/workflows/` support the project.
+
+| Workflow | Runs | What it does |
+|---|---|---|
+| Check | on every push and pull request | Compares every number the protocol quotes with the artefact it came from, lints the R scripts, checks every relative link and citation key, validates `CITATION.cff` and runs the count script's test scenarios on Python 3.8 and 3.13. |
+| Guard | on every push and pull request | Fails a commit that modifies, deletes or moves a frozen file (`tools/frozen.txt`: the printed poster, the archived drafts, the count-script versions supplied to the data controller) or adds a confidential or oversized one (`tools/confidential.txt`). |
+| Render preregistration | when started by hand | Renders the protocol and supplement with the pinned R and Quarto and offers them as a download. It commits the render only if asked to. |
+| Release | when a tag starting `v` or `stage` is pushed | Publishes a GitHub release with the current protocol draft attached. Once the repository is switched on in Zenodo, each release is archived there under a DOI, with the metadata in `CITATION.cff`. |
+
+Guard runs after a push, when the files are already public, so the same check also runs as a pre-commit hook. Enable it once in each clone:
+
+```bash
+git config core.hooksPath .githooks
+```
 
 ---
 

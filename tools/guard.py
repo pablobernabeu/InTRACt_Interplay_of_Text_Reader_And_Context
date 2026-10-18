@@ -5,9 +5,9 @@
     python tools/guard.py --tree [REV]        # every file tracked at REV (default HEAD)
 
 Run from anywhere inside the repository. The pre-commit hook in .githooks/ runs the
-first form, and the Guard workflow runs the other two on every push and pull request,
-the range form once per pushed commit, so a file added and removed again within one
-push is still caught. --confidential-from REV takes the confidential list from REV
+first form. The Guard workflow runs the other two on every push and pull request, the
+range form once per pushed commit, so a file added and removed again within one push
+is still caught. --confidential-from REV takes the confidential list from REV
 instead of the state being checked, so commits made before a pattern was added are
 held to it too.
 

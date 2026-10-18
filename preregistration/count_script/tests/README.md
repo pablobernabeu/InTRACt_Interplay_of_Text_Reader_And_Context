@@ -25,6 +25,9 @@ python check_expected.py             # compare with expected/
 python check_expected.py --update    # re-record, after a deliberate change
 ```
 
+In a folder synced by OneDrive, the scripts cannot always delete a previous run's
+scenario folders and stop with `FileExistsError`. Run them from a copy outside it.
+
 To include the two scenarios that need real material, pass the paths:
 
 ```

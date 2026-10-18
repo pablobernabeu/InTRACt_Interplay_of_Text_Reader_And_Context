@@ -6,7 +6,7 @@
 #
 # This repository is public, so by the time this workflow runs, a pushed file is
 # already published. The pre-commit hook in .githooks/ runs the same check before
-# the commit exists; this workflow is the backstop for a clone without the hook.
+# the commit exists, and this workflow is the backstop for a clone without it.
 
 name: Guard
 

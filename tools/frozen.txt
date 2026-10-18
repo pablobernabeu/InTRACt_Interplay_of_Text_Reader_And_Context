@@ -1,5 +1,5 @@
 # Files that must stay as they were issued. tools/guard.py refuses a change that
-# modifies, deletes or moves one; adding a file under a pattern is allowed. To change
+# modifies, deletes or moves one, but allows adding a file under a pattern. To change
 # a frozen file on purpose, delete its line here in the same commit. Patterns are
 # fnmatch, from the repository root, and * also matches across folders.
 

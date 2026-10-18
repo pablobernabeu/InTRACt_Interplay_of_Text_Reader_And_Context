@@ -3,10 +3,38 @@
 This file records notable changes to the code, documentation and generated artefacts in this
 repository, in the format of [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Earlier
 changes are recorded only in the git history and in the dated protocol drafts under
-`preregistration/`. Any change that could alter a reported number must be entered here with its
+`preregistration/` and `preregistration/drafts/`. Any change that could alter a reported number must be entered here with its
 date and rationale.
 
 ## [Unreleased]
+
+### 18 October 2026: folders grouped, checks on every push, releases archivable
+
+No reported number, table or figure changes. Rendered before and after the moves with a fixed
+`SOURCE_DATE_EPOCH`, the protocol and supplement PDFs and HTML files are byte-identical.
+
+- Layout: the 32 superseded protocol drafts are in `preregistration/drafts/`, with a copy of the
+  Quarto libraries their HTML loads, and the current draft stays in `preregistration/`. After a
+  render writes a new draft, `_rename-output.R` moves the one it supersedes into `drafts/`, and
+  it never overwrites an archived file. The citation styles, the Lua filter and the title partial
+  are in `preregistration/layout/`, as the poster's build files are in `poster/layout/`, and
+  `mindmap/source files/` is now `mindmap/source/`.
+- Checks: the Check workflow runs `check_reported_numbers.R` and
+  `theory/check_manuscript_claims.R` with their packages restored from
+  `preregistration/renv.lock`, lintr 3.4.0, the link and citation-key checks in `tools/`, a
+  `CITATION.cff` schema check and the count-script scenarios on Python 3.8 and 3.13.
+  `count_script/tests/check_expected.py` compares the scenarios' outcomes with the reports
+  recorded in `tests/expected/`.
+- Guard: `tools/guard.py` refuses a change to a frozen file (`tools/frozen.txt`) and the
+  addition of a confidential or oversized one (`tools/confidential.txt`), in a pre-commit hook
+  enabled with `git config core.hooksPath .githooks` and in the Guard workflow on every pushed
+  commit.
+- Render workflow: R 4.6.1 and Quarto 1.10.19 are pinned, the render is offered as a download,
+  and it is committed only when the run is started with "commit" ticked.
+- Citation: `CITATION.cff` gives the repository's citation, and a pushed tag starting `v` or
+  `stage` publishes a GitHub release for Zenodo to archive under a DOI.
+- Poster: the two CRAN entries in `poster/data/references.bib` name the Comprehensive R Archive
+  Network (CRAN), so the README's generated reference list keeps the wording added on `main`.
 
 ### 17 October 2026 (later): licence, and the simulation, figure and theory code hardened
 

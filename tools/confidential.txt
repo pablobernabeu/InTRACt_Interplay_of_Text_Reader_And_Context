@@ -1,8 +1,8 @@
 # Material that must never enter this public repository. tools/guard.py refuses a
 # staged or pushed file whose path matches a pattern here. Patterns are fnmatch,
 # from the repository root, and * also matches across folders. The root .gitignore
-# keeps most of these out of `git add`; this list also stops a forced add, a copy
-# under another folder and a commit made by a tool that ignores .gitignore.
+# keeps most of these out of `git add`, and this list also stops a forced add, a
+# copy under another folder and a commit by a tool that ignores .gitignore.
 
 # The data controller's story-text delivery, its viewer and what the extraction
 # script writes from it (preregistration/story_texts/).

@@ -1,6 +1,6 @@
 # Renders the protocol (preregistration/preregistration.qmd) and its supplement
 # on GitHub's runner, as a check that both build from a clean checkout with the
-# pinned toolchain, and offers the PDFs and HTML files as a downloadable
+# pinned toolchain. The PDFs and HTML files are offered as a downloadable
 # artefact of the run.
 #
 # Runs only when started by hand (Actions > Render preregistration > Run
@@ -8,7 +8,7 @@
 # with the change that produces them, so by default this run commits nothing.
 # It used to commit on every push, which put a render made with this runner's
 # fonts and TeX over the draft checked locally. Tick "commit" to commit the
-# render: the new dated draft, the supplement, and the draft it supersedes,
+# render: the new dated draft, the supplement and the draft it supersedes,
 # which _rename-output.R moves into preregistration/drafts/. The guard runs on
 # the staged render before the commit is made.
 #
@@ -88,8 +88,9 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # The whole folder, so the drafts _rename-output.R moved into drafts/
-          # are recorded as moves; .gitignore keeps Quarto's intermediates out.
+          # The whole folder is staged, so the drafts that _rename-output.R
+          # moved into drafts/ are recorded as moves. .gitignore keeps Quarto's
+          # intermediates out.
           git add -A -- preregistration/
           if git diff --cached --quiet; then
             echo "No rendered changes to commit."

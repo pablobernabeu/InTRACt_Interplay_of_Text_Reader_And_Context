@@ -5,9 +5,10 @@
 
 The two test scripts describe what each count-script version does with each
 synthetic input but assert nothing, so a changed outcome would pass unnoticed. This
-runs them with the interpreter running this file, drops the timing fields (any key
-ending in " seconds"), and compares every scenario with expected/<script>.json,
-recorded on 18 October 2026 from both versions as supplied to the data controller.
+runs them with the interpreter running this file and drops the timing fields (any
+key ending in " seconds"). It then compares every scenario with
+expected/<script>.json, recorded on 18 October 2026 from both versions as supplied
+to the data controller.
 The scenarios that need the real sample are skipped, as with no arguments.
 
 Standard library only, Python 3.8 or later.

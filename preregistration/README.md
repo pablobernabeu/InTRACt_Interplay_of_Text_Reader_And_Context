@@ -104,6 +104,10 @@ Rscript check_reported_numbers.R
 Rscript theory/check_manuscript_claims.R
 ```
 
+The Check workflow (`../.github/workflows/check.yml`) runs both on every push and pull
+request, with the three packages they load restored from `renv.lock`, so a mismatch also
+fails the push's checks.
+
 `check_reported_numbers.R` compares `preregistration.qmd` with the title and abstract limits
 in `journal.json`, the 0.90 and 0.95 precision requirements, the ordinal refusal and
 projection, the Scopus counts, and the theory object's rigour score and its construct,
@@ -273,7 +277,10 @@ zero empty identifiers, the story title standing in for the identifier). Version
 refuses the first and fourth, and counts and reports the rest. It also reads some inputs differently. Among other changes, an empty
 `story_id` is no longer replaced by the story title, and tokens such as `None` and `NaN` are
 read as missing. On the sample, it reproduces every figure the earlier version reported,
-adding seventeen rows of its own. The test scenarios are in `count_script/tests/`.
+adding seventeen rows of its own. The test scenarios are in `count_script/tests/`, and the
+Check workflow compares their outcomes with the recorded ones on every push. Both versions
+and the instruction sheet are listed in `../tools/frozen.txt`, so a commit that changes one
+is refused.
 
 The instruction sheet was deliberately not reissued, to keep the change to the data controller as
 small as one file. Everything in it still holds of the new version: the command, the inputs it
