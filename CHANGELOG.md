@@ -8,6 +8,19 @@ date and rationale.
 
 ## [Unreleased]
 
+### 19 October 2026: the classic stories' authorship
+
+No reported number changes. The data controller has answered question (j): the classic stories
+were created with the same generative model as the other stories and translated in the same way.
+
+- Table 2 and the C4 paragraph of the protocol, and Supplementary Section S7, record that the
+  answer rules out C4's condition, so C4 will not be run. The generated-or-classic indicator
+  stays a covariate.
+- Materials describes the classics as a fixed set the same model wrote from public-domain tales.
+  The rationale for the registered surprisal comparison of classic and generated texts, in
+  Sensitivity analyses and Supplementary Section S3, now rests on the classics echoing the tales'
+  wording, which the surprisal model's training corpus may contain. The analysis is unchanged.
+
 ### 18 October 2026 (evening, later): English story texts published
 
 No reported number changes. The rights holders, Ferrero International and Gameloft, agreed to

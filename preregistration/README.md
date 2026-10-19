@@ -361,8 +361,8 @@ and kept, because they may be what the app served.
 
 The delivery of 1 October 2026 holds 40,559 texts, all in US English. 40,500 are generated:
 every combination of 10 heroes, 10 worlds, 5 themes, 3 plot types and 9 sidekicks, each in a
-young, a mid and an old version. The other 59 are public-domain classics, mostly in a young and
-an old version. The script lists 16 of the texts as unusual.
+young, a mid and an old version. The other 59 are classics written by the same generative model
+from public-domain tales, mostly in a young and an old version. The script lists 16 of the texts as unusual.
 
 Before writing, the publishing script confirms that rewriting the extraction's table row by row
 reproduces it byte for byte, so each language's table holds its rows exactly as extracted. The
