@@ -22,8 +22,9 @@ has not been published. The protocol
 tests six confirmatory hypotheses in Bayesian crossed-effects models over hundreds to
 thousands of distinct texts and adjudicates between rival developmental accounts with two-sided
 tests that no laboratory sample has been large enough to decide. Every decision about what is
-tested, on which sample and with which model is registered as a function of provider-computed
-counts, an audit of the frozen extract, the prior-derivation output and the data controller's written answers. The few
+tested, on which sample and with which model is registered in this protocol. Each rests on
+provider-computed counts, the features' computational validation, an audit of the frozen
+extract, the prior-derivation output or the data controller's written answers. The few
 decisions that depend on a fitted quantity are stated in advance as conditional rules. The question
 matters beyond one platform: children's reading is migrating to systems that record it, and
 this protocol is a worked answer to whether such records can support inference.
@@ -52,10 +53,16 @@ submission has held a session-level record from this platform.
 the John Fell Fund, University of Oxford [grant reference], neither of which has a role in the
 design, analysis, interpretation or decision to publish. Ferrero International develops the
 *Applaydu* app with the data controller, a relationship the protocol's competing-interests
-statement declares. [Confirm that the facilities and personnel are in place and that the study
-can commence immediately on acceptance in principle.] The data controller has agreed to build the
-session-level export on its own release cycle and hold it under the sequestration arrangement
-described below, so analysis can begin as soon as in-principle acceptance is confirmed.
+statement declares. Every feature is validated computationally, so the study needs no annotator
+or native speaker in any language. Each validation check compares the pipeline's output with public gold
+annotation, with gold built by translating public stories one sentence at a time, or with the
+English source of each served text. Feature computation after acceptance runs on the University
+of Oxford's Advanced Research Computing service, and a registered budget guard keeps it within
+400 L40S GPU-hours [confirm that the allocation is in place]. [Confirm that the facilities and
+personnel are in place and that the study can commence immediately on acceptance in principle.]
+The data controller has agreed to build the session-level export on its own release cycle and
+hold it under the sequestration arrangement described below, so analysis can begin as soon as
+in-principle acceptance is confirmed.
 
 **No prior access to the data.** This is a secondary Registered Report, and no pre-registered
 analysis has been conducted. The session-level extract has never been in our possession: the
@@ -77,10 +84,12 @@ only quantities from this platform any author has seen are the summaries describ
 the data controller prepared, which relate no predictor to any outcome, and which enter no
 decision registered in this protocol.
 
-**Timeline.** [Anticipated timeline; the protocol proposes: feature extraction and its
-validation from the day in-principle acceptance is confirmed, on the story texts already
-received; data transfer within four weeks of in-principle acceptance; the audit of the frozen
-extract and the outcome-blind dimension reduction within three months of transfer; the
+**Timeline.** [Anticipated timeline; the protocol proposes: feature computation and its
+computational validation on the story texts, starting on the day in-principle acceptance is
+confirmed and taking about one week, or up to two if the GPU queue is congested
+<!-- PENDING: P80 -->; the outcome-blind dimension reduction on the whole catalogue before
+linkage; data transfer within four weeks of
+in-principle acceptance; the audit of the frozen extract within three months of transfer; the
 confirmatory and sensitivity models within a further four months; and the Stage 2 manuscript
 within twelve months of in-principle acceptance.]
 
@@ -89,7 +98,8 @@ study materials, computer code and laboratory log for all published results. All
 is version-controlled at
 <https://github.com/pablobernabeu/InTRACt_Interplay_of_Text_Reader_And_Context>, public from
 submission, including the theory object, the design specifications, the precision analysis,
-both versions of the count script and the frozen rules for deriving the priors. The English story
+the feature-validation benchmarks with the error model's calibration constants, both versions
+of the count script and the frozen rules for deriving the priors. The English story
 texts are public there too, under CC BY-NC 4.0 with the agreement of their rights holders,
 Ferrero International and Gameloft, and the texts in the other languages will be added as they
 are delivered. One restriction applies

@@ -3,7 +3,7 @@
 #
 # tf_diagram() fixes the content: which constructs exist, which paths connect
 # them and what each path claims. Its default layout, though, labels every one
-# of the eighteen paths with a word and lets graphviz place them freely, which
+# of its paths with a word and lets graphviz place them freely, which
 # a reader meets as a tangle. This script therefore restyles the emitted DOT
 # without touching its content: the words on the edges become signs on the
 # lines, moderation becomes a dashed line, and the constructs are grouped
@@ -46,7 +46,8 @@ groups <- list(
   reader  = c("c_accumulated_reading", "c_decoding_automaticity",
               "c_verbal_working_memory", "c_inferential_resource"),
   session = "c_spoken_rendition",
-  text    = c("c_text_provenance", "c_lexical_accessibility",
+  text    = c("c_text_provenance", "c_translation", "c_translation_quality",
+              "c_story_content", "c_layout", "c_lexical_accessibility",
               "c_structural_integration_load", "c_referential_continuity"),
   reading = c("c_processing_effort", "c_experienced_difficulty", "c_situation_model")
 )
@@ -97,13 +98,14 @@ edge_lines <- paste(sprintf('  "%s" -> "%s" %s', edges$from, edges$to,
 styled <- paste0(
 'digraph nomological_net {
   graph [rankdir=TB, bgcolor="white", fontname="Helvetica", fontsize=12,
-         pad="0.25", nodesep="0.4", ranksep="0.7", splines=true, newrank=true]
+         pad="0.25", nodesep="0.25", ranksep="0.7", splines=true, newrank=true]
   node [fontname="Helvetica", fontsize=12, shape=box, style="rounded,filled",
         color="#33567A", fillcolor="#F2F6F9", fontcolor="#12283A", penwidth=1.1,
         margin="0.18,0.11"]
   edge [arrowsize=0.75]
 ', paste(vapply(names(groups), cluster, character(1)), collapse = "\n"), '
   { rank=same; "c_accumulated_reading"; "c_verbal_working_memory"; "c_inferential_resource" }
+  { rank=same; "c_story_content"; "c_translation"; "c_layout" }
   { rank=same; "c_lexical_accessibility"; "c_structural_integration_load"; "c_referential_continuity"; "c_spoken_rendition" }
   { rank=same; "c_experienced_difficulty"; "c_situation_model" }
   "c_experienced_difficulty" -> "c_situation_model" [style=invis]

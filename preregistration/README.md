@@ -147,9 +147,9 @@ confirmatory predictions, held as one machine-checkable file.
 | `diagram_theory.R` | Prints the class, names and structure of what `tf_diagram()` returns. No other script or document uses it. |
 | `make_nomological_net.R` | Emits the nomological net (Figure 2) from the theory object, restyles the layout without touching its content (a hard assertion compares the node and edge sets), and renders the SVG, PDF and PNG. The manuscript embeds the PDF. Before writing the figure, it stops if the smallest type would print below six point at the protocol's embedding width, and reports any colour below the contrast floors the other figures are held to. The layout comes from the viz.js engine bundled with DiagrammeR, so a system Graphviz can lay the `.gv` files out differently. |
 
-The object currently scores 90.7 out of 100 with no blocking failure (`tf_check.txt` always
+The object currently scores 91.9 out of 100 with no blocking failure (`tf_check.txt` always
 holds the current figure), and its causal graph is acyclic, which is what lets
-`tf_implications()` derive the thirty independence claims, three of which the fourth
+`tf_implications()` derive the sixty-one independence claims, three of which the fourth
 outcome-neutral quality check tests. `tf_check()` scores the object alone and never reads the
 manuscript. `check_reported_numbers.R` compares the score and the counts with the protocol,
 but nothing compares the wording of a prediction, so a change to a hypothesis's rule in the

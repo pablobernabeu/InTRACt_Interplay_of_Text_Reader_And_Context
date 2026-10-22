@@ -31,16 +31,16 @@ constructs:
     definition: "The ease with which the word forms a text contains can be identified and their meanings retrieved, considered as a property of the text rather than of any one reader."
     measurement:
       - "mean log corpus frequency of content words"
-      - "proportion of words below a low-frequency threshold"
+      - "share of content tokens below Zipf 4 (ten per million), with non-name tokens absent from the frequency list counted as rare"
       - "mean rated age of acquisition"
-      - "mean orthographic length in characters"
-      - "mean per-word surprisal under a language-specific neural language model, a word's surprisal being the sum of the surprisals of the subword tokens composing it"
+      - "mean orthographic length in letters per content word, counted by script"
+      - "mean boundary-corrected per-word surprisal under a language-specific neural language model, which sums a word's subword surprisals and charges the probability of the word ending where it does to that word"
       - "lexical density"
-      - "moving-average type-token ratio over a 50-token window, with the Measure of Textual Lexical Diversity reported beside it"
+      - "moving-average type-token ratio over a window of 50 content lemmas, with the Measure of Textual Lexical Diversity reported beside it"
       - "mean rated concreteness of content words"
     boundary_conditions:
-      - "narrative prose of roughly 200 to 400 words"
-      - "languages for which validated frequency or age-of-acquisition norms exist"
+      - "narrative prose of roughly 200 to 600 words"
+      - "languages whose frequency list passes the four registered list gates"
       - "written presentation on a touchscreen device"
 
   - id: c_structural_integration_load
@@ -51,10 +51,10 @@ constructs:
       - "clauses per sentence (embedding, indexing how many dependencies are open at once)"
       - "ratio of subordinate to main clauses (embedding)"
       - "mean sentence length in words (length, with which the other four covary)"
-      - "mean depth of noun-phrase modification (embedding)"
+      - "noun-phrase elaboration, the number of modifiers per common noun (each modifier a dependency the reader must attach to its noun)"
     boundary_conditions:
-      - "narrative prose of roughly 200 to 400 words"
-      - "languages with a validated dependency parser and reported attachment accuracy"
+      - "narrative prose of roughly 200 to 600 words"
+      - "languages whose component reaches the registered floor, a noise-only reliability of .50 within each cell of reading level and generation route, with parse error transported from gold-standard treebanks to the served texts"
       - "written presentation on a touchscreen device"
 
   - id: c_referential_continuity
@@ -63,11 +63,11 @@ constructs:
     measurement:
       - "mean semantic similarity between adjacent sentences from a multilingual sentence encoder"
       - "proportion of adjacent sentence pairs sharing a referring expression"
-      - "connectives per hundred words, by relation type"
+      - "causal and contrastive connectives per hundred words, counted in each translation against an inventory induced by a registered rule from the catalogue's alignment with its English source"
     boundary_conditions:
-      - "narrative prose of roughly 200 to 400 words"
+      - "narrative prose of roughly 200 to 600 words"
       - "languages covered by the multilingual sentence encoder used"
-      - "texts long enough to contain at least five sentences"
+      - "texts whose English source contains at least five sentences"
 
   - id: c_decoding_automaticity
     label: "Automaticity of print-to-sound mapping in the reader"
@@ -145,7 +145,7 @@ constructs:
 
   - id: c_text_provenance
     label: "How a text came to have the properties it has"
-    definition: "The route by which a particular text was produced and served: whether it was machine-generated from the attributes a family chose or drawn from a fixed classic set, and which reading level the platform was targeting when it served it."
+    definition: "The route by which a particular text was produced and served: whether it was machine-generated from the attributes a family chose or drawn from a fixed classic set that the same model wrote from public-domain tales, and which reading level the platform was targeting when it served it."
     measurement:
       - "the customisation flag distinguishing generated from classic texts"
       - "the reading level recorded for the session"
@@ -154,6 +154,50 @@ constructs:
       - "applies only to texts served by this platform"
       - "the generating model, its version and its prompt are not disclosed"
       - "a text is fixed once produced and is not regenerated on rereading"
+
+  - id: c_translation
+    label: "Machine translation of the English source"
+    definition: "The step by which the provider's machine-translation system rendered a version in a language other than English from its English original, a rendering made once and stored for every later reader of that version."
+    measurement:
+      - "the reading language, which separates the English source from its 18 translations"
+      - "the English source of the same story version, available beside every translation"
+    boundary_conditions:
+      - "English is the source and has no translation step"
+      - "within one language, the step is constant across the texts a within-language slope compares only if a single version of the system translated them all, which is not known"
+
+  - id: c_translation_quality
+    label: "Fidelity and fluency of a rendered version"
+    definition: "How adequately a translated version conveys the meaning of its original and how idiomatically it reads in the target language. The property can differ between the renderings of one story and between the pages of one version."
+    measurement:
+      - "unmeasured, and approached through a reference-free quality estimate of each translated page against its English page, entered as the version's deviation from the mean of the same story's translations"
+      - "the cosine between each English page and its translation, entered beside the quality estimate as an adequacy covariate"
+    boundary_conditions:
+      - "defined for the 18 translations only, English being the untranslated reference"
+      - "the quality estimate partly measures the fluency of the target text, and so partly the lexical properties it is meant to adjust for"
+      - "no human judgement of any translation is available"
+      - "a disfluent rendering may also be parsed less accurately, so its bearing on measured grammatical load runs partly through measurement error"
+
+  - id: c_story_content
+    label: "Story content set at generation"
+    definition: "What a story is made of beyond the difficulty of its wording: how much of it is direct speech, how many of its words name characters and the emotional tone of its vocabulary, all fixed when the story is written."
+    measurement:
+      - "dialogue share, the proportion of words inside direct speech"
+      - "name-token share, as an empirical logit, from the frozen name inventory"
+      - "mean valence and mean arousal of content words"
+    boundary_conditions:
+      - "computed on the served text, with the English source supplying the value in a language whose served value fails its registered agreement check"
+      - "valence and arousal are predicted values that describe the text on an adult referent"
+      - "the names are invented or chosen through the story attributes, so their familiarity to the child is unknown"
+
+  - id: c_layout
+    label: "Division of a text into pages"
+    definition: "How the platform spreads a text across the screens a child turns, expressed as pages per hundred words."
+    measurement:
+      - "pages per hundred words of the delivered version, on a log scale"
+    boundary_conditions:
+      - "a session whose recorded page count differs from the delivered version's leaves tier 1"
+      - "timing is available for a whole text only, so the time a page turn takes cannot be separated from reading"
+      - "where page breaks follow sentence boundaries, the layout partly proxies sentence length"
 
   - id: c_situation_model
     label: "Quality of the mental model built from a text"
@@ -166,11 +210,12 @@ constructs:
 
 boundary_conditions:
   - "children aged 7 and older reading in a commercial storytelling app"
-  - "narrative texts of roughly 200 to 400 words, read on a touchscreen device"
+  - "narrative texts of roughly 200 to 600 words, read on a touchscreen device"
   - "reading is unsupervised, self-selected and outside any assessment context"
   - "timing is available for a whole text only, never per page"
   - "no measure of the individual child's reading skill, vocabulary or language background is available"
-  - "texts are generated from a fixed set of chosen attributes, or drawn from a fixed classic set"
+  - "texts are generated from a fixed set of chosen attributes, or drawn from a fixed classic set written by the same model"
+  - "every text in a language other than English is the provider's machine translation of an English source, made once and stored"
   - "narration, text choice and continued use of the app are all chosen by the family"
 
 propositions:
@@ -219,7 +264,7 @@ propositions:
     from: c_inferential_resource
     to: c_processing_effort
     relation: "moderates"
-    mechanism: "Moderates p3. Surface continuity saves the reader an inference, so it is worth most to a reader for whom that inference would have been effortful and worth least to one who would have drawn it readily in any case. The inference-saving route runs through all three devices. The rival account registered as alt_cue_utilisation derives the opposite sign for the connective anchors in particular, because a connective has to be reached and understood before it can save anything, and pred_h3_coherence_by_age is written to separate them."
+    mechanism: "Moderates p3. Surface continuity saves the reader an inference, so it is worth most to a reader for whom that inference would have been effortful and worth least to one who would have drawn it readily in any case. The inference-saving route runs through all three devices. The rival account registered as alt_cue_utilisation derives the opposite sign for the connective anchors in particular, because a connective has to be reached and understood before it can save anything, and pred_h3_coherence_by_age is written to separate them. That prediction's registered decomposition therefore enters a density of causal and contrastive connectives apart from a referential composite of similarity and overlap. The rival is tested on the connective term, where the two accounts predict opposite signs, and the referential term tests the inference-saving route on its own."
 
   - id: p8
     from: c_spoken_rendition
@@ -288,6 +333,99 @@ propositions:
     relation: "causes"
     mechanism: "A family sets the reading level to suit the child they have, so a more automatic decoder is served texts built for a higher level. This opens a path from the reader's own capacity to the properties of the text, which is why every text coefficient has to be read within reading level rather than across it."
 
+  - id: p19
+    from: c_translation
+    to: c_lexical_accessibility
+    relation: "causes"
+    mechanism: "The words of a translated text are those the translation system chose to render its English source. Machine translation tends to favour the frequent forms of the target language and to lose some of its source's lexical variety. A served translation therefore carries its source's lexical properties as the system re-expresses them."
+
+  - id: p20
+    from: c_translation
+    to: c_structural_integration_load
+    relation: "causes"
+    mechanism: "A translation re-expresses each source sentence in the grammar of the target language, whose word order, morphology and typical constructions set how far its dependencies reach and how deeply its clauses nest. A system that stays close to its source also carries part of the source's structure over."
+
+  - id: p21
+    from: c_translation
+    to: c_referential_continuity
+    relation: "causes"
+    mechanism: "A system that translates one sentence at a time can render the same referent differently from one sentence to the next, or leave implicit a connective its source stated. The links a translation states on its surface therefore need not be those of its source."
+
+  - id: p22
+    from: c_translation
+    to: c_translation_quality
+    relation: "causes"
+    mechanism: "Only a translated text has a translation quality. The same system renders some sentences more faithfully and fluently than others, so quality varies between the translations of one story and between the stories of one language."
+
+  - id: p23
+    from: c_translation_quality
+    to: c_processing_effort
+    relation: "decreases"
+    mechanism: "A sentence that renders its source poorly or reads unidiomatically is harder to understand, and readers spend longer on machine-translated sentences judged to be of low quality. A better translation therefore costs the reader less time per word."
+    functional_form: "monotonic"
+
+  - id: p24
+    from: c_translation_quality
+    to: c_lexical_accessibility
+    relation: "causes"
+    mechanism: "Disfluent wording makes a word less predictable from its context, which raises its surprisal. A faithful rendering, though, keeps more of its source's lexical variety, which a poorer one flattens towards the commonest forms. Translation quality therefore shifts the lexical properties of the served text in a direction that cannot be fixed in advance."
+
+  - id: p25
+    from: c_translation_quality
+    to: c_referential_continuity
+    relation: "increases"
+    mechanism: "A faithful translation keeps its source's chains of reference and the links it stated, whereas a poor one can break a chain or drop a stated link. Higher quality therefore preserves more of the source's surface continuity."
+    functional_form: "monotonic"
+
+  - id: p26
+    from: c_text_provenance
+    to: c_story_content
+    relation: "causes"
+    mechanism: "The attributes a family chooses, and the reading level the generator writes for, decide whom the story is about, how much of it is told through what its characters say and the emotional tone of its events."
+
+  - id: p27
+    from: c_story_content
+    to: c_processing_effort
+    relation: "causes"
+    mechanism: "Direct speech is read differently from narration, with more of the speaker's voice simulated in silent reading. Names are new words to the reader and become familiar as they recur, and emotionally charged words are recognised at different speeds. Each of these sets part of the time a text costs, and their joint sign is not fixed in advance."
+
+  - id: p28
+    from: c_story_content
+    to: c_lexical_accessibility
+    relation: "causes"
+    mechanism: "Dialogue is written in the vocabulary of speech, whose words are shorter and commoner than those of narration, so the wording of a story told largely through what its characters say is more accessible."
+
+  - id: p29
+    from: c_story_content
+    to: c_structural_integration_load
+    relation: "causes"
+    mechanism: "Direct speech comes in short turns, so a story told largely through dialogue has shorter and less embedded sentences than one told through narration."
+
+  - id: p30
+    from: c_story_content
+    to: c_referential_continuity
+    relation: "causes"
+    mechanism: "Each turn of dialogue changes the speaker and often the topic, and the speakers refer to each other by pronoun, so a story told largely through dialogue repeats fewer nouns across adjacent sentences."
+
+  - id: p31
+    from: c_text_provenance
+    to: c_layout
+    relation: "causes"
+    mechanism: "The platform lays a text out in pages when it serves it, and a layout designed for a lower reading level can put fewer words on each page."
+
+  - id: p32
+    from: c_structural_integration_load
+    to: c_layout
+    relation: "causes"
+    mechanism: "Where page breaks fall at sentence boundaries, how many words fit on a page depends on how long the sentences are, so the number of pages per word partly follows sentence length. The layout is therefore a descendant of grammatical load, which is why it is adjusted for only in a sensitivity analysis."
+
+  - id: p33
+    from: c_layout
+    to: c_processing_effort
+    relation: "increases"
+    mechanism: "Turning a page takes time in which nothing is read, and each new page asks the reader to find their place again. A text spread over more pages per word therefore takes longer per word."
+    functional_form: "monotonic"
+
 predictions:
   - id: pred_h1_lexical
     derives_from: [p1]
@@ -323,7 +461,7 @@ predictions:
 
   - id: pred_h3_coherence_by_age
     derives_from: [p3, p7]
-    statement: "The interaction between referential continuity and the age band lies outside the region of practical equivalence of 0.05 standardised units, and it is positive: the facilitation surface continuity affords is smaller in magnitude among children in the older band. A negative interaction of the same size corroborates the registered cue-utilisation account instead, and a posterior lying inside the region weighs against both."
+    statement: "The interaction between referential continuity and the age band lies outside the region of practical equivalence of 0.05 standardised units, and it is positive: the facilitation surface continuity affords is smaller in magnitude among children in the older band. A negative interaction of the same size corroborates the registered cue-utilisation account instead, and a posterior lying inside the region weighs against both. The component's posterior is the verdict. The registered decomposition only attributes it, adjudicating between the two accounts on its connective term, where they predict opposite signs. A negative connective term supports cue utilisation only if the referential term is not also negative and non-negligible, and a connective term inside the region, the expected outcome, leaves the adjudication not addressed."
     type: "interval"
     risk_score: 0.85
     severity: 0.75
@@ -516,3 +654,12 @@ provenance:
   - step: "6"
     action: "tf_add_assumption"
     detail: "Recorded six core auxiliary assumptions, five of which correspond to questions put to the data controller on 7 August 2026 and are resolved in the manuscript's data-provenance table."
+  - step: "7"
+    action: "tf_add_construct"
+    detail: "Added four constructs. The first is the step by which every non-English text was machine-translated from its English source, as the data controller confirmed in October 2026. The others are the quality of each translation, story content set at generation and the division of a text into pages."
+  - step: "8"
+    action: "tf_add_proposition"
+    detail: "Linked the four new constructs to text provenance, the three text constructs, processing effort and one another in fifteen causal propositions, so that the adjustment set follows from the graph by the disjunctive-cause criterion. Story content and translation quality are common causes of the text constructs and of effort, and the layout is a descendant of grammatical load, which is why it enters only a sensitivity analysis."
+  - step: "9"
+    action: "tf_amend"
+    detail: "Widened the scope to texts of 200 to 600 words, so that it covers the longer versions served at the oldest reading level. Brought the measures into line with the feature specification. Surprisal is boundary-corrected, diversity is taken over content lemmas, noun-phrase elaboration replaces modification depth, connectives are counted against induced inventories and the five-sentence floor is counted on the English source. Replaced the attachment-accuracy condition with the registered reliability floor, and recorded in p7 and pred_h3_coherence_by_age the decomposition that attributes the Hypothesis 3 verdict."

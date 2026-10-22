@@ -17,7 +17,7 @@ $maturity
 [1] "developing"
 
 $aggregate_score
-[1] 90.7
+[1] 91.9
 
 $gate
 [1] "pass"
@@ -94,7 +94,7 @@ $items[[4]]$status
 [1] "pass"
 
 $items[[4]]$score
-[1] 0.667
+[1] 0.818
 
 $items[[4]]$weight
 [1] 0.08
@@ -282,73 +282,127 @@ $items[[12]]$citation
 10    pred_no_spurious_structure interval        0.7               0.7
 
 == Construct redundancy screen ==
-                               a                             b similarity flag
-1        c_lexical_accessibility c_structural_integration_load      0.167   ok
-2        c_lexical_accessibility       c_decoding_automaticity      0.143   ok
-3        c_lexical_accessibility      c_referential_continuity      0.114   ok
-4        c_decoding_automaticity           c_processing_effort      0.100   ok
-5         c_inferential_resource             c_situation_model      0.100   ok
-6        c_verbal_working_memory        c_inferential_resource      0.100   ok
-7          c_accumulated_reading           c_processing_effort      0.097   ok
-8        c_lexical_accessibility           c_processing_effort      0.094   ok
-9       c_referential_continuity       c_decoding_automaticity      0.088   ok
-10      c_referential_continuity           c_processing_effort      0.081   ok
-11 c_structural_integration_load      c_referential_continuity      0.081   ok
-12            c_spoken_rendition             c_situation_model      0.071   ok
-13       c_lexical_accessibility             c_situation_model      0.069   ok
-14      c_experienced_difficulty             c_situation_model      0.067   ok
-15           c_processing_effort             c_situation_model      0.067   ok
-16            c_spoken_rendition         c_accumulated_reading      0.067   ok
-17 c_structural_integration_load             c_situation_model      0.067   ok
-18 c_structural_integration_load       c_verbal_working_memory      0.067   ok
-19       c_lexical_accessibility            c_spoken_rendition      0.065   ok
-20         c_accumulated_reading      c_experienced_difficulty      0.063   ok
-21       c_decoding_automaticity        c_inferential_resource      0.063   ok
-22            c_spoken_rendition      c_experienced_difficulty      0.063   ok
-23            c_spoken_rendition           c_processing_effort      0.063   ok
-24      c_referential_continuity             c_situation_model      0.059   ok
-25 c_structural_integration_load           c_processing_effort      0.059   ok
-26        c_inferential_resource      c_experienced_difficulty      0.057   ok
-27            c_spoken_rendition             c_text_provenance      0.057   ok
-28       c_lexical_accessibility             c_text_provenance      0.056   ok
-29      c_referential_continuity         c_accumulated_reading      0.056   ok
-30 c_structural_integration_load             c_text_provenance      0.054   ok
-31      c_referential_continuity        c_inferential_resource      0.051   ok
-32      c_referential_continuity             c_text_provenance      0.049   ok
-33       c_decoding_automaticity             c_situation_model      0.036   ok
-34       c_decoding_automaticity       c_verbal_working_memory      0.036   ok
-35         c_accumulated_reading             c_situation_model      0.034   ok
-36       c_decoding_automaticity            c_spoken_rendition      0.033   ok
-37       c_lexical_accessibility         c_accumulated_reading      0.031   ok
-38 c_structural_integration_load       c_decoding_automaticity      0.031   ok
-39 c_structural_integration_load         c_accumulated_reading      0.030   ok
-40 c_structural_integration_load            c_spoken_rendition      0.030   ok
-41       c_decoding_automaticity             c_text_provenance      0.029   ok
-42       c_lexical_accessibility      c_experienced_difficulty      0.029   ok
-43       c_lexical_accessibility        c_inferential_resource      0.029   ok
-44           c_processing_effort      c_experienced_difficulty      0.029   ok
-45 c_structural_integration_load      c_experienced_difficulty      0.029   ok
-46             c_text_provenance             c_situation_model      0.029   ok
-47         c_accumulated_reading             c_text_provenance      0.028   ok
-48        c_inferential_resource           c_processing_effort      0.028   ok
-49 c_structural_integration_load        c_inferential_resource      0.028   ok
-50      c_referential_continuity            c_spoken_rendition      0.027   ok
-51      c_experienced_difficulty             c_text_provenance      0.026   ok
-52           c_processing_effort             c_text_provenance      0.026   ok
-53      c_referential_continuity      c_experienced_difficulty      0.026   ok
-54       c_decoding_automaticity         c_accumulated_reading      0.000   ok
-55       c_decoding_automaticity      c_experienced_difficulty      0.000   ok
-56        c_inferential_resource         c_accumulated_reading      0.000   ok
-57        c_inferential_resource            c_spoken_rendition      0.000   ok
-58        c_inferential_resource             c_text_provenance      0.000   ok
-59       c_lexical_accessibility       c_verbal_working_memory      0.000   ok
-60      c_referential_continuity       c_verbal_working_memory      0.000   ok
-61       c_verbal_working_memory         c_accumulated_reading      0.000   ok
-62       c_verbal_working_memory      c_experienced_difficulty      0.000   ok
-63       c_verbal_working_memory           c_processing_effort      0.000   ok
-64       c_verbal_working_memory             c_situation_model      0.000   ok
-65       c_verbal_working_memory            c_spoken_rendition      0.000   ok
-66       c_verbal_working_memory             c_text_provenance      0.000   ok
+                                a                             b similarity flag
+1         c_lexical_accessibility c_structural_integration_load      0.167   ok
+2         c_lexical_accessibility       c_decoding_automaticity      0.143   ok
+3           c_accumulated_reading                      c_layout      0.120   ok
+4         c_lexical_accessibility      c_referential_continuity      0.114   ok
+5        c_experienced_difficulty                      c_layout      0.111   ok
+6         c_decoding_automaticity           c_processing_effort      0.100   ok
+7          c_inferential_resource             c_situation_model      0.100   ok
+8         c_verbal_working_memory        c_inferential_resource      0.100   ok
+9           c_accumulated_reading           c_processing_effort      0.097   ok
+10        c_decoding_automaticity                 c_translation      0.094   ok
+11        c_lexical_accessibility           c_processing_effort      0.094   ok
+12        c_lexical_accessibility         c_translation_quality      0.091   ok
+13        c_lexical_accessibility                 c_translation      0.088   ok
+14       c_referential_continuity       c_decoding_automaticity      0.088   ok
+15                       c_layout             c_situation_model      0.083   ok
+16                  c_translation         c_translation_quality      0.083   ok
+17       c_referential_continuity           c_processing_effort      0.081   ok
+18  c_structural_integration_load      c_referential_continuity      0.081   ok
+19             c_spoken_rendition                      c_layout      0.077   ok
+20            c_processing_effort                      c_layout      0.071   ok
+21             c_spoken_rendition             c_situation_model      0.071   ok
+22        c_lexical_accessibility             c_situation_model      0.069   ok
+23          c_translation_quality                      c_layout      0.069   ok
+24       c_experienced_difficulty             c_situation_model      0.067   ok
+25            c_processing_effort             c_situation_model      0.067   ok
+26             c_spoken_rendition         c_accumulated_reading      0.067   ok
+27  c_structural_integration_load             c_situation_model      0.067   ok
+28  c_structural_integration_load       c_verbal_working_memory      0.067   ok
+29        c_lexical_accessibility            c_spoken_rendition      0.065   ok
+30                c_story_content                      c_layout      0.065   ok
+31          c_accumulated_reading      c_experienced_difficulty      0.063   ok
+32        c_decoding_automaticity        c_inferential_resource      0.063   ok
+33             c_spoken_rendition      c_experienced_difficulty      0.063   ok
+34             c_spoken_rendition           c_processing_effort      0.063   ok
+35       c_referential_continuity             c_situation_model      0.059   ok
+36  c_structural_integration_load           c_processing_effort      0.059   ok
+37         c_inferential_resource      c_experienced_difficulty      0.057   ok
+38  c_structural_integration_load         c_translation_quality      0.057   ok
+39         c_inferential_resource         c_translation_quality      0.056   ok
+40       c_referential_continuity         c_accumulated_reading      0.056   ok
+41       c_experienced_difficulty               c_story_content      0.054   ok
+42              c_text_provenance                      c_layout      0.054   ok
+43          c_translation_quality               c_story_content      0.053   ok
+44       c_referential_continuity        c_inferential_resource      0.051   ok
+45       c_referential_continuity         c_translation_quality      0.051   ok
+46       c_referential_continuity                 c_translation      0.050   ok
+47             c_spoken_rendition             c_text_provenance      0.049   ok
+48        c_lexical_accessibility             c_text_provenance      0.048   ok
+49  c_structural_integration_load             c_text_provenance      0.047   ok
+50              c_text_provenance                 c_translation      0.044   ok
+51       c_referential_continuity             c_text_provenance      0.043   ok
+52              c_text_provenance               c_story_content      0.043   ok
+53        c_decoding_automaticity             c_situation_model      0.036   ok
+54        c_decoding_automaticity       c_verbal_working_memory      0.036   ok
+55        c_lexical_accessibility                      c_layout      0.036   ok
+56          c_accumulated_reading             c_situation_model      0.034   ok
+57  c_structural_integration_load                      c_layout      0.034   ok
+58        c_decoding_automaticity            c_spoken_rendition      0.033   ok
+59         c_inferential_resource                      c_layout      0.033   ok
+60        c_lexical_accessibility         c_accumulated_reading      0.031   ok
+61  c_structural_integration_load       c_decoding_automaticity      0.031   ok
+62          c_translation_quality             c_situation_model      0.031   ok
+63       c_referential_continuity                      c_layout      0.030   ok
+64  c_structural_integration_load         c_accumulated_reading      0.030   ok
+65  c_structural_integration_load            c_spoken_rendition      0.030   ok
+66                  c_translation             c_situation_model      0.030   ok
+67        c_decoding_automaticity               c_story_content      0.029   ok
+68        c_lexical_accessibility      c_experienced_difficulty      0.029   ok
+69        c_lexical_accessibility        c_inferential_resource      0.029   ok
+70            c_processing_effort      c_experienced_difficulty      0.029   ok
+71             c_spoken_rendition         c_translation_quality      0.029   ok
+72                c_story_content             c_situation_model      0.029   ok
+73  c_structural_integration_load      c_experienced_difficulty      0.029   ok
+74          c_accumulated_reading               c_story_content      0.028   ok
+75       c_experienced_difficulty         c_translation_quality      0.028   ok
+76         c_inferential_resource           c_processing_effort      0.028   ok
+77  c_structural_integration_load        c_inferential_resource      0.028   ok
+78            c_processing_effort                 c_translation      0.027   ok
+79       c_referential_continuity            c_spoken_rendition      0.027   ok
+80  c_structural_integration_load                 c_translation      0.027   ok
+81         c_inferential_resource               c_story_content      0.026   ok
+82         c_inferential_resource                 c_translation      0.026   ok
+83       c_referential_continuity      c_experienced_difficulty      0.026   ok
+84  c_structural_integration_load               c_story_content      0.026   ok
+85              c_text_provenance             c_situation_model      0.025   ok
+86                  c_translation               c_story_content      0.025   ok
+87          c_accumulated_reading             c_text_provenance      0.024   ok
+88        c_decoding_automaticity             c_text_provenance      0.024   ok
+89       c_experienced_difficulty             c_text_provenance      0.023   ok
+90            c_processing_effort             c_text_provenance      0.023   ok
+91          c_accumulated_reading                 c_translation      0.000   ok
+92          c_accumulated_reading         c_translation_quality      0.000   ok
+93        c_decoding_automaticity         c_accumulated_reading      0.000   ok
+94        c_decoding_automaticity      c_experienced_difficulty      0.000   ok
+95        c_decoding_automaticity                      c_layout      0.000   ok
+96        c_decoding_automaticity         c_translation_quality      0.000   ok
+97       c_experienced_difficulty                 c_translation      0.000   ok
+98         c_inferential_resource         c_accumulated_reading      0.000   ok
+99         c_inferential_resource            c_spoken_rendition      0.000   ok
+100        c_inferential_resource             c_text_provenance      0.000   ok
+101       c_lexical_accessibility               c_story_content      0.000   ok
+102       c_lexical_accessibility       c_verbal_working_memory      0.000   ok
+103           c_processing_effort               c_story_content      0.000   ok
+104           c_processing_effort         c_translation_quality      0.000   ok
+105      c_referential_continuity               c_story_content      0.000   ok
+106      c_referential_continuity       c_verbal_working_memory      0.000   ok
+107            c_spoken_rendition               c_story_content      0.000   ok
+108            c_spoken_rendition                 c_translation      0.000   ok
+109             c_text_provenance         c_translation_quality      0.000   ok
+110                 c_translation                      c_layout      0.000   ok
+111       c_verbal_working_memory         c_accumulated_reading      0.000   ok
+112       c_verbal_working_memory      c_experienced_difficulty      0.000   ok
+113       c_verbal_working_memory                      c_layout      0.000   ok
+114       c_verbal_working_memory           c_processing_effort      0.000   ok
+115       c_verbal_working_memory             c_situation_model      0.000   ok
+116       c_verbal_working_memory            c_spoken_rendition      0.000   ok
+117       c_verbal_working_memory               c_story_content      0.000   ok
+118       c_verbal_working_memory             c_text_provenance      0.000   ok
+119       c_verbal_working_memory                 c_translation      0.000   ok
+120       c_verbal_working_memory         c_translation_quality      0.000   ok
 
 == Testable implications of the causal graph ==
 $theory_id
@@ -386,11 +440,23 @@ $constructs[[9]]
 [1] "c_text_provenance"
 
 $constructs[[10]]
+[1] "c_translation"
+
+$constructs[[11]]
+[1] "c_translation_quality"
+
+$constructs[[12]]
+[1] "c_story_content"
+
+$constructs[[13]]
+[1] "c_layout"
+
+$constructs[[14]]
 [1] "c_situation_model"
 
 
 $n_edges
-[1] 15
+[1] 30
 
 $implications
 $implications[[1]]
@@ -404,9 +470,18 @@ $implications[[1]]$given
 $implications[[1]]$given[[1]]
 [1] "c_text_provenance"
 
+$implications[[1]]$given[[2]]
+[1] "c_translation"
+
+$implications[[1]]$given[[3]]
+[1] "c_translation_quality"
+
+$implications[[1]]$given[[4]]
+[1] "c_story_content"
+
 
 $implications[[1]]$statement
-[1] "c_lexical_accessibility _||_ c_structural_integration_load | c_text_provenance"
+[1] "c_lexical_accessibility _||_ c_structural_integration_load | c_text_provenance, c_translation, c_translation_quality, c_story_content"
 
 
 $implications[[2]]
@@ -420,9 +495,18 @@ $implications[[2]]$given
 $implications[[2]]$given[[1]]
 [1] "c_text_provenance"
 
+$implications[[2]]$given[[2]]
+[1] "c_translation"
+
+$implications[[2]]$given[[3]]
+[1] "c_translation_quality"
+
+$implications[[2]]$given[[4]]
+[1] "c_story_content"
+
 
 $implications[[2]]$statement
-[1] "c_lexical_accessibility _||_ c_referential_continuity | c_text_provenance"
+[1] "c_lexical_accessibility _||_ c_referential_continuity | c_text_provenance, c_translation, c_translation_quality, c_story_content"
 
 
 $implications[[3]]
@@ -439,9 +523,18 @@ $implications[[3]]$given[[1]]
 $implications[[3]]$given[[2]]
 [1] "c_text_provenance"
 
+$implications[[3]]$given[[3]]
+[1] "c_translation"
+
+$implications[[3]]$given[[4]]
+[1] "c_translation_quality"
+
+$implications[[3]]$given[[5]]
+[1] "c_story_content"
+
 
 $implications[[3]]$statement
-[1] "c_lexical_accessibility _||_ c_decoding_automaticity | c_accumulated_reading, c_text_provenance"
+[1] "c_lexical_accessibility _||_ c_decoding_automaticity | c_accumulated_reading, c_text_provenance, c_translation, c_translation_quality, c_story_content"
 
 
 $implications[[4]]
@@ -455,9 +548,18 @@ $implications[[4]]$given
 $implications[[4]]$given[[1]]
 [1] "c_text_provenance"
 
+$implications[[4]]$given[[2]]
+[1] "c_translation"
+
+$implications[[4]]$given[[3]]
+[1] "c_translation_quality"
+
+$implications[[4]]$given[[4]]
+[1] "c_story_content"
+
 
 $implications[[4]]$statement
-[1] "c_lexical_accessibility _||_ c_spoken_rendition | c_text_provenance"
+[1] "c_lexical_accessibility _||_ c_spoken_rendition | c_text_provenance, c_translation, c_translation_quality, c_story_content"
 
 
 $implications[[5]]
@@ -471,9 +573,18 @@ $implications[[5]]$given
 $implications[[5]]$given[[1]]
 [1] "c_text_provenance"
 
+$implications[[5]]$given[[2]]
+[1] "c_translation"
+
+$implications[[5]]$given[[3]]
+[1] "c_translation_quality"
+
+$implications[[5]]$given[[4]]
+[1] "c_story_content"
+
 
 $implications[[5]]$statement
-[1] "c_lexical_accessibility _||_ c_accumulated_reading | c_text_provenance"
+[1] "c_lexical_accessibility _||_ c_accumulated_reading | c_text_provenance, c_translation, c_translation_quality, c_story_content"
 
 
 $implications[[6]]
@@ -490,25 +601,46 @@ $implications[[6]]$given[[1]]
 $implications[[6]]$given[[2]]
 [1] "c_text_provenance"
 
+$implications[[6]]$given[[3]]
+[1] "c_translation"
+
+$implications[[6]]$given[[4]]
+[1] "c_translation_quality"
+
+$implications[[6]]$given[[5]]
+[1] "c_story_content"
+
 
 $implications[[6]]$statement
-[1] "c_lexical_accessibility _||_ c_experienced_difficulty | c_processing_effort, c_text_provenance"
+[1] "c_lexical_accessibility _||_ c_experienced_difficulty | c_processing_effort, c_text_provenance, c_translation, c_translation_quality, c_story_content"
 
 
 $implications[[7]]
 $implications[[7]]$a
-[1] "c_structural_integration_load"
+[1] "c_lexical_accessibility"
 
 $implications[[7]]$b
-[1] "c_referential_continuity"
+[1] "c_layout"
 
 $implications[[7]]$given
 $implications[[7]]$given[[1]]
+[1] "c_structural_integration_load"
+
+$implications[[7]]$given[[2]]
 [1] "c_text_provenance"
+
+$implications[[7]]$given[[3]]
+[1] "c_translation"
+
+$implications[[7]]$given[[4]]
+[1] "c_translation_quality"
+
+$implications[[7]]$given[[5]]
+[1] "c_story_content"
 
 
 $implications[[7]]$statement
-[1] "c_structural_integration_load _||_ c_referential_continuity | c_text_provenance"
+[1] "c_lexical_accessibility _||_ c_layout | c_structural_integration_load, c_text_provenance, c_translation, c_translation_quality, c_story_content"
 
 
 $implications[[8]]
@@ -516,18 +648,24 @@ $implications[[8]]$a
 [1] "c_structural_integration_load"
 
 $implications[[8]]$b
-[1] "c_decoding_automaticity"
+[1] "c_referential_continuity"
 
 $implications[[8]]$given
 $implications[[8]]$given[[1]]
-[1] "c_accumulated_reading"
+[1] "c_text_provenance"
 
 $implications[[8]]$given[[2]]
-[1] "c_text_provenance"
+[1] "c_translation"
+
+$implications[[8]]$given[[3]]
+[1] "c_translation_quality"
+
+$implications[[8]]$given[[4]]
+[1] "c_story_content"
 
 
 $implications[[8]]$statement
-[1] "c_structural_integration_load _||_ c_decoding_automaticity | c_accumulated_reading, c_text_provenance"
+[1] "c_structural_integration_load _||_ c_referential_continuity | c_text_provenance, c_translation, c_translation_quality, c_story_content"
 
 
 $implications[[9]]
@@ -535,15 +673,24 @@ $implications[[9]]$a
 [1] "c_structural_integration_load"
 
 $implications[[9]]$b
-[1] "c_spoken_rendition"
+[1] "c_decoding_automaticity"
 
 $implications[[9]]$given
 $implications[[9]]$given[[1]]
+[1] "c_accumulated_reading"
+
+$implications[[9]]$given[[2]]
 [1] "c_text_provenance"
+
+$implications[[9]]$given[[3]]
+[1] "c_translation"
+
+$implications[[9]]$given[[4]]
+[1] "c_story_content"
 
 
 $implications[[9]]$statement
-[1] "c_structural_integration_load _||_ c_spoken_rendition | c_text_provenance"
+[1] "c_structural_integration_load _||_ c_decoding_automaticity | c_accumulated_reading, c_text_provenance, c_translation, c_story_content"
 
 
 $implications[[10]]
@@ -551,15 +698,21 @@ $implications[[10]]$a
 [1] "c_structural_integration_load"
 
 $implications[[10]]$b
-[1] "c_accumulated_reading"
+[1] "c_spoken_rendition"
 
 $implications[[10]]$given
 $implications[[10]]$given[[1]]
 [1] "c_text_provenance"
 
+$implications[[10]]$given[[2]]
+[1] "c_translation"
+
+$implications[[10]]$given[[3]]
+[1] "c_story_content"
+
 
 $implications[[10]]$statement
-[1] "c_structural_integration_load _||_ c_accumulated_reading | c_text_provenance"
+[1] "c_structural_integration_load _||_ c_spoken_rendition | c_text_provenance, c_translation, c_story_content"
 
 
 $implications[[11]]
@@ -567,53 +720,68 @@ $implications[[11]]$a
 [1] "c_structural_integration_load"
 
 $implications[[11]]$b
-[1] "c_experienced_difficulty"
+[1] "c_accumulated_reading"
 
 $implications[[11]]$given
 $implications[[11]]$given[[1]]
-[1] "c_processing_effort"
+[1] "c_text_provenance"
 
 $implications[[11]]$given[[2]]
-[1] "c_text_provenance"
+[1] "c_translation"
+
+$implications[[11]]$given[[3]]
+[1] "c_story_content"
 
 
 $implications[[11]]$statement
-[1] "c_structural_integration_load _||_ c_experienced_difficulty | c_processing_effort, c_text_provenance"
+[1] "c_structural_integration_load _||_ c_accumulated_reading | c_text_provenance, c_translation, c_story_content"
 
 
 $implications[[12]]
 $implications[[12]]$a
-[1] "c_referential_continuity"
+[1] "c_structural_integration_load"
 
 $implications[[12]]$b
-[1] "c_decoding_automaticity"
+[1] "c_experienced_difficulty"
 
 $implications[[12]]$given
 $implications[[12]]$given[[1]]
-[1] "c_accumulated_reading"
+[1] "c_processing_effort"
 
 $implications[[12]]$given[[2]]
 [1] "c_text_provenance"
 
+$implications[[12]]$given[[3]]
+[1] "c_translation"
+
+$implications[[12]]$given[[4]]
+[1] "c_story_content"
+
 
 $implications[[12]]$statement
-[1] "c_referential_continuity _||_ c_decoding_automaticity | c_accumulated_reading, c_text_provenance"
+[1] "c_structural_integration_load _||_ c_experienced_difficulty | c_processing_effort, c_text_provenance, c_translation, c_story_content"
 
 
 $implications[[13]]
 $implications[[13]]$a
-[1] "c_referential_continuity"
+[1] "c_structural_integration_load"
 
 $implications[[13]]$b
-[1] "c_spoken_rendition"
+[1] "c_translation_quality"
 
 $implications[[13]]$given
 $implications[[13]]$given[[1]]
 [1] "c_text_provenance"
 
+$implications[[13]]$given[[2]]
+[1] "c_translation"
+
+$implications[[13]]$given[[3]]
+[1] "c_story_content"
+
 
 $implications[[13]]$statement
-[1] "c_referential_continuity _||_ c_spoken_rendition | c_text_provenance"
+[1] "c_structural_integration_load _||_ c_translation_quality | c_text_provenance, c_translation, c_story_content"
 
 
 $implications[[14]]
@@ -621,15 +789,27 @@ $implications[[14]]$a
 [1] "c_referential_continuity"
 
 $implications[[14]]$b
-[1] "c_accumulated_reading"
+[1] "c_decoding_automaticity"
 
 $implications[[14]]$given
 $implications[[14]]$given[[1]]
+[1] "c_accumulated_reading"
+
+$implications[[14]]$given[[2]]
 [1] "c_text_provenance"
+
+$implications[[14]]$given[[3]]
+[1] "c_translation"
+
+$implications[[14]]$given[[4]]
+[1] "c_translation_quality"
+
+$implications[[14]]$given[[5]]
+[1] "c_story_content"
 
 
 $implications[[14]]$statement
-[1] "c_referential_continuity _||_ c_accumulated_reading | c_text_provenance"
+[1] "c_referential_continuity _||_ c_decoding_automaticity | c_accumulated_reading, c_text_provenance, c_translation, c_translation_quality, c_story_content"
 
 
 $implications[[15]]
@@ -637,217 +817,238 @@ $implications[[15]]$a
 [1] "c_referential_continuity"
 
 $implications[[15]]$b
-[1] "c_experienced_difficulty"
+[1] "c_spoken_rendition"
 
 $implications[[15]]$given
 $implications[[15]]$given[[1]]
-[1] "c_processing_effort"
+[1] "c_text_provenance"
 
 $implications[[15]]$given[[2]]
-[1] "c_text_provenance"
+[1] "c_translation"
+
+$implications[[15]]$given[[3]]
+[1] "c_translation_quality"
+
+$implications[[15]]$given[[4]]
+[1] "c_story_content"
 
 
 $implications[[15]]$statement
-[1] "c_referential_continuity _||_ c_experienced_difficulty | c_processing_effort, c_text_provenance"
+[1] "c_referential_continuity _||_ c_spoken_rendition | c_text_provenance, c_translation, c_translation_quality, c_story_content"
 
 
 $implications[[16]]
 $implications[[16]]$a
-[1] "c_decoding_automaticity"
+[1] "c_referential_continuity"
 
 $implications[[16]]$b
-[1] "c_spoken_rendition"
+[1] "c_accumulated_reading"
 
 $implications[[16]]$given
 $implications[[16]]$given[[1]]
-[1] "c_accumulated_reading"
+[1] "c_text_provenance"
+
+$implications[[16]]$given[[2]]
+[1] "c_translation"
+
+$implications[[16]]$given[[3]]
+[1] "c_translation_quality"
+
+$implications[[16]]$given[[4]]
+[1] "c_story_content"
 
 
 $implications[[16]]$statement
-[1] "c_decoding_automaticity _||_ c_spoken_rendition | c_accumulated_reading"
+[1] "c_referential_continuity _||_ c_accumulated_reading | c_text_provenance, c_translation, c_translation_quality, c_story_content"
 
 
 $implications[[17]]
 $implications[[17]]$a
-[1] "c_decoding_automaticity"
+[1] "c_referential_continuity"
 
 $implications[[17]]$b
 [1] "c_experienced_difficulty"
 
 $implications[[17]]$given
 $implications[[17]]$given[[1]]
-[1] "c_accumulated_reading"
+[1] "c_processing_effort"
 
 $implications[[17]]$given[[2]]
-[1] "c_processing_effort"
+[1] "c_text_provenance"
+
+$implications[[17]]$given[[3]]
+[1] "c_translation"
+
+$implications[[17]]$given[[4]]
+[1] "c_translation_quality"
+
+$implications[[17]]$given[[5]]
+[1] "c_story_content"
 
 
 $implications[[17]]$statement
-[1] "c_decoding_automaticity _||_ c_experienced_difficulty | c_accumulated_reading, c_processing_effort"
+[1] "c_referential_continuity _||_ c_experienced_difficulty | c_processing_effort, c_text_provenance, c_translation, c_translation_quality, c_story_content"
 
 
 $implications[[18]]
 $implications[[18]]$a
-[1] "c_spoken_rendition"
+[1] "c_referential_continuity"
 
 $implications[[18]]$b
-[1] "c_accumulated_reading"
+[1] "c_layout"
 
 $implications[[18]]$given
-list()
+$implications[[18]]$given[[1]]
+[1] "c_structural_integration_load"
+
+$implications[[18]]$given[[2]]
+[1] "c_text_provenance"
+
+$implications[[18]]$given[[3]]
+[1] "c_translation"
+
+$implications[[18]]$given[[4]]
+[1] "c_translation_quality"
+
+$implications[[18]]$given[[5]]
+[1] "c_story_content"
+
 
 $implications[[18]]$statement
-[1] "c_spoken_rendition _||_ c_accumulated_reading"
+[1] "c_referential_continuity _||_ c_layout | c_structural_integration_load, c_text_provenance, c_translation, c_translation_quality, c_story_content"
 
 
 $implications[[19]]
 $implications[[19]]$a
-[1] "c_spoken_rendition"
+[1] "c_decoding_automaticity"
 
 $implications[[19]]$b
-[1] "c_processing_effort"
+[1] "c_spoken_rendition"
 
 $implications[[19]]$given
 $implications[[19]]$given[[1]]
-[1] "c_lexical_accessibility"
-
-$implications[[19]]$given[[2]]
-[1] "c_structural_integration_load"
-
-$implications[[19]]$given[[3]]
-[1] "c_referential_continuity"
-
-$implications[[19]]$given[[4]]
-[1] "c_decoding_automaticity"
+[1] "c_accumulated_reading"
 
 
 $implications[[19]]$statement
-[1] "c_spoken_rendition _||_ c_processing_effort | c_lexical_accessibility, c_structural_integration_load, c_referential_continuity, c_decoding_automaticity"
+[1] "c_decoding_automaticity _||_ c_spoken_rendition | c_accumulated_reading"
 
 
 $implications[[20]]
 $implications[[20]]$a
-[1] "c_spoken_rendition"
+[1] "c_decoding_automaticity"
 
 $implications[[20]]$b
 [1] "c_experienced_difficulty"
 
 $implications[[20]]$given
 $implications[[20]]$given[[1]]
+[1] "c_accumulated_reading"
+
+$implications[[20]]$given[[2]]
 [1] "c_processing_effort"
 
 
 $implications[[20]]$statement
-[1] "c_spoken_rendition _||_ c_experienced_difficulty | c_processing_effort"
+[1] "c_decoding_automaticity _||_ c_experienced_difficulty | c_accumulated_reading, c_processing_effort"
 
 
 $implications[[21]]
 $implications[[21]]$a
-[1] "c_spoken_rendition"
+[1] "c_decoding_automaticity"
 
 $implications[[21]]$b
-[1] "c_text_provenance"
+[1] "c_translation"
 
 $implications[[21]]$given
 $implications[[21]]$given[[1]]
-[1] "c_decoding_automaticity"
+[1] "c_accumulated_reading"
 
 
 $implications[[21]]$statement
-[1] "c_spoken_rendition _||_ c_text_provenance | c_decoding_automaticity"
+[1] "c_decoding_automaticity _||_ c_translation | c_accumulated_reading"
 
 
 $implications[[22]]
 $implications[[22]]$a
-[1] "c_accumulated_reading"
+[1] "c_decoding_automaticity"
 
 $implications[[22]]$b
-[1] "c_processing_effort"
+[1] "c_translation_quality"
 
 $implications[[22]]$given
 $implications[[22]]$given[[1]]
-[1] "c_lexical_accessibility"
+[1] "c_accumulated_reading"
 
 $implications[[22]]$given[[2]]
-[1] "c_structural_integration_load"
-
-$implications[[22]]$given[[3]]
-[1] "c_referential_continuity"
-
-$implications[[22]]$given[[4]]
-[1] "c_decoding_automaticity"
+[1] "c_translation"
 
 
 $implications[[22]]$statement
-[1] "c_accumulated_reading _||_ c_processing_effort | c_lexical_accessibility, c_structural_integration_load, c_referential_continuity, c_decoding_automaticity"
+[1] "c_decoding_automaticity _||_ c_translation_quality | c_accumulated_reading, c_translation"
 
 
 $implications[[23]]
 $implications[[23]]$a
-[1] "c_accumulated_reading"
+[1] "c_decoding_automaticity"
 
 $implications[[23]]$b
-[1] "c_experienced_difficulty"
+[1] "c_story_content"
 
 $implications[[23]]$given
 $implications[[23]]$given[[1]]
-[1] "c_processing_effort"
+[1] "c_accumulated_reading"
+
+$implications[[23]]$given[[2]]
+[1] "c_text_provenance"
 
 
 $implications[[23]]$statement
-[1] "c_accumulated_reading _||_ c_experienced_difficulty | c_processing_effort"
+[1] "c_decoding_automaticity _||_ c_story_content | c_accumulated_reading, c_text_provenance"
 
 
 $implications[[24]]
 $implications[[24]]$a
-[1] "c_accumulated_reading"
+[1] "c_decoding_automaticity"
 
 $implications[[24]]$b
-[1] "c_text_provenance"
+[1] "c_layout"
 
 $implications[[24]]$given
 $implications[[24]]$given[[1]]
-[1] "c_decoding_automaticity"
+[1] "c_structural_integration_load"
+
+$implications[[24]]$given[[2]]
+[1] "c_accumulated_reading"
+
+$implications[[24]]$given[[3]]
+[1] "c_text_provenance"
 
 
 $implications[[24]]$statement
-[1] "c_accumulated_reading _||_ c_text_provenance | c_decoding_automaticity"
+[1] "c_decoding_automaticity _||_ c_layout | c_structural_integration_load, c_accumulated_reading, c_text_provenance"
 
 
 $implications[[25]]
 $implications[[25]]$a
-[1] "c_accumulated_reading"
-
-$implications[[25]]$b
-[1] "c_situation_model"
-
-$implications[[25]]$given
-$implications[[25]]$given[[1]]
-[1] "c_lexical_accessibility"
-
-$implications[[25]]$given[[2]]
-[1] "c_structural_integration_load"
-
-$implications[[25]]$given[[3]]
-[1] "c_referential_continuity"
-
-$implications[[25]]$given[[4]]
-[1] "c_decoding_automaticity"
-
-$implications[[25]]$given[[5]]
 [1] "c_spoken_rendition"
 
+$implications[[25]]$b
+[1] "c_accumulated_reading"
+
+$implications[[25]]$given
+list()
 
 $implications[[25]]$statement
-[1] "c_accumulated_reading _||_ c_situation_model | c_lexical_accessibility, c_structural_integration_load, c_referential_continuity, c_decoding_automaticity, c_spoken_rendition"
+[1] "c_spoken_rendition _||_ c_accumulated_reading"
 
 
 $implications[[26]]
 $implications[[26]]$a
-[1] "c_processing_effort"
+[1] "c_spoken_rendition"
 
 $implications[[26]]$b
-[1] "c_text_provenance"
+[1] "c_processing_effort"
 
 $implications[[26]]$given
 $implications[[26]]$given[[1]]
@@ -862,42 +1063,39 @@ $implications[[26]]$given[[3]]
 $implications[[26]]$given[[4]]
 [1] "c_decoding_automaticity"
 
+$implications[[26]]$given[[5]]
+[1] "c_translation_quality"
+
+$implications[[26]]$given[[6]]
+[1] "c_story_content"
+
+$implications[[26]]$given[[7]]
+[1] "c_layout"
+
 
 $implications[[26]]$statement
-[1] "c_processing_effort _||_ c_text_provenance | c_lexical_accessibility, c_structural_integration_load, c_referential_continuity, c_decoding_automaticity"
+[1] "c_spoken_rendition _||_ c_processing_effort | c_lexical_accessibility, c_structural_integration_load, c_referential_continuity, c_decoding_automaticity, c_translation_quality, c_story_content, c_layout"
 
 
 $implications[[27]]
 $implications[[27]]$a
-[1] "c_processing_effort"
+[1] "c_spoken_rendition"
 
 $implications[[27]]$b
-[1] "c_situation_model"
+[1] "c_experienced_difficulty"
 
 $implications[[27]]$given
 $implications[[27]]$given[[1]]
-[1] "c_lexical_accessibility"
-
-$implications[[27]]$given[[2]]
-[1] "c_structural_integration_load"
-
-$implications[[27]]$given[[3]]
-[1] "c_referential_continuity"
-
-$implications[[27]]$given[[4]]
-[1] "c_decoding_automaticity"
-
-$implications[[27]]$given[[5]]
-[1] "c_spoken_rendition"
+[1] "c_processing_effort"
 
 
 $implications[[27]]$statement
-[1] "c_processing_effort _||_ c_situation_model | c_lexical_accessibility, c_structural_integration_load, c_referential_continuity, c_decoding_automaticity, c_spoken_rendition"
+[1] "c_spoken_rendition _||_ c_experienced_difficulty | c_processing_effort"
 
 
 $implications[[28]]
 $implications[[28]]$a
-[1] "c_experienced_difficulty"
+[1] "c_spoken_rendition"
 
 $implications[[28]]$b
 [1] "c_text_provenance"
@@ -906,74 +1104,746 @@ $implications[[28]]$given
 $implications[[28]]$given[[1]]
 [1] "c_decoding_automaticity"
 
-$implications[[28]]$given[[2]]
-[1] "c_processing_effort"
-
 
 $implications[[28]]$statement
-[1] "c_experienced_difficulty _||_ c_text_provenance | c_decoding_automaticity, c_processing_effort"
+[1] "c_spoken_rendition _||_ c_text_provenance | c_decoding_automaticity"
 
 
 $implications[[29]]
 $implications[[29]]$a
-[1] "c_experienced_difficulty"
-
-$implications[[29]]$b
-[1] "c_situation_model"
-
-$implications[[29]]$given
-$implications[[29]]$given[[1]]
-[1] "c_lexical_accessibility"
-
-$implications[[29]]$given[[2]]
-[1] "c_structural_integration_load"
-
-$implications[[29]]$given[[3]]
-[1] "c_referential_continuity"
-
-$implications[[29]]$given[[4]]
-[1] "c_decoding_automaticity"
-
-$implications[[29]]$given[[5]]
 [1] "c_spoken_rendition"
 
-$implications[[29]]$given[[6]]
-[1] "c_processing_effort"
+$implications[[29]]$b
+[1] "c_translation"
 
+$implications[[29]]$given
+list()
 
 $implications[[29]]$statement
-[1] "c_experienced_difficulty _||_ c_situation_model | c_lexical_accessibility, c_structural_integration_load, c_referential_continuity, c_decoding_automaticity, c_spoken_rendition, c_processing_effort"
+[1] "c_spoken_rendition _||_ c_translation"
 
 
 $implications[[30]]
 $implications[[30]]$a
-[1] "c_text_provenance"
+[1] "c_spoken_rendition"
 
 $implications[[30]]$b
-[1] "c_situation_model"
+[1] "c_translation_quality"
 
 $implications[[30]]$given
 $implications[[30]]$given[[1]]
-[1] "c_lexical_accessibility"
-
-$implications[[30]]$given[[2]]
-[1] "c_structural_integration_load"
-
-$implications[[30]]$given[[3]]
-[1] "c_referential_continuity"
-
-$implications[[30]]$given[[4]]
-[1] "c_decoding_automaticity"
-
-$implications[[30]]$given[[5]]
-[1] "c_spoken_rendition"
+[1] "c_translation"
 
 
 $implications[[30]]$statement
+[1] "c_spoken_rendition _||_ c_translation_quality | c_translation"
+
+
+$implications[[31]]
+$implications[[31]]$a
+[1] "c_spoken_rendition"
+
+$implications[[31]]$b
+[1] "c_story_content"
+
+$implications[[31]]$given
+$implications[[31]]$given[[1]]
+[1] "c_text_provenance"
+
+
+$implications[[31]]$statement
+[1] "c_spoken_rendition _||_ c_story_content | c_text_provenance"
+
+
+$implications[[32]]
+$implications[[32]]$a
+[1] "c_spoken_rendition"
+
+$implications[[32]]$b
+[1] "c_layout"
+
+$implications[[32]]$given
+$implications[[32]]$given[[1]]
+[1] "c_structural_integration_load"
+
+$implications[[32]]$given[[2]]
+[1] "c_text_provenance"
+
+
+$implications[[32]]$statement
+[1] "c_spoken_rendition _||_ c_layout | c_structural_integration_load, c_text_provenance"
+
+
+$implications[[33]]
+$implications[[33]]$a
+[1] "c_accumulated_reading"
+
+$implications[[33]]$b
+[1] "c_processing_effort"
+
+$implications[[33]]$given
+$implications[[33]]$given[[1]]
+[1] "c_lexical_accessibility"
+
+$implications[[33]]$given[[2]]
+[1] "c_structural_integration_load"
+
+$implications[[33]]$given[[3]]
+[1] "c_referential_continuity"
+
+$implications[[33]]$given[[4]]
+[1] "c_decoding_automaticity"
+
+$implications[[33]]$given[[5]]
+[1] "c_translation_quality"
+
+$implications[[33]]$given[[6]]
+[1] "c_story_content"
+
+$implications[[33]]$given[[7]]
+[1] "c_layout"
+
+
+$implications[[33]]$statement
+[1] "c_accumulated_reading _||_ c_processing_effort | c_lexical_accessibility, c_structural_integration_load, c_referential_continuity, c_decoding_automaticity, c_translation_quality, c_story_content, c_layout"
+
+
+$implications[[34]]
+$implications[[34]]$a
+[1] "c_accumulated_reading"
+
+$implications[[34]]$b
+[1] "c_experienced_difficulty"
+
+$implications[[34]]$given
+$implications[[34]]$given[[1]]
+[1] "c_processing_effort"
+
+
+$implications[[34]]$statement
+[1] "c_accumulated_reading _||_ c_experienced_difficulty | c_processing_effort"
+
+
+$implications[[35]]
+$implications[[35]]$a
+[1] "c_accumulated_reading"
+
+$implications[[35]]$b
+[1] "c_text_provenance"
+
+$implications[[35]]$given
+$implications[[35]]$given[[1]]
+[1] "c_decoding_automaticity"
+
+
+$implications[[35]]$statement
+[1] "c_accumulated_reading _||_ c_text_provenance | c_decoding_automaticity"
+
+
+$implications[[36]]
+$implications[[36]]$a
+[1] "c_accumulated_reading"
+
+$implications[[36]]$b
+[1] "c_translation"
+
+$implications[[36]]$given
+list()
+
+$implications[[36]]$statement
+[1] "c_accumulated_reading _||_ c_translation"
+
+
+$implications[[37]]
+$implications[[37]]$a
+[1] "c_accumulated_reading"
+
+$implications[[37]]$b
+[1] "c_translation_quality"
+
+$implications[[37]]$given
+$implications[[37]]$given[[1]]
+[1] "c_translation"
+
+
+$implications[[37]]$statement
+[1] "c_accumulated_reading _||_ c_translation_quality | c_translation"
+
+
+$implications[[38]]
+$implications[[38]]$a
+[1] "c_accumulated_reading"
+
+$implications[[38]]$b
+[1] "c_story_content"
+
+$implications[[38]]$given
+$implications[[38]]$given[[1]]
+[1] "c_text_provenance"
+
+
+$implications[[38]]$statement
+[1] "c_accumulated_reading _||_ c_story_content | c_text_provenance"
+
+
+$implications[[39]]
+$implications[[39]]$a
+[1] "c_accumulated_reading"
+
+$implications[[39]]$b
+[1] "c_layout"
+
+$implications[[39]]$given
+$implications[[39]]$given[[1]]
+[1] "c_structural_integration_load"
+
+$implications[[39]]$given[[2]]
+[1] "c_text_provenance"
+
+
+$implications[[39]]$statement
+[1] "c_accumulated_reading _||_ c_layout | c_structural_integration_load, c_text_provenance"
+
+
+$implications[[40]]
+$implications[[40]]$a
+[1] "c_accumulated_reading"
+
+$implications[[40]]$b
+[1] "c_situation_model"
+
+$implications[[40]]$given
+$implications[[40]]$given[[1]]
+[1] "c_lexical_accessibility"
+
+$implications[[40]]$given[[2]]
+[1] "c_structural_integration_load"
+
+$implications[[40]]$given[[3]]
+[1] "c_referential_continuity"
+
+$implications[[40]]$given[[4]]
+[1] "c_decoding_automaticity"
+
+$implications[[40]]$given[[5]]
+[1] "c_spoken_rendition"
+
+
+$implications[[40]]$statement
+[1] "c_accumulated_reading _||_ c_situation_model | c_lexical_accessibility, c_structural_integration_load, c_referential_continuity, c_decoding_automaticity, c_spoken_rendition"
+
+
+$implications[[41]]
+$implications[[41]]$a
+[1] "c_processing_effort"
+
+$implications[[41]]$b
+[1] "c_text_provenance"
+
+$implications[[41]]$given
+$implications[[41]]$given[[1]]
+[1] "c_lexical_accessibility"
+
+$implications[[41]]$given[[2]]
+[1] "c_structural_integration_load"
+
+$implications[[41]]$given[[3]]
+[1] "c_referential_continuity"
+
+$implications[[41]]$given[[4]]
+[1] "c_decoding_automaticity"
+
+$implications[[41]]$given[[5]]
+[1] "c_translation_quality"
+
+$implications[[41]]$given[[6]]
+[1] "c_story_content"
+
+$implications[[41]]$given[[7]]
+[1] "c_layout"
+
+
+$implications[[41]]$statement
+[1] "c_processing_effort _||_ c_text_provenance | c_lexical_accessibility, c_structural_integration_load, c_referential_continuity, c_decoding_automaticity, c_translation_quality, c_story_content, c_layout"
+
+
+$implications[[42]]
+$implications[[42]]$a
+[1] "c_processing_effort"
+
+$implications[[42]]$b
+[1] "c_translation"
+
+$implications[[42]]$given
+$implications[[42]]$given[[1]]
+[1] "c_lexical_accessibility"
+
+$implications[[42]]$given[[2]]
+[1] "c_structural_integration_load"
+
+$implications[[42]]$given[[3]]
+[1] "c_referential_continuity"
+
+$implications[[42]]$given[[4]]
+[1] "c_decoding_automaticity"
+
+$implications[[42]]$given[[5]]
+[1] "c_translation_quality"
+
+$implications[[42]]$given[[6]]
+[1] "c_story_content"
+
+$implications[[42]]$given[[7]]
+[1] "c_layout"
+
+
+$implications[[42]]$statement
+[1] "c_processing_effort _||_ c_translation | c_lexical_accessibility, c_structural_integration_load, c_referential_continuity, c_decoding_automaticity, c_translation_quality, c_story_content, c_layout"
+
+
+$implications[[43]]
+$implications[[43]]$a
+[1] "c_processing_effort"
+
+$implications[[43]]$b
+[1] "c_situation_model"
+
+$implications[[43]]$given
+$implications[[43]]$given[[1]]
+[1] "c_lexical_accessibility"
+
+$implications[[43]]$given[[2]]
+[1] "c_structural_integration_load"
+
+$implications[[43]]$given[[3]]
+[1] "c_referential_continuity"
+
+$implications[[43]]$given[[4]]
+[1] "c_decoding_automaticity"
+
+$implications[[43]]$given[[5]]
+[1] "c_spoken_rendition"
+
+$implications[[43]]$given[[6]]
+[1] "c_translation_quality"
+
+$implications[[43]]$given[[7]]
+[1] "c_story_content"
+
+$implications[[43]]$given[[8]]
+[1] "c_layout"
+
+
+$implications[[43]]$statement
+[1] "c_processing_effort _||_ c_situation_model | c_lexical_accessibility, c_structural_integration_load, c_referential_continuity, c_decoding_automaticity, c_spoken_rendition, c_translation_quality, c_story_content, c_layout"
+
+
+$implications[[44]]
+$implications[[44]]$a
+[1] "c_experienced_difficulty"
+
+$implications[[44]]$b
+[1] "c_text_provenance"
+
+$implications[[44]]$given
+$implications[[44]]$given[[1]]
+[1] "c_decoding_automaticity"
+
+$implications[[44]]$given[[2]]
+[1] "c_processing_effort"
+
+
+$implications[[44]]$statement
+[1] "c_experienced_difficulty _||_ c_text_provenance | c_decoding_automaticity, c_processing_effort"
+
+
+$implications[[45]]
+$implications[[45]]$a
+[1] "c_experienced_difficulty"
+
+$implications[[45]]$b
+[1] "c_translation"
+
+$implications[[45]]$given
+$implications[[45]]$given[[1]]
+[1] "c_processing_effort"
+
+
+$implications[[45]]$statement
+[1] "c_experienced_difficulty _||_ c_translation | c_processing_effort"
+
+
+$implications[[46]]
+$implications[[46]]$a
+[1] "c_experienced_difficulty"
+
+$implications[[46]]$b
+[1] "c_translation_quality"
+
+$implications[[46]]$given
+$implications[[46]]$given[[1]]
+[1] "c_processing_effort"
+
+$implications[[46]]$given[[2]]
+[1] "c_translation"
+
+
+$implications[[46]]$statement
+[1] "c_experienced_difficulty _||_ c_translation_quality | c_processing_effort, c_translation"
+
+
+$implications[[47]]
+$implications[[47]]$a
+[1] "c_experienced_difficulty"
+
+$implications[[47]]$b
+[1] "c_story_content"
+
+$implications[[47]]$given
+$implications[[47]]$given[[1]]
+[1] "c_processing_effort"
+
+$implications[[47]]$given[[2]]
+[1] "c_text_provenance"
+
+
+$implications[[47]]$statement
+[1] "c_experienced_difficulty _||_ c_story_content | c_processing_effort, c_text_provenance"
+
+
+$implications[[48]]
+$implications[[48]]$a
+[1] "c_experienced_difficulty"
+
+$implications[[48]]$b
+[1] "c_layout"
+
+$implications[[48]]$given
+$implications[[48]]$given[[1]]
+[1] "c_structural_integration_load"
+
+$implications[[48]]$given[[2]]
+[1] "c_processing_effort"
+
+$implications[[48]]$given[[3]]
+[1] "c_text_provenance"
+
+
+$implications[[48]]$statement
+[1] "c_experienced_difficulty _||_ c_layout | c_structural_integration_load, c_processing_effort, c_text_provenance"
+
+
+$implications[[49]]
+$implications[[49]]$a
+[1] "c_experienced_difficulty"
+
+$implications[[49]]$b
+[1] "c_situation_model"
+
+$implications[[49]]$given
+$implications[[49]]$given[[1]]
+[1] "c_lexical_accessibility"
+
+$implications[[49]]$given[[2]]
+[1] "c_structural_integration_load"
+
+$implications[[49]]$given[[3]]
+[1] "c_referential_continuity"
+
+$implications[[49]]$given[[4]]
+[1] "c_decoding_automaticity"
+
+$implications[[49]]$given[[5]]
+[1] "c_spoken_rendition"
+
+$implications[[49]]$given[[6]]
+[1] "c_processing_effort"
+
+
+$implications[[49]]$statement
+[1] "c_experienced_difficulty _||_ c_situation_model | c_lexical_accessibility, c_structural_integration_load, c_referential_continuity, c_decoding_automaticity, c_spoken_rendition, c_processing_effort"
+
+
+$implications[[50]]
+$implications[[50]]$a
+[1] "c_text_provenance"
+
+$implications[[50]]$b
+[1] "c_translation"
+
+$implications[[50]]$given
+$implications[[50]]$given[[1]]
+[1] "c_decoding_automaticity"
+
+
+$implications[[50]]$statement
+[1] "c_text_provenance _||_ c_translation | c_decoding_automaticity"
+
+
+$implications[[51]]
+$implications[[51]]$a
+[1] "c_text_provenance"
+
+$implications[[51]]$b
+[1] "c_translation_quality"
+
+$implications[[51]]$given
+$implications[[51]]$given[[1]]
+[1] "c_decoding_automaticity"
+
+$implications[[51]]$given[[2]]
+[1] "c_translation"
+
+
+$implications[[51]]$statement
+[1] "c_text_provenance _||_ c_translation_quality | c_decoding_automaticity, c_translation"
+
+
+$implications[[52]]
+$implications[[52]]$a
+[1] "c_text_provenance"
+
+$implications[[52]]$b
+[1] "c_situation_model"
+
+$implications[[52]]$given
+$implications[[52]]$given[[1]]
+[1] "c_lexical_accessibility"
+
+$implications[[52]]$given[[2]]
+[1] "c_structural_integration_load"
+
+$implications[[52]]$given[[3]]
+[1] "c_referential_continuity"
+
+$implications[[52]]$given[[4]]
+[1] "c_decoding_automaticity"
+
+$implications[[52]]$given[[5]]
+[1] "c_spoken_rendition"
+
+
+$implications[[52]]$statement
 [1] "c_text_provenance _||_ c_situation_model | c_lexical_accessibility, c_structural_integration_load, c_referential_continuity, c_decoding_automaticity, c_spoken_rendition"
+
+
+$implications[[53]]
+$implications[[53]]$a
+[1] "c_translation"
+
+$implications[[53]]$b
+[1] "c_story_content"
+
+$implications[[53]]$given
+$implications[[53]]$given[[1]]
+[1] "c_text_provenance"
+
+
+$implications[[53]]$statement
+[1] "c_translation _||_ c_story_content | c_text_provenance"
+
+
+$implications[[54]]
+$implications[[54]]$a
+[1] "c_translation"
+
+$implications[[54]]$b
+[1] "c_layout"
+
+$implications[[54]]$given
+$implications[[54]]$given[[1]]
+[1] "c_structural_integration_load"
+
+$implications[[54]]$given[[2]]
+[1] "c_text_provenance"
+
+
+$implications[[54]]$statement
+[1] "c_translation _||_ c_layout | c_structural_integration_load, c_text_provenance"
+
+
+$implications[[55]]
+$implications[[55]]$a
+[1] "c_translation"
+
+$implications[[55]]$b
+[1] "c_situation_model"
+
+$implications[[55]]$given
+$implications[[55]]$given[[1]]
+[1] "c_lexical_accessibility"
+
+$implications[[55]]$given[[2]]
+[1] "c_structural_integration_load"
+
+$implications[[55]]$given[[3]]
+[1] "c_referential_continuity"
+
+$implications[[55]]$given[[4]]
+[1] "c_decoding_automaticity"
+
+$implications[[55]]$given[[5]]
+[1] "c_spoken_rendition"
+
+
+$implications[[55]]$statement
+[1] "c_translation _||_ c_situation_model | c_lexical_accessibility, c_structural_integration_load, c_referential_continuity, c_decoding_automaticity, c_spoken_rendition"
+
+
+$implications[[56]]
+$implications[[56]]$a
+[1] "c_translation_quality"
+
+$implications[[56]]$b
+[1] "c_story_content"
+
+$implications[[56]]$given
+$implications[[56]]$given[[1]]
+[1] "c_text_provenance"
+
+$implications[[56]]$given[[2]]
+[1] "c_translation"
+
+
+$implications[[56]]$statement
+[1] "c_translation_quality _||_ c_story_content | c_text_provenance, c_translation"
+
+
+$implications[[57]]
+$implications[[57]]$a
+[1] "c_translation_quality"
+
+$implications[[57]]$b
+[1] "c_layout"
+
+$implications[[57]]$given
+$implications[[57]]$given[[1]]
+[1] "c_structural_integration_load"
+
+$implications[[57]]$given[[2]]
+[1] "c_text_provenance"
+
+$implications[[57]]$given[[3]]
+[1] "c_translation"
+
+
+$implications[[57]]$statement
+[1] "c_translation_quality _||_ c_layout | c_structural_integration_load, c_text_provenance, c_translation"
+
+
+$implications[[58]]
+$implications[[58]]$a
+[1] "c_translation_quality"
+
+$implications[[58]]$b
+[1] "c_situation_model"
+
+$implications[[58]]$given
+$implications[[58]]$given[[1]]
+[1] "c_lexical_accessibility"
+
+$implications[[58]]$given[[2]]
+[1] "c_structural_integration_load"
+
+$implications[[58]]$given[[3]]
+[1] "c_referential_continuity"
+
+$implications[[58]]$given[[4]]
+[1] "c_decoding_automaticity"
+
+$implications[[58]]$given[[5]]
+[1] "c_spoken_rendition"
+
+$implications[[58]]$given[[6]]
+[1] "c_translation"
+
+
+$implications[[58]]$statement
+[1] "c_translation_quality _||_ c_situation_model | c_lexical_accessibility, c_structural_integration_load, c_referential_continuity, c_decoding_automaticity, c_spoken_rendition, c_translation"
+
+
+$implications[[59]]
+$implications[[59]]$a
+[1] "c_story_content"
+
+$implications[[59]]$b
+[1] "c_layout"
+
+$implications[[59]]$given
+$implications[[59]]$given[[1]]
+[1] "c_structural_integration_load"
+
+$implications[[59]]$given[[2]]
+[1] "c_text_provenance"
+
+
+$implications[[59]]$statement
+[1] "c_story_content _||_ c_layout | c_structural_integration_load, c_text_provenance"
+
+
+$implications[[60]]
+$implications[[60]]$a
+[1] "c_story_content"
+
+$implications[[60]]$b
+[1] "c_situation_model"
+
+$implications[[60]]$given
+$implications[[60]]$given[[1]]
+[1] "c_lexical_accessibility"
+
+$implications[[60]]$given[[2]]
+[1] "c_structural_integration_load"
+
+$implications[[60]]$given[[3]]
+[1] "c_referential_continuity"
+
+$implications[[60]]$given[[4]]
+[1] "c_decoding_automaticity"
+
+$implications[[60]]$given[[5]]
+[1] "c_spoken_rendition"
+
+$implications[[60]]$given[[6]]
+[1] "c_text_provenance"
+
+
+$implications[[60]]$statement
+[1] "c_story_content _||_ c_situation_model | c_lexical_accessibility, c_structural_integration_load, c_referential_continuity, c_decoding_automaticity, c_spoken_rendition, c_text_provenance"
+
+
+$implications[[61]]
+$implications[[61]]$a
+[1] "c_layout"
+
+$implications[[61]]$b
+[1] "c_situation_model"
+
+$implications[[61]]$given
+$implications[[61]]$given[[1]]
+[1] "c_lexical_accessibility"
+
+$implications[[61]]$given[[2]]
+[1] "c_structural_integration_load"
+
+$implications[[61]]$given[[3]]
+[1] "c_referential_continuity"
+
+$implications[[61]]$given[[4]]
+[1] "c_decoding_automaticity"
+
+$implications[[61]]$given[[5]]
+[1] "c_spoken_rendition"
+
+$implications[[61]]$given[[6]]
+[1] "c_text_provenance"
+
+
+$implications[[61]]$statement
+[1] "c_layout _||_ c_situation_model | c_lexical_accessibility, c_structural_integration_load, c_referential_continuity, c_decoding_automaticity, c_spoken_rendition, c_text_provenance"
 
 
 
 $n_implications
-[1] 30
+[1] 61
 

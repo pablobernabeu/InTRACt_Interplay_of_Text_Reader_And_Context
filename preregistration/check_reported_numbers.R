@@ -225,9 +225,15 @@ if (three == 0) {
 
 writeLines("")
 writeLines("== theory object ==")
-NUM_WORDS <- c("one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+# Counts are quoted in words, hyphenated above twenty ("thirty-three"), so the
+# lookup runs to ninety-nine and NUM_WORDS[n] is the word for n.
+UNITS <- c("one", "two", "three", "four", "five", "six", "seven", "eight", "nine")
+NUM_WORDS <- c(UNITS,
                "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
-               "seventeen", "eighteen", "nineteen", "twenty")
+               "seventeen", "eighteen", "nineteen",
+               unlist(lapply(c("twenty", "thirty", "forty", "fifty", "sixty", "seventy",
+                               "eighty", "ninety"),
+                             function(tens) c(tens, paste0(tens, "-", UNITS)))))
 if (!requireNamespace("theoryforge", quietly = TRUE)) {
   skip("theory object", "theoryforge is not installed")
 } else {

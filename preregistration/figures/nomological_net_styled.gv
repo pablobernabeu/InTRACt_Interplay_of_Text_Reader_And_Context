@@ -1,6 +1,6 @@
 digraph nomological_net {
   graph [rankdir=TB, bgcolor="white", fontname="Helvetica", fontsize=12,
-         pad="0.25", nodesep="0.4", ranksep="0.7", splines=true, newrank=true]
+         pad="0.25", nodesep="0.25", ranksep="0.7", splines=true, newrank=true]
   node [fontname="Helvetica", fontsize=12, shape=box, style="rounded,filled",
         color="#33567A", fillcolor="#F2F6F9", fontcolor="#12283A", penwidth=1.1,
         margin="0.18,0.11"]
@@ -22,6 +22,10 @@ digraph nomological_net {
     label="The text"; labeljust=l; fontsize=13; fontcolor="#5A6B78";
     color="#C9D4DC"; style=rounded; margin=14;
     "c_text_provenance" [label="How a text came\nto have the\nproperties it\nhas"]
+    "c_translation" [label="Machine\ntranslation of\nthe English\nsource"]
+    "c_translation_quality" [label="Fidelity and\nfluency of a\nrendered\nversion"]
+    "c_story_content" [label="Story content\nset at\ngeneration"]
+    "c_layout" [label="Division of a\ntext into pages"]
     "c_lexical_accessibility" [label="Lexical\naccessibility\nof a text"]
     "c_structural_integration_load" [label="Grammatical\nintegration\nload imposed by\na text"]
     "c_referential_continuity" [label="Referential\ncontinuity\nacross a text"]
@@ -34,6 +38,7 @@ digraph nomological_net {
     "c_situation_model" [label="Quality of the\nmental model\nbuilt from a\ntext"]
   }
   { rank=same; "c_accumulated_reading"; "c_verbal_working_memory"; "c_inferential_resource" }
+  { rank=same; "c_story_content"; "c_translation"; "c_layout" }
   { rank=same; "c_lexical_accessibility"; "c_structural_integration_load"; "c_referential_continuity"; "c_spoken_rendition" }
   { rank=same; "c_experienced_difficulty"; "c_situation_model" }
   "c_experienced_difficulty" -> "c_situation_model" [style=invis]
@@ -55,5 +60,20 @@ digraph nomological_net {
   "c_text_provenance" -> "c_structural_integration_load" [color="#3A4A58", penwidth=1.2]
   "c_text_provenance" -> "c_referential_continuity" [color="#3A4A58", penwidth=1.2]
   "c_decoding_automaticity" -> "c_text_provenance" [color="#3A4A58", penwidth=1.2]
+  "c_translation" -> "c_lexical_accessibility" [color="#3A4A58", penwidth=1.2]
+  "c_translation" -> "c_structural_integration_load" [color="#3A4A58", penwidth=1.2]
+  "c_translation" -> "c_referential_continuity" [color="#3A4A58", penwidth=1.2]
+  "c_translation" -> "c_translation_quality" [color="#3A4A58", penwidth=1.2]
+  "c_translation_quality" -> "c_processing_effort" [color="#0072b2", label="−", fontcolor="#0072b2", fontsize=16, penwidth=1.2]
+  "c_translation_quality" -> "c_lexical_accessibility" [color="#3A4A58", penwidth=1.2]
+  "c_translation_quality" -> "c_referential_continuity" [color="#d55e00", label="+", fontcolor="#d55e00", fontsize=16, penwidth=1.2]
+  "c_text_provenance" -> "c_story_content" [color="#3A4A58", penwidth=1.2]
+  "c_story_content" -> "c_processing_effort" [color="#3A4A58", penwidth=1.2]
+  "c_story_content" -> "c_lexical_accessibility" [color="#3A4A58", penwidth=1.2]
+  "c_story_content" -> "c_structural_integration_load" [color="#3A4A58", penwidth=1.2]
+  "c_story_content" -> "c_referential_continuity" [color="#3A4A58", penwidth=1.2]
+  "c_text_provenance" -> "c_layout" [color="#3A4A58", penwidth=1.2]
+  "c_structural_integration_load" -> "c_layout" [color="#3A4A58", penwidth=1.2]
+  "c_layout" -> "c_processing_effort" [color="#d55e00", label="+", fontcolor="#d55e00", fontsize=16, penwidth=1.2]
 }
 

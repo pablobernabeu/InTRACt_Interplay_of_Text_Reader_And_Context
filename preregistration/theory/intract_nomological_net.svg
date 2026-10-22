@@ -1,229 +1,364 @@
-<svg width="1022pt" height="530pt"
- viewBox="0.00 0.00 1022.41 529.59" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(14.4 515.1887)">
+<svg width="1369pt" height="773pt"
+ viewBox="0.00 0.00 1369.35 772.60" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(14.4 758.2)">
 <title>nomological_net</title>
 <!-- c_lexical_accessibility -->
 <g id="node1" class="node">
 <title>c_lexical_accessibility</title>
-<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M635.4829,-150.5902C635.4829,-150.5902 555.3514,-150.5902 555.3514,-150.5902 549.3514,-150.5902 543.3514,-144.5902 543.3514,-138.5902 543.3514,-138.5902 543.3514,-109.3873 543.3514,-109.3873 543.3514,-103.3873 549.3514,-97.3873 555.3514,-97.3873 555.3514,-97.3873 635.4829,-97.3873 635.4829,-97.3873 641.4829,-97.3873 647.4829,-103.3873 647.4829,-109.3873 647.4829,-109.3873 647.4829,-138.5902 647.4829,-138.5902 647.4829,-144.5902 641.4829,-150.5902 635.4829,-150.5902"/>
-<text text-anchor="middle" x="595.4172" y="-133.8887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Lexical</text>
-<text text-anchor="middle" x="595.4172" y="-120.6887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">accessibility of a</text>
-<text text-anchor="middle" x="595.4172" y="-107.4887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">text</text>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M802.6299,-327.4015C802.6299,-327.4015 722.4985,-327.4015 722.4985,-327.4015 716.4985,-327.4015 710.4985,-321.4015 710.4985,-315.4015 710.4985,-315.4015 710.4985,-286.1985 710.4985,-286.1985 710.4985,-280.1985 716.4985,-274.1985 722.4985,-274.1985 722.4985,-274.1985 802.6299,-274.1985 802.6299,-274.1985 808.6299,-274.1985 814.6299,-280.1985 814.6299,-286.1985 814.6299,-286.1985 814.6299,-315.4015 814.6299,-315.4015 814.6299,-321.4015 808.6299,-327.4015 802.6299,-327.4015"/>
+<text text-anchor="middle" x="762.5642" y="-310.7" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Lexical</text>
+<text text-anchor="middle" x="762.5642" y="-297.5" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">accessibility of a</text>
+<text text-anchor="middle" x="762.5642" y="-284.3" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">text</text>
 </g>
 <!-- c_processing_effort -->
 <g id="node9" class="node">
 <title>c_processing_effort</title>
-<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M828.0702,-334.5902C828.0702,-334.5902 750.7798,-334.5902 750.7798,-334.5902 744.7798,-334.5902 738.7798,-328.5902 738.7798,-322.5902 738.7798,-322.5902 738.7798,-293.3873 738.7798,-293.3873 738.7798,-287.3873 744.7798,-281.3873 750.7798,-281.3873 750.7798,-281.3873 828.0702,-281.3873 828.0702,-281.3873 834.0702,-281.3873 840.0702,-287.3873 840.0702,-293.3873 840.0702,-293.3873 840.0702,-322.5902 840.0702,-322.5902 840.0702,-328.5902 834.0702,-334.5902 828.0702,-334.5902"/>
-<text text-anchor="middle" x="789.425" y="-317.8887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Effort expended</text>
-<text text-anchor="middle" x="789.425" y="-304.6887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">while reading a</text>
-<text text-anchor="middle" x="789.425" y="-291.4887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">text</text>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M1180.8054,-394.4015C1180.8054,-394.4015 1103.515,-394.4015 1103.515,-394.4015 1097.515,-394.4015 1091.515,-388.4015 1091.515,-382.4015 1091.515,-382.4015 1091.515,-353.1985 1091.515,-353.1985 1091.515,-347.1985 1097.515,-341.1985 1103.515,-341.1985 1103.515,-341.1985 1180.8054,-341.1985 1180.8054,-341.1985 1186.8054,-341.1985 1192.8054,-347.1985 1192.8054,-353.1985 1192.8054,-353.1985 1192.8054,-382.4015 1192.8054,-382.4015 1192.8054,-388.4015 1186.8054,-394.4015 1180.8054,-394.4015"/>
+<text text-anchor="middle" x="1142.1602" y="-377.7" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Effort expended</text>
+<text text-anchor="middle" x="1142.1602" y="-364.5" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">while reading a</text>
+<text text-anchor="middle" x="1142.1602" y="-351.3" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">text</text>
 </g>
 <!-- c_lexical_accessibility&#45;&gt;c_processing_effort -->
 <g id="edge1" class="edge">
 <title>c_lexical_accessibility&#45;&gt;c_processing_effort</title>
-<path fill="none" stroke="#7b909f" d="M642.4484,-150.7438C646.5217,-154.1951 650.3228,-157.9495 653.5759,-161.9887 666.1053,-177.5459 656.2205,-189.1346 669.5759,-203.9887 685.3191,-221.4985 698.0904,-213.7024 716.8079,-227.9887 734.6027,-241.5708 751.5879,-259.8757 764.6511,-275.5482"/>
-<polygon fill="#7b909f" stroke="#7b909f" points="762.9461,-277.3326 769.2807,-281.1895 766.7339,-274.2241 762.9461,-277.3326"/>
-<text text-anchor="middle" x="693.1919" y="-230.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">decreases</text>
+<path fill="none" stroke="#7b909f" d="M814.6818,-295.3264C835.0645,-294.1496 858.5934,-293.9829 879.7884,-296.8 951.6405,-306.3501 1031.7263,-330.001 1084.2971,-347.3932"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="1083.7929,-349.8075 1091.2085,-349.6961 1085.342,-345.1588 1083.7929,-349.8075"/>
+<text text-anchor="middle" x="953.9471" y="-326.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">decreases</text>
 </g>
 <!-- c_situation_model -->
-<g id="node12" class="node">
+<g id="node16" class="node">
 <title>c_situation_model</title>
-<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M834.1594,-100.5902C834.1594,-100.5902 744.6906,-100.5902 744.6906,-100.5902 738.6906,-100.5902 732.6906,-94.5902 732.6906,-88.5902 732.6906,-88.5902 732.6906,-59.3873 732.6906,-59.3873 732.6906,-53.3873 738.6906,-47.3873 744.6906,-47.3873 744.6906,-47.3873 834.1594,-47.3873 834.1594,-47.3873 840.1594,-47.3873 846.1594,-53.3873 846.1594,-59.3873 846.1594,-59.3873 846.1594,-88.5902 846.1594,-88.5902 846.1594,-94.5902 840.1594,-100.5902 834.1594,-100.5902"/>
-<text text-anchor="middle" x="789.425" y="-83.8887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Quality of the</text>
-<text text-anchor="middle" x="789.425" y="-70.6887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">mental model built</text>
-<text text-anchor="middle" x="789.425" y="-57.4887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">from a text</text>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M998.6816,-411.4015C998.6816,-411.4015 909.2127,-411.4015 909.2127,-411.4015 903.2127,-411.4015 897.2127,-405.4015 897.2127,-399.4015 897.2127,-399.4015 897.2127,-370.1985 897.2127,-370.1985 897.2127,-364.1985 903.2127,-358.1985 909.2127,-358.1985 909.2127,-358.1985 998.6816,-358.1985 998.6816,-358.1985 1004.6816,-358.1985 1010.6816,-364.1985 1010.6816,-370.1985 1010.6816,-370.1985 1010.6816,-399.4015 1010.6816,-399.4015 1010.6816,-405.4015 1004.6816,-411.4015 998.6816,-411.4015"/>
+<text text-anchor="middle" x="953.9471" y="-394.7" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Quality of the</text>
+<text text-anchor="middle" x="953.9471" y="-381.5" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">mental model built</text>
+<text text-anchor="middle" x="953.9471" y="-368.3" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">from a text</text>
 </g>
 <!-- c_lexical_accessibility&#45;&gt;c_situation_model -->
 <g id="edge10" class="edge">
 <title>c_lexical_accessibility&#45;&gt;c_situation_model</title>
-<path fill="none" stroke="#7b909f" d="M636.9408,-97.3282C642.5701,-93.5772 648.2417,-89.7259 653.5759,-85.9887 660.8559,-80.8884 661.1432,-76.7996 669.5759,-73.9887 687.1763,-68.1219 707.0554,-66.3419 725.4907,-66.5135"/>
-<polygon fill="#7b909f" stroke="#7b909f" points="725.6928,-68.9687 732.7472,-66.6801 725.8053,-64.07 725.6928,-68.9687"/>
-<text text-anchor="middle" x="693.1919" y="-76.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">increases</text>
+<path fill="none" stroke="#7b909f" d="M814.9438,-324.4804C821.2456,-327.2981 827.5959,-330.1228 833.6644,-332.8 852.1099,-340.9374 872.1983,-349.6722 890.582,-357.6156"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="889.8738,-359.9784 897.2716,-360.5038 891.8161,-355.4798 889.8738,-359.9784"/>
+<text text-anchor="middle" x="856.7264" y="-353.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">increases</text>
 </g>
 <!-- c_structural_integration_load -->
 <g id="node2" class="node">
 <title>c_structural_integration_load</title>
-<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M638.6089,-74.5902C638.6089,-74.5902 552.2254,-74.5902 552.2254,-74.5902 546.2254,-74.5902 540.2254,-68.5902 540.2254,-62.5902 540.2254,-62.5902 540.2254,-33.3873 540.2254,-33.3873 540.2254,-27.3873 546.2254,-21.3873 552.2254,-21.3873 552.2254,-21.3873 638.6089,-21.3873 638.6089,-21.3873 644.6089,-21.3873 650.6089,-27.3873 650.6089,-33.3873 650.6089,-33.3873 650.6089,-62.5902 650.6089,-62.5902 650.6089,-68.5902 644.6089,-74.5902 638.6089,-74.5902"/>
-<text text-anchor="middle" x="595.4172" y="-57.8887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Grammatical</text>
-<text text-anchor="middle" x="595.4172" y="-44.6887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">integration load</text>
-<text text-anchor="middle" x="595.4172" y="-31.4887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">imposed by a text</text>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M805.756,-624.4015C805.756,-624.4015 719.3724,-624.4015 719.3724,-624.4015 713.3724,-624.4015 707.3724,-618.4015 707.3724,-612.4015 707.3724,-612.4015 707.3724,-583.1985 707.3724,-583.1985 707.3724,-577.1985 713.3724,-571.1985 719.3724,-571.1985 719.3724,-571.1985 805.756,-571.1985 805.756,-571.1985 811.756,-571.1985 817.756,-577.1985 817.756,-583.1985 817.756,-583.1985 817.756,-612.4015 817.756,-612.4015 817.756,-618.4015 811.756,-624.4015 805.756,-624.4015"/>
+<text text-anchor="middle" x="762.5642" y="-607.7" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Grammatical</text>
+<text text-anchor="middle" x="762.5642" y="-594.5" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">integration load</text>
+<text text-anchor="middle" x="762.5642" y="-581.3" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">imposed by a text</text>
 </g>
 <!-- c_structural_integration_load&#45;&gt;c_processing_effort -->
 <g id="edge2" class="edge">
 <title>c_structural_integration_load&#45;&gt;c_processing_effort</title>
-<path fill="none" stroke="#7b909f" d="M643.7052,-74.7167C647.422,-78.1396 650.8003,-81.8961 653.5759,-85.9887 673.6834,-115.6375 647.8887,-136.4752 669.5759,-164.9887 683.8306,-183.7303 699.5232,-172.9987 716.8079,-188.9887 742.8493,-213.0796 762.8762,-248.5956 775.2387,-274.5555"/>
-<polygon fill="#7b909f" stroke="#7b909f" points="773.0359,-275.6289 778.2156,-280.9369 777.4765,-273.5574 773.0359,-275.6289"/>
-<text text-anchor="middle" x="693.1919" y="-191.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">increases</text>
+<path fill="none" stroke="#7b909f" d="M817.7887,-596.1421C896.8214,-592.6862 1036.9045,-582.1937 1075.3379,-550.8 1098.8831,-531.5675 1122.312,-449.1035 1134.1771,-401.6986"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="1136.6085,-402.072 1135.9114,-394.6885 1131.8519,-400.8952 1136.6085,-402.072"/>
+<text text-anchor="middle" x="953.9471" y="-593.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">increases</text>
+</g>
+<!-- c_layout -->
+<g id="node15" class="node">
+<title>c_layout</title>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M994.1271,-664.202C994.1271,-664.202 913.7672,-664.202 913.7672,-664.202 907.7672,-664.202 901.7672,-658.202 901.7672,-652.202 901.7672,-652.202 901.7672,-635.398 901.7672,-635.398 901.7672,-629.398 907.7672,-623.398 913.7672,-623.398 913.7672,-623.398 994.1271,-623.398 994.1271,-623.398 1000.1271,-623.398 1006.1271,-629.398 1006.1271,-635.398 1006.1271,-635.398 1006.1271,-652.202 1006.1271,-652.202 1006.1271,-658.202 1000.1271,-664.202 994.1271,-664.202"/>
+<text text-anchor="middle" x="953.9471" y="-647.1" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Division of a text</text>
+<text text-anchor="middle" x="953.9471" y="-633.9" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">into pages</text>
+</g>
+<!-- c_structural_integration_load&#45;&gt;c_layout -->
+<g id="edge32" class="edge">
+<title>c_structural_integration_load&#45;&gt;c_layout</title>
+<path fill="none" stroke="#7b909f" d="M817.6633,-611.0434C841.7872,-616.8417 870.1361,-623.6555 894.7126,-629.5626"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="894.159,-631.9493 901.5377,-631.2031 895.3042,-627.185 894.159,-631.9493"/>
+<text text-anchor="middle" x="856.7264" y="-627.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
 </g>
 <!-- c_structural_integration_load&#45;&gt;c_situation_model -->
 <g id="edge11" class="edge">
 <title>c_structural_integration_load&#45;&gt;c_situation_model</title>
-<path fill="none" stroke="#7b909f" d="M650.6775,-33.9483C671.6194,-30.738 695.5335,-29.6373 716.8079,-34.9887 725.0479,-37.0614 733.372,-40.2706 741.2979,-43.9776"/>
-<polygon fill="#7b909f" stroke="#7b909f" points="740.4879,-46.3093 747.8513,-47.1945 742.6472,-41.9106 740.4879,-46.3093"/>
-<text text-anchor="middle" x="693.1919" y="-37.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">decreases</text>
+<path fill="none" stroke="#7b909f" d="M779.3382,-571.194C793.1247,-549.9174 813.5883,-519.6432 833.6644,-494.8 846.3243,-479.134 880.8015,-442.257 895.7884,-428.8 900.562,-424.5137 905.7245,-420.2004 910.9349,-416.0386"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="912.6032,-417.8435 916.5913,-411.5906 909.5743,-413.9917 912.6032,-417.8435"/>
+<text text-anchor="middle" x="856.7264" y="-497.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">decreases</text>
 </g>
 <!-- c_referential_continuity -->
 <g id="node3" class="node">
 <title>c_referential_continuity</title>
-<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M636.321,-226.5902C636.321,-226.5902 554.5133,-226.5902 554.5133,-226.5902 548.5133,-226.5902 542.5133,-220.5902 542.5133,-214.5902 542.5133,-214.5902 542.5133,-185.3873 542.5133,-185.3873 542.5133,-179.3873 548.5133,-173.3873 554.5133,-173.3873 554.5133,-173.3873 636.321,-173.3873 636.321,-173.3873 642.321,-173.3873 648.321,-179.3873 648.321,-185.3873 648.321,-185.3873 648.321,-214.5902 648.321,-214.5902 648.321,-220.5902 642.321,-226.5902 636.321,-226.5902"/>
-<text text-anchor="middle" x="595.4172" y="-209.8887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Referential</text>
-<text text-anchor="middle" x="595.4172" y="-196.6887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">continuity across</text>
-<text text-anchor="middle" x="595.4172" y="-183.4887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">a text</text>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M803.468,-480.4015C803.468,-480.4015 721.6604,-480.4015 721.6604,-480.4015 715.6604,-480.4015 709.6604,-474.4015 709.6604,-468.4015 709.6604,-468.4015 709.6604,-439.1985 709.6604,-439.1985 709.6604,-433.1985 715.6604,-427.1985 721.6604,-427.1985 721.6604,-427.1985 803.468,-427.1985 803.468,-427.1985 809.468,-427.1985 815.468,-433.1985 815.468,-439.1985 815.468,-439.1985 815.468,-468.4015 815.468,-468.4015 815.468,-474.4015 809.468,-480.4015 803.468,-480.4015"/>
+<text text-anchor="middle" x="762.5642" y="-463.7" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Referential</text>
+<text text-anchor="middle" x="762.5642" y="-450.5" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">continuity across</text>
+<text text-anchor="middle" x="762.5642" y="-437.3" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">a text</text>
 </g>
 <!-- c_referential_continuity&#45;&gt;c_processing_effort -->
 <g id="edge3" class="edge">
 <title>c_referential_continuity&#45;&gt;c_processing_effort</title>
-<path fill="none" stroke="#7b909f" d="M641.189,-226.8017C650.552,-232.2097 660.3602,-237.8192 669.5759,-242.9887 690.2491,-254.5852 713.0876,-267.0553 733.2341,-277.9411"/>
-<polygon fill="#7b909f" stroke="#7b909f" points="732.0709,-280.0974 739.3946,-281.2659 734.3981,-275.7852 732.0709,-280.0974"/>
-<text text-anchor="middle" x="693.1919" y="-270.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">decreases</text>
+<path fill="none" stroke="#7b909f" d="M815.6792,-447.558C835.7696,-445.1704 858.8378,-442.3969 879.7884,-439.8 938.6293,-432.5066 954.8679,-438.2679 1012.1059,-422.8 1036.6612,-416.1642 1062.676,-405.8725 1084.9334,-395.9785"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="1086.0318,-398.1709 1091.4098,-393.064 1084.021,-393.7025 1086.0318,-398.1709"/>
+<text text-anchor="middle" x="953.9471" y="-440.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">decreases</text>
 </g>
 <!-- c_referential_continuity&#45;&gt;c_situation_model -->
 <g id="edge12" class="edge">
 <title>c_referential_continuity&#45;&gt;c_situation_model</title>
-<path fill="none" stroke="#7b909f" d="M642.9341,-173.151C646.8592,-169.7341 650.4948,-166.0097 653.5759,-161.9887 667.5101,-143.8042 653.3683,-129.1799 669.5759,-112.9887 678.1719,-104.4015 701.8655,-95.925 725.9395,-89.0794"/>
-<polygon fill="#7b909f" stroke="#7b909f" points="726.639,-91.4279 732.7274,-87.1931 725.327,-86.7068 726.639,-91.4279"/>
-<text text-anchor="middle" x="693.1919" y="-115.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">increases</text>
+<path fill="none" stroke="#7b909f" d="M815.6958,-433.4444C821.7473,-431.1792 827.8336,-428.9247 833.6644,-426.8 852.081,-420.0893 872.1605,-412.9918 890.5449,-406.5794"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="891.4301,-408.8655 897.2352,-404.2499 889.8188,-404.238 891.4301,-408.8655"/>
+<text text-anchor="middle" x="856.7264" y="-429.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">increases</text>
 </g>
 <!-- c_decoding_automaticity -->
 <g id="node4" class="node">
 <title>c_decoding_automaticity</title>
-<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M265.3929,-157.289C265.3929,-157.289 193.1255,-157.289 193.1255,-157.289 187.1255,-157.289 181.1255,-151.289 181.1255,-145.289 181.1255,-145.289 181.1255,-102.6884 181.1255,-102.6884 181.1255,-96.6884 187.1255,-90.6884 193.1255,-90.6884 193.1255,-90.6884 265.3929,-90.6884 265.3929,-90.6884 271.3929,-90.6884 277.3929,-96.6884 277.3929,-102.6884 277.3929,-102.6884 277.3929,-145.289 277.3929,-145.289 277.3929,-151.289 271.3929,-157.289 265.3929,-157.289"/>
-<text text-anchor="middle" x="229.2592" y="-140.4887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Automaticity of</text>
-<text text-anchor="middle" x="229.2592" y="-127.2887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">print&#45;to&#45;sound</text>
-<text text-anchor="middle" x="229.2592" y="-114.0887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">mapping in the</text>
-<text text-anchor="middle" x="229.2592" y="-100.8887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">reader</text>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M265.3929,-569.1003C265.3929,-569.1003 193.1255,-569.1003 193.1255,-569.1003 187.1255,-569.1003 181.1255,-563.1003 181.1255,-557.1003 181.1255,-557.1003 181.1255,-514.4997 181.1255,-514.4997 181.1255,-508.4997 187.1255,-502.4997 193.1255,-502.4997 193.1255,-502.4997 265.3929,-502.4997 265.3929,-502.4997 271.3929,-502.4997 277.3929,-508.4997 277.3929,-514.4997 277.3929,-514.4997 277.3929,-557.1003 277.3929,-557.1003 277.3929,-563.1003 271.3929,-569.1003 265.3929,-569.1003"/>
+<text text-anchor="middle" x="229.2592" y="-552.3" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Automaticity of</text>
+<text text-anchor="middle" x="229.2592" y="-539.1" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">print&#45;to&#45;sound</text>
+<text text-anchor="middle" x="229.2592" y="-525.9" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">mapping in the</text>
+<text text-anchor="middle" x="229.2592" y="-512.7" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">reader</text>
 </g>
 <!-- c_decoding_automaticity&#45;&gt;c_processing_effort -->
 <g id="edge4" class="edge">
 <title>c_decoding_automaticity&#45;&gt;c_processing_effort</title>
-<path fill="none" stroke="#7b909f" d="M267.6501,-157.6572C322.7907,-203.536 429.6686,-283.4731 537.2584,-313.9887 601.8388,-332.3056 679.493,-326.5353 731.409,-318.9566"/>
-<polygon fill="#7b909f" stroke="#7b909f" points="732.0037,-321.3447 738.5597,-317.8775 731.2725,-316.4996 732.0037,-321.3447"/>
-<text text-anchor="middle" x="498.1964" y="-310.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">decreases</text>
+<path fill="none" stroke="#7b909f" d="M240.877,-569.4936C262.5921,-625.5329 314.987,-731.8 400.0687,-731.8 400.0687,-731.8 400.0687,-731.8 953.9471,-731.8 1101.8314,-731.8 1133.6487,-491.802 1140.3853,-401.5601"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="1142.8299,-401.721 1140.8792,-394.5658 1137.9421,-401.3758 1142.8299,-401.721"/>
+<text text-anchor="middle" x="668.402" y="-734.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">decreases</text>
 </g>
 <!-- c_text_provenance -->
 <g id="node11" class="node">
 <title>c_text_provenance</title>
-<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M447.2002,-150.5902C447.2002,-150.5902 352.9372,-150.5902 352.9372,-150.5902 346.9372,-150.5902 340.9372,-144.5902 340.9372,-138.5902 340.9372,-138.5902 340.9372,-109.3873 340.9372,-109.3873 340.9372,-103.3873 346.9372,-97.3873 352.9372,-97.3873 352.9372,-97.3873 447.2002,-97.3873 447.2002,-97.3873 453.2002,-97.3873 459.2002,-103.3873 459.2002,-109.3873 459.2002,-109.3873 459.2002,-138.5902 459.2002,-138.5902 459.2002,-144.5902 453.2002,-150.5902 447.2002,-150.5902"/>
-<text text-anchor="middle" x="400.0687" y="-133.8887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">How a text came to</text>
-<text text-anchor="middle" x="400.0687" y="-120.6887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">have the</text>
-<text text-anchor="middle" x="400.0687" y="-107.4887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">properties it has</text>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M447.2002,-562.4015C447.2002,-562.4015 352.9372,-562.4015 352.9372,-562.4015 346.9372,-562.4015 340.9372,-556.4015 340.9372,-550.4015 340.9372,-550.4015 340.9372,-521.1985 340.9372,-521.1985 340.9372,-515.1985 346.9372,-509.1985 352.9372,-509.1985 352.9372,-509.1985 447.2002,-509.1985 447.2002,-509.1985 453.2002,-509.1985 459.2002,-515.1985 459.2002,-521.1985 459.2002,-521.1985 459.2002,-550.4015 459.2002,-550.4015 459.2002,-556.4015 453.2002,-562.4015 447.2002,-562.4015"/>
+<text text-anchor="middle" x="400.0687" y="-545.7" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">How a text came to</text>
+<text text-anchor="middle" x="400.0687" y="-532.5" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">have the</text>
+<text text-anchor="middle" x="400.0687" y="-519.3" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">properties it has</text>
 </g>
 <!-- c_decoding_automaticity&#45;&gt;c_text_provenance -->
 <g id="edge18" class="edge">
 <title>c_decoding_automaticity&#45;&gt;c_text_provenance</title>
-<path fill="none" stroke="#7b909f" d="M277.7495,-123.9887C295.0768,-123.9887 314.9145,-123.9887 333.4997,-123.9887"/>
-<polygon fill="#7b909f" stroke="#7b909f" points="333.8259,-126.4388 340.8259,-123.9887 333.8259,-121.5388 333.8259,-126.4388"/>
-<text text-anchor="middle" x="309.1645" y="-126.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
+<path fill="none" stroke="#7b909f" d="M277.7495,-535.8C295.0768,-535.8 314.9145,-535.8 333.4997,-535.8"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="333.8259,-538.2501 340.8259,-535.8 333.8259,-533.3501 333.8259,-538.2501"/>
+<text text-anchor="middle" x="309.1645" y="-538.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
 </g>
 <!-- c_decoding_automaticity&#45;&gt;c_situation_model -->
 <g id="edge13" class="edge">
 <title>c_decoding_automaticity&#45;&gt;c_situation_model</title>
-<path fill="none" stroke="#7b909f" d="M277.3565,-100.0702C336.7182,-72.0061 441.567,-27.1297 537.2584,-9.9887 616.1592,4.1446 643.5699,5.5886 716.8079,-26.9887 727.0344,-31.5376 737.4614,-37.4216 747.1053,-43.4777"/>
-<polygon fill="#7b909f" stroke="#7b909f" points="745.7855,-45.5418 753,-47.2603 748.4318,-41.4178 745.7855,-45.5418"/>
-<text text-anchor="middle" x="498.1964" y="-26.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">increases</text>
+<path fill="none" stroke="#7b909f" d="M277.577,-519.0866C297.2212,-512.3653 320.1619,-504.6096 341.003,-497.8 474.3824,-454.2199 506.71,-435.503 645.34,-413.8 729.4247,-400.6362 827.4009,-392.6691 890.0121,-388.5018"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="890.2664,-390.9405 897.0907,-388.0369 889.9451,-386.051 890.2664,-390.9405"/>
+<text text-anchor="middle" x="576.0757" y="-440.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">increases</text>
 </g>
 <!-- c_verbal_working_memory -->
 <g id="node5" class="node">
 <title>c_verbal_working_memory</title>
-<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M631.6462,-500.5902C631.6462,-500.5902 559.1881,-500.5902 559.1881,-500.5902 553.1881,-500.5902 547.1881,-494.5902 547.1881,-488.5902 547.1881,-488.5902 547.1881,-459.3873 547.1881,-459.3873 547.1881,-453.3873 553.1881,-447.3873 559.1881,-447.3873 559.1881,-447.3873 631.6462,-447.3873 631.6462,-447.3873 637.6462,-447.3873 643.6462,-453.3873 643.6462,-459.3873 643.6462,-459.3873 643.6462,-488.5902 643.6462,-488.5902 643.6462,-494.5902 637.6462,-500.5902 631.6462,-500.5902"/>
-<text text-anchor="middle" x="595.4172" y="-483.8887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Verbal working</text>
-<text text-anchor="middle" x="595.4172" y="-470.6887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">memory of the</text>
-<text text-anchor="middle" x="595.4172" y="-457.4887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">reader</text>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M990.1762,-129.4015C990.1762,-129.4015 917.7181,-129.4015 917.7181,-129.4015 911.7181,-129.4015 905.7181,-123.4015 905.7181,-117.4015 905.7181,-117.4015 905.7181,-88.1985 905.7181,-88.1985 905.7181,-82.1985 911.7181,-76.1985 917.7181,-76.1985 917.7181,-76.1985 990.1762,-76.1985 990.1762,-76.1985 996.1762,-76.1985 1002.1762,-82.1985 1002.1762,-88.1985 1002.1762,-88.1985 1002.1762,-117.4015 1002.1762,-117.4015 1002.1762,-123.4015 996.1762,-129.4015 990.1762,-129.4015"/>
+<text text-anchor="middle" x="953.9471" y="-112.7" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Verbal working</text>
+<text text-anchor="middle" x="953.9471" y="-99.5" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">memory of the</text>
+<text text-anchor="middle" x="953.9471" y="-86.3" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">reader</text>
 </g>
 <!-- c_verbal_working_memory&#45;&gt;c_processing_effort -->
 <g id="edge6" class="edge">
 <title>c_verbal_working_memory&#45;&gt;c_processing_effort</title>
-<path fill="none" stroke="#7b909f" d="M636.8902,-447.2555C642.5274,-443.5157 648.2146,-439.6869 653.5759,-435.9887 682.1831,-416.2558 691.0848,-413.3572 716.8079,-389.9887 733.4803,-374.8425 750.271,-356.1568 763.501,-340.4498"/>
-<polygon fill="#7b909f" stroke="#7b909f" points="765.6035,-341.7542 768.2073,-334.8099 761.8413,-338.6148 765.6035,-341.7542"/>
-<text text-anchor="middle" x="693.1919" y="-427.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">moderates</text>
+<path fill="none" stroke="#7b909f" d="M1002.3821,-104.5131C1027.1734,-107.864 1056.1011,-115.9733 1075.3379,-134.8 1103.7471,-162.6035 1126.6174,-276.262 1136.6522,-333.9172"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="1134.2685,-334.5126 1137.8688,-340.9965 1139.0978,-333.6826 1134.2685,-334.5126"/>
+<text text-anchor="middle" x="1051.7219" y="-137.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">moderates</text>
 </g>
 <!-- c_inferential_resource -->
 <g id="node6" class="node">
 <title>c_inferential_resource</title>
-<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M641.7351,-424.5902C641.7351,-424.5902 549.0992,-424.5902 549.0992,-424.5902 543.0992,-424.5902 537.0992,-418.5902 537.0992,-412.5902 537.0992,-412.5902 537.0992,-383.3873 537.0992,-383.3873 537.0992,-377.3873 543.0992,-371.3873 549.0992,-371.3873 549.0992,-371.3873 641.7351,-371.3873 641.7351,-371.3873 647.7351,-371.3873 653.7351,-377.3873 653.7351,-383.3873 653.7351,-383.3873 653.7351,-412.5902 653.7351,-412.5902 653.7351,-418.5902 647.7351,-424.5902 641.7351,-424.5902"/>
-<text text-anchor="middle" x="595.4172" y="-407.8887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Readiness to</text>
-<text text-anchor="middle" x="595.4172" y="-394.6887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">supply an unstated</text>
-<text text-anchor="middle" x="595.4172" y="-381.4887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">connection</text>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M1000.2651,-53.4015C1000.2651,-53.4015 907.6292,-53.4015 907.6292,-53.4015 901.6292,-53.4015 895.6292,-47.4015 895.6292,-41.4015 895.6292,-41.4015 895.6292,-12.1985 895.6292,-12.1985 895.6292,-6.1985 901.6292,-.1985 907.6292,-.1985 907.6292,-.1985 1000.2651,-.1985 1000.2651,-.1985 1006.2651,-.1985 1012.2651,-6.1985 1012.2651,-12.1985 1012.2651,-12.1985 1012.2651,-41.4015 1012.2651,-41.4015 1012.2651,-47.4015 1006.2651,-53.4015 1000.2651,-53.4015"/>
+<text text-anchor="middle" x="953.9471" y="-36.7" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Readiness to</text>
+<text text-anchor="middle" x="953.9471" y="-23.5" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">supply an unstated</text>
+<text text-anchor="middle" x="953.9471" y="-10.3" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">connection</text>
 </g>
 <!-- c_inferential_resource&#45;&gt;c_processing_effort -->
 <g id="edge7" class="edge">
 <title>c_inferential_resource&#45;&gt;c_processing_effort</title>
-<path fill="none" stroke="#7b909f" d="M653.5993,-379.779C673.9881,-372.6494 696.7845,-363.8147 716.8079,-353.9887 726.0606,-349.4482 735.6059,-344.0097 744.6127,-338.4882"/>
-<polygon fill="#7b909f" stroke="#7b909f" points="746.1068,-340.444 750.7519,-334.6624 743.5152,-336.2854 746.1068,-340.444"/>
-<text text-anchor="middle" x="693.1919" y="-375.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">moderates</text>
+<path fill="none" stroke="#7b909f" d="M1012.2875,-46.0949C1035.0221,-56.3454 1059.3954,-71.1887 1075.3379,-91.8 1104.5998,-129.6314 1127.8901,-268.6559 1137.4521,-333.7541"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="1135.0652,-334.3661 1138.4961,-340.9412 1139.9143,-333.6617 1135.0652,-334.3661"/>
+<text text-anchor="middle" x="1051.7219" y="-94.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">moderates</text>
 </g>
 <!-- c_spoken_rendition -->
 <g id="node7" class="node">
 <title>c_spoken_rendition</title>
-<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M638.6177,-302.5902C638.6177,-302.5902 552.2166,-302.5902 552.2166,-302.5902 546.2166,-302.5902 540.2166,-296.5902 540.2166,-290.5902 540.2166,-290.5902 540.2166,-261.3873 540.2166,-261.3873 540.2166,-255.3873 546.2166,-249.3873 552.2166,-249.3873 552.2166,-249.3873 638.6177,-249.3873 638.6177,-249.3873 644.6177,-249.3873 650.6177,-255.3873 650.6177,-261.3873 650.6177,-261.3873 650.6177,-290.5902 650.6177,-290.5902 650.6177,-296.5902 644.6177,-302.5902 638.6177,-302.5902"/>
-<text text-anchor="middle" x="595.4172" y="-285.8887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Availability of a</text>
-<text text-anchor="middle" x="595.4172" y="-272.6887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">spoken rendition</text>
-<text text-anchor="middle" x="595.4172" y="-259.4887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">alongside the text</text>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M805.7648,-251.4015C805.7648,-251.4015 719.3636,-251.4015 719.3636,-251.4015 713.3636,-251.4015 707.3636,-245.4015 707.3636,-239.4015 707.3636,-239.4015 707.3636,-210.1985 707.3636,-210.1985 707.3636,-204.1985 713.3636,-198.1985 719.3636,-198.1985 719.3636,-198.1985 805.7648,-198.1985 805.7648,-198.1985 811.7648,-198.1985 817.7648,-204.1985 817.7648,-210.1985 817.7648,-210.1985 817.7648,-239.4015 817.7648,-239.4015 817.7648,-245.4015 811.7648,-251.4015 805.7648,-251.4015"/>
+<text text-anchor="middle" x="762.5642" y="-234.7" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Availability of a</text>
+<text text-anchor="middle" x="762.5642" y="-221.5" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">spoken rendition</text>
+<text text-anchor="middle" x="762.5642" y="-208.3" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">alongside the text</text>
 </g>
 <!-- c_spoken_rendition&#45;&gt;c_processing_effort -->
 <g id="edge8" class="edge">
 <title>c_spoken_rendition&#45;&gt;c_processing_effort</title>
-<path fill="none" stroke="#7b909f" d="M650.7524,-285.1158C676.0388,-289.2866 705.9891,-294.2267 731.5733,-298.4466"/>
-<polygon fill="#7b909f" stroke="#7b909f" points="731.3606,-300.8945 738.6661,-299.6165 732.1581,-296.0598 731.3606,-300.8945"/>
-<text text-anchor="middle" x="693.1919" y="-297.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">moderates</text>
+<path fill="none" stroke="#7b909f" d="M817.8731,-231.6109C869.6503,-239.3231 948.3731,-254.5224 1012.1059,-281.8 1044.9357,-295.8512 1078.4668,-318.2588 1103.2581,-336.6788"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="1101.9784,-338.7817 1109.0472,-341.0257 1104.9206,-334.8633 1101.9784,-338.7817"/>
+<text text-anchor="middle" x="953.9471" y="-284.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">moderates</text>
 </g>
 <!-- c_spoken_rendition&#45;&gt;c_situation_model -->
 <g id="edge14" class="edge">
 <title>c_spoken_rendition&#45;&gt;c_situation_model</title>
-<path fill="none" stroke="#7b909f" d="M643.7742,-249.3072C647.4767,-245.8747 650.8329,-242.1033 653.5759,-237.9887 675.1413,-205.64 646.8043,-183.5 669.5759,-151.9887 683.6111,-132.5669 696.5353,-138.7643 716.8079,-125.9887 727.1162,-119.4926 737.9379,-112.0851 747.9868,-104.9379"/>
-<polygon fill="#7b909f" stroke="#7b909f" points="749.5418,-106.8377 753.8044,-100.7686 746.6874,-102.8549 749.5418,-106.8377"/>
-<text text-anchor="middle" x="693.1919" y="-154.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">increases</text>
+<path fill="none" stroke="#7b909f" d="M802.4091,-251.4266C807.6117,-255.1503 812.8149,-259.0036 817.6644,-262.8 854.4683,-291.6121 894.0021,-327.6225 920.9605,-353.0294"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="919.4102,-354.9354 926.18,-357.9642 922.7766,-351.3748 919.4102,-354.9354"/>
+<text text-anchor="middle" x="856.7264" y="-316.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">increases</text>
 </g>
 <!-- c_accumulated_reading -->
 <g id="node8" class="node">
 <title>c_accumulated_reading</title>
-<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M105.2741,-150.5902C105.2741,-150.5902 12.2413,-150.5902 12.2413,-150.5902 6.2413,-150.5902 .2413,-144.5902 .2413,-138.5902 .2413,-138.5902 .2413,-109.3873 .2413,-109.3873 .2413,-103.3873 6.2413,-97.3873 12.2413,-97.3873 12.2413,-97.3873 105.2741,-97.3873 105.2741,-97.3873 111.2741,-97.3873 117.2741,-103.3873 117.2741,-109.3873 117.2741,-109.3873 117.2741,-138.5902 117.2741,-138.5902 117.2741,-144.5902 111.2741,-150.5902 105.2741,-150.5902"/>
-<text text-anchor="middle" x="58.7577" y="-133.8887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Reading</text>
-<text text-anchor="middle" x="58.7577" y="-120.6887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">accumulated within</text>
-<text text-anchor="middle" x="58.7577" y="-107.4887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">the app</text>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M105.2741,-562.4015C105.2741,-562.4015 12.2413,-562.4015 12.2413,-562.4015 6.2413,-562.4015 .2413,-556.4015 .2413,-550.4015 .2413,-550.4015 .2413,-521.1985 .2413,-521.1985 .2413,-515.1985 6.2413,-509.1985 12.2413,-509.1985 12.2413,-509.1985 105.2741,-509.1985 105.2741,-509.1985 111.2741,-509.1985 117.2741,-515.1985 117.2741,-521.1985 117.2741,-521.1985 117.2741,-550.4015 117.2741,-550.4015 117.2741,-556.4015 111.2741,-562.4015 105.2741,-562.4015"/>
+<text text-anchor="middle" x="58.7577" y="-545.7" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Reading</text>
+<text text-anchor="middle" x="58.7577" y="-532.5" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">accumulated within</text>
+<text text-anchor="middle" x="58.7577" y="-519.3" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">the app</text>
 </g>
 <!-- c_accumulated_reading&#45;&gt;c_decoding_automaticity -->
 <g id="edge5" class="edge">
 <title>c_accumulated_reading&#45;&gt;c_decoding_automaticity</title>
-<path fill="none" stroke="#7b909f" d="M117.4346,-123.9887C135.7182,-123.9887 155.8136,-123.9887 173.8649,-123.9887"/>
-<polygon fill="#7b909f" stroke="#7b909f" points="173.9365,-126.4388 180.9364,-123.9887 173.9364,-121.5388 173.9365,-126.4388"/>
-<text text-anchor="middle" x="149.3539" y="-126.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
+<path fill="none" stroke="#7b909f" d="M117.4346,-535.8C135.7182,-535.8 155.8136,-535.8 173.8649,-535.8"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="173.9365,-538.2501 180.9364,-535.8 173.9364,-533.3501 173.9365,-538.2501"/>
+<text text-anchor="middle" x="149.3539" y="-538.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
 </g>
 <!-- c_experienced_difficulty -->
 <g id="node10" class="node">
 <title>c_experienced_difficulty</title>
-<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M981.56,-334.5902C981.56,-334.5902 921.7721,-334.5902 921.7721,-334.5902 915.7721,-334.5902 909.7721,-328.5902 909.7721,-322.5902 909.7721,-322.5902 909.7721,-293.3873 909.7721,-293.3873 909.7721,-287.3873 915.7721,-281.3873 921.7721,-281.3873 921.7721,-281.3873 981.56,-281.3873 981.56,-281.3873 987.56,-281.3873 993.56,-287.3873 993.56,-293.3873 993.56,-293.3873 993.56,-322.5902 993.56,-322.5902 993.56,-328.5902 987.56,-334.5902 981.56,-334.5902"/>
-<text text-anchor="middle" x="951.6661" y="-317.8887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Difficulty the</text>
-<text text-anchor="middle" x="951.6661" y="-304.6887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">child reports</text>
-<text text-anchor="middle" x="951.6661" y="-291.4887" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">having met</text>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M1328.5004,-394.4015C1328.5004,-394.4015 1268.7125,-394.4015 1268.7125,-394.4015 1262.7125,-394.4015 1256.7125,-388.4015 1256.7125,-382.4015 1256.7125,-382.4015 1256.7125,-353.1985 1256.7125,-353.1985 1256.7125,-347.1985 1262.7125,-341.1985 1268.7125,-341.1985 1268.7125,-341.1985 1328.5004,-341.1985 1328.5004,-341.1985 1334.5004,-341.1985 1340.5004,-347.1985 1340.5004,-353.1985 1340.5004,-353.1985 1340.5004,-382.4015 1340.5004,-382.4015 1340.5004,-388.4015 1334.5004,-394.4015 1328.5004,-394.4015"/>
+<text text-anchor="middle" x="1298.6064" y="-377.7" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Difficulty the</text>
+<text text-anchor="middle" x="1298.6064" y="-364.5" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">child reports</text>
+<text text-anchor="middle" x="1298.6064" y="-351.3" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">having met</text>
 </g>
 <!-- c_processing_effort&#45;&gt;c_experienced_difficulty -->
 <g id="edge9" class="edge">
 <title>c_processing_effort&#45;&gt;c_experienced_difficulty</title>
-<path fill="none" stroke="#7b909f" d="M840.3139,-307.9887C860.1777,-307.9887 882.8635,-307.9887 902.5531,-307.9887"/>
-<polygon fill="#7b909f" stroke="#7b909f" points="902.6608,-310.4388 909.6608,-307.9887 902.6607,-305.5388 902.6608,-310.4388"/>
-<text text-anchor="middle" x="877.8806" y="-310.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
+<path fill="none" stroke="#7b909f" d="M1192.9538,-367.8C1211.1487,-367.8 1231.6106,-367.8 1249.6471,-367.8"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="1249.6906,-370.2501 1256.6906,-367.8 1249.6905,-365.3501 1249.6906,-370.2501"/>
+<text text-anchor="middle" x="1224.821" y="-370.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
 </g>
 <!-- c_text_provenance&#45;&gt;c_lexical_accessibility -->
 <g id="edge15" class="edge">
 <title>c_text_provenance&#45;&gt;c_lexical_accessibility</title>
-<path fill="none" stroke="#7b909f" d="M459.2098,-123.9887C483.5353,-123.9887 511.6582,-123.9887 536.0111,-123.9887"/>
-<polygon fill="#7b909f" stroke="#7b909f" points="536.1055,-126.4388 543.1055,-123.9887 536.1054,-121.5388 536.1055,-126.4388"/>
-<text text-anchor="middle" x="498.1964" y="-126.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
+<path fill="none" stroke="#7b909f" d="M413.797,-509.0866C433.4857,-473.1489 472.9308,-409.3076 522.8114,-370.8 563.2268,-339.5995 584.3617,-351.9626 629.34,-327.8 636.9421,-323.7161 637.2912,-319.9123 645.34,-316.8 663.5167,-309.7715 684.3219,-305.755 703.3106,-303.4834"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="703.799,-305.8946 710.49,-302.6956 703.2645,-301.0239 703.799,-305.8946"/>
+<text text-anchor="middle" x="576.0757" y="-373.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
 </g>
 <!-- c_text_provenance&#45;&gt;c_structural_integration_load -->
 <g id="edge16" class="edge">
 <title>c_text_provenance&#45;&gt;c_structural_integration_load</title>
-<path fill="none" stroke="#7b909f" d="M459.2098,-100.98C482.7159,-91.835 509.7678,-81.3105 533.5376,-72.0629"/>
-<polygon fill="#7b909f" stroke="#7b909f" points="534.5138,-74.312 540.1491,-69.4907 532.7371,-69.7455 534.5138,-74.312"/>
-<text text-anchor="middle" x="498.1964" y="-95.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
+<path fill="none" stroke="#7b909f" d="M441.6514,-562.4016C464.71,-575.9545 494.3958,-591.4955 522.8114,-600.8 594.451,-624.2578 616.8574,-629.5875 691.464,-618.8 694.4018,-618.3752 697.3873,-617.8565 700.3881,-617.2643"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="701.0726,-619.6233 707.4025,-615.7586 700.0441,-614.8324 701.0726,-619.6233"/>
+<text text-anchor="middle" x="576.0757" y="-626.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
 </g>
 <!-- c_text_provenance&#45;&gt;c_referential_continuity -->
 <g id="edge17" class="edge">
 <title>c_text_provenance&#45;&gt;c_referential_continuity</title>
-<path fill="none" stroke="#7b909f" d="M459.2098,-146.9975C483.4344,-156.422 511.425,-167.3117 535.7079,-176.759"/>
-<polygon fill="#7b909f" stroke="#7b909f" points="535.0404,-179.1281 542.4524,-179.3829 536.8171,-174.5615 535.0404,-179.1281"/>
-<text text-anchor="middle" x="498.1964" y="-173.9887" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
+<path fill="none" stroke="#7b909f" d="M445.764,-509.0763C468.2363,-497.1902 496.1645,-484.228 522.8114,-476.8 582.3176,-460.2122 652.9881,-455.1099 702.12,-453.7611"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="702.2705,-456.2083 709.2088,-453.5884 702.1511,-451.3097 702.2705,-456.2083"/>
+<text text-anchor="middle" x="576.0757" y="-479.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
+</g>
+<!-- c_story_content -->
+<g id="node14" class="node">
+<title>c_story_content</title>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M617.1053,-540.202C617.1053,-540.202 535.0461,-540.202 535.0461,-540.202 529.0461,-540.202 523.0461,-534.202 523.0461,-528.202 523.0461,-528.202 523.0461,-511.398 523.0461,-511.398 523.0461,-505.398 529.0461,-499.398 535.0461,-499.398 535.0461,-499.398 617.1053,-499.398 617.1053,-499.398 623.1053,-499.398 629.1053,-505.398 629.1053,-511.398 629.1053,-511.398 629.1053,-528.202 629.1053,-528.202 629.1053,-534.202 623.1053,-540.202 617.1053,-540.202"/>
+<text text-anchor="middle" x="576.0757" y="-523.1" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Story content set</text>
+<text text-anchor="middle" x="576.0757" y="-509.9" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">at generation</text>
+</g>
+<!-- c_text_provenance&#45;&gt;c_story_content -->
+<g id="edge26" class="edge">
+<title>c_text_provenance&#45;&gt;c_story_content</title>
+<path fill="none" stroke="#7b909f" d="M459.1661,-530.4277C477.3279,-528.7767 497.3374,-526.9577 515.5907,-525.2984"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="516.009,-527.7206 522.7584,-524.6468 515.5653,-522.8407 516.009,-527.7206"/>
+<text text-anchor="middle" x="490.9729" y="-530.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
+</g>
+<!-- c_text_provenance&#45;&gt;c_layout -->
+<g id="edge31" class="edge">
+<title>c_text_provenance&#45;&gt;c_layout</title>
+<path fill="none" stroke="#7b909f" d="M421.0191,-562.8269C443.0674,-588.7697 480.4146,-626.1138 522.8114,-640.8 649.3933,-684.6479 809.7009,-668.6542 894.7139,-655.0589"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="895.1883,-657.464 901.7028,-653.9194 894.3997,-652.6279 895.1883,-657.464"/>
+<text text-anchor="middle" x="668.402" y="-671.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
+</g>
+<!-- c_translation -->
+<g id="node12" class="node">
+<title>c_translation</title>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M440.8734,-299.4015C440.8734,-299.4015 359.264,-299.4015 359.264,-299.4015 353.264,-299.4015 347.264,-293.4015 347.264,-287.4015 347.264,-287.4015 347.264,-258.1985 347.264,-258.1985 347.264,-252.1985 353.264,-246.1985 359.264,-246.1985 359.264,-246.1985 440.8734,-246.1985 440.8734,-246.1985 446.8734,-246.1985 452.8734,-252.1985 452.8734,-258.1985 452.8734,-258.1985 452.8734,-287.4015 452.8734,-287.4015 452.8734,-293.4015 446.8734,-299.4015 440.8734,-299.4015"/>
+<text text-anchor="middle" x="400.0687" y="-282.7" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Machine</text>
+<text text-anchor="middle" x="400.0687" y="-269.5" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">translation of the</text>
+<text text-anchor="middle" x="400.0687" y="-256.3" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">English source</text>
+</g>
+<!-- c_translation&#45;&gt;c_lexical_accessibility -->
+<g id="edge19" class="edge">
+<title>c_translation&#45;&gt;c_lexical_accessibility</title>
+<path fill="none" stroke="#7b909f" d="M423.7973,-246.142C446.533,-222.7732 483.1671,-190.4622 522.8114,-176.8 567.574,-161.374 586.0449,-157.638 629.34,-176.8 676.5603,-197.6993 668.5925,-228.8067 707.464,-262.8 710.0609,-265.071 712.7964,-267.3263 715.6036,-269.539"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="714.3977,-271.7013 721.4448,-274.0124 717.377,-267.8111 714.3977,-271.7013"/>
+<text text-anchor="middle" x="576.0757" y="-179.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
+</g>
+<!-- c_translation&#45;&gt;c_structural_integration_load -->
+<g id="edge20" class="edge">
+<title>c_translation&#45;&gt;c_structural_integration_load</title>
+<path fill="none" stroke="#7b909f" d="M411.4778,-299.4691C440.9349,-368.2148 517.6096,-546.4061 522.8114,-550.8 549.0979,-573.0042 638.3673,-585.942 700.2267,-592.4403"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="700.0374,-594.8836 707.2515,-593.1631 700.539,-590.0094 700.0374,-594.8836"/>
+<text text-anchor="middle" x="576.0757" y="-585.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
+</g>
+<!-- c_translation&#45;&gt;c_referential_continuity -->
+<g id="edge21" class="edge">
+<title>c_translation&#45;&gt;c_referential_continuity</title>
+<path fill="none" stroke="#7b909f" d="M452.7464,-268.9571C503.3628,-268.1041 579.3353,-274.6331 629.34,-314.8 643.6266,-326.2759 634.5578,-337.9829 645.34,-352.8 651.4288,-361.1673 692.6561,-396.0525 724.5164,-422.5021"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="722.9906,-424.4196 729.9432,-427.0011 726.1179,-420.6474 722.9906,-424.4196"/>
+<text text-anchor="middle" x="576.0757" y="-317.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
+</g>
+<!-- c_translation_quality -->
+<g id="node13" class="node">
+<title>c_translation_quality</title>
+<path fill="#e4f1f1" stroke="#1e7b7b" stroke-width="1.1" d="M617.0944,-253.4015C617.0944,-253.4015 535.057,-253.4015 535.057,-253.4015 529.057,-253.4015 523.057,-247.4015 523.057,-241.4015 523.057,-241.4015 523.057,-212.1985 523.057,-212.1985 523.057,-206.1985 529.057,-200.1985 535.057,-200.1985 535.057,-200.1985 617.0944,-200.1985 617.0944,-200.1985 623.0944,-200.1985 629.0944,-206.1985 629.0944,-212.1985 629.0944,-212.1985 629.0944,-241.4015 629.0944,-241.4015 629.0944,-247.4015 623.0944,-253.4015 617.0944,-253.4015"/>
+<text text-anchor="middle" x="576.0757" y="-236.7" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">Fidelity and</text>
+<text text-anchor="middle" x="576.0757" y="-223.5" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">fluency of a</text>
+<text text-anchor="middle" x="576.0757" y="-210.3" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#12283a">rendered version</text>
+</g>
+<!-- c_translation&#45;&gt;c_translation_quality -->
+<g id="edge22" class="edge">
+<title>c_translation&#45;&gt;c_translation_quality</title>
+<path fill="none" stroke="#7b909f" d="M452.8766,-258.9985C472.7999,-253.7915 495.6045,-247.8314 516.1337,-242.466"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="516.8481,-244.8117 523.0011,-240.6712 515.6091,-240.0709 516.8481,-244.8117"/>
+<text text-anchor="middle" x="490.9729" y="-254.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
+</g>
+<!-- c_translation_quality&#45;&gt;c_lexical_accessibility -->
+<g id="edge24" class="edge">
+<title>c_translation_quality&#45;&gt;c_lexical_accessibility</title>
+<path fill="none" stroke="#7b909f" d="M629.2802,-247.3516C648.8568,-254.9655 671.1926,-263.7137 691.464,-271.8 695.4457,-273.3883 699.5489,-275.0352 703.6803,-276.7008"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="702.7741,-278.977 710.1822,-279.3279 704.6099,-274.4339 702.7741,-278.977"/>
+<text text-anchor="middle" x="668.402" y="-274.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
+</g>
+<!-- c_translation_quality&#45;&gt;c_referential_continuity -->
+<g id="edge25" class="edge">
+<title>c_translation_quality&#45;&gt;c_referential_continuity</title>
+<path fill="none" stroke="#7b909f" d="M609.9997,-253.4993C616.5757,-259.0407 623.2966,-264.9715 629.34,-270.8 637.0444,-278.2304 638.1946,-280.8306 645.34,-288.8 665.742,-311.5545 673.0552,-315.4048 691.464,-339.8 711.1134,-365.8391 730.5131,-397.4501 744.0718,-420.7742"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="742.1146,-422.2844 747.7365,-427.1215 746.3581,-419.8343 742.1146,-422.2844"/>
+<text text-anchor="middle" x="668.402" y="-342.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">increases</text>
+</g>
+<!-- c_translation_quality&#45;&gt;c_processing_effort -->
+<g id="edge23" class="edge">
+<title>c_translation_quality&#45;&gt;c_processing_effort</title>
+<path fill="none" stroke="#7b909f" d="M629.2673,-206.6955C652.8532,-198.8068 681.1675,-190.7142 707.464,-186.8 755.9082,-179.5892 769.135,-180.1864 817.6644,-186.8 938.911,-203.3235 985.6366,-200.5688 1075.3379,-283.8 1091.8839,-299.1526 1107.7319,-318.7819 1119.8382,-335.204"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="1118.0245,-336.8757 1124.1235,-341.0953 1121.9871,-333.9933 1118.0245,-336.8757"/>
+<text text-anchor="middle" x="856.7264" y="-196.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">decreases</text>
+</g>
+<!-- c_story_content&#45;&gt;c_lexical_accessibility -->
+<g id="edge28" class="edge">
+<title>c_story_content&#45;&gt;c_lexical_accessibility</title>
+<path fill="none" stroke="#7b909f" d="M608.9593,-499.5093C616.0319,-494.464 623.2147,-488.7755 629.34,-482.8 642.2012,-470.2533 705.1002,-382.1463 739.677,-333.274"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="741.7072,-334.6463 743.748,-327.5162 737.7062,-331.8174 741.7072,-334.6463"/>
+<text text-anchor="middle" x="668.402" y="-463.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
+</g>
+<!-- c_story_content&#45;&gt;c_structural_integration_load -->
+<g id="edge29" class="edge">
+<title>c_story_content&#45;&gt;c_structural_integration_load</title>
+<path fill="none" stroke="#7b909f" d="M624.5865,-540.09C647.8676,-549.8274 676.0245,-561.6042 700.8157,-571.9733"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="699.972,-574.2761 707.3753,-574.7169 701.8628,-569.7555 699.972,-574.2761"/>
+<text text-anchor="middle" x="668.402" y="-567.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
+</g>
+<!-- c_story_content&#45;&gt;c_referential_continuity -->
+<g id="edge30" class="edge">
+<title>c_story_content&#45;&gt;c_referential_continuity</title>
+<path fill="none" stroke="#7b909f" d="M629.2662,-500.9754C652.1949,-492.8607 679.1129,-483.3342 702.7341,-474.9744"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="703.8443,-477.1805 709.6258,-472.5354 702.2095,-472.5612 703.8443,-477.1805"/>
+<text text-anchor="middle" x="668.402" y="-496.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
+</g>
+<!-- c_story_content&#45;&gt;c_processing_effort -->
+<g id="edge27" class="edge">
+<title>c_story_content&#45;&gt;c_processing_effort</title>
+<path fill="none" stroke="#7b909f" d="M629.1523,-523.1142C690.3096,-525.6924 793.4754,-526.2183 879.7884,-507.8 941.7435,-494.5794 953.8931,-479.7898 1012.1059,-454.8 1040.5165,-442.6038 1049.3487,-442.5472 1075.3379,-425.8 1087.2137,-418.1474 1099.1809,-408.5076 1109.6412,-399.296"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="1111.3833,-401.0248 1114.9654,-394.5308 1108.1154,-397.3736 1111.3833,-401.0248"/>
+<text text-anchor="middle" x="856.7264" y="-517.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">causes</text>
+</g>
+<!-- c_layout&#45;&gt;c_processing_effort -->
+<g id="edge33" class="edge">
+<title>c_layout&#45;&gt;c_processing_effort</title>
+<path fill="none" stroke="#7b909f" d="M1006.2081,-639.2881C1030.1894,-634.6302 1057.2464,-625.3166 1075.3379,-606.8 1103.8514,-577.6164 1126.7502,-460.795 1136.7349,-401.986"/>
+<polygon fill="#7b909f" stroke="#7b909f" points="1139.2035,-402.0787 1137.9446,-394.77 1134.3709,-401.2685 1139.2035,-402.0787"/>
+<text text-anchor="middle" x="1051.7219" y="-635.8" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#0f6e6e">increases</text>
 </g>
 </g>
 </svg>
