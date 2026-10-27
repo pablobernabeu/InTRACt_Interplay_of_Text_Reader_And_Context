@@ -1,17 +1,94 @@
 id,folder,lang,age,issue,detail
-2334,Beaky the Duck-Sandyland-Learning-VoyagePrompts-Prins the Penguin-old,en-us,old,empty page,page 20
-5901,Bingo the Bear-Pinkerton-Honesty-VoyagePrompts-Remi the Rabbit-old,en-us,old,empty page,page 24
-14258,Meri the Monkey-Sandyland-Friendship-DefeatMonsterPrompts-Beaky the Duck-mid,en-us,mid,empty page,page 16
-21234,Remi the Rabbit-Funland-Honesty-DefeatMonsterPrompts-Meri the Monkey-old,en-us,old,empty page,page 18
-21408,Remi the Rabbit-Funland-Sustainability-DefeatMonsterPrompts-Wispy the Sheep-old,en-us,old,page numbers skip or repeat,1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 17 18 19 20
-23424,Remi the Rabbit-Snowtown-Sustainability-DefeatMonsterPrompts-Prins the Penguin-old,en-us,old,page numbers skip or repeat,1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 17 18 19 20
-23839,Remi the Rabbit-Stellacity-Sustainability-DefeatMonsterPrompts-Zippy the Bird-young,en-us,young,page numbers skip or repeat,1 2 3 12 13 14 15 16 17
-26522,Roff the Fox-Sandyland-Honesty-QuestPrompts-Hollis the Hedgehog-mid,en-us,mid,page numbers skip or repeat,1 2 3 12 13 14 15 16 17
-26802,Roff the Fox-Sealight-Diversity-VoyagePrompts-Remi the Rabbit-old,en-us,old,empty page,page 20
-28431,Saffi the Mouse-AnimaLearn-Diversity-VoyagePrompts-Zippy the Bird-old,en-us,old,page numbers skip or repeat,1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 17 18 19 20
-29475,Saffi the Mouse-Funland-Learning-VoyagePrompts-Remi the Rabbit-old,en-us,old,empty page,page 13
-30957,Saffi the Mouse-Sealight-Honesty-DefeatMonsterPrompts-Prins the Penguin-old,en-us,old,empty page,page 23
-38622,Zippy the Bird-Sandyland-Friendship-VoyagePrompts-Meri the Monkey-old,en-us,old,empty page,page 20
-40506,PD_Jingwei Filling up the Sea Young,en-us,young,page numbers skip or repeat,1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 19 20 21
-40534,PD_Jack and the Enchanted Bean Old,en-us,old,page numbers skip or repeat,1 2 3 4 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21
-40555,PD_The Wind in the Willows old,en-us,old,page numbers skip or repeat,1 2 3 4 5 6 7 8 9 10 11 12 12 13 14 15 16 17 18 19 20 21 22 23 24
+5010,Bingo the Bear-Funland-Friendship-VoyagePrompts-Remi the Rabbit-old,en-us,old,page marked missing in en-us,page 13
+5010,Bingo the Bear-Funland-Friendship-VoyagePrompts-Remi the Rabbit-old,ar-sa,old,page marked missing in en-us,page 13
+17328,Prins the Penguin-Funland-Learning-VoyagePrompts-Saffi the Mouse-old,ar-sa,old,page count differs from en-us,"19 pages, en-us has 20"
+40532,PD_CinderellaOld,ar-sa,old,page count differs from en-us,"28 pages, en-us has 29"
+40534,PD_Jack and the Enchanted Bean Old,ar-sa,old,page count differs from en-us,"21 pages, en-us has 20"
+40548,PD_The Jungle Book old,ar-sa,old,page count differs from en-us,"24 pages, en-us has 25"
+5010,Bingo the Bear-Funland-Friendship-VoyagePrompts-Remi the Rabbit-old,bg-bg,old,page marked missing in en-us,page 13
+6717,Bingo the Bear-Sealight-Honesty-VoyagePrompts-Saffi the Mouse-old,bg-bg,old,page count differs from en-us,"19 pages, en-us has 20"
+5010,Bingo the Bear-Funland-Friendship-VoyagePrompts-Remi the Rabbit-old,de-de,old,page marked missing in en-us,page 13
+13334,Meri the Monkey-Funland-Sustainability-QuestPrompts-Wispy the Sheep-mid,de-de,mid,title line is a page marker,Page 1:
+13850,Meri the Monkey-Pinkerton-Diversity-VoyagePrompts-Zippy the Bird-mid,de-de,mid,title line is a page marker,Page 1:
+40518,PD_The Jackal and the Drum YOUNG,de-de,young,page count differs from en-us,"10 pages, en-us has 11"
+40534,PD_Jack and the Enchanted Bean Old,de-de,old,page count differs from en-us,"21 pages, en-us has 20"
+40539,PD_Moby Dick old,de-de,old,backslash other than a line-break escape,1 in the text
+5010,Bingo the Bear-Funland-Friendship-VoyagePrompts-Remi the Rabbit-old,el-gr,old,page marked missing in en-us,page 13
+33328,Wispy the Sheep-Funland-Friendship-QuestPrompts-Meri the Monkey-young,el-gr,young,page count differs from en-us,"16 pages, en-us has 17"
+5010,Bingo the Bear-Funland-Friendship-VoyagePrompts-Remi the Rabbit-old,es-es,old,page marked missing in en-us,page 13
+21316,Remi the Rabbit-Funland-Learning-DefeatMonsterPrompts-Prins the Penguin-young,es-es,young,title line is a page marker,Page 1:
+40555,PD_The Wind in the Willows old,es-es,old,page count differs from en-us,"24 pages, en-us has 25"
+5010,Bingo the Bear-Funland-Friendship-VoyagePrompts-Remi the Rabbit-old,fr-fr,old,page marked missing in en-us,page 13
+12837,Meri the Monkey-Belleville-Learning-QuestPrompts-Prins the Penguin-old,fr-fr,old,title line is a page marker,Page 1:
+13333,Meri the Monkey-Funland-Sustainability-QuestPrompts-Wispy the Sheep-young,fr-fr,young,title line is a page marker,Page 1:
+13334,Meri the Monkey-Funland-Sustainability-QuestPrompts-Wispy the Sheep-mid,fr-fr,mid,title line is a page marker,Page 1:
+15817,Meri the Monkey-Treetops-Diversity-DefeatMonsterPrompts-Wispy the Sheep-young,fr-fr,young,title line is a page marker,Page 1:
+21316,Remi the Rabbit-Funland-Learning-DefeatMonsterPrompts-Prins the Penguin-young,fr-fr,young,title line is a page marker,Page 1:
+40524,PD_The Turnip Young,fr-fr,young,page count differs from en-us,"23 pages, en-us has 24"
+1403,Beaky the Duck-Islandia-Honesty-DefeatMonsterPrompts-Zippy the Bird-mid,he-il,mid,page count differs from en-us,"1 pages, en-us has 17"
+1403,Beaky the Duck-Islandia-Honesty-DefeatMonsterPrompts-Zippy the Bird-mid,he-il,mid,repetitive text,compresses to 0.06 of the language's median ratio
+2732,Beaky the Duck-Sealight-Learning-VoyagePrompts-Hollis the Hedgehog-mid,he-il,mid,page count differs from en-us,"1 pages, en-us has 17"
+2732,Beaky the Duck-Sealight-Learning-VoyagePrompts-Hollis the Hedgehog-mid,he-il,mid,repetitive text,compresses to 0.05 of the language's median ratio
+5010,Bingo the Bear-Funland-Friendship-VoyagePrompts-Remi the Rabbit-old,he-il,old,page marked missing in en-us,page 13
+6717,Bingo the Bear-Sealight-Honesty-VoyagePrompts-Saffi the Mouse-old,he-il,old,page count differs from en-us,"19 pages, en-us has 20"
+16591,Prins the Penguin-AnimaLearn-Sustainability-VoyagePrompts-Remi the Rabbit-young,he-il,young,page count differs from en-us,"1 pages, en-us has 17"
+16591,Prins the Penguin-AnimaLearn-Sustainability-VoyagePrompts-Remi the Rabbit-young,he-il,young,repetitive text,compresses to 0.06 of the language's median ratio
+21634,Remi the Rabbit-Islandia-Honesty-DefeatMonsterPrompts-Hollis the Hedgehog-young,he-il,young,page count differs from en-us,"1 pages, en-us has 17"
+21634,Remi the Rabbit-Islandia-Honesty-DefeatMonsterPrompts-Hollis the Hedgehog-young,he-il,young,repetitive text,compresses to 0.06 of the language's median ratio
+22368,Remi the Rabbit-Sandyland-Friendship-DefeatMonsterPrompts-Meri the Monkey-old,he-il,old,page count differs from en-us,"19 pages, en-us has 20"
+35712,Wispy the Sheep-Stellacity-Diversity-VoyagePrompts-Remi the Rabbit-old,he-il,old,page count differs from en-us,"9 pages, en-us has 20"
+35712,Wispy the Sheep-Stellacity-Diversity-VoyagePrompts-Remi the Rabbit-old,he-il,old,repetitive text,compresses to 0.39 of the language's median ratio
+36485,Zippy the Bird-AnimaLearn-Diversity-QuestPrompts-Hollis the Hedgehog-mid,he-il,mid,page count differs from en-us,"6 pages, en-us has 17"
+36485,Zippy the Bird-AnimaLearn-Diversity-QuestPrompts-Hollis the Hedgehog-mid,he-il,mid,repetitive text,compresses to 0.24 of the language's median ratio
+38836,Zippy the Bird-Sandyland-Sustainability-QuestPrompts-Meri the Monkey-young,he-il,young,page count differs from en-us,"16 pages, en-us has 17"
+39757,Zippy the Bird-Stellacity-Diversity-VoyagePrompts-Prins the Penguin-young,he-il,young,page count differs from en-us,"18 pages, en-us has 19"
+5010,Bingo the Bear-Funland-Friendship-VoyagePrompts-Remi the Rabbit-old,hu-hu,old,page marked missing in en-us,page 13
+6717,Bingo the Bear-Sealight-Honesty-VoyagePrompts-Saffi the Mouse-old,hu-hu,old,page count differs from en-us,"19 pages, en-us has 20"
+14347,Meri the Monkey-Sandyland-Honesty-DefeatMonsterPrompts-Prins the Penguin-young,hu-hu,young,title line is a page marker,Page 1:
+40518,PD_The Jackal and the Drum YOUNG,hu-hu,young,page count differs from en-us,"10 pages, en-us has 11"
+40534,PD_Jack and the Enchanted Bean Old,hu-hu,old,page count differs from en-us,"21 pages, en-us has 20"
+40555,PD_The Wind in the Willows old,hu-hu,old,page count differs from en-us,"24 pages, en-us has 25"
+5010,Bingo the Bear-Funland-Friendship-VoyagePrompts-Remi the Rabbit-old,it-it,old,page marked missing in en-us,page 13
+12837,Meri the Monkey-Belleville-Learning-QuestPrompts-Prins the Penguin-old,it-it,old,title line is a page marker,Page 1:
+13850,Meri the Monkey-Pinkerton-Diversity-VoyagePrompts-Zippy the Bird-mid,it-it,mid,title line is a page marker,Page 1:
+14347,Meri the Monkey-Sandyland-Honesty-DefeatMonsterPrompts-Prins the Penguin-young,it-it,young,title line is a page marker,Page 1:
+15817,Meri the Monkey-Treetops-Diversity-DefeatMonsterPrompts-Wispy the Sheep-young,it-it,young,title line is a page marker,Page 1:
+21316,Remi the Rabbit-Funland-Learning-DefeatMonsterPrompts-Prins the Penguin-young,it-it,young,title line is a page marker,Page 1:
+40518,PD_The Jackal and the Drum YOUNG,it-it,young,page count differs from en-us,"10 pages, en-us has 11"
+5010,Bingo the Bear-Funland-Friendship-VoyagePrompts-Remi the Rabbit-old,kk-kz,old,page marked missing in en-us,page 13
+5010,Bingo the Bear-Funland-Friendship-VoyagePrompts-Remi the Rabbit-old,ko-kr,old,page marked missing in en-us,page 13
+40518,PD_The Jackal and the Drum YOUNG,ko-kr,young,page count differs from en-us,"10 pages, en-us has 11"
+40534,PD_Jack and the Enchanted Bean Old,ko-kr,old,page count differs from en-us,"21 pages, en-us has 20"
+40543,PD_The Blue Jackal OLD,ko-kr,old,backslash other than a line-break escape,2 in the text
+5010,Bingo the Bear-Funland-Friendship-VoyagePrompts-Remi the Rabbit-old,nl-nl,old,page marked missing in en-us,page 13
+12837,Meri the Monkey-Belleville-Learning-QuestPrompts-Prins the Penguin-old,nl-nl,old,title line is a page marker,Page 1:
+13333,Meri the Monkey-Funland-Sustainability-QuestPrompts-Wispy the Sheep-young,nl-nl,young,title line is a page marker,Page 1:
+13334,Meri the Monkey-Funland-Sustainability-QuestPrompts-Wispy the Sheep-mid,nl-nl,mid,title line is a page marker,Page 1:
+14347,Meri the Monkey-Sandyland-Honesty-DefeatMonsterPrompts-Prins the Penguin-young,nl-nl,young,title line is a page marker,Page 1:
+21316,Remi the Rabbit-Funland-Learning-DefeatMonsterPrompts-Prins the Penguin-young,nl-nl,young,title line is a page marker,Page 1:
+40506,PD_Jingwei Filling up the Sea Young,nl-nl,young,page count differs from en-us,"19 pages, en-us has 20"
+40518,PD_The Jackal and the Drum YOUNG,nl-nl,young,page count differs from en-us,"10 pages, en-us has 11"
+40520,PD_The Mountain of Gold YOUNG Current,nl-nl,young,backslash other than a line-break escape,1 in the text
+40531,PD_AliceOld,nl-nl,old,page count differs from en-us,"31 pages, en-us has 32"
+40534,PD_Jack and the Enchanted Bean Old,nl-nl,old,page count differs from en-us,"21 pages, en-us has 20"
+40538,PD_MidnightOld,nl-nl,old,backslash other than a line-break escape,2 in the text
+40555,PD_The Wind in the Willows old,nl-nl,old,page count differs from en-us,"24 pages, en-us has 25"
+40559,PD_Sun and Moon,nl-nl,,backslash other than a line-break escape,1 in the text
+5010,Bingo the Bear-Funland-Friendship-VoyagePrompts-Remi the Rabbit-old,pl-pl,old,page marked missing in en-us,page 13
+13334,Meri the Monkey-Funland-Sustainability-QuestPrompts-Wispy the Sheep-mid,pl-pl,mid,title line is a page marker,Page 1:
+14347,Meri the Monkey-Sandyland-Honesty-DefeatMonsterPrompts-Prins the Penguin-young,pl-pl,young,title line is a page marker,Page 1:
+40518,PD_The Jackal and the Drum YOUNG,pl-pl,young,page count differs from en-us,"10 pages, en-us has 11"
+40534,PD_Jack and the Enchanted Bean Old,pl-pl,old,page count differs from en-us,"21 pages, en-us has 20"
+40555,PD_The Wind in the Willows old,pl-pl,old,page count differs from en-us,"24 pages, en-us has 25"
+5010,Bingo the Bear-Funland-Friendship-VoyagePrompts-Remi the Rabbit-old,pt-pt,old,page marked missing in en-us,page 13
+13333,Meri the Monkey-Funland-Sustainability-QuestPrompts-Wispy the Sheep-young,pt-pt,young,title line is a page marker,Page 1:
+13334,Meri the Monkey-Funland-Sustainability-QuestPrompts-Wispy the Sheep-mid,pt-pt,mid,title line is a page marker,Page 1:
+40555,PD_The Wind in the Willows old,pt-pt,old,page count differs from en-us,"24 pages, en-us has 25"
+5010,Bingo the Bear-Funland-Friendship-VoyagePrompts-Remi the Rabbit-old,sr-rs,old,page marked missing in en-us,page 13
+5010,Bingo the Bear-Funland-Friendship-VoyagePrompts-Remi the Rabbit-old,tr-tr,old,page marked missing in en-us,page 13
+6717,Bingo the Bear-Sealight-Honesty-VoyagePrompts-Saffi the Mouse-old,tr-tr,old,page count differs from en-us,"19 pages, en-us has 20"
+10977,Hollis the Hedgehog-Snowtown-Diversity-QuestPrompts-Remi the Rabbit-old,tr-tr,old,backslash other than a line-break escape,3 in the text
+19578,Prins the Penguin-Stellacity-Friendship-VoyagePrompts-Beaky the Duck-old,tr-tr,old,page count differs from en-us,"19 pages, en-us has 20"
+5010,Bingo the Bear-Funland-Friendship-VoyagePrompts-Remi the Rabbit-old,zh-cn,old,page marked missing in en-us,page 13
+40504,PD_FishermanYoung,zh-cn,young,page count differs from en-us,"24 pages, en-us has 25"
+5010,Bingo the Bear-Funland-Friendship-VoyagePrompts-Remi the Rabbit-old,zh-tw,old,page marked missing in en-us,page 13

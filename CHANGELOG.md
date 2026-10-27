@@ -8,6 +8,33 @@ date and rationale.
 
 ## [Unreleased]
 
+### 26 October 2026: story texts in every language
+
+No reported number changes. The data controller exported the stories in every language directly
+from the app's content, as two zip files with one plain-text file per story and language.
+
+- `story_texts/extract_story_texts.py` (version 2026-10-26) reads the zip files as well as the
+  viewer of 1 October, which it still reproduces byte for byte. It writes one compressed table
+  per language, gives each story the Story ID the viewer gave its English text, and decodes the
+  `\n` that the export writes for a line break inside a page. It reads the zip files through a
+  memory map, because on the machine that ran it a file seek was occasionally ignored, which
+  zip's own checks caught as unreadable archives. English is extracted first and the other
+  languages in parallel processes.
+- `story_texts/data/` now holds 21 languages, 770,854 texts in all, from this delivery. Nineteen
+  hold all 40,559 stories; Czech holds 132 and Slovak 101. The tables take 362 MB, the largest
+  23 MB. The English table is replaced by the 26 October export, so that every language comes
+  from one extraction. Its texts match those of 1 October in 40,539 stories once the line-break
+  escapes are decoded: 8 have lost the empty page the viewer showed in them, and 12 were edited
+  in between (see `preregistration/README.md`).
+- `anomalies.csv` lists the new delivery's unusual texts, among them six Hebrew texts that repeat
+  a few words hundreds of times, 23 translated texts whose first line is a page marker in
+  place of a title, and 39 texts whose page count differs from that of the same story in
+  English, six of them the Hebrew texts. The structure checks count pages, lines and repetition only, and compute no
+  linguistic feature.
+- `story_texts/publish_story_texts.py` checks each compressed table and copies it byte for byte.
+  Tables are now compressed at xz preset 6, which on a 30 MB sample came within 3 per cent of
+  preset 9 in size, at the same speed and about a seventh of the memory.
+
 ### 19 October 2026: the classic stories' authorship
 
 No reported number changes. The data controller has answered question (j): the classic stories

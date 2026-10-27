@@ -2,8 +2,10 @@
 Write the story texts in the form this repository publishes, or check that form.
 
 WHAT IT READS
-The tables extract_story_texts.py writes into the git-ignored delivery: stories.csv,
-anomalies.csv and extraction_record.json.
+The tables extract_story_texts.py writes into the git-ignored delivery: anomalies.csv,
+extraction_record.json and the stories, either as one stories.csv (the viewer of
+1 October 2026) or as one compressed table per language in stories/ (the zip files of
+26 October 2026). The record's delivery_form says which.
 
 WHAT IT WRITES
 Into data/ beside this file:
@@ -27,9 +29,11 @@ language, English included, because the record and the anomalies list describe o
 extraction. The run stops if data/ already holds a language the extraction lacks.
 
 HOW IT CHECKS ITSELF
-Before writing, the run confirms that rewriting stories.csv row by row reproduces its
-bytes exactly, so each language's table holds its rows as extracted, and that the
-counts per language match the extraction record. --check reads data/ alone and
+Before writing, the run confirms that rewriting the extraction's stories row by row
+reproduces their bytes exactly, so each language's table holds its rows as extracted,
+and that the counts per language match the extraction record. A table the extraction
+already compressed is also checked to hold rows in its own language only, and is
+copied byte for byte. --check reads data/ alone and
 confirms that every file has the size and checksum the manifest gives, that each table
 decompresses to its recorded checksum and story count with every row in its own
 language, that the languages and counts agree with the record, and that data/ holds no
@@ -122,33 +126,82 @@ def write_text(path, text):
     os.replace(tmp, path)
 
 
+def decompressed(path):
+    """Return (bytes, SHA-256) of an xz file's content."""
+    sha, size = hashlib.sha256(), 0
+    with lzma.open(path, "rb") as f:
+        for block in iter(lambda: f.read(1 << 20), b""):
+            sha.update(block)
+            size += len(block)
+    return size, sha.hexdigest()
+
+
+def verify_table(path, lang):
+    """Confirm that a compressed table rewrites to itself with every row in `lang`; return its row count."""
+    sink, n = Sink(), 0
+    with lzma.open(path, "rt", encoding="utf-8", newline="") as f:
+        rows = csv.reader(f)
+        header = next(rows)
+        col = header.index("lang")
+        w = csv.writer(sink)
+        w.writerow(header)
+        for row in rows:
+            if row[col] != lang:
+                raise PublishError(f"{path.name}: a row in {row[col]!r}")
+            w.writerow(row)
+            n += 1
+    if (sink.bytes, sink.sha.hexdigest()) != decompressed(path):
+        raise PublishError(f"{path.name}: rewriting the table does not reproduce it")
+    return n
+
+
 def publish(extracted):
-    stories = extracted / "stories.csv"
     record = json.loads((extracted / "extraction_record.json").read_text(encoding="utf-8"))
     langs = {k: v for k, v in record["stories_by_lang"].items() if v}
-
-    whole = Sink()
-    if rewrite(stories, whole) != record["stories"] or whole.sha.hexdigest() != sha256(stories):
-        raise PublishError("rewriting stories.csv does not reproduce it, or its row count differs from the record")
     present = {p.name for p in DATA.iterdir() if p.is_dir()} if DATA.exists() else set()
     if present - set(langs):
         raise PublishError(f"data/ holds {sorted(present - set(langs))}, which this extraction lacks")
 
     manifest = {"languages": {}, "files": {}}
-    for lang, expected in langs.items():
-        folder = DATA / lang
-        folder.mkdir(parents=True, exist_ok=True)
-        target, tmp = folder / TABLE, folder / (TABLE + ".tmp")
-        sink = Sink(tmp)
-        n = rewrite(stories, sink, lang)
-        if n != expected:
-            tmp.unlink()
-            raise PublishError(f"{lang}: {n} stories, the record gives {expected}")
-        os.replace(tmp, target)
-        manifest["languages"][lang] = dict(file=f"{lang}/{TABLE}", stories=n, **describe(target),
-                                           uncompressed_bytes=sink.bytes,
-                                           uncompressed_sha256=sink.sha.hexdigest())
-        print(f"{lang}: {n:,} stories, {target.stat().st_size / 2**20:.1f} MB")
+    if record.get("delivery_form") == "zip":
+        # The extraction already wrote one compressed table per language. Each is checked
+        # and copied byte for byte, so the published file is the extraction's.
+        for lang, expected in langs.items():
+            source = extracted / "stories" / f"{lang}.csv.xz"
+            n = verify_table(source, lang)
+            if n != expected:
+                raise PublishError(f"{lang}: {n} stories, the record gives {expected}")
+            folder = DATA / lang
+            folder.mkdir(parents=True, exist_ok=True)
+            target, tmp = folder / TABLE, folder / (TABLE + ".tmp")
+            tmp.write_bytes(source.read_bytes())
+            if sha256(tmp) != sha256(source):
+                tmp.unlink()
+                raise PublishError(f"{lang}: the copy differs from the extraction's table")
+            os.replace(tmp, target)
+            size, sha = decompressed(target)
+            manifest["languages"][lang] = dict(file=f"{lang}/{TABLE}", stories=n, **describe(target),
+                                               uncompressed_bytes=size, uncompressed_sha256=sha)
+            print(f"{lang}: {n:,} stories, {target.stat().st_size / 2**20:.1f} MB")
+    else:
+        stories = extracted / "stories.csv"
+        whole = Sink()
+        if rewrite(stories, whole) != record["stories"] or whole.sha.hexdigest() != sha256(stories):
+            raise PublishError("rewriting stories.csv does not reproduce it, or its row count differs from the record")
+        for lang, expected in langs.items():
+            folder = DATA / lang
+            folder.mkdir(parents=True, exist_ok=True)
+            target, tmp = folder / TABLE, folder / (TABLE + ".tmp")
+            sink = Sink(tmp)
+            n = rewrite(stories, sink, lang)
+            if n != expected:
+                tmp.unlink()
+                raise PublishError(f"{lang}: {n} stories, the record gives {expected}")
+            os.replace(tmp, target)
+            manifest["languages"][lang] = dict(file=f"{lang}/{TABLE}", stories=n, **describe(target),
+                                               uncompressed_bytes=sink.bytes,
+                                               uncompressed_sha256=sink.sha.hexdigest())
+            print(f"{lang}: {n:,} stories, {target.stat().st_size / 2**20:.1f} MB")
 
     tmp = DATA / "anomalies.csv.tmp"
     tmp.write_bytes((extracted / "anomalies.csv").read_bytes())

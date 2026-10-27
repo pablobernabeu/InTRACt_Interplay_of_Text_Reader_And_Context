@@ -42,7 +42,7 @@ Hypothesis 4 predicts that when the app narrates the story, the lexical associat
 
 Data come from the *Let's Story* feature of *Applaydu*, in which a family chooses a setting, a hero, a companion, a plot and a theme, and a generative model writes the story. The logs were recorded passively, with no experimental manipulation. The session-level extract stays with the data controller until the preregistration is accepted in principle.
 
-The story texts themselves are public. `preregistration/story_texts/` holds the 40,559 US English texts delivered on 1 October 2026, with the scripts that extract and check them. The texts are released under CC BY-NC 4.0, copyright Ferrero International and Gameloft, and the texts in the app's other languages will be added as they are delivered.
+The story texts themselves are public. `preregistration/story_texts/` holds the 40,559 stories in each of 19 languages, and in part in two more, as exported from the app's content on 26 October 2026, with the scripts that extract and check them. The texts are released under CC BY-NC 4.0, copyright Ferrero International and Gameloft.
 
 The first tier of the sample will take every eligible completed reading by a child recorded in the 7 to 8 or 9 and older age band, excluding readings faster than 400 or slower than 10 words per minute. The second tier, for the within-child hypothesis, will take children with at least three eligible sessions on distinct texts. The primary outcome is log reading time per word, and Hypothesis 5 uses the child's optional post-reading difficulty rating.
 
