@@ -8,6 +8,23 @@ date and rationale.
 
 ## [Unreleased]
 
+### 27 October 2026: the protocol's languages follow the delivery
+
+No reported number changes yet. The story texts delivered on 26 October exist in full in 19
+languages, but not the 19 the protocol named: Indonesian, Romanian, Russian and Thai are absent,
+and Bulgarian, Hungarian, Kazakh and Serbian are added.
+
+- The Introduction lists the delivered languages, the orthographic-depth paragraph and
+  Supplementary Section S3 record the change, and Table 2's question (i) describes the delivery.
+- The structural-counts paragraph reports the counts on the delivery: pages parallel the English
+  in all but 39 of 730,295 translated texts, and no length array, translation-mode field or Thai
+  text is present.
+- The protocol and the cover letter say the texts are held in every language and public in all
+  21 delivered.
+- Every passage that still names or depends on the earlier set, among them the registered
+  third-parser rule and the refit excluding Thai, carries the new pending item P81 in
+  `preregistration/pending_benchmarks.md`. No registered rule was changed.
+
 ### 26 October 2026: story texts in every language
 
 No reported number changes. The data controller exported the stories in every language directly

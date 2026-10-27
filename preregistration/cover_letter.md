@@ -74,9 +74,9 @@ Section S7). / The data-access certification sent to the data controller on 7 Au
 an owner and deputy for the held file and confirming that no analysis relating story text to
 reading time has been conducted or reported to us, is reproduced in Supplementary Section S7,
 with the fields still open at submission marked.] We disclose in the protocol what was received in advance: a 35-row structural
-sample with the data dictionary and the English story texts, [and the texts in the other
-languages, the file manifest and provider-computed aggregate counts, received on DATE / with the
-texts in the other languages, the file manifest and provider-computed aggregate counts to follow
+sample with the data dictionary, the story texts in English (received on 1 October 2026) and in
+every language (26 October 2026), [and the file manifest and provider-computed aggregate counts,
+received on DATE / with the file manifest and provider-computed aggregate counts to follow
 before in-principle acceptance]. The arrangement was put to the editorial office and
 confirmed as appropriate by the Chief Editor on 3 August 2026, including the direction, which we
 have followed, not to run the dimension reduction before submission. Beyond that material, the
@@ -99,10 +99,9 @@ is version-controlled at
 <https://github.com/pablobernabeu/InTRACt_Interplay_of_Text_Reader_And_Context>, public from
 submission, including the theory object, the design specifications, the precision analysis,
 the feature-validation benchmarks with the error model's calibration constants, both versions
-of the count script and the frozen rules for deriving the priors. The English story
-texts are public there too, under CC BY-NC 4.0 with the agreement of their rights holders,
-Ferrero International and Gameloft, and the texts in the other languages will be added as they
-are delivered. One restriction applies
+of the count script and the frozen rules for deriving the priors. The story texts in all 21
+languages delivered are public there too, under CC BY-NC 4.0 with the agreement of their rights
+holders, Ferrero International and Gameloft. One restriction applies
 for legal reasons: the session-level extract is governed by a data-sharing agreement between
 the University of Oxford and the data controller, and where a field cannot be released we will
 state the reason and deposit a derived form sufficient to reproduce every reported analysis,
