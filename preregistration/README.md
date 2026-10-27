@@ -319,59 +319,87 @@ equally to all six.
 
 | File | What it is |
 |---|---|
-| `data/en-us/stories.csv.xz` | The 40,559 story texts in US English, xz-compressed, one row per story: the viewer's Story ID, the folder the text came from, the seven metadata fields, the title, the page and word counts, and the text exactly as delivered, page markers included. |
-| `data/anomalies.csv` | The 16 texts whose page markers skip or repeat a number, or that contain an empty page. |
+| `data/<lang>/stories.csv.xz` | The story texts in one language, xz-compressed, one row per story: the Story ID, the name of the file the text came from, the seven metadata fields, the title, the page and word counts, and the text exactly as delivered. There is a folder for each of 21 languages. |
+| `data/anomalies.csv` | The texts whose structure is unusual, one row for each issue in each text (see below). |
 | `data/extraction_record.json` | The extraction's record: the size and SHA-256 checksum of every file read from the delivery, and the counts. |
 | `data/manifest.json` | The size and checksum of every file in `data/`, and the story count and checksum of each table uncompressed. |
-| `extract_story_texts.py` | Reads the story texts out of the data controller's StoryReview viewer and writes them as tables: one row per story, one row per page, a list of structurally unusual texts and a record of every file read with its SHA-256 checksum. Standard library only. |
+| `extract_story_texts.py` | Reads the story texts out of either delivery and writes them as tables, with a list of structurally unusual texts and a record of every file read with its SHA-256 checksum. Standard library only. |
 | `publish_story_texts.py` | Writes `data/` from the extraction's tables, one compressed table per language, and with `--check` confirms that `data/` matches its manifest and the extraction record. Standard library only. |
 
 The story texts are copyright Ferrero International and Gameloft, who have agreed to their
-release here under CC BY-NC 4.0 (see `../LICENSE-content.md`). The texts in the app's other
-languages will be added in the same form, in a folder per language, as they are delivered.
+release here under CC BY-NC 4.0 (see `../LICENSE-content.md`).
 
 R and Python read a compressed table directly:
 
 ```r
-stories <- read.csv("story_texts/data/en-us/stories.csv.xz", encoding = "UTF-8")
+stories <- read.csv("story_texts/data/de-de/stories.csv.xz", encoding = "UTF-8")
 ```
 
 ```python
 import pandas as pd
-stories = pd.read_csv("story_texts/data/en-us/stories.csv.xz")
+stories = pd.read_csv("story_texts/data/de-de/stories.csv.xz")
 ```
 
-The data controller delivered the texts on 1 October 2026 as StoryReview, a browser viewer that
-shows one story at a time. Its data files are JSON wrapped in a JavaScript call, so the
-extraction script removes the wrapper and reads every text directly, in about a minute. The
-delivery is kept in `Oxford-40k-stories/`, which the root `.gitignore` excludes, because it
-holds the data controller's viewer software as well as the texts. The extraction writes into
-`Oxford-40k-stories/extracted/` by default, and the publishing script reads from there.
+The folders are named by the locale codes of the delivery. Nineteen hold all 40,559 stories:
+`ar-sa` (Arabic), `bg-bg` (Bulgarian), `de-de` (German), `el-gr` (Greek), `en-us` (US English),
+`es-es` (Spanish), `fr-fr` (French), `he-il` (Hebrew), `hu-hu` (Hungarian), `it-it` (Italian),
+`kk-kz` (Kazakh, in Cyrillic), `ko-kr` (Korean), `nl-nl` (Dutch), `pl-pl` (Polish), `pt-pt`
+(Portuguese), `sr-rs` (Serbian, in Cyrillic), `tr-tr` (Turkish), `zh-cn` (Chinese in simplified
+characters) and `zh-tw` (Chinese in traditional characters). `cs-cz` (Czech) holds 132 stories
+and `sk-sk` (Slovak) 101, as delivered. A story has one Story ID in every language, the ID the
+viewer of 1 October gave its English text, so the versions of a story in different languages
+share a row key.
+
+The data controller delivered the texts twice. On 1 October 2026 came the 40,559 US English
+texts, as StoryReview, a browser viewer that shows one story at a time. Its data files are JSON
+wrapped in a JavaScript call, so the extraction script removes the wrapper and reads every text
+directly. On 26 October 2026 came every language, as two zip files exported directly from the
+app's content, with one plain-text file per story in a folder per language. The first line of
+a file is the title and each further line is one page, and a line break inside a page is
+written as the two characters `\n`. `split_lines()` in the extraction script divides a text
+into its pages. Both deliveries are kept in `Oxford-40k-stories/`, which the root `.gitignore`
+excludes, because the first holds the data controller's viewer software as well as the texts.
+The extraction writes into `Oxford-40k-stories/extracted/` by default, and the publishing script
+reads from there.
 
 ```bash
-python story_texts/extract_story_texts.py
+python story_texts/extract_story_texts.py            # the zip files of 26 October
+python story_texts/extract_story_texts.py --viewer   # the viewer of 1 October
 python story_texts/publish_story_texts.py
 ```
 
-Before writing anything, the extraction script checks that every chunk file the index declares is
-present, that the index and the texts correspond one to one, and that its own page and word
-counts reproduce the viewer's. It stops with exit status 1 on any failure. Texts whose page
-markers skip or repeat a number, or that contain an empty page, are listed in `anomalies.csv`
-and kept, because they may be what the app served.
+The published tables come from the zip files, English included, so that every language comes
+from one extraction. Once the line-break escapes are decoded, the English texts of the two
+deliveries agree in 40,539 of 40,559 stories. Eight texts have lost the empty page the viewer
+showed in them, which the data controller traced to its export tool. Eleven were edited in
+between, seven to straighten typographic quotation marks, two to spell out an ampersand and
+two, the classic *Momotaro*, to rewrite its opening. The last, Story ID 5010, now holds the note
+"(this page was missing)" at the start of its 13th page, a note that most of the translations
+carry too.
 
-The delivery of 1 October 2026 holds 40,559 texts, all in US English. 40,500 are generated:
-every combination of 10 heroes, 10 worlds, 5 themes, 3 plot types and 9 sidekicks, each in a
-young, a mid and an old version. The other 59 are classics written by the same generative model
-from public-domain tales, mostly in a young and an old version. The script lists 16 of the texts as unusual.
+The 40,559 stories are 40,500 generated ones, every combination of 10 heroes, 10 worlds, 5
+themes, 3 plot types and 9 sidekicks, each in a young, a mid and an old version, and 59 classics
+written by the same generative model from public-domain tales, mostly in a young and an old
+version.
 
-Before writing, the publishing script confirms that rewriting the extraction's table row by row
-reproduces it byte for byte, so each language's table holds its rows exactly as extracted. The
-pages table is not published, because it holds the same texts split at their page markers,
-which `split_pages()` in the extraction script reproduces. The published record leaves out one
-field of the extraction's, the data controller's path to the folder it built the viewer from.
-A delivery is expected to hold every language, English included, since the record and the
-list of unusual texts describe a single extraction. The Check workflow runs
-`publish_story_texts.py --check` on every push.
+For the viewer, the extraction script checks before writing anything that every chunk file the
+index declares is present, that the index and the texts correspond one to one, and that its own
+page and word counts reproduce the viewer's. For the zip files, it checks that every entry is a
+text file one folder deep, in a folder named as a locale, that every file name is a story the
+viewer gave an ID and that no story appears twice in a language, and zip's own checksum
+confirms every file as it is read. Either run stops with exit status 1 on any failure. Unusual
+texts are listed in `anomalies.csv` and kept, because they may be what the app served. In the
+zip files, they are title lines that hold a page marker in place of a title, empty pages,
+backslashes other than the line-break escape, every version of the story whose English text
+marks a page as missing, and texts whose number of pages differs from that of the same story
+in English.
+
+Before writing, the publishing script confirms that rewriting the extraction's tables row by row
+reproduces them byte for byte, so each language's table holds its rows exactly as extracted. No
+pages table is published, because the text column holds the same pages, which the extraction
+script's `split_lines()` and `split_pages()` recover. A delivery is expected to hold every
+language, English included, since the record and the list of unusual texts describe a single
+extraction. The Check workflow runs `publish_story_texts.py --check` on every push.
 
 ## priors/
 
