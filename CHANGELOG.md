@@ -29,8 +29,32 @@ No registered rule, threshold, number or citation changes.
   before any of the parser's gains was computed. The record and the training recipe are deposited
   in `preregistration/third_parser/` with their checksums, as Supplementary Section S3 states.
 - `pending_benchmarks.md`: P05 records the freeze; P43 records the domain factors of the error
-  model's rerun, which await the PI's wording; P82 records the Serbian evidence, which favours
-  parsing a Latin transliteration, and leaves the choice of route to the PI.
+  model's rerun; P82 records the Serbian evidence, which favours parsing a Latin transliteration.
+- Rulings made later that evening by the main session, under the PI's delegation to decide on
+  the evidence, prioritising rigour within feasible bounds:
+  - Serbian (P82, settled): each Serbian text is transliterated to Latin by the CLDR 47
+    Serbian-Latin-BGN transform, and parsing, frequency lookups and connective induction run on
+    the transliteration, with tokens mapped back to the served text (fifth script rule of
+    Supplementary Section S3). In Cyrillic the parsers agreed on 13 per cent of labelled
+    relations and Stanza tagged 70 per cent of words X; through the transliteration they agreed on
+    87 per cent, and a round trip changed 21 of 342,980 tokens.
+  - Kazakh (P83, settled): a component whose reliability cannot be estimated is treated as below
+    the floor, which applies to all three components in Kazakh, since the released Kazakh models
+    saw the test file of its only treebank and UDPipe 2 has no Kazakh model. Kazakh's fallback
+    package is not used.
+  - Domain factor (P43): the supplement gives the interim noise-only factors for the two-parser
+    mean (median 0.95; bounds widened to 0.19 and 4.63 by the largest leave-one-out error) and a
+    forecast, from translated public stories, that the slope correction differs between the
+    bounds by about 4 to 27 per cent in 15 of 17 languages. Because the upper bound would take
+    GrammaticalLoad below the floor in both Chinese scripts, each refit at a bound now applies the
+    reliability floor and the positive-definiteness rule at that bound, as the main analysis does,
+    so that the sensitivity rule tests the registered analysis under another factor instead of
+    an analysis the protocol would never run.
+  - Third parser (P05): its full training is not run before submission, for cost, so the
+    deferral route applies unless more GPU-hours are authorised before 27 November.
+  - The error model's local-versus-service check on German HDT (98.99 per cent of sentences, bar
+    99) is overruled by its diagnosis: identical tokenisation and single-arc differences in long
+    sentences, recorded in the strand README.
 
 ### 3 November 2026 (later): the third parser's joining rule and its fallbacks for delay or cost
 
