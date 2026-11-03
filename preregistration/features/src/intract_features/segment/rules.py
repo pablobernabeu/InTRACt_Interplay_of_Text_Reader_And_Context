@@ -1,6 +1,6 @@
 """Frozen rule segmenters that the segmentation checks score against.
 
-Outcome-neutral quality checks: "The second requires English SaT to reach an F1 of .95 against a
+Outcome-neutral quality checks: "The second requires English SaT to reach a boundary F1 of 95 against a
 frozen rule segmenter on the served English texts." The rule is SEG-3, the English rule segmenter
 of the benchmark (``presub/translated_union/scripts/tu_common.segment``, verbatim from
 ``rigour/segmentation/scripts/mt_more.py`` and ``verify-seg/scripts/ts_gold.py``). On the 20

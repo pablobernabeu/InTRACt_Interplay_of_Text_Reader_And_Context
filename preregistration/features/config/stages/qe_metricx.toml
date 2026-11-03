@@ -94,7 +94,7 @@ min_edge_pairs = 8
 
 [bf16_check]
 # P08 (pending_benchmarks.md): "The bf16 step is taken only if text means agree with those at full precision at
-# r >= .995 on the public benchmark." preregistration.qmd, Timeline: "That step is taken only if their text means agree
-# with those at full precision at $r \geq .995$". The text mean is the stage's value, the word-weighted mean of a text's
+# r >= .995 on the public benchmark." preregistration.qmd, Timeline: "A model takes that step only if its text means
+# agree with those at full precision at $r \geq .995$ on the public benchmark". The text mean is the stage's value, the word-weighted mean of a text's
 # page scores.
 min_pearson = 0.995

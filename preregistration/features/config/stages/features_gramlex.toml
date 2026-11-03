@@ -75,7 +75,7 @@ content_upos = ["NOUN", "VERB", "ADJ", "ADV"]
 
 [lexical.names]
 # qmd Materials: "A type is a name if the Stanza parse tags at least half its occurrences as a proper noun, or as
-# X in Arabic, the tag its treebank gives names."
+# X in Arabic, the catch-all tag its treebank gives names."
 name_upos = ["PROPN"]
 name_upos_extra = { ar = ["X"] }
 name_share = 0.5

@@ -101,7 +101,8 @@ offline = true
 [bf16_check]
 # P08 (pending_benchmarks.md): "The bf16 step is taken only if text means agree with those at full precision at
 # r >= .995 on the public benchmark", for "the coreference resolver" among others. preregistration.qmd, Timeline:
-# "That step is taken only if their text means agree with those at full precision at $r \geq .995$".
+# "A model takes that step only if its text means agree with those at full precision at $r \geq .995$ on
+# the public benchmark".
 min_pearson = 0.995
 # PENDING the Feature Specification: the resolver's text mean. The registered text gives none; this is the mean of a
 # text's pair_continuity over the pairs with data, the English chain continuity S3 compares with overlap. Texts with no

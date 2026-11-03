@@ -57,8 +57,9 @@ carry_rule = "page_lines"
 english_lang = "en-us"
 
 [keyed_sample]
-# Outcome-neutral quality checks: "A registered sentence aligner pairs the two on a keyed sample of
-# 2,000 story versions per language, drawn by a keyed hash of the story identifier." Each document
+# Outcome-neutral quality checks: "A registered sentence aligner pairs the two on a fixed sample of
+# 2,000 story versions per language, chosen from the story identifiers by a rule fixed in advance, so
+# that every run draws the same versions." The rule is the keyed hash below. Each document
 # stores its keyed hash (meta.keyed_hash), which depends on its identifier alone; the documents
 # manifest records each size's cut-off over the input's stories (text/keyed.py, keyed_cutoffs).
 # PENDING (gap G7): the purpose string of the key "<prefix>|<purpose>|<version>|<story id>", whose

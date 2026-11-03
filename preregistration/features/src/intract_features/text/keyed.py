@@ -1,8 +1,9 @@
 """Registered keyed samples: story identifiers ranked by a keyed hash, so a sample depends on the ids alone.
 
 Outcome-neutral quality checks (preregistration.qmd): "A registered sentence aligner pairs the two on
-a keyed sample of 2,000 story versions per language, drawn by a keyed hash of the story identifier."
-S3 runs the second Stanza package "on the keyed sample of 2,000 texts per language" and enlarges the
+a fixed sample of 2,000 story versions per language, chosen from the story identifiers by a rule fixed in
+advance, so that every run draws the same versions." That rule is the keyed hash computed here.
+S3 runs the second Stanza package "on the fixed sample of 2,000 texts per language" and enlarges the
 connective sample "by count alone to up to 10,000 versions".
 
 A sample of n is the n identifiers with the smallest keyed hash. A larger sample therefore contains

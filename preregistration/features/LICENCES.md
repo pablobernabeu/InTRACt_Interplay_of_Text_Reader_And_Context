@@ -70,7 +70,7 @@ while `ufal.chu_liu_edmonds` 1.0.3 is GPLv3; it runs inside the UDPipe 2 server,
 | FLORES-200 (`flores200`) | CC BY-SA 4.0 | the multilingual stages, after the English dry run | README.md of facebookresearch/flores |
 | The translated benchmark's English-German pairs (`translated_benchmark_mt_de`) | derived from TinyStories (CDLA-Sharing-1.0) by MADLAD-400-3B-MT (Apache-2.0) and NLLB-200-3.3B (CC BY-NC 4.0) | timing `qe_metricx` in the dry run; read in place on ARC | `config/resources.lock.json` |
 | Unicode CLDR 47 quotation delimiters, `cldr-misc-full` 47.0.0, `main/en/delimiters.json` | Unicode License v3 (Unicode-3.0) | the English quotation pairs in `config/languages.toml` (dialogue detector) | recorded with the file's SHA-256 in `config/stages/features_discourse.toml` [dialogue] |
-| Universal Dependencies treebanks and earlier benchmark parses | each treebank's own licence | the tests marked `models` (UD 2.18 gold on ARC, local copies elsewhere); not distributed here | each treebank's LICENSE |
+| Universal Dependencies treebanks and earlier benchmark parses | each treebank's own licence | the tests marked `models` (the hand-annotated UD 2.18 files on ARC, local copies elsewhere); not distributed here | each treebank's LICENSE |
 | The *Let's Story* story texts | CC BY-NC 4.0, copyright Ferrero International and Gameloft | not read before in-principle acceptance: the catalogue lock refuses them | `../../LICENSE-content.md` |
 
 ## Third-party code copied or adapted here

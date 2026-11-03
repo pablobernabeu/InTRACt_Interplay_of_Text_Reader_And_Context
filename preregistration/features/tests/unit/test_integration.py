@@ -13,6 +13,8 @@ import sys
 import tomllib
 from pathlib import Path
 
+import pytest
+
 from intract_features import cli, records
 from intract_features.text import keyed
 
@@ -174,7 +176,12 @@ def test_the_parse_artefacts_have_one_reader():
 
 
 def test_the_ci_workflow_pins_every_action_by_commit():
-    text = (FEATURES / "ci" / "features.yml").read_text(encoding="utf-8")
+    # The workflow moved from ci/ to the repository's .github/workflows/ on 3 November 2026, where GitHub runs it; a
+    # copy of the package deployed without the repository (as on ARC) has no workflow to check.
+    workflow = FEATURES.parents[1] / ".github" / "workflows" / "features.yml"
+    if not workflow.exists():
+        pytest.skip(f"{workflow} is not in this checkout")
+    text = workflow.read_text(encoding="utf-8")
     uses = re.findall(r"uses:\s*(\S+)", text)
     assert uses, "the workflow uses no action"
     for action in uses:

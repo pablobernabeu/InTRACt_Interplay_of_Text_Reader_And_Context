@@ -55,6 +55,24 @@ No registered rule, threshold, number or citation changes.
   - The error model's local-versus-service check on German HDT (98.99 per cent of sentences, bar
     99) is overruled by its diagnosis: identical tokenisation and single-arc differences in long
     sentences, recorded in the strand README.
+- Documentation pass before the branch was pushed:
+  - Table 1 and the floor paragraph no longer forecast "18 or 19 of the 19 languages" passing,
+    since Kazakh's components are now below the floor by rule. The other 18 are expected to pass,
+    and both Chinese scripts are named as the most at risk, with their interim reliability in
+    translated public stories (P01). P03 notes that its 1,132 texts predate the Kazakh rule.
+  - F1 is reported in points throughout, as the benchmark tables already were: the SaT
+    threshold reads 95, and the connective paragraph 5, 47 to 92 and 62 to 35. The scale is
+    stated once in Materials and in the glossary. The code keeps computing F1 from 0 to 1.
+  - The supplement defines Stanza's `nocharlm` packages at first use.
+  - Quotations of the protocol in the feature package's configuration comments and docstrings
+    follow the plain-language wording (the fixed sample, the catch-all tag X, the bf16 step, the
+    SaT threshold).
+  - `preregistration/README.md` documents `third_parser/`; the root README lists `features/`,
+    `priors/` and `third_parser/`; the cover letter names the third parser's frozen rules among
+    the deposits; `SPECIFICATION.md` notes the Serbian and Kazakh rules it must still build
+    (FP-11), and "gold" is replaced in the human-facing documents.
+  - `test_integration.py` reads the CI workflow from `.github/workflows/`, where it moved on
+    3 November, and skips where the package is deployed without the repository (FP-12).
 
 ### 3 November 2026 (later): the third parser's joining rule and its fallbacks for delay or cost
 

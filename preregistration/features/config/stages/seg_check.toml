@@ -1,12 +1,12 @@
 # Stage seg_check: English SaT against the frozen rule segmenter, and the five-sentence floor
 # (src/intract_features/stages/seg_check.py). Anchors: preregistration.qmd, Outcome-neutral
-# quality checks ("The second requires English SaT to reach an F1 of .95 against a frozen rule
+# quality checks ("The second requires English SaT to reach a boundary F1 of 95 against a frozen rule
 # segmenter on the served English texts."); supplementary.qmd S3, Validation without human
 # annotation; Outcome-blind dimension reduction for the floor, whose minimum is pipeline.toml
 # [floor].
 
 [criterion]
-# Outcome-neutral quality checks: "an F1 of .95".
+# Outcome-neutral quality checks: "a boundary F1 of 95", which is 0.95 on the scale computed here.
 min_f1 = 0.95
 # Materials: "Boundary accuracy is scored without counting as an error a quotation mark placed
 # on the other side of a boundary"; S3: "exact matching is reported beside that score".
@@ -16,8 +16,9 @@ score = "tolerant"
 statistic = "point"                   # or "lower_95"
 
 [sample]
-# Outcome-neutral quality checks: the segmentation checks run "on the keyed sample", a "keyed
-# sample of 2,000 story versions per language, drawn by a keyed hash of the story identifier".
+# Outcome-neutral quality checks: "three checks on the fixed sample test what it assumes", a "fixed
+# sample of 2,000 story versions per language, chosen from the story identifiers by a rule fixed in
+# advance" (the keyed hash of documents.toml).
 # Plan v3: "on the 2,000 served English texts". The sample has one definition, documents.toml
 # [keyed_sample] (its purpose string is PENDING gap G7); "all" scores every text instead, for
 # the dry run's cost of the check.

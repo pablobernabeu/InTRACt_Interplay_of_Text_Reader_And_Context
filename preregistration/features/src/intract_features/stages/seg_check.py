@@ -1,6 +1,6 @@
 """Stage seg_check: English SaT against the frozen rule segmenter, and the five-sentence floor.
 
-Outcome-neutral quality checks: "The second requires English SaT to reach an F1 of .95 against a frozen
+Outcome-neutral quality checks: "The second requires English SaT to reach a boundary F1 of 95 against a frozen
 rule segmenter on the served English texts. If either of these two checks fails, every language falls
 back to SaT alone, with its noise measured." The three segmentation checks run "on the keyed sample"
 (S3: "After acceptance, the three segmentation checks [...] run on the keyed sample"). The score is the

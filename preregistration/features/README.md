@@ -67,7 +67,7 @@ model on a GPU.
 |---|---|---|---|
 | `documents` | CPU, `core` | rows in the catalogue's schema to normalised documents, behind the lock | Run through the command line under the real lock on SimpleStories; smoke rows equal full-run rows. Page titles excluded by default (G1b, pending the PI) |
 | `sat` | GPU, `core` | the registered SaT sentence boundaries | Reproduces the benchmark's registered F1 values and English SaT's 382 of 382 boundaries; run with a tiny random model on CPU. The real model on a GPU awaits ARC |
-| `seg_check` | CPU, `core` | English SaT against the frozen rule segmenter (F1 of .95) and the five-sentence floor | Tested with a fake SaT; the bootstrap reproduces the benchmark's. Computes in the `--shard 0` run only |
+| `seg_check` | CPU, `core` | English SaT against the frozen rule segmenter (boundary F1 of 95, 0.95 on the code's scale) and the five-sentence floor | Tested with a fake SaT; the bootstrap reproduces the benchmark's. Computes in the `--shard 0` run only |
 | `parse_stanza` | CPU, `core` | the Stanza 1.15.0 parse of every registered sentence | Run with the real Stanza 1.15.0 and the pinned English models on CPU (stand-in smoke) |
 | `parse_udpipe` | GPU, `udpipe` | the UDPipe 2 parse on a local deterministic server | Tested against a stand-in server; UDPipe 2 under TensorFlow awaits ARC |
 | `features_gramlex` | CPU, `core` | grammatical, lexical, diversity and page features | Counts equal the error model's gfeat on 62 UD files. Subordination is written as an empirical logit, a conflict with the registered ratio (CF-01) |

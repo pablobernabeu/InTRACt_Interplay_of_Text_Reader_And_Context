@@ -440,6 +440,25 @@ as a deviation at Stage 2, whether or not extraction rows exist by then, and any
 will be recorded here with a new checksum. Both triggers are stricter than the file's own §7. The pipeline's timestamped output is deposited here before the extract is
 transferred.
 
+## third_parser/
+
+| File | What it is |
+|---|---|
+| `decision_rules_v3.json` | Version 3 of the rules that decide whether the third parser joins the two-parser mean, frozen on 3 November 2026 at 21:51:44 UTC, before any of its gains was computed. Rules SHA-256 `6eac12739a2b9283bb07b5ed792d92cbad0d8f9cead61c584e84fc1f1f27525f`. |
+| `recipe.json` | The parser's training recipe and version 1 of the rules, frozen on 23 October 2026 and kept unchanged. |
+| `SHA256SUMS` | The checksums of both files, which `.gitattributes` keeps LF in every checkout. |
+| `README.md` | What the record holds, in plain words. |
+
+Supplementary Section S3 (The third parser) states the rules, and the protocol's Materials
+section quotes them in the passage that begins "It joins the mean only in the languages";
+`registered_text` in the record repeats that passage word for word. The code that drafts,
+freezes, checks and applies the rules runs on ARC and is not in this repository. A change to it
+after the freeze is logged with its reason and decides nothing, since the rules are fixed by
+their checksum. The pilot benchmark runs before submission. The full training, the check that
+the development sets were held out of training, and the joining decision follow after
+acceptance unless more GPU-hours are authorised before 27 November 2026 (`pending_benchmarks.md`,
+P05).
+
 ## features/
 
 The pipeline that computes the registered text features, the Python package `intract-features`.
@@ -447,7 +466,7 @@ Its own `README.md` explains how to run it, `DESIGN.md` fixes the contracts ever
 and `SPECIFICATION.md` maps each registered quantity to the code that computes it, with the
 defaults that await the Feature Specification. Before in-principle acceptance it runs on public
 data only: a stand-in built from SimpleStories and matched to the English catalogue's page and
-token counts (`standin/`), FLORES-200 and public gold. Its catalogue lock refuses the story texts
+token counts (`standin/`), FLORES-200 and public hand-annotated text. Its catalogue lock refuses the story texts
 until the record of acceptance is committed. `jobs/arc/` holds the jobs of the dry run on ARC,
 which times every stage on the stand-in, and the run records are copied to `records/`.
 `.github/workflows/features.yml` runs its unit tests and ruff.

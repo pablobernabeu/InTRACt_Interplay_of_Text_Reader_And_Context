@@ -148,7 +148,7 @@ Tests: `tests/unit/test_text.py`, `test_io.py`, `test_documents.py`, `test_pages
 | SEG-03 | Five-sentence floor on the English source | mask, reference for translations | qmd § Outcome-blind dimension reduction: "A text whose English source has fewer than five sentences enters no family's solution in any language." | `segment/diagnostics.py:floor_excluded` | sat, seg_check | `pipeline.toml [floor] min_english_sentences = 5` | implemented |
 | SEG-04 | Sentences and words per text, and the number of texts the floor removes | diagnostic | qmd § Outcome-blind dimension reduction: "We will report, per language, the distribution of sentences and of words per text and the number of texts the minimum removes." | `stages/seg_check.py:run`<br>`segment/diagnostics.py:quantiles` | seg_check | none | implemented |
 | SEG-05 | Eight-sentence floor | sensitivity | qmd § Sensitivity analyses: "With the sentence floor raised to eight, we will refit the tier-1 model and report its three component coefficients and distinct-text count with the primary estimates." | `segment/diagnostics.py:floor_excluded` | none | none | not yet built |
-| SEG-06 | English SaT against the frozen rule segmenter, boundary F1 of at least .95 | diagnostic | qmd § Outcome-neutral quality checks: "The second requires English SaT to reach an F1 of .95 against a frozen rule segmenter on the served English texts."<br>qmd § Materials: "Boundary accuracy is scored without counting as an error a quotation mark placed on the other side of a boundary" | `segment/rules.py:rule_spans`<br>`segment/diagnostics.py:score_text`<br>`segment/diagnostics.py:boot_prf`<br>`stages/seg_check.py:run` | seg_check | frozen rule SEG-3 (`stages/seg_check.toml [rule]`) | default pending FS-03 |
+| SEG-06 | English SaT against the frozen rule segmenter, boundary F1 of at least 95 (0.95 on the code's scale) | diagnostic | qmd § Outcome-neutral quality checks: "The second requires English SaT to reach a boundary F1 of 95 against a frozen rule segmenter on the served English texts."<br>qmd § Materials: "Boundary accuracy is scored without counting as an error a quotation mark placed on the other side of a boundary" | `segment/rules.py:rule_spans`<br>`segment/diagnostics.py:score_text`<br>`segment/diagnostics.py:boot_prf`<br>`stages/seg_check.py:run` | seg_check | frozen rule SEG-3 (`stages/seg_check.toml [rule]`) | default pending FS-03 |
 | SEG-07 | Segmentation diagnostics: sentence length and the share of sentences without a terminal mark | diagnostic | supp § S3: "Per language, we will report the mean and standard deviation of sentence length and the proportion of sentences ending without a terminal mark."<br>supp § S3: "the union segmenter and the segmentation diagnostics recognise . ! ? … and their full-width forms as terminal marks" | `segment/diagnostics.py:mean_sd`<br>`segment/diagnostics.py:ends_with_terminal`<br>`stages/seg_check.py:run` | seg_check | none | implemented |
 | SEG-08 | English sentences and terminal marks per text, the denominators of each translation's ratios to its source | reference for translations | supp § S3: "For every text, we will report the ratios of its sentences and of its terminal marks to those of its English source, with their median, interquartile range and share within 10 per cent." | `stages/sat.py:run` writes the sentence count (`n_sentences`); planned: a count of terminal marks beside it | sat | none | not yet built |
 
@@ -161,7 +161,7 @@ Notes.
   are counted (`newline_forced`) so that G9 can be judged on the stand-in.
 - SEG-03. The flag is written on the English source's segments record; every language takes it from there.
 - SEG-05. `floor_excluded` takes the minimum as an argument, so the row needs only a stage that writes the flag at 8.
-- SEG-06. The check runs on the keyed sample (REF-01). The score is quote-tolerant boundary F1 with exact matching
+- SEG-06. The check runs on the keyed sample (REF-01), the code's name for what the protocol calls the fixed sample. The score is quote-tolerant boundary F1 with exact matching
   beside it and 2,000 cluster-bootstrap replicates, as in the benchmark.
 - SEG-07. The per-language summaries are seg_check's; the per-text ratios to the English source are
   translation-side, and their English denominators are SEG-08.
@@ -384,7 +384,7 @@ Notes.
 - COV-01. The detector runs on the normalised text, never on lookup keys. Spans come from the locale's CLDR 47
   primary and alternate pairs in `config/languages.toml`, the direction of an ambiguous mark from its spacing, and
   dash turns only where in-page line breaks survive (G9). The served value equals the English-source value in
-  English, and the gates of section 5 compare the two in each translation. Validation on public gold is P54.
+  English, and the gates of section 5 compare the two in each translation. Validation on public hand-annotated text is P54.
 - COV-02. `spans_with_speech` computes it, but no stage writes it per sentence.
 - COV-03. For English the inventory has route A only; route B projects English names into the translations. The two
   feature stages mask names differently by default: `features_discourse` builds the type-level inventory over the
@@ -545,6 +545,12 @@ Notes.
 - Output 14. The order is the same in every language, because the hash reads only the story identifier, but a
   language's sample of n is the first n stories of its own set, so samples coincide only where story sets do
   (REF-01).
+- Two translation-side rules registered on 3 November 2026 are not built yet (`ISSUES.md` FP-11). Serbian is
+  transliterated to Latin by the CLDR 47 Serbian-Latin-BGN transform after NFC, and its parse, frequency lookups and
+  connective induction read the transliteration, with each token mapped back to the served text by character
+  offsets (supp § S3, the fifth script rule). The Serbian frequency lists are built from subtitles transliterated the
+  same way. In Kazakh, every component is treated as below the reliability floor, because its reliability cannot be
+  estimated (qmd § Outcome-neutral quality checks), so Kazakh's scores feed only the partial-inclusion adjustment.
 
 ## 6. Stage map
 
