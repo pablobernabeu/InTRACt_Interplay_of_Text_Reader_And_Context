@@ -53,7 +53,7 @@ code_points = [
 ]
 
 [precision]
-# Plan v3: the contrast is scored "in fp32". qmd Timeline, budget guard: "the inference-only models used for
+# Plan v3: the contrast is scored "in fp32". qmd Timeline, budget guard: "the pretrained models used for
 # sensitivity or validation, namely XGLM-4.5B, MetricX-24 and the coreference resolver, run with 16-bit (bf16)
 # weights and 32-bit log-probabilities. That step is taken only if their text means agree with those at full
 # precision at $r \geq .995$ on the public benchmark scored before submission." (P08.) "bf16" is used only once

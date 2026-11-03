@@ -1,4 +1,4 @@
-# Stage 1 cover letter — Nature Human Behaviour
+# Stage 1 cover letter for Nature Human Behaviour
 
 *Draft prepared 2026-09-01 against the journal's Registered Report guidelines
 (<https://www.nature.com/nathumbehav/submission-guidelines/registeredreports>, read 2026-09-01).
@@ -23,8 +23,8 @@ tests six confirmatory hypotheses in Bayesian crossed-effects models over hundre
 thousands of distinct texts and adjudicates between rival developmental accounts with two-sided
 tests that no laboratory sample has been large enough to decide. Every decision about what is
 tested, on which sample and with which model is registered in this protocol. Each rests on
-provider-computed counts, the features' computational validation, an audit of the frozen
-extract, the prior-derivation output or the data controller's written answers. The few
+the data controller's counts and written answers, the features' computational validation, an audit of the frozen data
+extract or the derivation of the priors. The few
 decisions that depend on a fitted quantity are stated in advance as conditional rules. The question
 matters beyond one platform: children's reading is migrating to systems that record it, and
 this protocol is a worked answer to whether such records can support inference.
@@ -32,8 +32,8 @@ this protocol is a worked answer to whether such records can support inference.
 **A prior publication on this platform by two of us.** Two authors of this submission, Ratner
 and Murphy, have published a descriptive study of *Let's Story* (2026, *Frontiers in
 Developmental Psychology*, doi:10.3389/fdpys.2026.1816559), which the Introduction cites. We
-declare it here, and set out why it leaves this protocol's questions open, rather than leave a
-reviewer to find it. Neither author had access to the raw data. They saw only summaries prepared
+declare it here and set out why it leaves this protocol's questions open.
+Neither author had access to the raw data. They saw only summaries prepared
 for them by the data controller, and worked from aggregated dashboard counts covering the thirty
 days after the feature launched in November 2024. On that basis they report completion, the point
 at which a session was abandoned, use of the dictionary and discussion scaffolds, and the marginal
@@ -41,8 +41,8 @@ distribution of the post-reading difficulty rating, for children aged 4 to 9. Th
 descriptive throughout, and the paper states that aggregated data preclude inference about
 individual learners. It examines no property of the stories and no reading duration. Every
 association this protocol registers is therefore untested by it: no text feature is related to
-any behavioural measure, no reading time is modelled, and the session-level structure a
-within-child term requires was not in the summaries. The window does not overlap the one this
+any behavioural measure, no reading time is modelled, and the summaries held no session-level
+records, which a within-child comparison requires. The window does not overlap the one this
 study will use, which opens on 1 January 2026, and the summaries concern an age range beginning
 three years below this study's youngest band, so nothing reported there is an input to what we
 propose. We take this history as evidence that the sequestration described below is real and of
@@ -54,9 +54,9 @@ the John Fell Fund, University of Oxford [grant reference], neither of which has
 design, analysis, interpretation or decision to publish. Ferrero International develops the
 *Applaydu* app with the data controller, a relationship the protocol's competing-interests
 statement declares. Every feature is validated computationally, so the study needs no annotator
-or native speaker in any language. Each validation check compares the pipeline's output with public gold
-annotation, with gold built by translating public stories one sentence at a time, or with the
-English source of each served text. Feature computation after acceptance runs on the University
+or native speaker in any language. Each validation check compares the pipeline's output with public hand-annotated
+text, with public stories translated one sentence at a time, or with the
+English source of each translated text. Feature computation after acceptance runs on the University
 of Oxford's Advanced Research Computing service, and a registered budget guard keeps it within
 400 L40S GPU-hours [confirm that the allocation is in place]. [Confirm that the facilities and
 personnel are in place and that the study can commence immediately on acceptance in principle.]
@@ -75,8 +75,8 @@ an owner and deputy for the held file and confirming that no analysis relating s
 reading time has been conducted or reported to us, is reproduced in Supplementary Section S7,
 with the fields still open at submission marked.] We disclose in the protocol what was received in advance: a 35-row structural
 sample with the data dictionary, the story texts in English (received on 1 October 2026) and in
-every language (26 October 2026), [and the file manifest and provider-computed aggregate counts,
-received on DATE / with the file manifest and provider-computed aggregate counts to follow
+every language (26 October 2026), [and the file manifest and the data controller's aggregate counts,
+received on DATE / with the file manifest and the data controller's aggregate counts to follow
 before in-principle acceptance]. The arrangement was put to the editorial office and
 confirmed as appropriate by the Chief Editor on 3 August 2026, including the direction, which we
 have followed, not to run the dimension reduction before submission. We have computed none of
@@ -92,8 +92,8 @@ decision registered in this protocol.
 **Timeline.** [Anticipated timeline; the protocol proposes: feature computation and its
 computational validation on the story texts, starting on the day in-principle acceptance is
 confirmed and taking about one week, or up to two if the GPU queue is congested
-<!-- PENDING: P80 -->; the outcome-blind dimension reduction on the whole catalogue before
-linkage; data transfer within four weeks of
+<!-- PENDING: P80 -->; the dimension reduction across all story texts before outcomes are
+linked to them; data transfer within four weeks of
 in-principle acceptance; the audit of the frozen extract within three months of transfer; the
 confirmatory and sensitivity models within a further four months; and the Stage 2 manuscript
 within twelve months of in-principle acceptance.]
@@ -102,8 +102,8 @@ within twelve months of in-principle acceptance.]
 study materials, computer code and laboratory log for all published results. All analysis code
 is version-controlled at
 <https://github.com/pablobernabeu/InTRACt_Interplay_of_Text_Reader_And_Context>, public from
-submission, including the theory object, the design specifications, the precision analysis,
-the feature-validation benchmarks with the error model's calibration constants, both versions
+submission, including the machine-readable theory, the design specifications, the precision analysis,
+the feature-validation benchmarks with their measurement-error constants, both versions
 of the count script and the frozen rules for deriving the priors. The story texts in all 21
 languages delivered are public there too, under CC BY-NC 4.0 with the agreement of their rights
 holders, Ferrero International and Gameloft. One restriction applies
