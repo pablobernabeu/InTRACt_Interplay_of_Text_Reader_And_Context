@@ -79,8 +79,13 @@ every language (26 October 2026), [and the file manifest and provider-computed a
 received on DATE / with the file manifest and provider-computed aggregate counts to follow
 before in-principle acceptance]. The arrangement was put to the editorial office and
 confirmed as appropriate by the Chief Editor on 3 August 2026, including the direction, which we
-have followed, not to run the dimension reduction before submission. Beyond that material, the
-only quantities from this platform any author has seen are the summaries described above, which
+have followed, not to run the dimension reduction before submission. We have computed none of
+the protocol's linguistic features on the story texts. The counts we made on them are summarised
+in the protocol under Data provenance and listed, with their dates and uses, in its Supplementary
+Section S7. They comprise checks of each delivery's integrity, corpus-level figures that sized the
+computation and set design values such as the length of the benchmark texts, and page and token
+counts. None of them involves an outcome. Beyond that material and those counts, the only
+quantities from this platform any author has seen are the summaries described above, which
 the data controller prepared, which relate no predictor to any outcome, and which enter no
 decision registered in this protocol.
 

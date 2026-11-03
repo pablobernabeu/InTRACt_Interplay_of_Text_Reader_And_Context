@@ -8,6 +8,44 @@ date and rationale.
 
 ## [Unreleased]
 
+### 3 November 2026: the counts made on the story texts, corrected citations and an evidence map
+
+No number from the design analysis changes. Estimates cited in the Introduction change where a
+source had been misreported, and the protocol now discloses the counts made on the story texts
+before in-principle acceptance.
+
+- Data provenance no longer says that no feature has been computed on the story texts. It says
+  that no registered linguistic feature has been, summarises the counts made on the texts and
+  points to a dated record of each in a new subsection of Supplementary Section S7. Among them
+  is the corpus count of 20 October, whose median of 413 words per text set the length of the
+  public benchmark texts and whose text lengths widened the theory object's scope to texts of
+  200 to 600 words. The cover letter and `pending_benchmarks.md` say the same.
+- Introduction: Altamura et al. (2026) found no cross-lagged path between digital reading
+  habits and comprehension, so the sentence that cited them for an association independent of
+  print is corrected. Booton et al. (2023) is cited for a comprehension benefit of narration
+  that came from a study of 4- and 5-year-olds. Wood et al. (2018) is reported in Hedges' *g*,
+  for students with reading disabilities. The medium paragraph adds Salmerón et al. (2024),
+  gives the overall estimate of Furenes et al. (2021) with its two subgroups, and reports that
+  Clinton-Lisell and Litzinger (2026) found the scrolling shortfall unreliable on smartphones.
+  The first citation of Table 2 now follows that of Table 1.
+- Bulgarian, Hungarian and Serbian will be annotated as shallow orthographies, and Kazakh
+  provisionally so (Introduction and Supplementary Section S3). The sentence on head-final
+  languages notes that Hungarian has no dominant word order. Seven bibliography entries are added
+  and the title of Marzi et al. (2026) is corrected.
+- Supplementary Section S4 gains the poster's evidence map, rebuilt as Supplementary Figure 2
+  by `literature/make_evidence_figure.R` from `literature/evidence_map.csv`, which records
+  where in its source each value was read. The precision panels become Supplementary Figure 3.
+  `tools/check_citations.py` also checks the keys in the new CSV.
+- Layout: Table 1 and Supplementary Table 3 take column widths at which no cell runs off the
+  page, and the supplement takes its Korean and Chinese characters from SimSun and Malgun
+  Gothic where both fonts are installed (`preregistration/README.md`, Requirements).
+- `pending_benchmarks.md`: P59 is retired because no Thai text was delivered, and P82 to P86
+  are added (the Serbian route, Kazakh's held-out gold, the timing of the coverage gate, the
+  Portuguese variety served and the dry run of the feature pipeline). Each row's week follows
+  the revised schedule.
+- `story_texts/extract_story_texts.py`: a comment that named the wrong tail of the compression
+  ratios is corrected. No output changes.
+
 ### 27 October 2026: the protocol's languages follow the delivery
 
 No reported number changes yet. The story texts delivered on 26 October exist in full in 19

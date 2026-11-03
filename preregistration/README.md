@@ -65,7 +65,10 @@ API calls replaced by the archived counts, which it reproduced apart from the ru
 no lints. The 2026-10-16 draft was rendered with Quarto 1.10.19 and LuaTeX 1.24.0 (TeX Live
 2026). The count script and the two story-text scripts need Python 3.8
 or later and nothing outside the standard library. Regenerating the framework figure in
-`../mindmap/source` needs Node.js and network access.
+`../mindmap/source` needs Node.js and network access. Times New Roman has no Korean or Chinese
+characters, so the supplement's PDF takes the few it quotes from SimSun and Malgun Gothic, which
+Windows provides. On a machine that lacks either font, such as the Render workflow's runner,
+those characters are missing from the PDF.
 
 ## Pipeline
 
@@ -85,6 +88,7 @@ write, apart from the Scopus step, which queries the API.
 | 7 | `Rscript figures/make_precision_figure.R` | `design_analysis/precision_sweep.csv` | `figures/fig_precision.{png,pdf}`, `fig_precision_supplement.{png,pdf}` |
 | 8 | `Rscript --no-save --no-restore literature/scopus_gap_analysis.R` | the Scopus API | `literature/scopus_gap_sizes.csv`, `scopus_topic_trends.csv`, `scopus_search_record.md`, `scopus_run_stamp.txt`, then runs step 9 |
 | 9 | `Rscript literature/replot_scopus_figures.R` | the two Scopus CSVs | `literature/scopus_gap_intersections.{png,pdf}`, `scopus_topic_trends.{png,pdf}` |
+| 9b | `Rscript literature/make_evidence_figure.R` | `literature/evidence_map.csv` | `literature/evidence_map.{png,pdf}` |
 | 10 | `Rscript check_reported_numbers.R`, `Rscript theory/check_manuscript_claims.R` | the protocol and the artefacts above | nothing |
 | 11 | `quarto render` | both documents | the dated protocol draft, `supplementary.{pdf,html}`, and the superseded draft moved into `drafts/` |
 
@@ -131,6 +135,7 @@ The quoted numbers come from these artefacts:
 | Rigour score, checklist and implications | `theory/tf_check.txt` | `build_theory.R` |
 | Largest construct similarity | `theory/tf_redundancy.csv` | `build_theory.R` |
 | Figures 1, 2 and 3 | `literature/scopus_gap_intersections.pdf`, `figures/nomological_net.pdf`, `figures/fig_precision.pdf` | `replot_scopus_figures.R`, `make_nomological_net.R`, `make_precision_figure.R` |
+| The estimates in Supplementary Figure 2 | `literature/evidence_map.csv`, columns `estimate`, `lo`, `hi`, `verdict` | compiled by hand from the sources, and drawn by `make_evidence_figure.R` |
 
 ## theory/
 
@@ -248,6 +253,9 @@ also stops if the CSV does not hold the values the panel subtitles state.
 | `scopus_gap_intersections.{png,pdf}`, `scopus_topic_trends.{png,pdf}` | Figure 1 of the manuscript, and a supplementary figure. |
 | `replot_scopus_figures.R` | Redraws both figures from the archived CSVs, issuing no API request, so presentation can change without touching the recorded counts. Strips the in-image title, subtitle and footnote (the captions carry them), gives the three trend series short names, and runs `depictr::check_figure()` on each figure before saving either. It stops on a missing value in an archive, on short names that do not match the archived queries, and on any failed check but one: colour carried without a second encoding needs a change to the package's geoms, so that failure is reported as a warning. |
 | `evidence_notes.md` | The justification record for the protocol's less obvious choices: why the two age-band interactions are two-sided, where the plausibility bounds come from, why the resource plan changed. Its claims cite their sources, most of them by DOI. |
+| `evidence_map.csv` | The data of the evidence map in Supplementary Section S4, compiled by hand from the sources. Each row is a pooled estimate, a range of estimates or a review's conclusion, with the page or table it was read from (`location`) and the copy of the source it was checked against (`checked_against`). A row without an estimate carries a `verdict`, whose parts are separated by semicolons and take their directions, in order, from `verdict_dir`. |
+| `make_evidence_figure.R` | Draws Supplementary Figure 2 from `evidence_map.csv`. It stops if a pooled estimate lacks its interval or lies outside it, or if a verdict does not give one direction per part. It also stops if a row does not say where in its source it was read or which copy was checked. It runs `depictr::check_figure()` at the narrower of the supplement's text widths on US Letter and A4 and stops on any failed check. Text drawn inside the panel, which `check_figure()` does not read, is checked for size, contrast and fit. |
+| `evidence_map.{png,pdf}` | Supplementary Figure 2, embedded in the supplement as the PDF. |
 
 ```bash
 Rscript --no-save --no-restore literature/scopus_gap_analysis.R
@@ -392,7 +400,13 @@ texts are listed in `anomalies.csv` and kept, because they may be what the app s
 zip files, they are title lines that hold a page marker in place of a title, empty pages,
 backslashes other than the line-break escape, every version of the story whose English text
 marks a page as missing, and texts whose number of pages differs from that of the same story
-in English.
+in English. The list also holds repetitive texts, whose zlib compression ratio is below half the
+median ratio of their language, as happens when a short sequence is repeated over and over. The
+threshold was set after the ratio of every text in the delivery of 26 October had been computed.
+In every language, all but the most compressible 0.1 per cent of texts reach at least 0.84 of the
+median, whereas the six texts flagged, all in Hebrew, fall below 0.4. Which texts the analysis
+excludes will be decided after in-principle acceptance by the protocol's anomaly battery
+(Outcome-neutral quality checks), whose check for repeated loops is separate from this flag.
 
 Before writing, the publishing script confirms that rewriting the extraction's tables row by row
 reproduces them byte for byte, so each language's table holds its rows exactly as extracted. No

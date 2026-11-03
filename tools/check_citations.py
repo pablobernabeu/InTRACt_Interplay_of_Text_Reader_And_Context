@@ -8,8 +8,8 @@ can reach a rendered draft unnoticed. This script reads each document listed in
 DOCUMENTS, takes the bibliography its YAML header names, and fails on any key the
 document cites that the bibliography does not hold. Cross-references (@fig-, @tbl-,
 @sec- and the like), e-mail addresses and anything inside code are not citations
-and are skipped. The poster's evidence map cites by key from data/evidence.csv, so
-those keys are checked against the poster's bibliography too.
+and are skipped. The evidence maps of the poster and the supplement cite by key from
+their data files, listed in KEY_FILES, so those keys are checked too.
 
 Exit status 1 if any key is missing, 0 otherwise. Standard library only.
 """
@@ -25,7 +25,12 @@ DOCUMENTS = [
     "poster/poster.qmd",
 ]
 # Keys cited from a data file rather than the document's text.
-KEY_FILES = {"poster/poster.qmd": [("poster/data/evidence.csv", "bibkey")]}
+KEY_FILES = {
+    "poster/poster.qmd": [("poster/data/evidence.csv", "bibkey")],
+    "preregistration/supplementary.qmd": [
+        ("preregistration/literature/evidence_map.csv", "bibkey")
+    ],
+}
 
 CROSSREF = re.compile(r"^(fig|tbl|sec|eq|lst|thm|lem|cor|prp|cnj|def|exm|exr|rem|apx)-")
 # Pandoc's citation key: a letter, digit or underscore, then key characters, with

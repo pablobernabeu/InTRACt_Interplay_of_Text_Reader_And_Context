@@ -391,10 +391,10 @@ def write_language(lang, items, tmp, reference_pages, missing_pages):
             ratios[story_id] = (len(zlib.compress(raw, 6)) / max(len(raw), 1), folder, s["age"])
             pages += s["pages"]
             w.writerow([s[k] for k in STORY_COLS])
-    # A text that repeats a few words many times compresses far better than its language's
-    # texts usually do. Half the median separates such texts from the rest with a wide
-    # margin: in the delivery of 26 October, the least compressible 0.1 per cent of every
-    # language still reach 0.84 of its median, and six texts fall below 0.4.
+    # A text that repeats a short sequence over and over compresses far better than its
+    # language's texts usually do. Half the median separates such texts from the rest with a
+    # wide margin: in the delivery of 26 October, all but the most compressible 0.1 per cent
+    # of every language still reach 0.84 of its median, and six texts fall below 0.4.
     median = statistics.median(r for r, _, _ in ratios.values())
     for story_id, (r, folder, age) in ratios.items():
         if r < REPETITION * median:
