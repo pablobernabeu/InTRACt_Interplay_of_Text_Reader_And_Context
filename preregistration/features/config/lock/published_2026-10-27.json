@@ -1,0 +1,259 @@
+{
+ "what": "The SHA-256 values one publication's story_texts/data manifests record, frozen so that the catalogue lock (lock.py) keeps refusing that publication's files after later manifests replace these. Written by `python -m intract_features.lock_build checksums`; only checksums and the sources' provenance are kept.",
+ "publication": {
+  "commit": "5227d8b85c1b8a8885a10bd4385d1b5fb21c6a3a",
+  "date": "2026-10-27",
+  "folder": "preregistration/story_texts/data"
+ },
+ "sources": [
+  {
+   "file": "manifest.json",
+   "git_blob": "1e235433b859136d942aede2cb3bfa720a7de494",
+   "bytes": 7192,
+   "file_sha256": "f7ea4734b08d2ff44b419ce8ddd3b2311c121215e0c3816a324a90152e4b33c2"
+  },
+  {
+   "file": "extraction_record.json",
+   "git_blob": "6ebd70bf66a3fbeabc7bc3f51cc245cb436e3cf0",
+   "bytes": 2341,
+   "file_sha256": "875dba63639562a1bd6d5d73a6890c39edb2cd6651ce43249f3cd3a6efab78f3"
+  }
+ ],
+ "checksums": [
+  {
+   "source": "manifest.json",
+   "key": "languages/ar-sa/sha256",
+   "sha256": "99618a3cc0fbec38d302d4c50beea1956bc31405cc7903ace8d643e6e10b8696"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/ar-sa/uncompressed_sha256",
+   "sha256": "ee89ff659069be2ca6aab67834c4122dbd6aa4d6cf7a794188439d68d26a23a0"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/bg-bg/sha256",
+   "sha256": "daebaf0383bcdd8621c5cd8fdb8818989ea7510d0628d7bc5f24a5ae64fab623"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/bg-bg/uncompressed_sha256",
+   "sha256": "e91f5a097adc09ec4bcd89097e5eeae241bc62379ad3ee918de1111cb8370c3b"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/cs-cz/sha256",
+   "sha256": "8a616ab3645a068ce970ec1ea967185efd38e7fb899591fa01f934ffebe38583"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/cs-cz/uncompressed_sha256",
+   "sha256": "23e3b6b8b71091923ad11025c7b66f09a89aa0034b0e67e7ed7735df9076a7ae"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/de-de/sha256",
+   "sha256": "966f65c351b382355c2ea745d51354b2b57127a53e5fc11c611972d528425524"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/de-de/uncompressed_sha256",
+   "sha256": "ec808b00efdb5d000c64eef3ad940d9ae6501b1bc323bf3e9be1d1cc2c656361"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/el-gr/sha256",
+   "sha256": "1b8ce4f6e2768ff71b41be971e5532940797b9e26b629561d7107851306b2940"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/el-gr/uncompressed_sha256",
+   "sha256": "f4cfedf1c59dde4951cbb83dba08ceda30f73c7c696b33dcec2d74741900174d"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/en-us/sha256",
+   "sha256": "60913d14e5e23aef6e663c606e6abe9469ec5ae1977cfc58994486247c28e614"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/en-us/uncompressed_sha256",
+   "sha256": "22e770448510b72f0c9c28f5c0b71d876c344f466efb20f19710253d9606a445"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/es-es/sha256",
+   "sha256": "12fe8f2bf1cac3f31cf9728a8061e12cca6fd05bf91ac0566d9b00edd08a100b"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/es-es/uncompressed_sha256",
+   "sha256": "c657f8cd16ecc6679607ecd98d53731b700458fa701b8712a11c8fcf410395b7"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/fr-fr/sha256",
+   "sha256": "74ce59700ef172832c66ffe1a527185a89bf38950b993f95721a07bfdb549dca"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/fr-fr/uncompressed_sha256",
+   "sha256": "df594f45dd66c37ea62b4ee7834186ffc7d33abdb78fd26f9bf4b552b3a6d79a"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/he-il/sha256",
+   "sha256": "70d9894db3ac1be29ae3c872fc5f7cef665097f895f4488960685dafa12e9631"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/he-il/uncompressed_sha256",
+   "sha256": "db3ea048905efea2d5e9a6c56b5b2b40f3bd1427e9c866a9db3debbe70c324d8"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/hu-hu/sha256",
+   "sha256": "630adbaf9633cb0db1aecdf6bfab481cc3c586e6d1ecc090cf08bdc36fa8f07e"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/hu-hu/uncompressed_sha256",
+   "sha256": "cb7ac9d38517525de56cf0f0530df89b9ce7d9749e22eb3461b3a381c04c3324"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/it-it/sha256",
+   "sha256": "455fcaa715f616dc619df641d36ec10046fb1dd945418fec87dc7f8781c6f4c1"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/it-it/uncompressed_sha256",
+   "sha256": "8fb774f9f27ec35bbb1752e772a4aa9fe568d0df99939ed1fcff45daa88ea556"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/kk-kz/sha256",
+   "sha256": "c1c4ccdfcc9034f3005d681644dcf32c3df8a6af901d58afb21b2172381e7449"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/kk-kz/uncompressed_sha256",
+   "sha256": "aabbab4cc616c54f916639e65aa153eb91fab704bd3bd67db594c8b632edca78"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/ko-kr/sha256",
+   "sha256": "7ca8cba0d23d48e974c1527132bad0bf22ec26f4114b69b4a57cbc60fc8a3ec7"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/ko-kr/uncompressed_sha256",
+   "sha256": "1abbf68e7bf8e1c9be7c5479a99c06a0f067cc49df39ebcf044beca4505988e2"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/nl-nl/sha256",
+   "sha256": "73c01e2ad2cd99927732f2d1eb1daa03d1563053359c8a100e039bfe52f7f37d"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/nl-nl/uncompressed_sha256",
+   "sha256": "29cb3b387096f32464cce907158400f3b5491a75b13ac5fe63322bef0f37487d"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/pl-pl/sha256",
+   "sha256": "373d18cb96c56ed451bf16005d198d45b4c270b1ab63cb59e953543dfc79a6ba"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/pl-pl/uncompressed_sha256",
+   "sha256": "ffa1a560e63158cf7cd6284fe6ddd158d2bd14eb9dc2cdbcd831c6a85d6bbbac"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/pt-pt/sha256",
+   "sha256": "87a3370b9857ac56fc90f6604d6d15c0e0e7fe81ecb4645dc7753dfa157a4fc0"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/pt-pt/uncompressed_sha256",
+   "sha256": "debc9ed4f73c3faccd1cd0bc31c9574eca34fe229d264187beec74674800d89c"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/sk-sk/sha256",
+   "sha256": "59d17c01822914da4f1708443b9188baa944eb3bf5ebce759d7e557b940a2334"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/sk-sk/uncompressed_sha256",
+   "sha256": "1272632bb01e24b2002171370211369e7060adc2ec6b2c048098e57375d039d1"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/sr-rs/sha256",
+   "sha256": "967e3c90fca1e6e6e963f7f0869e7be10b9c0e522c8be3a9de64d4bc79ef5d08"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/sr-rs/uncompressed_sha256",
+   "sha256": "47ab36a4c8fc3c3fc2c0972333889c815c150a1198130bcd212edfda0a324115"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/tr-tr/sha256",
+   "sha256": "3bf0b8bfa44181321c1d9bddda2a72322c9573344d212115cfca3a5f992b06ae"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/tr-tr/uncompressed_sha256",
+   "sha256": "04324bde235337afc44de584f0de6f85ae3c84402e7422d00e49319b3f2a0578"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/zh-cn/sha256",
+   "sha256": "95df7e58721a1f3e822a8c1aac650d15403b161d0de0245403ef8d030ecc4009"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/zh-cn/uncompressed_sha256",
+   "sha256": "055b9c8004da9453ca696026527cc3363b81fcef74c31e1ea661cc7aa1215f0b"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/zh-tw/sha256",
+   "sha256": "1d0ccc8e795f642d82288562ac7832a88d138f885e6032b3c4117be13c2d09e3"
+  },
+  {
+   "source": "manifest.json",
+   "key": "languages/zh-tw/uncompressed_sha256",
+   "sha256": "58e31ba6fee0ed1190288bfc08d17c16cd5481185d05aabf3d051920bcbe12d7"
+  },
+  {
+   "source": "manifest.json",
+   "key": "files/anomalies.csv/sha256",
+   "sha256": "4a8a842ff9968228f7e8078455ff7de2f9619de2856e7ea52a80611d5054c9e0"
+  },
+  {
+   "source": "manifest.json",
+   "key": "files/extraction_record.json/sha256",
+   "sha256": "875dba63639562a1bd6d5d73a6890c39edb2cd6651ce43249f3cd3a6efab78f3"
+  },
+  {
+   "source": "extraction_record.json",
+   "key": "id_source/sha256",
+   "sha256": "dbab39cf0b0d62d7f6b31db2138afa97c09c25250a32f7de05cffd278e734a9e"
+  },
+  {
+   "source": "extraction_record.json",
+   "key": "files/0/sha256",
+   "sha256": "95002af76f31a042de408ad05d9a86c451d52da61c32d113957fe3a30ce95a6f"
+  },
+  {
+   "source": "extraction_record.json",
+   "key": "files/1/sha256",
+   "sha256": "ed07e78f9ca8c40a5316f2566606da13ce6d06d563f69051224ccd7870c428f7"
+  }
+ ]
+}

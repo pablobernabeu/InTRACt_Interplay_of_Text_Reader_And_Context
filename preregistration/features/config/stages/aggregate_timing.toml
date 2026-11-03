@@ -1,0 +1,138 @@
+# Constants of the aggregate_timing stage (src/intract_features/stages/aggregate_timing.py), which collects the
+# timing record cli.py writes for every stage and shard into one table per run, with throughput per unit and a
+# projection to the whole English catalogue. DESIGN.md: "Every run writes a timing record to <work>/<lang>/_timing/
+# [...] so that costs can be projected per unit." None of these values is a registered rule: the stage measures what
+# the pipeline costs, for the plan's budget and the protocol's budget guard (preregistration.qmd, Timeline: "A pilot
+# on 1 per cent of the catalogue times every GPU step and projects the total"); it computes no feature.
+# "Scout" is the English-pipeline scout report of 2-3 November 2026.
+
+[scope]
+# The language folders of the run that are read: "all", or a list of locales. qe_metricx is timed under de-de, on
+# the translated benchmark's English-German pairs, so "all" keeps it in the run's table.
+langs = "all"
+# The stage's own records are left out.
+exclude_stages = ["aggregate_timing"]
+
+[catalogue]
+# Scout, section 4, the structure-only profile of the English table: "The table holds 40,559 texts and 733,441
+# pages, with 17,309,915 tokens and 101,672,026 characters." Tokens are whitespace tokens ("the `words` column equals
+# the whitespace-token count in every text"); characters are counted on the pages joined with single spaces, titles
+# excluded. These are structural counts the editorial office allowed before acceptance; no feature was computed on
+# the texts.
+texts = 40559
+pages = 733441
+whitespace_tokens = 17309915
+characters = 101672026
+# supplementary.qmd S3, segmentation paragraph: "In the 18 translations, the union segmenter keeps every sentence
+# end the translation marks itself and takes the others from its English source."
+translations = 18
+
+[catalogue.levels]
+# Scout, section 4: texts and mean whitespace tokens per text by level ("Young (13,500) ... 357.2", "Mid (13,500)
+# ... 409.2", "Old (13,500) ... 513.5", "Classics (59) ... 535.9"); section 5, step 8: "Scale the character- and
+# subword-driven stages (SaT, LMs, e5, CorPipe, MetricX) by the catalogue-to-stand-in character ratio: 1.045
+# (young), 1.072 (mid) and 1.088 (old)."
+young = { texts = 13500, mean_tokens = 357.2, char_ratio = 1.045 }
+mid = { texts = 13500, mean_tokens = 409.2, char_ratio = 1.072 }
+old = { texts = 13500, mean_tokens = 513.5, char_ratio = 1.088 }
+# The 59 classics have no measured ratio (scout, section 5: 45 of 59 matched by single stories); they take the
+# token-weighted mean ratio of the three levels, at 0.2 per cent of the catalogue's tokens. PENDING the dry run.
+classic = { texts = 59, mean_tokens = 535.9 }
+
+[projection]
+# How a stage's compute time is scaled to the whole catalogue. Not registered; PENDING the dry run, which tests
+# whether the two rules for character-driven stages agree on the stand-in.
+#   "whitespace_tokens": catalogue whitespace tokens / whitespace tokens the stage processed
+#   "characters":        catalogue characters / characters the stage processed
+#   "documents":         catalogue texts / documents the stage processed
+#   "level_ratios":      the whitespace-token factor times the token-weighted character ratio of [catalogue.levels],
+#                        the scout's rule for character- and subword-driven stages on a stand-in matched in tokens
+# A stage scaled by characters reports the other character rule beside its primary one.
+character_method = "level_ratios"
+# Unit for a stage not named in [projection.units].
+default_unit = "whitespace_tokens"
+# Stages whose counts stand in for a stage that does not count a unit, in order of preference. A count is borrowed
+# only when both stages recorded the same number of documents for the same shard. sat and the parse stages count
+# whitespace tokens with str.split, the rule behind the catalogue's own count (scout, section 4).
+reference_stages = ["sat", "parse_stanza", "documents"]
+# With no whitespace-token count of its own or borrowed, a stage falls back to its `words`, and the row and the
+# totals mark the projection approximate. PENDING the Feature Specification of the timing record (cli.py).
+allow_words_fallback = true
+# Processes per stage in the catalogue run, over which fixed costs recur: 0 takes the pipeline's [shards] default
+# (pipeline.toml), the layout of the dry run itself.
+target_shards = 0
+
+[projection.units]
+# The unit each stage's cost follows. Parsers and the gramlex features walk syntactic words, which are not counted
+# in the catalogue, so they are scaled by whitespace tokens: the parse stages count those of the units they send,
+# and features_gramlex borrows them. The segmenter, the subword language models and encoders, CorPipe, MetricX,
+# normalisation and the eSpeak NG phonemizer read text and are scaled by characters. source = "reference" prefers a
+# reference stage's count: CorPipe's own counts are the parsed sentences it sends, without the spaces between them.
+documents = { unit = "characters" }
+sat = { unit = "characters" }
+seg_check = { unit = "characters" }
+parse_stanza = { unit = "whitespace_tokens" }
+parse_udpipe = { unit = "whitespace_tokens" }
+features_gramlex = { unit = "whitespace_tokens" }
+features_discourse = { unit = "characters" }
+surprisal_goldfish = { unit = "characters" }
+surprisal_xglm = { unit = "characters" }
+encode_e5 = { unit = "characters" }
+encode_bgem3 = { unit = "characters" }
+coref_corpipe = { unit = "characters", source = "reference" }
+qe_metricx = { unit = "characters" }
+
+[projection.overrides]
+# qe_metricx is timed on public English-German sentence pairs, not on the stand-in, so the stand-in's character
+# ratios do not apply. On the catalogue every translated page is scored with its English page, so its characters
+# are taken as the English characters twice (source and candidate, assuming translations as long as their source)
+# in each of the 18 translations: multiplier = per_translation x translations. Each translation is its own run, so
+# its fixed costs recur 18 times. PENDING the dry run.
+qe_metricx = { method = "characters", per_translation = 2 }
+
+[projection.cores]
+# CPUs allocated per task (the --cpus-per-task of each stage's sbatch template), used only where run_stage.sh left
+# no side record. ARC bills a CPU job for its allocated cores over its elapsed time, so CPU projections are in
+# core-hours of that allocation.
+documents = 1
+seg_check = 1
+parse_stanza = 1
+features_gramlex = 1
+features_discourse = 2
+
+[split]
+# Where the division of a stage's wall time into fixed and compute seconds comes from, first match first:
+#   "probe":      the one-document probes jobs/arc/run_stage.sh runs before (cold) and after (warm) the shards
+#   "timers":     compute seconds the stage reports in its counts ([split.timers], fnmatch patterns of count keys)
+#   "fixed_keys": fixed seconds the stage reports ([split.fixed_keys], dotted paths into its counts)
+# A stage with none is projected unsplit, an upper bound, and listed in the totals.
+order = ["probe", "timers", "fixed_keys"]
+
+[split.timers]
+# encode_e5.py and surprisal_*.py time each model call and report it as seconds_<name>. coref_corpipe.py reports
+# the official script's prediction after its weights have loaded (seconds_predict), and qe_metricx.py the scoring
+# after verification and loading (seconds_score); both report the fixed part under setup_seconds.
+encode_e5 = ["seconds_encode"]
+encode_bgem3 = ["seconds_encode"]
+surprisal_goldfish = ["seconds_*"]
+surprisal_xglm = ["seconds_*"]
+coref_corpipe = ["seconds_predict"]
+qe_metricx = ["seconds_score"]
+
+[split.fixed_keys]
+# parse_udpipe.py reports the server's start (185 s on L40S in TU-4u, scout section 3).
+parse_udpipe = ["udpipe.server.startup_seconds"]
+
+[probe]
+# run_stage.sh writes the probes under <work>/<dir>/<cold|warm>/<stage>/ and reads this table to know which stages
+# to probe and on how many documents. documents is not probed: each of its tasks reads the whole input table,
+# whatever --limit says, so a probe would cost as much as a shard and measure the same thing.
+dir = "_probe"
+limit = 1
+exclude = ["aggregate_timing", "documents"]
+
+[output]
+# Written atomically under the run's work folder as <work>/<dir>/timing.tsv and timing.json.
+dir = "_summary"
+# Decimal places in the TSV; the JSON keeps full precision.
+decimals = 4

@@ -1,0 +1,136 @@
+# Constants of the surprisal_goldfish stage: corrected word surprisal under the Goldfish models
+# (src/intract_features/features/surprisal.py, src/intract_features/stages/surprisal_goldfish.py).
+#
+# Anchors: "qmd" is preregistration.qmd, "S3" is Supplementary Section S3 of supplementary.qmd and "plan v3" is the
+# feature plan of 22 October 2026 (section "Surprisal", "Specification"), whose settings the Feature Specification
+# registers. A value marked PENDING is a default taken behind a switch until the Feature Specification decides it.
+# Model pins (repository, revision, SHA-256 of every file loaded) are in config/models.lock.json, keyed by the
+# repository names in config/languages.toml. Code reads every value from here and holds none of them.
+
+[stage]
+# Raise on a document that cannot be scored instead of recording it in its diagnostics. The dry run keeps going so
+# that one odd text cannot stop a shard; the tests run strict.
+strict = false
+# Documents whose windows go to the model together. Fixed batch shapes ([runtime]) make every value independent of it.
+docs_per_group = 256
+
+[models]
+# S3, Table 3, Surprisal row: "Goldfish, one GPT-2 model per language (`goldfish-models/<lang>_1000mb`, 124,770,816
+# parameters, 50,000-token SentencePiece vocabulary, 512-token window, 10 epochs)". qmd Sensitivity analyses, fifth
+# family: "Surprisal comes from the 100 MB tier of the same language models in another". Each tier names a key of
+# the language's goldfish table in config/languages.toml.
+tiers = ["tier_1gb", "tier_100mb"]
+
+[models.value_names]
+# The 1 GB tier is the LexicalDifficulty anchor (qmd Outcome-blind dimension reduction: "For LexicalDifficulty, they
+# are frequency, surprisal and word length"); the 100 MB tier is the registered sensitivity refit.
+tier_1gb = "mean_surprisal"
+tier_100mb = "mean_surprisal_100mb"
+
+[tokens]
+# S3: windows begin "with the start token `[CLS]` as in training and never ending with `[SEP]`", and the correction
+# has "`[SEP]` in the set of boundary tokens". The Goldfish model card: "All models are trained with a [CLS] (same
+# as [BOS]) token prepended, and a [SEP] (same as [EOS]) token separating sequences." In the pinned tokenizer.json,
+# [CLS] = 50000, [SEP] = 50001, <pad> = 50002 and <unk> = 0.
+start = "[CLS]"
+end_of_sequence = "[SEP]"
+unknown = "<unk>"
+padding = "<pad>"
+# S3: "Goldfish marks the beginning of a word". Plan v3: "the log mass of the boundary set (pieces starting with ▁,
+# plus [SEP])". The marker is U+2581, SentencePiece's word-start symbol.
+word_start_marker = "▁"
+
+[windows]
+# S3: "Each text is scored in windows of 512 tokens, the model's maximum [...]. Windows advance by 256 tokens, and the
+# last one ends at the text's final token. Each token's surprisal is taken from the first window that contains it".
+# Plan v3: "[CLS] plus up to 511 tokens at a stride of 256, the last window ending at the final token". The
+# positions include the start token.
+positions = 512
+stride = 256
+
+[text]
+# Plan v3: "Normalisation: join pages with one space, collapse whitespace and trim the ends." Documents arrive with
+# pages joined by one space (records.Document.text); White_Space runs are collapsed and the ends trimmed.
+# PENDING the Feature Specification: qmd Measures registers only that "A token of punctuation alone attaches to a
+# neighbouring word". A punctuation-only token's subword surprisals join the word that text.words.word_extents
+# attaches it to (the side plan v3 states); "quote_pairs" takes as openers the opening marks of the language's
+# quotation pairs in config/languages.toml whose two marks differ.
+attach_punctuation = "word_extents"
+openers = "quote_pairs"
+
+[replacements]
+# S3: "A fixed table replaces characters that a language's tokeniser cannot encode, such as the em dash (U+2014) in
+# 10 of the 18 tokenisers, with equivalents in its vocabulary." Plan v3: "apply the replacement table, but only where
+# the language's tokeniser encodes a character as unknown and the replacement is in its vocabulary. The table maps
+# U+2014 to U+2013; ‘ ’ ‚ ‹ › to '; “ ” „ « » to "; U+2010 and U+2011 to -." The Feature Specification freezes the
+# table (plan v3). Each pair is [source, replacement] as code points, so that look-alike dashes cannot be confused;
+# every entry maps one character to one, so offsets do not move. In the English Goldfish tokenisers, « » ‹ › ‚ „
+# U+2010 and U+2011 are unknown and the em dash is not (verify-surprisal/out/unk_table.tsv).
+code_points = [
+  [0x2014, 0x2013],                                                   # em dash to en dash
+  [0x2018, 0x0027], [0x2019, 0x0027], [0x201A, 0x0027], [0x2039, 0x0027], [0x203A, 0x0027],  # to apostrophe
+  [0x201C, 0x0022], [0x201D, 0x0022], [0x201E, 0x0022], [0x00AB, 0x0022], [0x00BB, 0x0022],  # to quotation mark
+  [0x2010, 0x002D], [0x2011, 0x002D],                                 # hyphens to hyphen-minus
+]
+
+[precision]
+# DESIGN.md, Determinism: "Language models and encoders run in fp32 with TF32 off". Plan v3: "IEEE fp32 with TF32
+# disabled through PyTorch's fp32_precision API, one GPU model for the whole run, fixed batch shapes" and "Goldfish
+# always runs in fp32, and only the budget guard can move XGLM-4.5B, MetricX-24-Hybrid-XL and CorPipe to bf16".
+mode = "fp32"
+allowed_modes = ["fp32"]
+# Plan v3: "with log-softmax over all 51,200 outputs", in 32-bit arithmetic.
+logprob_dtype = "float32"
+fp32_precision = "ieee"
+deterministic_algorithms = true
+# What cuBLAS needs for deterministic kernels; read when CUDA starts.
+cublas_workspace_config = ":4096:8"
+
+[runtime]
+# None of these is registered, and none changes a value. The stage's device is gpu; "auto" or "cpu" for development.
+device = "cuda"
+# The benchmark engine (predictability/scripts/gf_scorer.py) ran GPT-2 with eager attention.
+attn_implementation = "eager"
+# DESIGN.md, Determinism: "Batches have fixed shapes wherever padding could change a result." Every forward call
+# holds windows_per_batch windows, each right-padded to the window's positions; a short last batch is filled with
+# copies of its first window, whose outputs are discarded.
+windows_per_batch = 32
+pad_to_window = true
+# Positions per chunk of the output layer, which bounds the memory of the log-softmax over the vocabulary.
+positions_per_chunk = 512
+offline = true
+
+[loading]
+# Weights are read only from model.safetensors (Goldfish ships only a pickled pytorch_model.bin, which the
+# environment build converts once with features.surprisal.convert_pickled_checkpoint and pins by SHA-256). The
+# conversion leaves out the output layer, which GPT-2 ties to its embeddings, and the obsolete causal-mask buffers;
+# any other missing or unexpected weight stops the stage.
+allowed_missing = ["^lm_head\\.weight$"]
+allowed_unexpected = ["\\.attn\\.bias$", "\\.attn\\.masked_bias$"]
+# Patterns the build job passes to convert_pickled_checkpoint: buffers dropped and the output layer's tie.
+conversion_drop = ["\\.attn\\.bias$", "\\.attn\\.masked_bias$"]
+conversion_tied = { "lm_head.weight" = "transformer.wte.weight" }
+
+[names]
+# qmd Materials: "The mean is taken over the words of the outcome's denominator, excluding names and words containing
+# a character the model cannot encode." and "Surprisal is computed with the names present in context and excluded
+# only from the mean." PENDING P06 and P53, which choose the name rule. "none": no mask is applied, so the registered
+# mean is written as null and the per-word values are stored for the frozen mask (features.surprisal.text_mean).
+# "artefact": the indices of the registered words that are names are read from diagnostics[field] of each record of
+# the named artefact, whose diagnostics must also hold "words", the registered word count.
+source = "none"
+artefact = "features_gramlex"
+field = "name_word_indices"
+
+[descriptive]
+# Plan v3: "Descriptive only: next-word entropy, the within-text SD of word surprisal, surprisal per character". Not
+# registered: the benchmark (predictability/scripts/exp_pm_flores.py) took the population SD (corr.std()), the
+# entropy of the distribution that predicts each word's first token, and the token surprisal per character of the
+# normalised text, there in bits and here in nats.
+sd_ddof = 0
+
+[output]
+# Per-word corrected surprisals (nats) are stored, in the order of text.words.words(Document.text), so that the
+# registered mean can be recomputed under the frozen name mask without a second GPU pass.
+store_word_values = true
+decimals = 6

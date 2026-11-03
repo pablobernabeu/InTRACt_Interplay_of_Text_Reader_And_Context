@@ -1,0 +1,100 @@
+# Stage qe_metricx: MetricX-24-Hybrid-XL reference-free quality estimates of page pairs (GPU, environment core;
+# reference/metricx_qe.py, a port of the developers' code validated against it). preregistration.qmd, Sensitivity
+# analyses, ninth family: "Translation quality is estimated for every translated page against its English source by
+# MetricX-24 in its reference-free mode [@juraskaMetricX24GoogleSubmission2024], validated before submission against
+# public human judgements (Supplementary Section S3). A text's value is the word-weighted mean over its pages."
+# supplementary.qmd S3: "Every translated page is scored against its English source by MetricX-24-Hybrid-XL in its
+# reference-free quality-estimation mode". Values the protocol leaves open are marked as such.
+
+[model]
+# Keys of the pins in config/models.lock.json, verified before loading (DESIGN.md, Configuration). S3:
+# "MetricX-24-Hybrid-XL"; google/metricx-24-hybrid-xl-v2p6 (Apache-2.0), float32 weights in two pickled shards.
+metricx = "google/metricx-24-hybrid-xl-v2p6"
+# The developers' README runs every MetricX-24 model with "--tokenizer google/mt5-xl"; the port rebuilds from its
+# spiece.model the fast tokeniser that transformers 4.30.2 makes of it (reference/metricx_qe.py, build_tokenizer).
+tokenizer = "google/mt5-xl"
+# Environment variables naming the snapshot folders; when unset, the Hugging Face cache's pinned revision is used.
+model_dir_env = "INTRACT_METRICX_MODEL"
+tokenizer_dir_env = "INTRACT_MT5_TOKENIZER"
+# The official code the port reproduces, run only for the validation (tests/gpu/test_reference_gpu.py):
+# google-research/metricx at commit fc4978eb064670f7cc33e93ea4f52d38396b8ae6 (metricx24/predict.py and models.py,
+# Apache-2.0), pinned in config/models.lock.json under this key.
+official_code = "google-research/metricx"
+
+[versions]
+# PENDING the environment lock (ARC builder): the torch and transformers releases under which the port is validated,
+# those of the core environment (envs/core.in: torch 2.14.1, transformers 5.19.0). Changing them needs a new
+# validation run.
+torch = "2.14"
+transformers = "5.19"
+
+[input]
+# metricx24/predict.py, get_dataset() with --qe: "source: " + example["source"] + " candidate: " +
+# example["hypothesis"]. No reference enters the reference-free input.
+source_prefix = "source: "
+candidate_prefix = " candidate: "
+# README: "--max_input_length 1536"; "The models were trained with a maximum input length of 1536 [...] tokens, so
+# significantly increasing that value may lead to unpredictable behavior."
+max_input_length = 1536
+# predict.py's _remove_eos(): the tokeniser's final token, the end-of-sequence mark, is dropped before scoring.
+drop_final_token = true
+# S3: "Before any stage runs, each text is normalised once to Unicode normalisation form NFC and stripped of invisible
+# format characters". The --input pages are normalised with documents.toml's [normalise] set unless this is false.
+# Nothing else is stripped: predict.py scores a page as given, and a page ending in white space keeps the final "▁"
+# piece the official tokeniser gives it (reference/metricx_qe.py, "Tokens").
+normalise = true
+
+[output]
+# models.py: "# 250089 = <extra_id_10>", "predictions = lm_logits[:, 0, 250089]", "# Clip to 0 to 25". Lower is better.
+logit_index = 250089
+clip = [0.0, 25.0]
+# PENDING the Feature Specification (not registered): the weight of a page in "the word-weighted mean over its pages".
+# "translation_words" (the scout's default) counts the registered words of the translated page, or takes a row's
+# "words"; a page the translation left empty then weighs nothing. "source_words" counts the registered words of the
+# English page, so every page of the source weighs the same in every language.
+page_weight = "translation_words"
+
+[batching]
+# Not registered. "single": one pair per forward pass without padding, as predict.py runs (its default collator
+# cannot pad). "buckets": each pair padded to the smallest edge that holds it, in batches of tokens_per_batch // edge
+# rows filled to that size, so a pair's batch shape depends on its own length alone (DESIGN.md: "Batches have fixed
+# shapes wherever padding could change a result"). PENDING the dry run: buckets stays only if it agrees with single
+# within [validation] on the GPU.
+mode = "buckets"
+bucket_edges = [64, 96, 128, 192, 256, 384, 512, 768, 1024, 1536]
+tokens_per_batch = 16384
+# Pairs tokenised and scored at a time, which bounds memory on a large shard and changes no score.
+chunk_pairs = 50000
+
+[runtime]
+# DESIGN.md, Determinism: "Language models and encoders run in fp32 with TF32 off." PENDING P08: "bfloat16" is the
+# budget guard's first step, "16-bit (bf16) weights and 32-bit log-probabilities" (preregistration.qmd, Timeline):
+# the encoder and decoder are cast to bf16 and the head keeps float32 weights and a float32 input.
+dtype = "float32"
+# transformers 4.30.2, the official pin, has only eager attention in its mT5 model, so the port asks for it.
+attn_implementation = "eager"
+allow_tf32 = false
+deterministic_algorithms = true
+deterministic_warn_only = true
+cublas_workspace_config = ":4096:8"
+device = "cuda"
+offline = true
+
+[validation]
+# Not registered. The port is admitted only if, on public pairs scored by the official code in its own Python 3.11
+# environment, it reproduces every score within max_abs_difference on the 0-25 scale and correlates at least
+# min_pearson with them (tests/gpu/test_reference_gpu.py). PENDING the Feature Specification. On a tiny checkpoint
+# built by the official MT5ForRegression, the port came within 8.6e-6 of predict.py on 73 public pairs (CPU).
+max_abs_difference = 0.01
+min_pearson = 0.9999
+# The validation pairs must include candidates that end in a space, end in a line break, and are empty, because only
+# there does transformers 5's tokeniser differ from the official one in the common case; each kind needs at least
+# this many pairs (metricx_qe.validation_pairs adds them to any public set).
+min_edge_pairs = 8
+
+[bf16_check]
+# P08 (pending_benchmarks.md): "The bf16 step is taken only if text means agree with those at full precision at
+# r >= .995 on the public benchmark." preregistration.qmd, Timeline: "That step is taken only if their text means agree
+# with those at full precision at $r \geq .995$". The text mean is the stage's value, the word-weighted mean of a text's
+# page scores.
+min_pearson = 0.995

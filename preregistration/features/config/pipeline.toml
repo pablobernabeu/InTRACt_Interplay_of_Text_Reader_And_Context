@@ -1,0 +1,25 @@
+# Constants that every stage shares. Stage-specific constants live in
+# config/stages/<stage>.toml. Each value names its anchor: a section of
+# preregistration.qmd, or a section of supplementary.qmd as S1 to S7.
+
+[keys]
+# keyed_hash() builds "<prefix>|<purpose>|<version>|" + the story id. One key string
+# for every registered sample (gap G7; this form is the default the Feature
+# Specification has to confirm).
+prefix = "intract"
+version = "v1"
+
+[shards]
+# The default number of shards per language for job arrays (array index =
+# 4 x language + shard in the plan's job design).
+default = 4
+
+[seeds]
+# For anything stochastic that a keyed hash does not already fix, such as the dry
+# run's bootstrap summaries. Registered samples use keyed hashes, not this seed.
+base = 20261026
+
+[floor]
+# Outcome-blind dimension reduction: "A text whose English source has fewer than
+# five sentences enters no family's solution in any language."
+min_english_sentences = 5

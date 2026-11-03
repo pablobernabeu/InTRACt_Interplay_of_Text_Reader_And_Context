@@ -1,0 +1,34 @@
+# Environment "metricx": MetricX-24 quality estimation (preregistration.qmd, Outcome-neutral quality checks;
+# supplementary.qmd S3), run from google-research/metricx at the commit pinned in config/resources.lock.json.
+#
+# The official pins, requirements.txt of google-research/metricx at commit fc4978eb (12 December 2024):
+transformers[torch]==4.30.2
+sentencepiece==0.1.99
+datasets==2.13.1
+# Left out: git+https://github.com/google-research/mt-metrics-eval, which serves meta-evaluation only;
+# metricx24/predict.py and metricx24/models.py import datasets, torch and transformers, not mt_metrics_eval.
+# A git dependency also cannot be hash-locked.
+#
+# Everything else upstream leaves open (torch, accelerate, pyarrow, fsspec, pandas) is resolved from PyPI as
+# of that commit's date (uv pip compile --exclude-newer 2024-12-13T00:00:00Z; envs/README.md), so that the
+# 2023 pins meet the releases a fresh install met when MetricX-24 was published, not 2026 releases that
+# removed APIs they call. torch then resolves to its PyPI build with CUDA 12 libraries, which the L40S
+# nodes' driver (580.65.06, recorded by the presub job logs) supports.
+#
+# Python 3.11 (ARC module Python/3.11.5-GCCcore-13.2.0): sentencepiece 0.1.99 and tokenizers 0.13.x, which
+# transformers 4.30.2 requires, publish no CPython 3.12 wheels.
+#
+# A precaution, not an upstream pin: numpy 2.0 (June 2024) came a year after transformers 4.30.2 and
+# datasets 2.13.1, so both predate its API changes.
+numpy<2
+# The converted MetricX weights are safetensors shards (jobs/arc/staging.py); transformers 4.30.2 reads them
+# with this package.
+safetensors
+# Not upstream pins, but without them predict.py does not run (reproduced on 3 November 2026 with the lock's
+# own versions on Python 3.11.5, tests/gpu/test_reference_gpu.py): transformers 4.30.2 converts mt5-xl's
+# spiece.model with its T5Converter, which requires protobuf and whose generated module fails under protobuf 4
+# and later ("Descriptors cannot be created directly"); and datasets 2.13.1 with fsspec 2024.10.0 stops with
+# "Loading a dataset cached in a LocalFileSystem is not supported".
+protobuf==3.20.3
+fsspec[http]==2023.6.0
+# The intract_features package is not installed here (envs/build_envs.sh): it needs Python 3.12 or later.

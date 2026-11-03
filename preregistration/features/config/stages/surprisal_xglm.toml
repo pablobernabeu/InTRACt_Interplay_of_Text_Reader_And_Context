@@ -1,0 +1,106 @@
+# Constants of the surprisal_xglm stage: corrected word surprisal under XGLM-4.5B, the multilingual contrast
+# (src/intract_features/features/surprisal.py, src/intract_features/stages/surprisal_xglm.py).
+#
+# Anchors: "qmd" is preregistration.qmd, "S3" is Supplementary Section S3 of supplementary.qmd and "plan v3" is the
+# feature plan of 22 October 2026 (section "Surprisal", "Specification"). A value marked PENDING is a default taken
+# behind a switch until the Feature Specification decides it. The model's pin is in config/models.lock.json.
+
+[stage]
+# As in surprisal_goldfish.toml.
+strict = false
+docs_per_group = 64
+
+[model]
+# S3, Table 3, Surprisal row: "XGLM-4.5B (`facebook/xglm-4.5B`, 4.5 billion parameters, MIT licence), trained on 134
+# languages according to its model card, is the single-multilingual-model contrast in all 19 languages". qmd
+# Sensitivity analyses, fifth family: surprisal comes "from the multilingual XGLM-4.5B model in a third" refit.
+key = "facebook/xglm-4.5B"
+value_name = "mean_surprisal_xglm"
+
+[tokens]
+# Plan v3: "each whole text scored after the model's start token" and "the boundary set is the pieces beginning with
+# U+2581 plus the end-of-sequence token". The model's start token is </s>: XGLM's tokeniser prefixes every sequence
+# with it (transformers 5.19.0, models/xglm/tokenization_xglm.py, post-processor "</s> $A"; the pinned
+# tokenizer.json holds the same template), and </s> is also its end of sequence (config.json, eos_token_id 2).
+start = "</s>"
+end_of_sequence = "</s>"
+unknown = "<unk>"
+padding = "<pad>"
+word_start_marker = "▁"
+
+[windows]
+# Plan v3: "using its 2,048-token context with a stride fallback for longer texts". 2,048 is max_position_embeddings
+# in the model's config.json, start token included. PENDING the Feature Specification: plan v3 names no stride. Half
+# the window, as in the Goldfish rule (512 and 256), with the last window ending at the final token and each token
+# taken from the first window that contains it.
+positions = 2048
+stride = 1024
+
+[text]
+# Plan v3: "The word, name, unknown-character and Traditional Chinese rules are the same" as for Goldfish.
+attach_punctuation = "word_extents"
+openers = "quote_pairs"
+
+[replacements]
+# Plan v3: the same table and rule as Goldfish (surprisal_goldfish.toml); an entry applies only where this
+# tokeniser encodes the character as unknown and the replacement is in its vocabulary. XGLM's English tokeniser
+# encodes every character of the table, so none applies there.
+code_points = [
+  [0x2014, 0x2013],                                                   # em dash to en dash
+  [0x2018, 0x0027], [0x2019, 0x0027], [0x201A, 0x0027], [0x2039, 0x0027], [0x203A, 0x0027],  # to apostrophe
+  [0x201C, 0x0022], [0x201D, 0x0022], [0x201E, 0x0022], [0x00AB, 0x0022], [0x00BB, 0x0022],  # to quotation mark
+  [0x2010, 0x002D], [0x2011, 0x002D],                                 # hyphens to hyphen-minus
+]
+
+[precision]
+# Plan v3: the contrast is scored "in fp32". qmd Timeline, budget guard: "the inference-only models used for
+# sensitivity or validation, namely XGLM-4.5B, MetricX-24 and the coreference resolver, run with 16-bit (bf16)
+# weights and 32-bit log-probabilities. That step is taken only if their text means agree with those at full
+# precision at $r \geq .995$ on the public benchmark scored before submission." (P08.) "bf16" is used only once
+# that check has passed; in that mode the documents whose keyed fraction lies below check_fraction are scored at
+# both precisions and their text means compared (1.0 for the public-benchmark check itself).
+mode = "fp32"
+allowed_modes = ["fp32", "bf16"]
+logprob_dtype = "float32"
+check_fraction = 1.0
+agreement_threshold = 0.995
+# The keyed hash's purpose string that selects the checked documents (records.keyed_hash, gap G7's key form).
+check_key_purpose = "bf16_check"
+fp32_precision = "ieee"
+deterministic_algorithms = true
+cublas_workspace_config = ":4096:8"
+
+[runtime]
+# Not registered, and none changes a value. Each window goes alone at its own length, so no padding enters any call
+# (DESIGN.md: fixed shapes "wherever padding could change a result") and a text's values never depend on another
+# text. Eager attention: transformers 5.19.0 refuses scaled-dot-product attention for XGLMForCausalLM ("does not
+# support an attention implementation through torch.nn.functional.scaled_dot_product_attention yet").
+device = "cuda"
+attn_implementation = "eager"
+windows_per_batch = 1
+pad_to_window = false
+# Output positions per chunk: 512 x 256,008 fp32 log-probabilities take about 0.5 GB.
+positions_per_chunk = 512
+offline = true
+
+[loading]
+# The pinned repository ships model.safetensors, so no conversion is needed and the pickled pytorch_model.bin beside
+# it is never read. UNVERIFIED which tied or legacy keys the 2022 checkpoint holds: the output layer is tied to the
+# embeddings, and the sinusoidal position table is rebuilt by the model, so both are allowed.
+allowed_missing = ["^lm_head\\.weight$"]
+allowed_unexpected = ["^model\\.embed_positions\\.weights$", "^lm_head\\.weight$"]
+
+[names]
+# As in surprisal_goldfish.toml (PENDING P06 and P53).
+source = "none"
+artefact = "features_gramlex"
+field = "name_word_indices"
+
+[descriptive]
+# As in surprisal_goldfish.toml.
+sd_ddof = 0
+
+[output]
+# As in surprisal_goldfish.toml.
+store_word_values = true
+decimals = 6

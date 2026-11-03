@@ -1,0 +1,94 @@
+# Stage sat: the registered Segment any Text (SaT) call (src/intract_features/segment/sat.py).
+# In English its sentences are the registered segmentation; in a translation they are SaT
+# alone, the union segmenter's input and the fallback the segmentation checks can impose.
+# Anchors: preregistration.qmd, Materials, the segmentation paragraph ("Sentence segmentation is
+# registered with the inventory."); supplementary.qmd S3 ("The fourth rule also requires
+# sentence segmentation to be registered in full."). Values the protocol leaves to the plan
+# cite feature plan v3, "Sentences and words".
+
+[model]
+# Keys of the pins in config/models.lock.json (repository, revision, SHA-256 of every file),
+# which the code verifies before loading. S3: "the `sat-12l-sm` model run through `wtpsplit`
+# 2.2.2". Plan v3: "segment-any-text/sat-12l-sm@d70c72a9, its tokeniser loaded from a local
+# snapshot of FacebookAI/xlm-roberta-base@e73636d4".
+sat = "segment-any-text/sat-12l-sm"
+tokenizer = "FacebookAI/xlm-roberta-base"
+wtpsplit_version = "2.2.2"
+
+[call]
+# S3: "at a threshold of .25". Passed explicitly; plan v3: "a local path without "sm" in its
+# name silently gets 0.025".
+threshold = 0.25
+# Plan v3: "Use stride=64, block_size=512, batch_size=32, strip_whitespace=False,
+# pad_last_batch=True and split_on_input_newlines=True, counting the boundaries that newlines
+# force."
+stride = 64
+block_size = 512
+batch_size = 32
+pad_last_batch = true
+strip_whitespace = false
+# PENDING the Feature Specification (gap G9, in-page line breaks). The delivery writes line
+# breaks inside pages (preregistration/README.md), so this forces a boundary at each one; the
+# plan's value stands until the specification decides. The colon rule still applies across a
+# line break.
+split_on_input_newlines = true
+
+[colon_rule]
+# Materials: "a sentence ends where the registered Segment any Text (SaT) model places a
+# boundary [...], never after a colon." Plan v3: "no boundary after ":" or "：". The rule does
+# not cover ";", because NFC maps the Greek question mark (U+037E) to it."
+colons = [":", "："]
+
+[candidates]
+# S3: "Candidates are the characters that end a whitespace token, are punctuation or have a
+# boundary probability of at least $10^{-5}$, and a colon is never one." Plan v3: "Store the
+# probabilities at candidate positions for the union search." The stage stores p' there.
+floor = 1e-5
+store = true
+
+[runtime]
+# None of these changes a boundary. DESIGN.md, Determinism: "Language models and encoders run
+# in fp32 with TF32 off"; plan v3: "Run in PyTorch fp32 with TF32 disabled, offline."
+device = "cuda"                       # "auto" or "cpu" for development; the stage's device is gpu
+dtype = "float32"
+allow_tf32 = false
+deterministic_algorithms = true       # torch.use_deterministic_algorithms(True, warn_only=True), as TU-2
+cublas_workspace_config = ":4096:8"   # what cuBLAS needs for deterministic kernels
+offline = true
+# Not registered. A sentinel text of at least 510 subword tokens opens every model call, so
+# that wtpsplit always pads blocks to full width and a text's probabilities do not depend on
+# which texts share its call (DESIGN.md: "Batches have fixed shapes wherever padding could
+# change a result"). The chunk geometry the registered stride and block fix is unchanged.
+fixed_block_width = true
+sentinel_word = "x"
+sentinel_words = 600
+texts_per_call = 1000                 # wtpsplit's own outer batch size
+count_tokens = true                   # subword tokens and forward chunks for the timing record
+
+[floor]
+# Outcome-blind dimension reduction: "A text whose English source has fewer than five
+# sentences enters no family's solution in any language." The minimum is pipeline.toml
+# [floor] min_english_sentences; this names the locale whose texts are the English source.
+source_lang = "en-us"
+
+[union]
+# The union segmenter of the translations (src/intract_features/segment/union.py); English does
+# not use it. S3, the fourth script rule: "the union segmenter and the segmentation diagnostics
+# recognise . ! ? … and their full-width forms as terminal marks, together with the Arabic
+# question mark ؟."
+terminal_marks = [".", "!", "?", "…", "؟", "。", "！", "？", "．"]
+# S3: "In Greek alone, the semicolon `;` is one too, since it is the question mark after NFC
+# normalisation." The delivery's Greek locale is el-gr; the ISO and FLORES codes are kept so
+# that the benchmark's texts read the same way.
+semicolon_terminal_langs = ["el-gr", "el", "ell_Grek"]
+# S3: "Closing quotation marks after a terminal mark are skipped" (union_lib.CLOSERS).
+closing_marks = ["\"", "'", "”", "’", "»", "›", "」", "』", ")", "]", "）"]
+# Not a weight: keeps logit(p') finite (union_lib.EPS).
+eps = 1e-6
+# PENDING a decision by the PI (scout critique, item 3): plan v3 excludes the quotation-mark
+# term "unless before submission it passes a test on a keyed held-out half of the 2,000-story
+# MADLAD-400 benchmark". Off, as in the benchmark, until that decision is recorded. The weight
+# is TU-3's log(0.95 / 0.05), and the anchors are double quotation marks and corner brackets.
+quote_term = false
+quote_term_weight = 2.9444389791664403
+quote_anchors = ["\"", "“", "”", "„", "‟", "«", "»", "「", "」", "『", "』"]

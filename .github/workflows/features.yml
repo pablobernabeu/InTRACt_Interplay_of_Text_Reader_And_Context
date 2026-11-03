@@ -1,0 +1,73 @@
+# Runs the feature pipeline's checks (preregistration/features) on every push and pull request that touches it
+# or the registered text it quotes. Nothing here downloads a model, reads a story text or writes to the
+# repository.
+#
+#   features  ruff over the folder, then the unit tests on Python 3.12, the version ARC's environments run.
+#             NumPy and wordfreq are installed at the versions envs/core.lock pins, so that the bootstrap of
+#             the segmentation check and the frequency features are tested too; the tests that need torch,
+#             pyarrow, Stanza or model weights skip, and those marked gpu or models are deselected
+#             (pyproject.toml). The history is fetched in full because the lock's tests rebuild its frozen
+#             checksum records from the commits of 18 and 27 October 2026, and the specification's tests read
+#             the protocol as committed at HEAD.
+#
+# Every action is pinned to a full commit SHA, as in check.yml, so a moved or compromised tag cannot change what
+# runs here.
+
+name: Features
+
+on:
+  push:
+    paths:
+      - 'preregistration/features/**'
+      - 'preregistration/preregistration.qmd'
+      - 'preregistration/supplementary.qmd'
+      - 'preregistration/pending_benchmarks.md'
+      - 'preregistration/story_texts/extract_story_texts.py'
+      - 'preregistration/story_texts/data/manifest.json'
+      - 'preregistration/story_texts/data/extraction_record.json'
+      - '.github/workflows/features.yml'
+  pull_request:
+    paths:
+      - 'preregistration/features/**'
+      - 'preregistration/preregistration.qmd'
+      - 'preregistration/supplementary.qmd'
+      - 'preregistration/pending_benchmarks.md'
+      - 'preregistration/story_texts/extract_story_texts.py'
+      - 'preregistration/story_texts/data/manifest.json'
+      - 'preregistration/story_texts/data/extraction_record.json'
+      - '.github/workflows/features.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: features-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  features:
+    name: Ruff and unit tests on Python 3.12
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: preregistration/features
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+
+      - name: Install the package, the test tools and the two optional test dependencies
+        run: |
+          python -m pip install --quiet "pytest==9.2.0" "ruff==0.17.3" "numpy==2.5.4" "wordfreq==3.1.1"
+          python -m pip install --quiet --no-deps -e .
+
+      - name: Ruff
+        run: ruff check . --no-cache
+
+      - name: Unit tests
+        run: python -I -X utf8 -m pytest tests/unit -q -p no:cacheprovider

@@ -1,0 +1,49 @@
+# The InTRACt feature pipeline: computes the registered text features of the
+# Let's Story catalogue. Before in-principle acceptance it runs only on public
+# data (the length-matched stand-in in standin/ and FLORES-200); src/intract_features/lock.py
+# refuses the catalogue until then. Environments for ARC are pinned and hash-locked
+# in envs/; this file only describes the package and its development tools.
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "intract-features"
+version = "0.1.0.dev0"
+description = "Registered text features for the InTRACt Registered Report"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [{ name = "InTRACt project, University of Oxford" }]
+# The core needs only the standard library; each stage imports its heavy
+# dependencies lazily so that unit tests run without them. The pinned sets that
+# the ARC jobs use are in envs/*.in and envs/*.lock.
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.8"]
+
+[project.scripts]
+intract-features = "intract_features.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# standin/ (the public stand-in builder) sits beside the installed package, as the ARC jobs run it from this
+# folder with `python -m standin.build_standin`; this puts the folder on the tests' import path.
+pythonpath = ["."]
+markers = [
+  "gpu: needs a CUDA GPU and the pinned models; runs on ARC, results kept in records/",
+  "models: needs downloaded model weights; skipped when they are absent",
+  "slow: takes more than a few seconds",
+]
+addopts = "-m 'not gpu and not models'"
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM"]

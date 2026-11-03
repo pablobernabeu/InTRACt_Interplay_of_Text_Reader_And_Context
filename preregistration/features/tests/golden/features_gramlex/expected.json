@@ -1,0 +1,78 @@
+{
+ "S1": {
+  "clauses_per_sentence": 1.25,
+  "lexical_density": 0.625,
+  "mattr": 0.9,
+  "mattr_all_words": 0.8823529411764706,
+  "mattr_content_forms": 0.9,
+  "mattr_window100": 0.9,
+  "mattr_window25": 0.9,
+  "mean_dependency_distance": 1.3461538461538463,
+  "mean_sentence_length": 4.25,
+  "mean_zipf": 3.4771658687581386,
+  "mean_zipf_matched": 3.6412994533260172,
+  "mtld": 28.000000000000007,
+  "noun_phrase_elaboration": 0.25,
+  "page_count": 2,
+  "pages_per_100_words": 11.764705882352942,
+  "rare_share": 0.7,
+  "rare_share_matched": 0.6666666666666666,
+  "rare_share_zipf3": 0.3,
+  "subordination": -2.3978952727983707,
+  "word_count": 17,
+  "word_length": 3.8,
+  "word_length_all_words": 3.125
+ },
+ "S2": {
+  "clauses_per_sentence": null,
+  "lexical_density": 0.6,
+  "mattr": 1.0,
+  "mattr_all_words": 0.875,
+  "mattr_content_forms": 1.0,
+  "mattr_window100": 1.0,
+  "mattr_window25": 1.0,
+  "mean_dependency_distance": null,
+  "mean_sentence_length": 3.5,
+  "mean_zipf": 2.696598644793701,
+  "mean_zipf_matched": 3.044916163366934,
+  "mtld": null,
+  "noun_phrase_elaboration": null,
+  "page_count": 2,
+  "pages_per_100_words": 28.571428571428573,
+  "rare_share": 1.0,
+  "rare_share_matched": 1.0,
+  "rare_share_zipf3": 0.6666666666666666,
+  "subordination": null,
+  "word_count": 7,
+  "word_length": 5.0,
+  "word_length_all_words": 4.0
+ },
+ "diagnostics": {
+  "S1": {
+   "long_units": 0,
+   "page_breaks": 1,
+   "page_breaks_inside_sentence": 0,
+   "speech_main_heads": 1,
+   "stanza": {
+    "mean_dependency_distance": 1.3076923076923077,
+    "noun_phrase_elaboration": 0.5
+   },
+   "udpipe": {
+    "mean_dependency_distance": 1.3846153846153846,
+    "noun_phrase_elaboration": 0.0
+   }
+  },
+  "S2": {
+   "lexical_density_syntactic_word": 0.5,
+   "missing": [
+    "udpipe: no parse"
+   ],
+   "stanza": {
+    "clauses_per_sentence": 1.0,
+    "mean_dependency_distance": 1.6666666666666667,
+    "noun_phrase_elaboration": 1.0,
+    "subordination": -1.6094379124341003
+   }
+  }
+ }
+}

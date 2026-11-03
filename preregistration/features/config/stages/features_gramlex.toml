@@ -1,0 +1,203 @@
+# Constants of the features_gramlex stage: grammatical, lexical, diversity and page features.
+#
+# Anchors: "qmd" is preregistration.qmd, "S3" is Supplementary Section S3 of supplementary.qmd and "plan v3" is
+# the feature plan of 22 October 2026, whose counting rules the Feature Specification registers. A value marked
+# PENDING is a default taken behind a switch until the Feature Specification decides it (gap Gn or item Pnn of
+# pending_benchmarks.md). Code reads every value from here and holds none of them.
+
+[stage]
+# Raise on a missing or misaligned input instead of recording it in the diagnostics and the timing record. The
+# dry run keeps going so that one odd text cannot stop a shard; the tests run strict.
+strict = false
+
+[grammatical]
+# qmd Materials: "Grammatical features are mean dependency distance, clauses per sentence, the ratio of
+# subordinate to main clauses, mean sentence length and noun-phrase elaboration, the number of modifiers per
+# common noun. Open clausal complements are not counted as clauses."
+# S3: "the counting rules are fixed on syntactic words after multi-word-token expansion."
+# plan v3, Counting rules: "Subordinate: csubj, ccomp, advcl and acl, with their predicate conjuncts. Main: root
+# and parataxis, with theirs."
+subordinate_relations = ["csubj", "ccomp", "advcl", "acl"]
+main_relations = ["parataxis"]
+open_relations = ["xcomp"]
+# plan v3: "A conj dependent of a clause head is also a clause head if it is a predicate (VERB or AUX, or with an
+# nsubj, csubj, cop, aux or expl dependent). It then inherits its first conjunct's type."
+conjunct_relation = "conj"
+predicate_upos = ["VERB", "AUX"]
+predicate_dependents = ["nsubj", "csubj", "cop", "aux", "expl"]
+# plan v3: "summed |position(head) - position(dependent)| over all non-root dependencies of the text, with
+# punctuation removed and positions renumbered" (Liu, 2008). gfeat.py reads punctuation from the relation alone.
+punct_relation = "punct"
+# S3: "Noun-phrase elaboration counts the dependents of common nouns with the relations amod, nmod, acl, nummod or
+# appos, leaving out determiners"
+elaboration_relations = ["amod", "nmod", "acl", "nummod", "appos"]
+elaboration_head_upos = ["NOUN"]
+# plan v3: "Subordination is analysed as log((sub + 0.5) / (main + 0.5)), the empirical logit of the subordinate
+# share."
+empirical_logit_offset = 0.5
+
+[grammatical.speech]
+# PENDING G6. The registered reported-speech rule takes speech status from the registered dialogue detector (S3,
+# Validation: "The reported-speech rule for clause heads needs a sentence-level kappa of at least .70 against the
+# English source"). The default keeps the approximation of gfeat.py (23 October 2026), on which the error model
+# ran: quotation-mark spans, the words strictly between two paired marks of one sentence, single quotes left out
+# because they double as apostrophes. "none" gives the counts of rounds 1 to 4. "detector_spans" is the
+# replacement: a word is in direct speech when its token's first letter or digit lies inside the spans of the
+# registered dialogue detector (features.dialogue), configured by the [dialogue] table of the stage named below.
+# Switching rule changes the error-model counts, so EM-5 and EM-6 must be rerun (scout report, gap G6).
+rule = "quote_marks"
+detector_config_stage = "features_discourse"
+# gfeat.py: "a ccomp or csubj head inside direct speech counts as a main clause, not a subordinate one (parataxis
+# is main everywhere)"
+main_relations = ["ccomp", "csubj"]
+quote_marks = ['"', "\u201C", "\u201D", "\u201E", "\u201F", "\u00AB", "\u00BB", "\u300C", "\u300D", "\u300E", "\u300F"]
+
+[sentences]
+# PENDING (not registered): the sentence a word belongs to, for the long-unit rule and for the sentences that hold
+# a word. "first_alnum" takes the sentence holding the word's first letter or digit, the convention S3 uses for
+# dialogue share ("the share of a text's words whose first letter lies inside direct speech"); "start" takes the
+# word's first character.
+word_anchor = "first_alnum"
+# PENDING (not registered): a segment holding no word of the outcome's unit (a run of dots or dashes) is left out
+# of the sentence count of mean sentence length, as gfeat.py leaves out a sentence with no non-punctuation word.
+count_empty_sentences = false
+
+[parser_mean]
+# S3: "A unit longer than 100 words takes Stanza's parse in both members of the mean." The rule's constants have
+# one home, the [long_units] table of the stage named here (parse.long_units.LongUnitRule).
+long_unit_config_stage = "parse_udpipe"
+
+[lexical]
+# qmd Materials (third rule): "Content-word tokens are those whose universal part-of-speech tag is NOUN, VERB, ADJ
+# or ADV, except in Korean, where content status is decided by morphology". The Kiwi morpheme rule for Korean (S3)
+# is not implemented in this version, so the stage refuses Korean.
+content_upos = ["NOUN", "VERB", "ADJ", "ADV"]
+
+[lexical.names]
+# qmd Materials: "A type is a name if the Stanza parse tags at least half its occurrences as a proper noun, or as
+# X in Arabic, the tag its treebank gives names."
+name_upos = ["PROPN"]
+name_upos_extra = { ar = ["X"] }
+name_share = 0.5
+# PENDING P06 and P53. The frozen inventory is built after acceptance by the two-route rule chosen before
+# submission. "token_upos" is the error-model benchmark's rule (em_counts.py: a syntactic word tagged PROPN, or X
+# in Arabic, is a name and never a content word); "type_majority_text" applies route A within the text;
+# "inventory" reads a frozen list of normalised types, one per line, from the path below.
+rule = "token_upos"
+inventory = ""
+# PENDING: a word of the outcome's unit is a name, for density and word length, when "any" or "all" of the
+# letter- or digit-bearing syntactic words in it are names.
+word_rule = "any"
+
+[lexical.frequency]
+# PENDING P48. The primary resource is the set of OpenSubtitles 2024 lists (S3: "The primary frequency resource is
+# a set of 19 lists built for this study from the 2024 release of the OpenSubtitles corpus"), not yet built. Until
+# then wordfreq 3.1.1 stands in, read as a dictionary as in the error-model benchmark (lexrules.FreqList),
+# although S3 keeps wordfreq only "as an independent list in the third gate on the frequency lists". "count_list"
+# reads a two-column list of lookup units and counts, which the list builder will write.
+resource = "wordfreq"
+wordfreq_version = "3.1.1"
+wordfreq_wordlist = "best"
+count_list = ""
+# DESIGN.md, Configuration: "Code verifies a pin before it loads the file". A list that resources.lock.json does
+# not pin stops the stage, as [affect] require_pin does for MEmoLon in features_discourse.
+require_pin = true
+# qmd Materials: "the share of content tokens below ten per million (Zipf 4)"; S3: "uses a threshold of Zipf 4"
+rare_zipf = 4.0
+# S3: "The shares at Zipf 3 and over matched tokens alone are sensitivity analyses."
+rare_zipf_sensitivity = 3.0
+# S3 (second script rule, Arabic and Hebrew): "the value is aggregated back to the orthographic word and then to
+# the text mean". PENDING for the other languages: plan v3 applies it everywhere ("An orthographic word with
+# several content words takes their mean"); "syntactic_word" is the error-model benchmark's unit (em_counts.py).
+aggregation = "orthographic_word"
+
+[lexical.word_length]
+# S3: "Word length counts letters per content word, names excluded, by script." A content word is a syntactic word
+# tagged NOUN, VERB, ADJ or ADV (qmd, third rule), as in the error-model benchmark (em_counts.py). PENDING: plan v3
+# counts letters on "words containing a content word", the outcome's unit ("word").
+unit = "syntactic_word"
+
+[lexical.density]
+# S3: "Lexical density is the share of words, in the outcome's unit, that contain a content syntactic word, with
+# punctuation and names excluded." The error-model benchmark counted syntactic words instead; that version is kept
+# in the diagnostics ("syntactic_word").
+unit = "word"
+
+[lexical.casing]
+# plan v3, lookup normalisation: "Lower-casing uses lower(), never casefold(), and in Turkish I with a dot becomes
+# i and I becomes dotless i first." Applied to every lookup and diversity key (critique item 19).
+dotted_i_languages = ["tr"]
+
+[lexical.normalisation]
+# S3: "Lists and texts share one normalisation function". plan v3: "U+200B, U+2060, U+FEFF and U+00AD are deleted,
+# and U+2019 and U+02BC map to the ASCII apostrophe." Applied after NFC and before lower-casing.
+delete = ["\u200B", "\u2060", "\uFEFF", "\u00AD"]
+map = { "\u2019" = "'", "\u02BC" = "'" }
+
+[lexical.normalisation.lang.ar]
+# plan v3: "NFKC only to Arabic presentation forms" and "the marks U+064B to U+065F and U+0670 and tatweel are
+# deleted, alef with hamza above or below and alef with madda map to alef, and teh marbuta and alef maksura stay
+# distinct."
+nfkc_ranges = [[0xFB50, 0xFDFF], [0xFE70, 0xFEFF]]
+delete_ranges = [[0x064B, 0x065F], [0x0670, 0x0670], [0x0640, 0x0640]]
+map = { "\u0623" = "\u0627", "\u0625" = "\u0627", "\u0622" = "\u0627" }
+
+[lexical.normalisation.lang.he]
+# plan v3: "points (combining marks within U+0591 to U+05C7) are deleted but the maqaf is kept, and geresh (U+05F3)
+# and gershayim (U+05F4) map to the ASCII apostrophe and double quote." The ranges are those of lexrules.py, which
+# keep the maqaf (U+05BE) but also delete three punctuation marks of the block (U+05C0, U+05C3, U+05C6).
+delete_ranges = [[0x0591, 0x05BD], [0x05BF, 0x05C7]]
+map = { "\u05F3" = "'", "\u05F4" = '"' }
+
+[lexical.normalisation.lang.ro]
+# plan v3: "Romanian s and t with cedilla become s and t with comma below"
+post_lower_map = { "\u015F" = "\u0219", "\u0163" = "\u021B" }
+
+[lexical.normalisation.lang.ru]
+# plan v3: "Russian io becomes ie."
+post_lower_map = { "\u0451" = "\u0435" }
+
+[lexical.normalisation.lang."zh-hant"]
+# S3: "Traditional Chinese text is therefore converted to Simplified script with OpenCC 1.4.2 in its tw2s mode,
+# never tw2sp" and "The variant characters [U+59B3] and [U+7260] then map to [U+4F60] and [U+5B83]"
+opencc = "tw2s"
+post_lower_map = { "\u59B3" = "\u4F60", "\u7260" = "\u5B83" }
+
+[lexical.letters]
+# S3: "Latin, Greek and Cyrillic letters are counted without combining marks, and Arabic and Hebrew letters as base
+# letters. Korean counts conjoining jamo after canonical decomposition, Chinese counts Han characters, and Thai
+# counts consonants and vowels without tone marks." Rules and ranges as in lexrules.letters (b4_pud_units.py);
+# every other language counts Unicode letters (category L).
+rule_by_language = { ko = "jamo", zh = "han", th = "thai", ar = "arabic_base" }
+jamo_ranges = [[0x1100, 0x11FF], [0x3131, 0x318E]]
+thai_ranges = [[0x0E01, 0x0E2E], [0x0E30, 0x0E39], [0x0E40, 0x0E45]]
+
+[diversity]
+# qmd Materials: "Diversity is the moving-average type-token ratio over windows of 50 content lemmas."
+window = 50
+# S3, sensitivity column: "Diversity over windows of 25 and 100 lemmas, over content forms and over all words, and
+# the Measure of Textual Lexical Diversity"
+variant_windows = [25, 100]
+# PENDING (not registered): a text with no more units than the window takes its plain type-token ratio, as in the
+# benchmarks (b4_pud_units.py, lexrules.mattr_ref); "missing" declares it undefined instead.
+short_text = "ttr"
+# lexrules.content_lemma: "forms in Chinese and Thai, the lemma (else form) in Korean, else the lower-cased lemma
+# (else form)". S3: "Stanza's Thai package also has no lemmatiser, so a Thai lemma is its surface form."
+lemma_is_form_languages = ["zh", "th"]
+keep_case_languages = ["zh", "th", "ko"]
+# McCarthy and Jarvis (2010): factor size .72, the forward and reverse passes averaged.
+mtld_threshold = 0.72
+# PENDING: a factor closes when the running TTR reaches the threshold (true, as LexicalRichness reads the paper) or
+# only when it falls below it (false, as koRpus and lexical_diversity 0.1.1 do). The paper's own wording is
+# UNVERIFIED.
+mtld_inclusive = true
+# PENDING: the fewest tokens a full factor may hold. koRpus and LexicalRichness set none; lexical_diversity 0.1.1
+# uses 10.
+mtld_min_factor_tokens = 0
+# PENDING (not registered): MTLD on the primary's unit, content lemmas, so that its reported correlation changes
+# the index alone; MTLD over all words is kept in the diagnostics.
+mtld_unit = "content_lemma"
+
+[pages]
+# qmd Sensitivity analyses: "Pages per hundred words, computed from the delivered text, will enter a tier-1 refit"
+per_words = 100

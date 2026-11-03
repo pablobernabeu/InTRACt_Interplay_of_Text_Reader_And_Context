@@ -1,0 +1,14 @@
+# Environment "corpipe": CorPipe 26 (supplementary.qmd S3: "CorPipe 26 ... with its umT5-xl one-stage model,
+# instead resolves coreference on every English source"), run from ufal/crac2026-corpipe at the commit pinned
+# in config/resources.lock.json. Its requirements.txt at that commit asks for:
+#     minnt~=1.1, torch~=2.10.0, transformers~=5.2.0, sentencepiece, udapi~=0.5.1
+# which conflict with core's torch 2.14.1 and transformers 5.19.0. The CorefUD scorer and validator packages
+# of that file (pytest, scipy, regex) are left out, because the stage only predicts.
+minnt~=1.1
+# The cu126 build, as in core: the CUDA 12.6 runtime is the one already proven on ARC's L40S nodes.
+torch~=2.10.0
+transformers~=5.2.0
+sentencepiece==0.2.2
+udapi~=0.5.1
+# For the editable, no-build-isolation install of intract_features (pyproject.toml: setuptools>=75).
+setuptools>=75

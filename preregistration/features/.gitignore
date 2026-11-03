@@ -1,0 +1,7 @@
+# Build and tool caches. Outputs on real data never enter the repository; only
+# run records (records/) do.
+*.egg-info/
+build/
+.ruff_cache/
+.pytest_cache/
+work/

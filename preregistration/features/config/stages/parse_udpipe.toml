@@ -1,0 +1,90 @@
+# Stage parse_udpipe: UDPipe 2 on every registered sentence of every text (GPU, environment udpipe).
+# supplementary.qmd S3: "The two parsers of the grammatical features are Stanza 1.15.0 in its `nocharlm` tier ... and
+# UDPipe 2 with its models of release 2.17 ... Both run on every sentence of every text, each with the registered
+# treebank for the language and its own tokeniser." The model name per language is languages.toml's udpipe_model.
+# S3: "UDPipe 2 runs on a GPU with deterministic operations, and it moves to a CPU if a rerun of the pilot on
+# 1 per cent of the catalogue does not reproduce identical output."
+# The server's seed is pipeline.toml's [seeds] base (20261026, the seed of EM-2 and TU-4u).
+
+# The input rules both parsers share (the segments field, every sentence parsed, line breaks, the registered
+# segmentation per language and the token alignment's offset_max_skip) have one home: this stage's.
+input_config_stage = "parse_stanza"
+
+# The models.lock.json entry holding the archive's SHA-256 and the per-file SHA-256 of the source checkout,
+# MODELS.txt, each model directory and the encoder snapshot (parse/udpipe_server.py, verify_server_files and
+# --print-pins).
+models_lock_key = "udpipe-2.17"
+
+# Environment variables naming the UDPipe 2 source checkout (ufal/udpipe, branch udpipe-2, at the pinned commit) and
+# the extracted 2.17 model archive (the directory holding MODELS.txt). No path is written in code or config.
+udpipe_src_env = "INTRACT_UDPIPE_SRC"
+models_dir_env = "INTRACT_UDPIPE_MODELS"
+# The Hugging Face hub cache that holds the multilingual BERT snapshot UDPipe 2 loads for its word embeddings
+# (bert-base-multilingual-uncased at the commit pinned in models.lock.json, "embedding_snapshot").
+hf_hub_cache_env = "HF_HUB_CACHE"
+
+# Not registered: an already running local server to use instead of starting one (empty: the stage starts its own).
+# Its files cannot be verified, so it is refused unless allow_unverified_external_server is true, which only tests
+# set; the ARC jobs always let the stage start and verify its own server.
+server_url = ""
+allow_unverified_external_server = false
+
+# S3: "UDPipe 2 runs on a GPU". "cpu" is the registered fallback: the server then runs with the GPU hidden
+# (CUDA_VISIBLE_DEVICES="", as EM-3 ran it); "gpu" makes the server exit if TensorFlow sees no GPU.
+device = "gpu"
+
+# Not registered: the server's TensorFlow threads and its batch of sentences, as in EM-2 and TU-4u, the runs whose
+# fresh-server reruns were byte-identical (46 of 46 files) and whose English rate was 6,356 words per second on L40S.
+threads = 8
+server_batch_size = 32
+
+# Not registered: the largest request body, passed to the server as --max_request_size (upstream's default at the
+# pinned commit, 4096 * 1024 bytes). The client never sends a larger request: it splits the call into one request
+# per sentence instead, because the server answers an oversized body with HTTP 400 before reading it.
+max_request_bytes = 4194304
+
+# S3 and Materials: the registered sentences are given, so UDPipe's tokeniser runs in presegmented mode (one sentence
+# per line) and cannot move a boundary, as in TU-4u and error_model's udpipe_api2.py raw mode.
+tokenizer = "presegmented"
+
+# Not registered: the launcher and the client. The presub jobs polled /models 120 times at 5 s, each probe waiting at
+# most 5 s; the server took 185 s to start on L40S (TU-4u). TU-4u retried a failed request four times, ten seconds
+# apart, with a one-hour timeout.
+startup_timeout_s = 900
+poll_interval_s = 5
+probe_timeout_s = 5
+stop_timeout_s = 120
+request_timeout_s = 3600
+retries = 4
+retry_sleep_s = 10
+
+# Not registered: after the shard is parsed, restart a fresh server and reparse the first N texts (completed to a
+# whole call), comparing the CoNLL-U byte for byte (EM-2's determinism check, at a smaller scale). 0 turns it off.
+# The registered rerun of the pilot on 1 per cent of the catalogue comes after acceptance; on the stand-in this
+# measures what it costs.
+rerun_check_documents = 0
+
+[calls]
+# Not registered (PENDING the Feature Specification): how many texts share one request. 0 sends each text's
+# sentences in a request of its own, so a text's parse never depends on which texts share its shard (DESIGN.md,
+# Determinism) and whether UDPipe's output depends on batch composition does not matter. N > 0 packs whole texts
+# into requests of at most N sentences, as TU-4u's 500-sentence requests did.
+sentences_per_call = 0
+
+[refusals]
+# Not registered (PENDING the Feature Specification). udpipe2_server.py at the pinned commit refuses, with HTTP 400,
+# a request holding a sentence of more than 1,000 words, which only presegmented input makes possible. The client
+# then resends that call's sentences one per request, and each refused sentence keeps an empty block marked
+# "# refused". S3 gives a unit of more than 100 words Stanza's parse in both members, so a refused unit that is long
+# loses nothing. One that is not long (most of its UDPipe tokens would be punctuation, not registered words) would
+# leave the UDPipe member without it: "flag" counts it in the run record and names it on stderr, "fail" keeps the
+# shard as .failed and stops. In Chinese and Thai the registered words are Stanza's tokens, so the check is reported
+# as unchecked there.
+refused_not_long = "flag"
+
+[long_units]
+# S3: "A unit longer than 100 words takes Stanza's parse in both members of the mean." Strictly longer: 100 words is
+# not long. Words are those of the registered word function (Stanza's tokens in Chinese and Thai), as in em_counts.py.
+max_words = 100
+# S3: "The share of such units is reported per language, a language above 1 per cent is flagged".
+flag_share = 0.01

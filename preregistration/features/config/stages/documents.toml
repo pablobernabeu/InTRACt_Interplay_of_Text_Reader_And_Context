@@ -1,0 +1,105 @@
+# Constants of the documents stage (src/intract_features/stages/documents.py). Each value names its
+# anchor: a section of preregistration.qmd, or S3 of supplementary.qmd. A value marked PENDING is the
+# scout's recommended default behind a named switch, awaiting the Feature Specification.
+
+[normalise]
+# S3: "Before any stage runs, each text is normalised once to Unicode normalisation form NFC and
+# stripped of invisible format characters, and its pages are joined with one space."
+form = "NFC"
+# The format characters stripped, as inclusive [first, last] code point ranges, promoted from the
+# translated-union benchmark's seglib2.normalise (= tu_common.normalise): zero width space, ZWNJ,
+# ZWJ, LRM and RLM; the bidirectional embeddings, overrides and pop; the word joiner, invisible
+# operators and bidirectional isolates; the Arabic letter mark; the zero width no-break space. Must
+# equal text/normalise.py's FORMAT_CHARACTER_RANGES (tests/unit/test_text.py checks it).
+delete_ranges = [[0x200B, 0x200F], [0x202A, 0x202E], [0x2060, 0x2069], [0x061C, 0x061C], [0xFEFF, 0xFEFF]]
+# PENDING (feature plan v3: whitespace is "the Unicode White_Space property of the frozen Unicode
+# version"; the scout: "the Unicode version comes with Python 3.12 and should be pinned"). The
+# Unicode Character Database the run is expected to use. Python 3.12 ships 15.0.0, 3.13 ships 15.1.0.
+unicode_version = "15.0.0"
+# What a different version does: "warn" records it and continues, "refuse" stops the run.
+on_unicode_mismatch = "warn"
+
+[catalogue]
+# Materials: "the reading level served". The values a row's age field may hold, lower-cased; an
+# empty age (one classic in the English catalogue, by the scout's structure-only profile) is kept as
+# an empty level and counted.
+levels = ["young", "mid", "old"]
+
+[titles]
+# S3: "A title is the first line of a text or page if it has at most eight words and no
+# sentence-final mark. Titles are identified on the English source and carried to each translation
+# by line index if line structure survives."
+max_words = 8
+# S3, the fourth rule for the scripts: "the union segmenter and the segmentation diagnostics
+# recognise . ! ? … and their full-width forms as terminal marks, together with the Arabic question
+# mark ؟". PENDING: the title rule's "sentence-final mark" is read as these marks, with the
+# language's own terminal_marks in languages.toml added (Greek's ";", for instance). S3 names no
+# ideographic full stop (。).
+terminal_marks = [".", "!", "?", "…", "．", "！", "？", "؟"]
+# PENDING (gaps G1b and G9). "multiline": a page's first line is tested only when an in-page line
+# break follows it; "every_page": single-line pages are tested too (the literal reading); "off".
+# Either way, a short first line of dialogue or verse without a sentence-final mark ('“Wait,”' above
+# 'said Tom.') is taken for a title, and under action = "exclude" its words leave every feature and
+# the processing outcome's denominator. The stage counts page_titles and page_title_words.
+page_rule = "multiline"
+# PENDING the PI (gap G1b, SPECIFICATION.md). "exclude": a page title leaves the page text, and so the
+# outcome's denominator, and is kept in the document's meta; "mark": it is recorded and the page kept.
+# The scout's recommendation to exclude covered the delivered title line (G1a) only.
+action = "exclude"
+# PENDING. "anywhere": a line holding any sentence-final mark is no title (the literal reading);
+# "line_end": only a line ending with one, closing quotation marks and brackets skipped.
+final_mark_test = "anywhere"
+# PENDING. What "if line structure survives" means. "page_lines": the translation has as many pages
+# as its English source, and the title's page as many lines as the English page as served;
+# "text_lines": every page of the translation also keeps its number of lines.
+carry_rule = "page_lines"
+# The English source on which titles are identified (S3); other languages carry its decisions.
+english_lang = "en-us"
+
+[keyed_sample]
+# Outcome-neutral quality checks: "A registered sentence aligner pairs the two on a keyed sample of
+# 2,000 story versions per language, drawn by a keyed hash of the story identifier." Each document
+# stores its keyed hash (meta.keyed_hash), which depends on its identifier alone; the documents
+# manifest records each size's cut-off over the input's stories (text/keyed.py, keyed_cutoffs).
+# PENDING (gap G7): the purpose string of the key "<prefix>|<purpose>|<version>|<story id>", whose
+# prefix and version are in pipeline.toml [keys].
+purpose = "keyed_sample"
+size = 2000
+# S3, connective inventories: "the aligned sample is enlarged by count alone to up to 10,000
+# versions".
+max_size = 10000
+
+[lock]
+# Data provenance, sequestration and outcome blindness: "No linguistic feature registered here has
+# been computed on the story texts, and none will be before in-principle acceptance." Paths are
+# relative to the config folder.
+# The files whose recorded SHA-256 values the lock refuses as inputs (only the checksums are read):
+# the manifests of the current publication, and a frozen record of each publication so far, written
+# from the repository's history by `lock_build checksums` (18 October 2026, commit 03413a4, English
+# in the viewer's form; 27 October 2026, commit 5227d8b, 21 languages in the zip form).
+manifests = ["../../story_texts/data/manifest.json", "../../story_texts/data/extraction_record.json",
+             "lock/published_2026-10-18.json", "lock/published_2026-10-27.json"]
+# Folders no input may come from before acceptance.
+protected_dirs = ["../../story_texts/data", "../../Oxford-40k-stories"]
+# Fingerprint files written by `lock_build fingerprints`; every file present is read.
+fingerprints = "catalogue_fingerprints_*.txt"
+# The labels (the "*" above) whose fingerprint file must exist, so that a lost or unsynced file stops
+# the run instead of switching the fingerprint check off. Empty until lock_build has run on the
+# published tables; then every label it printed: the 21 languages and en-us-2026-10-18.
+required_fingerprints = []
+# A reading of a document other than its pages as split (lock.text_fingerprints) is checked only when
+# it holds at least this many tokens, so that a short remainder cannot match a short catalogue text
+# by chance.
+min_variant_tokens = 20
+# The SHA-256 of the record of in-principle acceptance, committed at acceptance. Absent until then,
+# so the lock holds.
+ipa_checksum = "ipa_record.sha256"
+# The record itself ("" for none); the environment variable INTRACT_IPA_RECORD takes precedence.
+ipa_record = ""
+# Scout critique, item 12: "Verify the record of in-principle acceptance against a committed tag or
+# hash." "git": the checksum counts only while git tracks ipa_record.sha256 with no change since
+# HEAD, so an uncommitted local file cannot unlock, and a copy of the code without .git stays locked.
+# "none" skips the check, a choice the run manifest records.
+ipa_commit_check = "git"
+# A manifest that cannot be read stops the run ("refuse"); "warn" lets it continue unchecked.
+on_missing_manifest = "refuse"

@@ -1,0 +1,86 @@
+# Stage parse_stanza: Stanza on every registered sentence of every text (CPU, environment core).
+# supplementary.qmd S3: "The two parsers of the grammatical features are Stanza 1.15.0 in its `nocharlm` tier, which
+# tracks release 2.18 of Universal Dependencies, and UDPipe 2 with its models of release 2.17 ... Both run on every
+# sentence of every text, each with the registered treebank for the language and its own tokeniser."
+# Each processor's package is named per language in languages.toml (stanza_packages). The SHA-256 of Stanza's frozen
+# resources.json, from which every model file's MD5 is checked, and each model file's own SHA-256 ("files") are
+# pinned in models.lock.json under models_lock_key.
+# This file is also the one home of the input rules both parsers share: offset_max_skip, [input] and [segments].
+# parse_udpipe.toml names it (input_config_stage), so the two parse artefacts cannot be cut or aligned differently.
+
+# S3: "Stanza 1.15.0". The installed package and the pin must both be this version.
+stanza_version = "1.15.0"
+
+# S3: "in its `nocharlm` tier". Every tiered processor (tokenize, pos, lemma, depparse) must resolve to a
+# <treebank>_nocharlm package; mwt packages carry no tier, and Thai's identity lemmatiser has none.
+required_tier = "nocharlm"
+
+# The models.lock.json entry holding {"version": "1.15.0", "resources_json_sha256": "...", "files": {...}}.
+models_lock_key = "stanza-1.15.0"
+
+# Environment variable naming the directory of resources.json and the models (no path is written in code or config).
+model_dir_env = "STANZA_RESOURCES_DIR"
+
+# Not registered: torch intra-op threads. One thread in every presub Stanza run (EM-1, TU-4s), which measured 583
+# syntactic words per CPU-second for English on htc; a fixed count also keeps CPU arithmetic reproducible.
+torch_threads = 1
+
+# Materials and S3: "Both parsers, the word function, the dialogue spans and every sentence-based feature take these
+# sentences." Each sentence is one paragraph, and Stanza may not split it (tokenize_no_ssplit), as in EM-1 and TU-4s.
+tokenize_no_ssplit = true
+
+# Not registered: error_model parse_stanza2.py's output check, "every syntactic word must carry a lemma ... the run
+# fails above 0.5%". A shard above it is kept as <artefact>.failed and the stage stops.
+max_lemma_missing_share = 0.005
+
+# Not registered, shared by both parsers: the alignment that records each surface token's offsets in Document.text
+# (TokenRange in MISC; parse/__init__.py, align_tokens) compares non-space characters only. A token is looked for at
+# most this many characters past where the text continues (a tokeniser may drop a character), and after tokens it
+# could not place, within this many characters of where they would end.
+offset_max_skip = 16
+
+[batch]
+# Stanza's parser batch. 0 keeps Stanza's own value: the batch_size saved in the model file (5,000 in English GUM)
+# and a separate batch for every sentence longer than 150 counting the ROOT node, so of 150 words or more. PENDING
+# (TU-4s identity test): a capped batch, such as depparse_batch_size = 1000, is adopted only if task 37 (MADLAD
+# Polish shard 1, which holds a loop) reparses byte for byte identically under it.
+# Memory guidance: by default the stage parses one text per call ([calls]), so a batch holds one story's sentences.
+# The label scorer holds about n L (D + 1) R + 2 n L^2 R floats for n sentences padded to L (ROOT included), D = 400
+# and R = 51 in English GUM: about 12 GiB for one 5,500-word unit (the catalogue's Hebrew loops, critique item 9),
+# on top of the rest of the model. The stage prints its pre-flight estimate before parsing and records the largest batch
+# met. Request 24 GB per CPU job until the dry run has measured the peak (TU-4s: 8 GB killed seven tasks whose
+# 400-sentence chunks were padded to a loop).
+depparse_batch_size = 0
+depparse_min_length_to_batch_separately = 0
+
+[calls]
+# Not registered (PENDING the Feature Specification): how many texts share one parser call. 0 gives each text a call
+# of its own, so a text's parse never depends on which texts share its shard (DESIGN.md, Determinism: the 1 per cent
+# smoke run's rows equal the full run's) and a padded batch holds one story's sentences (the TU-4s memory lesson).
+# N > 0 packs whole texts into calls of at most N sentences (a longer text goes alone), as TU-4s's 400-sentence
+# chunks did; a text's parse may then depend on its neighbours, so the smoke-equals-full check can fail.
+sentences_per_call = 0
+
+[input]
+# The field of a segments record that lists the sentence spans, each {start, end, ...} or [start, end, ...] over
+# Document.text (DESIGN.md, Sentences). Must match what the sat stage writes.
+segments_field = "sentences"
+# S3: both parsers run "on every sentence of every text", so text outside every sentence stops the stage.
+allow_uncovered_text = false
+# Not registered (gap G9, critique item 21; PENDING the Feature Specification): a line break inside a registered
+# sentence. "flatten" replaces each line-break character with one space before parsing, keeping every offset,
+# because both parsers read a line break as a sentence boundary and sentence k must stay segment k; "refuse" stops
+# the stage at the first such sentence instead.
+line_breaks = "flatten"
+
+[segments]
+# qmd Materials: "In English, a sentence ends where the registered Segment any Text (SaT) model places a boundary";
+# "In each translation, the union segmenter keeps every sentence end the translation marks itself and takes the
+# others from its English source." S3: "Both parsers, the word function, the dialogue spans and every
+# sentence-based feature take these sentences". The sat stage's record is the registered segmentation of the English
+# source only (is_source); a translation needs the union segmenter's record, unless the registered sensitivity
+# analysis with SaT alone is being run (qmd Sensitivity analyses: "and by SaT alone in another"), which
+# allow_sat_alone switches on. A segments record must also carry the text_sha256 of the text it was cut from.
+source_segmenter = "sat"
+translation_segmenter = "union"
+allow_sat_alone = false

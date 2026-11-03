@@ -1,0 +1,179 @@
+# Constants of the features_discourse stage: referential overlap, anaphoric continuation, connective densities,
+# dialogue share, the name inventory and covariates, valence and arousal, and the predicted spoken duration.
+# Each value quotes its anchor in preregistration.qmd (by section) or supplementary.qmd (S3). A value marked
+# PENDING is a default that the protocol leaves open; it sits behind a named switch until the Feature
+# Specification settles it.
+
+[stage]
+# English first (the dry run on the public stand-in). The other languages need what this version lacks: their
+# connective inventories are induced after acceptance (S3), Chinese and Thai take their words from the segmenter
+# (Measures), and the affect lookups of Arabic, Hebrew, Korean, Chinese and Thai need S3's script fallback.
+languages = ["en"]
+
+[lookup]
+# S3: "Lists and texts share one normalisation function". The shared lookup normalisation (features.lexical.
+# LookupNormaliser, promoted from lexrules.normalise) is configured in [lexical.normalisation] and [lexical.casing]
+# of this stage's config file, so affect lookups, name types and frequency lookups use one function.
+config_stage = "features_gramlex"
+
+[parse]
+# The parses this stage reads. ReferentialContinuity and LexicalDifficulty take Stanza's parse alone; only
+# GrammaticalLoad takes the two-parser mean (presub error_model em_aggregate.py, the registered served scores:
+# "GL from PU, LD and RC from P"). Materials: "A type is a name if the Stanza parse tags at least half its
+# occurrences as a proper noun".
+artefact = "parses_stanza"
+ext = "conllu.gz"
+
+[overlap]
+# Materials: "Referential overlap is the proportion of adjacent sentence pairs sharing at least one content lemma in
+# a nominal position". S3: "a content lemma is in a nominal position when its universal part-of-speech tag is NOUN
+# or PROPN, or X in Arabic, whose treebank tags names X".
+nominal_upos = ["NOUN", "PROPN"]
+nominal_upos_extra = { ar = ["X"] }
+# S3: "Stanza's Thai package also has no lemmatiser, so a Thai lemma is its surface form"; lexrules.overlap_key also
+# keys Chinese on the form. Keys are ISO 639-1 codes from languages.toml.
+form_as_lemma = ["zh", "th"]
+
+[continuation]
+# S3, referential overlap row (sensitivity): "Anaphoric continuation, which also counts a pair as continuous when
+# the next sentence's main clause has a third-person pronoun subject or, where the dropped-subject gate is passed, a
+# dropped one." The dropped-subject clause applies only in "the eight null-subject languages" (S3), not English.
+# The rule below is rigour/discourse/scripts/rc_features.py's main_subject_pron3.
+subject_relations = ["nsubj", "nsubj:pass"]
+root_handover_upos = ["CCONJ", "PART"]
+root_handover_relations = ["parataxis", "conj", "advcl"]
+predicate_dependents = ["nsubj", "csubj", "cop", "aux", "expl"]
+
+[connectives]
+# S3: "The causal anchors are because, therefore, thus and clause-initial so, and the contrastive anchors are but,
+# however, although, though, even though, even if and whereas."
+causal = ["because", "therefore", "thus"]
+causal_clause_initial = ["so"]
+contrastive = ["but", "however", "although", "though", "even though", "even if", "whereas"]
+# S3, connective density row: "Connectives per 100 words of the outcome's unit".
+per_words = 100
+# PENDING: "clause-initial" is registered without an operationalisation. Default: rc_features.py's count_conn rule,
+# sentence-initial, second after a sentence-initial quotation mark, or after one of these tokens.
+clause_boundary_before = [",", ";", ":", "--", "and", "—", "–"]
+sentence_initial_quotes = ['"', "“", "”", "'", "‘", "’"]
+# S3 hygiene: "Hygiene rules block ... the expressions and so on and not X but Y". rc_features.py blocks "so" before
+# these tokens: purpose ("so that"), "so on", "so forth", degree ("so far", "so much", "so many") and inversion
+# with an auxiliary or modal ("so did I").
+clause_initial_blocked_before = ["that", "on", "forth", "far", "much", "many", "was", "were", "is", "are", "am",
+                                 "did", "do", "does", "has", "have", "had", "can", "could", "will", "would",
+                                 "should", "be"]
+# PENDING: the registered hygiene rule blocks "not X but Y", but no benchmark implemented it. Default: block a cc
+# "but" whose conjunct has no subject of its own and whose head conjunct carries a negator as advmod
+# (connectives.is_not_x_but_y).
+block_not_x_but_y = true
+not_x_but_y_forms = ["but"]
+negators = ["not", "n't"]
+clause_subject_relations = ["nsubj", "csubj", "expl"]
+# Gap G4: the additive and temporal densities are descriptive (Measures: "the additive and temporal connective
+# densities, will be computed for description only") but no English anchor list is registered. Off until the
+# Feature Specification registers the lists; the stage refuses to run with the switch on and no list.
+additive_temporal = false
+additive = []
+temporal = []
+
+[dialogue]
+# Measures and S3: spans from "the primary and alternate quotation pairs of release 47 of the Unicode Common Locale
+# Data Repository"; the pairs themselves are languages.toml's `quotes` (CLDR 47 plus the marks the structural counts
+# admit). cldr-misc-full 47.0.0, main/en/delimiters.json, SHA-256
+# 7dba09b7aba3f8c98292df1e6fee27cdc950d3542139472799ca350d877909bb (Unicode-3.0 licence).
+cldr_release = "47"
+# S3: "A line-initial dialogue dash opens a turn that runs to the end of the line, if line breaks survive within
+# pages". The dash set is dialogue.py's DASHES.
+dash_turns = true
+dashes = ["—", "–", "―", "-"]
+# S3: "The direction of every ambiguous mark is read from its spacing." Marks that double as apostrophes take
+# dialogue.py's guard (open after a space, the line start or one of guard_open_context, before a letter; close after
+# a non-space, before a non-letter). Other marks that open and close alike take dir_only's spacing rule, with
+# open_context its OPEN_CTX.
+apostrophe_marks = ["‘", "’", "'", "‚"]
+guard_open_context = "([{—–-"
+open_context = "([{—–-«„“"
+# S3: "In Hebrew, a straight double or single quotation mark is a gershayim or geresh only when letters stand on
+# both sides".
+letter_flanked = { he = ['"', "'"] }
+
+[names]
+# Materials: "A type is a name if the Stanza parse tags at least half its occurrences as a proper noun, or as X in
+# Arabic". The rule awaits P06 and P53; route B (projection from the English source) applies to translations only.
+name_upos = ["PROPN"]
+name_upos_extra = { ar = ["X"] }
+min_share = 0.5
+# Materials: "Names are taken from a frozen inventory, built after acceptance and before linkage", over the
+# language's catalogue. "catalogue" reads every shard of the parse; "shard" reads only the shard being run, which
+# equals the catalogue only when nshards = 1; "file" reads a frozen inventory from inventory_path (one normalised
+# type per line), so that a smoke run can apply the full run's inventory and reproduce its rows.
+inventory_scope = "catalogue"
+inventory_path = ""
+# Write the inventory built here beside the artefact (features_discourse/name_inventory.txt), in the format
+# features_gramlex reads under its name rule "inventory", so that both stages mask the same names.
+write_inventory = true
+# Materials: "the number of distinct name types per hundred words ... counting types by lemma".
+per_words = 100
+# PENDING: Materials registers "the empirical logit" of name-token share without its constant; 0.5 is the
+# conventional one, log((k + 0.5) / (n - k + 0.5)).
+elogit_offset = 0.5
+
+[affect]
+# S3: "MEmoLon, induced for 91 languages from a single procedure" (MTL_grouped v1.0, doi:10.5281/zenodo.3756607,
+# CC BY 4.0). {resources} is the INTRACT_RESOURCES directory and {code} languages.toml's `memolon`.
+lexicon = "{resources}/memolon/MTL_grouped/{code}.tsv"
+# Key of the file's pin in resources.lock.json (DESIGN: "Code verifies a pin before it loads the file").
+resource_pin = "memolon_mtl_grouped_{code}"
+require_pin = true
+# Materials, third rule: content tokens are "those whose universal part-of-speech tag is NOUN, VERB, ADJ or ADV".
+content_upos = ["NOUN", "VERB", "ADJ", "ADV"]
+# S3: "Lookups try the language-aware lower case, the surface form and the lemma, then a script fallback". English
+# has no script fallback.
+lookup_order = ["lower", "surface", "lemma"]
+# Multi-word entries can never match a single syntactic word (memolon_flores.py drops them).
+drop_multiword = true
+# PENDING: the "variability" of valence and arousal (Materials) is registered without a formula. Default: the
+# sample standard deviation over a text's matched tokens.
+sd_ddof = 1
+
+[duration]
+# S3: "Predicted seconds, the rate per unit times the text's spoken units plus 0.55 s per sentence end and 0.20 s
+# per clause mark, divided by the words and log-transformed. The units are eSpeak NG 1.52.0 phones, through
+# phonemizer 3.4.0, at 0.08 s each in the 13 languages written in Latin, Greek or Cyrillic script."
+seconds_per_unit = 0.08
+seconds_per_sentence_end = 0.55
+seconds_per_clause_mark = 0.20
+espeak_ng_version = "1.52.0"
+phonemizer_version = "3.4.0"
+# For local development only: true lets a different version run, recorded in the timing record.
+allow_version_mismatch = false
+# phonemizer settings of verify-narrdur/scripts/dur_constants_ts.py, the benchmark that tested the registered
+# constants' sensitivity (it assumed 0.55 s and 0.20 s, with 0.085 s per phone, and did not fit them). The voice is
+# languages.toml's `espeak_voice`.
+backend = "espeak"
+phone_separator = " "
+word_separator = " | "
+strip = true
+with_stress = false
+preserve_punctuation = false
+language_switch = "remove-flags"
+# The program runs as a separate process: empty means "<this python> -I -m phonemizer.main". espeak_library and
+# espeak_data_path, when set, pass --espeak-library and ESPEAK_DATA_PATH; otherwise phonemizer finds the library
+# itself (PHONEMIZER_ESPEAK_LIBRARY or the system default).
+command = []
+espeak_library = ""
+espeak_data_path = ""
+timeout_seconds = 3600
+# PENDING: what a "sentence end" is. "segments": one per sentence of the registered segmentation (S3: "every
+# sentence-based feature take these sentences"). "terminal_marks": runs of terminal marks, each counted once, as
+# dur_constants_ts.py counted them.
+sentence_ends = "segments"
+terminal_marks = [".", "!", "?", "…"]
+# PENDING (gap G5): "clause mark" is undefined. Default: comma, semicolon and colon with their full-width forms,
+# and dashes; not between two digits; a run of dashes, a run of two or more hyphens or a hyphen between spaces
+# counts once.
+clause_marks = [",", ";", ":", "，", "；", "："]
+clause_dashes = ["—", "–", "―"]
+ascii_double_hyphen_is_dash = true
+spaced_hyphen_is_dash = true
+skip_between_digits = true

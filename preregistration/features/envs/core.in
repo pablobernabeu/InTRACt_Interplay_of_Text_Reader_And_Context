@@ -1,0 +1,30 @@
+# Environment "core": every stage except UDPipe 2, CorPipe and MetricX (DESIGN.md, Environments).
+# Top-level pins only; core.lock is the hash-locked closure (envs/README.md says how it was compiled).
+# Where a package overlaps the pre-submission environments that already ran on ARC (translated_union
+# seg and mt, error_model stanza115, third_parser stanza_tp), the version is the one they ran.
+#
+# torch comes from the PyTorch cu126 index: 2.14 is the last series with CUDA 12 wheels, and
+# torch 2.14.1+cu126 is the build TU-1, TU-2, TU-5 and the third-parser pilot ran on L40S.
+torch==2.14.1+cu126
+# The registered segmenter: supplementary.qmd S3, "the `sat-12l-sm` model run through `wtpsplit` 2.2.2".
+wtpsplit==2.2.2
+# transformers 5.19.0 ran the registered SaT call, e5 and MADLAD in the pre-submission strands.
+transformers==5.19.0
+# S3: "Stanza 1.15.0 in its `nocharlm` tier".
+stanza==1.15.0
+huggingface-hub==2.2.0
+numpy==2.5.4
+scipy==1.18.1
+safetensors==0.8.0
+sentencepiece==0.2.2
+# INTERIM frequency resource until the OpenSubtitles 2024 lists exist (P48); S3 keeps wordfreq only as the
+# independent list of the third frequency gate.
+wordfreq==3.1.1
+# S3: "eSpeak NG 1.52.0 phones, through phonemizer 3.4.0". eSpeak NG itself is a C library built from its
+# tag by jobs/arc/j0_build.sbatch, because ARC has no module for it.
+phonemizer==3.4.0
+# The stand-in builder reads the SimpleStories parquet shards.
+pyarrow
+# Needed to install the intract_features package itself without build isolation (pyproject.toml asks for
+# setuptools>=75), so the editable install uses a hash-locked build backend.
+setuptools>=75

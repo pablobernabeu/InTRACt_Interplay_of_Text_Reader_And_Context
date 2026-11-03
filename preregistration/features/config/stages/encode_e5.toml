@@ -1,0 +1,77 @@
+# Constants of the encode_e5 stage: adjacent-sentence similarity under multilingual-e5-large-instruct, the
+# ReferentialContinuity anchor (src/intract_features/features/similarity.py, src/intract_features/stages/encode_e5.py).
+#
+# Anchors: "qmd" is preregistration.qmd, "S3" is Supplementary Section S3 of supplementary.qmd and "plan v3" is the
+# feature plan of 22 October 2026. A value marked PENDING is a default taken behind a switch until the Feature
+# Specification decides it. The model's pin is in config/models.lock.json. Code reads every value from here.
+
+[stage]
+# Raise on a document without a usable segmentation instead of recording it in its diagnostics (the tests run strict).
+strict = false
+# Documents whose sentences are encoded together; fixed call shapes make every value independent of it.
+docs_per_group = 512
+
+[model]
+# S3, Table 3, adjacent-sentence similarity row: "multilingual-E5-large-instruct [...], identified by checkpoint,
+# since no DOI is registered". Plan v3: "Similarity keeps multilingual-e5-large-instruct@274baa43".
+key = "intfloat/multilingual-e5-large-instruct"
+# qmd Outcome-blind dimension reduction: "For ReferentialContinuity, they are adjacent-sentence similarity, referential
+# overlap and the densities of causal and contrastive connectives."
+value_name = "adjacent_similarity"
+
+[encoding]
+# S3, Table 3: "prompted with its developers' instruction for semantic similarity on both sentences of a pair". The
+# developers' model card (README at 274baa43) builds the input as "Instruct: {task_description}\nQuery: {query}", and
+# their evaluation code gives semantic textual similarity the task "Retrieve semantically similar text."
+# (microsoft/unilm, e5/utils.py at 9c0f1ff7, line 108). Plan v3: "with the developers' instruction, "Instruct:
+# Retrieve semantically similar text." then "Query: ", for both sentences of a pair". TU-5 (tu5_e5.py) used it.
+prefix = "Instruct: Retrieve semantically similar text.\nQuery: "
+# The model card's average_pool over the attention mask and F.normalize(p=2); the pinned 1_Pooling/config.json sets
+# pooling_mode_mean_tokens and modules.json ends with Normalize. tu5_e5.py: "mean pooling over the attention mask, L2
+# normalisation, max length 512".
+pooling = "mean"
+normalise = true
+max_length = 512
+padding_token = "<pad>"
+
+[segments]
+# qmd Materials: "In English, a sentence ends where the registered Segment any Text (SaT) model places a boundary";
+# "In each translation, the union segmenter keeps every sentence end the translation marks itself and takes the
+# others from its English source." S3: "Both parsers, the word function, the dialogue spans and every
+# sentence-based feature take these sentences". The sat stage's record is the registered segmentation of the English
+# source only. A translation needs the union segmenter's record, unless the registered sensitivity analysis with
+# SaT alone is being run (qmd Sensitivity analyses: "and by SaT alone in another"), which allow_sat_alone switches on.
+source_segmenter = "sat"
+translation_segmenter = "union"
+allow_sat_alone = false
+
+[precision]
+# DESIGN.md, Determinism: "Language models and encoders run in fp32 with TF32 off"; TU-5 asserted fp32. The encoders
+# are not among the models the budget guard may move to bf16 (qmd Timeline).
+fp32_precision = "ieee"
+deterministic_algorithms = true
+cublas_workspace_config = ":4096:8"
+
+[runtime]
+# Not registered, and none changes a value. The stage's device is gpu; "auto" or "cpu" for development.
+device = "cuda"
+# tu5_e5.py loaded the model with transformers' default attention (scaled dot-product attention).
+attn_implementation = "sdpa"
+# DESIGN.md, Determinism: "Batches have fixed shapes wherever padding could change a result." Each sentence is padded
+# to the first bucket that holds its tokens (instruction and special tokens included), and every call of a bucket has
+# tokens_per_batch // bucket rows, a short call being filled with copies of its first sentence.
+buckets = [16, 24, 32, 48, 64, 96, 128, 192, 256, 384, 512]
+tokens_per_batch = 16384
+offline = true
+
+[loading]
+# The pinned repository ships model.safetensors (fp16 weights, loaded in fp32). The model is built without its
+# pooling layer, which mean pooling never reads; a checkpoint that carries one, or the position-id and token-type
+# buffers that transformers 5.19 no longer saves, is accepted, and any other missing or unexpected weight stops the
+# stage.
+allowed_missing = []
+allowed_unexpected = ["^pooler\\.", "^embeddings\\.position_ids$", "^embeddings\\.token_type_ids$"]
+
+[output]
+# Per-pair cosines are stored, rounded, for the agreement and generalisability tables; embeddings are not stored.
+decimals = 6

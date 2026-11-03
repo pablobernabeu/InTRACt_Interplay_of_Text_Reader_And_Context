@@ -1,0 +1,70 @@
+# Stage seg_check: English SaT against the frozen rule segmenter, and the five-sentence floor
+# (src/intract_features/stages/seg_check.py). Anchors: preregistration.qmd, Outcome-neutral
+# quality checks ("The second requires English SaT to reach an F1 of .95 against a frozen rule
+# segmenter on the served English texts."); supplementary.qmd S3, Validation without human
+# annotation; Outcome-blind dimension reduction for the floor, whose minimum is pipeline.toml
+# [floor].
+
+[criterion]
+# Outcome-neutral quality checks: "an F1 of .95".
+min_f1 = 0.95
+# Materials: "Boundary accuracy is scored without counting as an error a quotation mark placed
+# on the other side of a boundary"; S3: "exact matching is reported beside that score".
+score = "tolerant"
+# PENDING the Feature Specification: the protocol does not say whether the point estimate or
+# the lower 95% limit must reach .95. The benchmark (TU-3) decided on the point estimate.
+statistic = "point"                   # or "lower_95"
+
+[sample]
+# Outcome-neutral quality checks: the segmentation checks run "on the keyed sample", a "keyed
+# sample of 2,000 story versions per language, drawn by a keyed hash of the story identifier".
+# Plan v3: "on the 2,000 served English texts". The sample has one definition, documents.toml
+# [keyed_sample] (its purpose string is PENDING gap G7); "all" scores every text instead, for
+# the dry run's cost of the check.
+scope = "keyed_sample"                # or "all"
+
+[bootstrap]
+# Not registered for this check. S3's "2,000 cluster-bootstrap replicates" registers the
+# pre-submission scoring of the union segmenter in the benchmark conditions; this check reuses
+# that convention. The seed is pipeline.toml [seeds] base, 20261026 as in the benchmark, whose
+# English stream was SeedSequence(20261026, spawn_key=(18,)) (tu_common.boot_rng, English last in
+# the protocol's language order). They decide the check only if [criterion] statistic is
+# "lower_95" (FS-03, pending the Feature Specification).
+replicates = 2000
+spawn_key = 18
+
+[scorer]
+# tu_common.QUOTES: the marks a quote-tolerant boundary moves back over.
+quotes = "\"'“”„‟«»‹›「」『』‘’‚"
+
+[rule]
+# SEG-3, the frozen English rule segmenter (tu_common.segment, verbatim from
+# rigour/segmentation/scripts/mt_more.py). Plan v3: "A quotation and its speech verb form one
+# sentence." The tests pin every value to the frozen rule.
+abbreviations = ["Mr.", "Mrs.", "Ms.", "Dr.", "St.", "Mt."]
+terminal = ".!?…"
+closing_quotes = "\"”’'"
+opening_quotes = "\"“"
+word_pattern = "[A-Za-z']+"
+conjunction = " and "
+max_tag_words = 7
+tag_verb_window = 4
+tag_verbs = [
+  "said", "says", "asked", "asks", "cried", "shouted", "replied", "exclaimed", "whispered",
+  "yelled", "answered", "called", "screamed", "giggled", "laughed", "sang", "added", "explained",
+  "begged", "pleaded", "sighed", "squeaked", "barked", "roared", "chirped", "meowed", "quacked",
+  "growled", "shrieked", "gasped", "suggested", "warned", "insisted", "mumbled", "muttered",
+  "sobbed", "cheered", "squealed", "hissed", "boomed", "howled", "wailed", "announced",
+  "declared", "continued", "repeated",
+]
+
+[orth_rule]
+# The frozen target-only gold rule (tu_common.internal_orth_ends, verbatim from
+# rigour/verify-segmentation/scripts/ags_construct_eval.py). S3: "a frozen rule that is
+# conservative for abbreviations, ordinals and initials". ";" stays terminal in every language,
+# as frozen. It scores the union segmenter on the translated benchmark; English does not use it.
+terminal = ".!?…؟。！？;"
+closers = "\"'”’»›」』)]）"
+openers = "\"'“‘«‹„「『("
+cjk_terminal = "。！？"
+max_abbreviation_letters = 2

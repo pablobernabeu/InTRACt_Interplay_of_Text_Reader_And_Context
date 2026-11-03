@@ -1,0 +1,19 @@
+# One table per served locale. The dry run on the public stand-in covers English;
+# the other delivered locales are added before the FLORES-200 run in all 19
+# languages. Package and model names follow supplementary.qmd S3; every file they
+# name is pinned by revision and SHA-256 in models.lock.json.
+
+[en-us]
+name = "English"
+iso = "en"
+script = "Latn"
+spaced = true                      # words are whitespace-delimited (Measures: the word definition)
+terminal_marks = [".", "!", "?", "…"]
+# CLDR 47 quotation marks for English (supplementary.qmd S3, the dialogue detector).
+quotes = [["“", "”"], ["‘", "’"], ["\"", "\""]]
+stanza_lang = "en"
+stanza_packages = { tokenize = "gum", mwt = "gum", pos = "gum_nocharlm", lemma = "gum_nocharlm", depparse = "gum_nocharlm" }
+udpipe_model = "english-gum-ud-2.17-251125"
+goldfish = { tier_1gb = "goldfish-models/eng_latn_1000mb", tier_100mb = "goldfish-models/eng_latn_100mb" }
+memolon = "en"
+espeak_voice = "en-us"

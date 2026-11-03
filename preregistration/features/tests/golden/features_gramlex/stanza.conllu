@@ -1,0 +1,61 @@
+# newdoc id = S1
+# sent_id = S1-0
+# text = Mia saw a red kite.
+# span = 0:19
+1	Mia	Mia	PROPN	_	_	2	nsubj	_	TokenRange=0:3
+2	saw	see	VERB	_	_	0	root	_	TokenRange=4:7
+3	a	a	DET	_	_	5	det	_	TokenRange=8:9
+4	red	red	ADJ	_	_	5	amod	_	TokenRange=10:13
+5	kite	kite	NOUN	_	_	2	obj	_	SpaceAfter=No|TokenRange=14:18
+6	.	.	PUNCT	_	_	2	punct	_	TokenRange=18:19
+
+# sent_id = S1-1
+# text = It flew high.
+# span = 20:33
+1	It	it	PRON	_	_	2	nsubj	_	TokenRange=20:22
+2	flew	fly	VERB	_	_	0	root	_	TokenRange=23:27
+3	high	high	ADV	_	_	2	advmod	_	SpaceAfter=No|TokenRange=28:32
+4	.	.	PUNCT	_	_	2	punct	_	TokenRange=32:33
+
+# sent_id = S1-2
+# text = She said, “I want it.”
+# span = 34:56
+1	She	she	PRON	_	_	2	nsubj	_	TokenRange=34:37
+2	said	say	VERB	_	_	0	root	_	SpaceAfter=No|TokenRange=38:42
+3	,	,	PUNCT	_	_	2	punct	_	TokenRange=42:43
+4	“	“	PUNCT	_	_	6	punct	_	SpaceAfter=No|TokenRange=44:45
+5	I	I	PRON	_	_	6	nsubj	_	TokenRange=45:46
+6	want	want	VERB	_	_	2	ccomp	_	TokenRange=47:51
+7	it	it	PRON	_	_	6	obj	_	SpaceAfter=No|TokenRange=52:54
+8	.	.	PUNCT	_	_	6	punct	_	SpaceAfter=No|TokenRange=54:55
+9	”	”	PUNCT	_	_	6	punct	_	TokenRange=55:56
+
+# sent_id = S1-3
+# text = The kite fell down.
+# span = 57:76
+1	The	the	DET	_	_	2	det	_	TokenRange=57:60
+2	kite	kite	NOUN	_	_	3	nsubj	_	TokenRange=61:65
+3	fell	fall	VERB	_	_	0	root	_	TokenRange=66:70
+4	down	down	ADV	_	_	3	advmod	_	SpaceAfter=No|TokenRange=71:75
+5	.	.	PUNCT	_	_	3	punct	_	TokenRange=75:76
+
+# newdoc id = S2
+# sent_id = S2-0
+# text = Sparkle cannot fly.
+# span = 0:19
+1	Sparkle	Sparkle	PROPN	_	_	4	nsubj	_	TokenRange=0:7
+2-3	cannot	_	_	_	_	_	_	_	TokenRange=8:14
+2	can	can	AUX	_	_	4	aux	_	_
+3	not	not	PART	_	_	4	advmod	_	_
+4	fly	fly	VERB	_	_	0	root	_	SpaceAfter=No|TokenRange=15:18
+5	.	.	PUNCT	_	_	4	punct	_	TokenRange=18:19
+
+# sent_id = S2-1
+# text = The dragon Sparkle smiled.
+# span = 20:46
+1	The	the	DET	_	_	2	det	_	TokenRange=20:23
+2	dragon	dragon	NOUN	_	_	4	nsubj	_	TokenRange=24:30
+3	Sparkle	Sparkle	PROPN	_	_	2	appos	_	TokenRange=31:38
+4	smiled	smile	VERB	_	_	0	root	_	SpaceAfter=No|TokenRange=39:45
+5	.	.	PUNCT	_	_	4	punct	_	TokenRange=45:46
+

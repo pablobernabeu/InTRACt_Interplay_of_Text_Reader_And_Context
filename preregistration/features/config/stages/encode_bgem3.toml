@@ -1,0 +1,63 @@
+# Constants of the encode_bgem3 stage: adjacent-sentence similarity under BGE-M3, the sensitivity encoder
+# (src/intract_features/features/similarity.py, src/intract_features/stages/encode_bgem3.py).
+#
+# Anchors: "qmd" is preregistration.qmd and "S3" is Supplementary Section S3 of supplementary.qmd. A value marked
+# PENDING is a default taken behind a switch until the Feature Specification decides it. The model's pin is in
+# config/models.lock.json. Code reads every value from here.
+
+[stage]
+# As in encode_e5.toml.
+strict = false
+docs_per_group = 512
+
+[model]
+# S3, Table 3, adjacent-sentence similarity row: "BGE-M3, peer-reviewed and covering over 100 languages, retained as
+# the sensitivity encoder", with "the per-language correlation between the two estimates [...] reported with the
+# feature-pipeline validation". The repository ships only a pickled pytorch_model.bin, so the environment build
+# converts it once (features.surprisal.convert_pickled_checkpoint) and pins the safetensors file by SHA-256.
+key = "BAAI/bge-m3"
+value_name = "adjacent_similarity_bgem3"
+
+[encoding]
+# BGE-M3's dense vector: the pinned 1_Pooling/config.json sets pooling_mode_cls_token and modules.json ends with
+# Normalize; the model card says BGE-M3 "no longer requires adding instructions to the queries".
+# verify-discourse/scripts/enc_compare.py: "BGE-M3 (dense CLS, no instruction)", L2-normalised, max_length 512.
+prefix = ""
+pooling = "cls"
+normalise = true
+# PENDING the Feature Specification: BGE-M3 reads up to 8,192 tokens (sentence_bert_config.json), but the benchmark
+# truncated at 512, as e5 does, and no sentence of a story approaches that length.
+max_length = 512
+padding_token = "<pad>"
+
+[segments]
+# As in encode_e5.toml: both encoders take the registered sentences.
+source_segmenter = "sat"
+translation_segmenter = "union"
+allow_sat_alone = false
+
+[precision]
+# As in encode_e5.toml (fp32, TF32 off).
+fp32_precision = "ieee"
+deterministic_algorithms = true
+cublas_workspace_config = ":4096:8"
+
+[runtime]
+# As in encode_e5.toml; enc_compare.py loaded BGE-M3 with transformers' default attention. No instruction, so the
+# smaller buckets hold most sentences.
+device = "cuda"
+attn_implementation = "sdpa"
+buckets = [16, 24, 32, 48, 64, 96, 128, 192, 256, 384, 512]
+tokens_per_batch = 16384
+offline = true
+
+[loading]
+# As in encode_e5.toml. The converted checkpoint keeps the keys of pytorch_model.bin.
+allowed_missing = []
+allowed_unexpected = ["^pooler\\.", "^embeddings\\.position_ids$", "^embeddings\\.token_type_ids$"]
+# Patterns the build job passes to convert_pickled_checkpoint: nothing is dropped and nothing is tied.
+conversion_drop = []
+conversion_tied = {}
+
+[output]
+decimals = 6

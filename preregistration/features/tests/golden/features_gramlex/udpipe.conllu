@@ -1,0 +1,36 @@
+# newdoc id = S1
+# sent_id = S1-0
+# text = Mia saw a red kite.
+1	Mia	Mia	PROPN	_	_	2	nsubj	_	_
+2	saw	see	VERB	_	_	0	root	_	_
+3	a	a	DET	_	_	5	det	_	_
+4	red	red	ADJ	_	_	2	xcomp	_	_
+5	kite	kite	NOUN	_	_	2	obj	_	_
+6	.	.	PUNCT	_	_	2	punct	_	_
+
+# sent_id = S1-1
+# text = It flew high.
+1	It	it	PRON	_	_	2	nsubj	_	_
+2	flew	fly	VERB	_	_	0	root	_	_
+3	high	high	ADV	_	_	2	advmod	_	_
+4	.	.	PUNCT	_	_	2	punct	_	_
+
+# sent_id = S1-2
+# text = She said, “I want it.”
+1	She	she	PRON	_	_	2	nsubj	_	_
+2	said	say	VERB	_	_	0	root	_	_
+3	,	,	PUNCT	_	_	2	punct	_	_
+4	“	“	PUNCT	_	_	6	punct	_	_
+5	I	I	PRON	_	_	6	nsubj	_	_
+6	want	want	VERB	_	_	2	ccomp	_	_
+7	it	it	PRON	_	_	6	obj	_	_
+8	.”	.”	PUNCT	_	_	6	punct	_	_
+
+# sent_id = S1-3
+# text = The kite fell down.
+1	The	the	DET	_	_	2	det	_	_
+2	kite	kite	NOUN	_	_	3	nsubj	_	_
+3	fell	fall	VERB	_	_	0	root	_	_
+4	down	down	ADV	_	_	3	advmod	_	_
+5	.	.	PUNCT	_	_	3	punct	_	_
+

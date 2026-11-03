@@ -1,0 +1,110 @@
+{
+ "schema": "intract-features resources.lock v1",
+ "read": "3 November 2026",
+ "conventions": [
+  "Entries sit under 'resources'; features/lexical.py and stages/features_discourse.py read that table.",
+  "An entry's 'sha256' is verified before the file is read (lexical.verify_pin). 'path' is relative to the folder its 'dir_env' variable names (jobs/arc/env.sh)."
+ ],
+ "resources": {
+  "espeak-ng-1.52.0": {
+   "repo": "https://github.com/espeak-ng/espeak-ng",
+   "tag": "1.52.0",
+   "commit": "4870adfa25b1a32b4361592f1be8a40337c58d6c",
+   "release_published": "2024-12-12T13:47:27Z",
+   "licence": "GPL-3.0",
+   "licence_source": "GitHub licence detection of espeak-ng/espeak-ng, read 3 November 2026",
+   "role": "eSpeak NG phones for the predicted spoken duration (H4 adjustment)",
+   "anchor": "supplementary.qmd S3, Table 3, predicted spoken duration row (\"eSpeak NG 1.52.0 phones, through phonemizer 3.4.0\")",
+   "checkout": {
+    "dir_env": "INTRACT_SRC",
+    "dir": "espeak-ng"
+   },
+   "build": {
+    "why": "no eSpeak NG module on ARC (/apps/system/easybuild/software and modules/all listed on 3 November 2026); the tag has no source tarball among its release assets",
+    "prefix_env": "INTRACT_OPT",
+    "prefix": "espeak-ng-1.52.0",
+    "configure": [
+     "--without-pcaudiolib",
+     "--without-sonic"
+    ],
+    "modules": [
+     "GCCcore/13.3.0",
+     "Autotools/20231222-GCCcore-13.3.0"
+    ]
+   }
+  },
+  "flores200": {
+   "sha256": "b8b0b76783024b85797e5cc75064eb83fc5288b41e9654dabc7be6ae944011f6",
+   "bytes": 25585843,
+   "dir_env": "INTRACT_RESOURCES",
+   "path": "flores200/flores200_dataset.tar.gz",
+   "reuse": {
+    "dir_env": "PRESUB",
+    "path": "data/flores200/flores200_dataset.tar.gz"
+   },
+   "url": "https://dl.fbaipublicfiles.com/nllb/flores200_dataset.tar.gz",
+   "licence": "CC-BY-SA-4.0",
+   "licence_source": "README.md of facebookresearch/flores at a6c830c6 (\"FLORES-200: CC-BY-SA 4.0\"); the archive's own README states no licence",
+   "role": "FLORES-200 for the multilingual stages (after the English dry run); the pre-submission copy has the same SHA-256 (read on ARC)"
+  },
+  "memolon_mtl_grouped_en": {
+   "sha256": "cb2056c68172b8a6d756c45aafc2be87a002cb631ad25f82fb0d7a8af9824bbb",
+   "bytes": 97583658,
+   "dir_env": "INTRACT_RESOURCES",
+   "path": "memolon/MTL_grouped/en.tsv",
+   "licence": "CC-BY-4.0",
+   "licence_source": "Zenodo record 3756607 metadata (license cc-by-4.0)",
+   "role": "MEmoLon valence and arousal, English (MTL_grouped v1.0)",
+   "anchor": "supplementary.qmd S3, Table 3, valence and arousal row; config/stages/features_discourse.toml [affect]",
+   "source": {
+    "doi": "10.5281/zenodo.3756607",
+    "file": "MTL_grouped.zip",
+    "url": "https://zenodo.org/api/records/3756607/files/MTL_grouped.zip/content",
+    "archive_bytes": 2361457932,
+    "archive_md5": "e773cbd8a8f3fc4b76a36c4b6d03fcd4",
+    "member": "en.tsv",
+    "member_compressed_bytes": 37540663,
+    "member_crc32": "953b8e8e",
+    "how": "the member alone, fetched by HTTP range requests and checked against the archive's central-directory CRC-32 (jobs/arc/staging.py resources)"
+   }
+  },
+  "simplestories": {
+   "repo": "SimpleStories/SimpleStories",
+   "revision": "e63b8adc3b1a1bdc7cac5b500d150b71346b0628",
+   "licence": "MIT",
+   "dir_env": "INTRACT_RESOURCES",
+   "path": "simplestories",
+   "pinned_in": "config/stages/standin.toml [source] (every shard's size and SHA-256)",
+   "role": "the public stories of the English stand-in (standin/build_standin.py download and verify)"
+  },
+  "translated_benchmark_mt_de": {
+   "dir_env": "PRESUB",
+   "path": "translated_union/mt",
+   "files": {
+    "madlad_de.jsonl": {
+     "sha256": "4d41896bad66cf02f6bdb03167b8114f9310060d7a74cf6ef477e573b709d4e6",
+     "bytes": 10589840
+    },
+    "nllb_de.jsonl": {
+     "sha256": "da4c1b2e4d3a30b19890f016d6472512e20c04845339f795d75c3d40c4e25bb5",
+     "bytes": 1562731
+    }
+   },
+   "provenance": "TU-1b and TU-1c outputs of the pre-submission translated benchmark on public TinyStories; read in place, SHA-256 read on ARC",
+   "role": "English-German sentence pairs on which the dry run times qe_metricx (jobs/arc/staging.py qe-pairs), since the stand-in has no translations",
+   "licence": "derived from TinyStories (CDLA-Sharing-1.0) by MADLAD-400-3B-MT (Apache-2.0) and NLLB-200-3.3B (CC-BY-NC-4.0)"
+  },
+  "wordfreq-3.1.1/large_en.msgpack.gz": {
+   "sha256": "dffae8066b78dce0a6667cf5f58e567054f902674667090a7ac8a8a44628b05c",
+   "bytes": 1494836,
+   "licence": "CC-BY-SA-4.0 (wordfreq data; the code is Apache-2.0)",
+   "licence_source": "the License section of wordfreq 3.1.1's package metadata (README), read 3 November 2026",
+   "role": "INTERIM frequency list (P48) read by features_gramlex; wordfreq's 'best' English list",
+   "anchor": "config/stages/features_gramlex.toml [lexical.frequency]",
+   "source": {
+    "package": "wordfreq==3.1.1 (envs/core.lock pins the wheel)",
+    "record": "the wheel's RECORD lists sha256=3_roBmt43OCmZnz19Y5WcFT5AmdGZwkKesiopEYosFw, the same digest"
+   }
+  }
+ }
+}

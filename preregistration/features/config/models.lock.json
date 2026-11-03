@@ -1,0 +1,962 @@
+{
+ "schema": "intract-features models.lock v1",
+ "read": "3 November 2026",
+ "conventions": [
+  "Entries sit under 'models', keyed as the stage configs name them; readers accept that table (segment/sat.py resolve_pinned_snapshot, parse.model_pin).",
+  "'files' lists what the consuming stage verifies by SHA-256 before loading, in the folder it resolves: the entry's 'path', else the folder an INTRACT_* variable names, else the Hugging Face cache snapshot of 'revision' under HF_HUB_CACHE.",
+  "A 'conversion' entry is loaded from $INTRACT_MODELS/<conversion.dir>, which jobs/arc/staging.py convert builds from 'hub_files' in j0_build. A SHA-256 of null is pending: no stage loads such a file until jobs/arc/staging.py run-config writes a run's config with the hash recorded by that conversion and the entry's 'path'; the hash is then transcribed here from records/.",
+  "No ARC path is written here; jobs/arc/env.sh defines HF_HUB_CACHE, STANZA_RESOURCES_DIR, INTRACT_MODELS and the other folders.",
+  "Revisions are full commits; nothing is fetched by branch name. 'hub_ref_main' marks a snapshot that third-party code loads by name offline, so refs/main must name 'revision'.",
+  "An entry marked 'optional' is read by no stage and is staged only on request (jobs/arc/staging.py models --include-optional, or --only naming it), since its conversion costs disk, memory and hours."
+ ],
+ "models": {
+  "BAAI/bge-m3": {
+   "repo": "BAAI/bge-m3",
+   "revision": "5617a9f61b028005a4858fdac845db406aefb181",
+   "licence": "MIT",
+   "licence_source": "Hugging Face model card metadata at this revision (license: mit), read 3 November 2026",
+   "source": "https://huggingface.co/BAAI/bge-m3",
+   "role": "sensitivity encoder (dense CLS vector)",
+   "anchor": "supplementary.qmd S3, Table 3, adjacent-sentence similarity row",
+   "files": {
+    "1_Pooling/config.json": {
+     "sha256": "e54c164a07274f2eb45bb724f54a79d1efcc90c41573887cd9a29aeee0597352",
+     "bytes": 191
+    },
+    "config.json": {
+     "sha256": "26159e7ad065073448460117eb24b7a4572f6f4e78eadff65dc0a11c052449fa",
+     "bytes": 687
+    },
+    "config_sentence_transformers.json": {
+     "sha256": "1eef72430e7194a1e59680e635aed81ffa083f05668dbc5bb1c56c04c0999c38",
+     "bytes": 123
+    },
+    "model.safetensors": {
+     "sha256": null,
+     "status": "pending: written by jobs/arc/staging.py convert in j0_build"
+    },
+    "modules.json": {
+     "sha256": "84e40c8e006c9b1d6c122e02cba9b02458120b5fb0c87b746c41e0207cf642cf",
+     "bytes": 349
+    },
+    "sentence_bert_config.json": {
+     "sha256": "eb9b44b13c0f52a3b3685c3b1cbdea1ba8b04bea123b98f61610048940776eb1",
+     "bytes": 54
+    },
+    "sentencepiece.bpe.model": {
+     "sha256": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865",
+     "bytes": 5069051
+    },
+    "special_tokens_map.json": {
+     "sha256": "8c785abebea9ae3257b61681b4e6fd8365ceafde980c21970d001e834cf10835",
+     "bytes": 964
+    },
+    "tokenizer.json": {
+     "sha256": "21106b6d7dab2952c1d496fb21d5dc9db75c28ed361a05f5020bbba27810dd08",
+     "bytes": 17098108
+    },
+    "tokenizer_config.json": {
+     "sha256": "a62b2b6784f990259fddef5f16388693a8043be4f69179e6a5257eeb3f9abac4",
+     "bytes": 444
+    }
+   },
+   "hub_files": {
+    "pytorch_model.bin": {
+     "sha256": "b5e0ce3470abf5ef3831aa1bd5553b486803e83251590ab7ff35a117cf6aad38",
+     "bytes": 2271145830
+    },
+    "1_Pooling/config.json": {
+     "sha256": "e54c164a07274f2eb45bb724f54a79d1efcc90c41573887cd9a29aeee0597352",
+     "bytes": 191
+    },
+    "config.json": {
+     "sha256": "26159e7ad065073448460117eb24b7a4572f6f4e78eadff65dc0a11c052449fa",
+     "bytes": 687
+    },
+    "config_sentence_transformers.json": {
+     "sha256": "1eef72430e7194a1e59680e635aed81ffa083f05668dbc5bb1c56c04c0999c38",
+     "bytes": 123
+    },
+    "modules.json": {
+     "sha256": "84e40c8e006c9b1d6c122e02cba9b02458120b5fb0c87b746c41e0207cf642cf",
+     "bytes": 349
+    },
+    "sentence_bert_config.json": {
+     "sha256": "eb9b44b13c0f52a3b3685c3b1cbdea1ba8b04bea123b98f61610048940776eb1",
+     "bytes": 54
+    },
+    "sentencepiece.bpe.model": {
+     "sha256": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865",
+     "bytes": 5069051
+    },
+    "special_tokens_map.json": {
+     "sha256": "8c785abebea9ae3257b61681b4e6fd8365ceafde980c21970d001e834cf10835",
+     "bytes": 964
+    },
+    "tokenizer.json": {
+     "sha256": "21106b6d7dab2952c1d496fb21d5dc9db75c28ed361a05f5020bbba27810dd08",
+     "bytes": 17098108
+    },
+    "tokenizer_config.json": {
+     "sha256": "a62b2b6784f990259fddef5f16388693a8043be4f69179e6a5257eeb3f9abac4",
+     "bytes": 444
+    }
+   },
+   "conversion": {
+    "dir_env": "INTRACT_MODELS",
+    "dir": "BAAI--bge-m3--5617a9f61b028005a4858fdac845db406aefb181",
+    "copy": [
+     "1_Pooling/config.json",
+     "config.json",
+     "config_sentence_transformers.json",
+     "modules.json",
+     "sentence_bert_config.json",
+     "sentencepiece.bpe.model",
+     "special_tokens_map.json",
+     "tokenizer.json",
+     "tokenizer_config.json"
+    ],
+    "function": "intract_features.features.surprisal.convert_pickled_checkpoint",
+    "map": {
+     "pytorch_model.bin": "model.safetensors"
+    },
+    "drop": [],
+    "tied": {},
+    "why": "config/stages/encode_bgem3.toml [loading]: the converted checkpoint keeps the keys of pytorch_model.bin"
+   }
+  },
+  "FacebookAI/xlm-roberta-base": {
+   "repo": "FacebookAI/xlm-roberta-base",
+   "revision": "e73636d4f797dec63c3081bb6ed5c7b0bb3f2089",
+   "licence": "MIT",
+   "licence_source": "Hugging Face model card metadata at this revision (license: mit), read 3 November 2026",
+   "source": "https://huggingface.co/FacebookAI/xlm-roberta-base",
+   "role": "tokeniser of the SaT model, loaded from a local snapshot (feature plan v3)",
+   "anchor": "supplementary.qmd S3, sentence segmentation paragraph",
+   "files": {
+    "config.json": {
+     "sha256": "d66ed8cd4f2a93b358c245e50736fa389ed4f35c0bae7aad0b32abb20c62b579",
+     "bytes": 615
+    },
+    "sentencepiece.bpe.model": {
+     "sha256": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865",
+     "bytes": 5069051
+    },
+    "tokenizer.json": {
+     "sha256": "a898ea75433890f6610f4e470b8ebeb0c21dce5c8dd61f892eb09eb5919d2e2c",
+     "bytes": 9096718
+    },
+    "tokenizer_config.json": {
+     "sha256": "994f46754c5bf4014f1aa92d34b1374319c3a6b3f702105cd5b742beaecd18ce",
+     "bytes": 25
+    }
+   }
+  },
+  "facebook/xglm-4.5B": {
+   "repo": "facebook/xglm-4.5B",
+   "revision": "1c2905c6ab3ea065e09e61daa12e3af0d246ca7e",
+   "licence": "MIT",
+   "licence_source": "Hugging Face model card metadata at this revision (license: mit), read 3 November 2026",
+   "source": "https://huggingface.co/facebook/xglm-4.5B",
+   "role": "single-multilingual-model surprisal contrast (the repository ships safetensors, so nothing is converted)",
+   "anchor": "supplementary.qmd S3, Table 3, Surprisal row; preregistration.qmd, Timeline (budget guard)",
+   "files": {
+    "config.json": {
+     "sha256": "26275cc16efb0baecb62d171b07c09901bbb059d8cf7a18ce0d11297722e772f",
+     "bytes": 577
+    },
+    "generation_config.json": {
+     "sha256": "036755e7f461bc9f0f9d6c003755a95b3cbf8f0fb568d63a1ab191e3d5d40f07",
+     "bytes": 168
+    },
+    "model.safetensors": {
+     "sha256": "368aef43963e312d4e1dba9378f4380d2b324e404c5da25a04569f6988e847f9",
+     "bytes": 10153716952
+    },
+    "sentencepiece.bpe.model": {
+     "sha256": "c49dc7e82c10227af764e518924cf2f9d50c00462750d184fa74697bba65eef8",
+     "bytes": 4920706
+    },
+    "special_tokens_map.json": {
+     "sha256": "22c821716a905be84f1520f2498a0ece88ce1eba542c57dc44c374de8ef3cfa9",
+     "bytes": 276
+    },
+    "tokenizer.json": {
+     "sha256": "6d6ba7e2ce40f0d38ec750c799181a372891ef44a7b11e33fbf91b84d49e8351",
+     "bytes": 9032074
+    },
+    "tokenizer_config.json": {
+     "sha256": "2a64d496c4412be9be0b7852773db12f0e2020fdd6f2694a0e4e8f08801a9c83",
+     "bytes": 448
+    }
+   }
+  },
+  "goldfish-models/eng_latn_1000mb": {
+   "repo": "goldfish-models/eng_latn_1000mb",
+   "revision": "1467d2805d90dc26ba8821ecbfb724ef818ebb57",
+   "licence": "Apache-2.0",
+   "licence_source": "Hugging Face model card metadata at this revision (license: apache-2.0), read 3 November 2026",
+   "source": "https://huggingface.co/goldfish-models/eng_latn_1000mb",
+   "role": "LexicalDifficulty surprisal anchor, 1 GB tier",
+   "anchor": "supplementary.qmd S3, Table 3, Surprisal row; preregistration.qmd, Sensitivity analyses",
+   "files": {
+    "added_tokens.json": {
+     "sha256": "544444fda677a4a054d8e25651b720bb91ba0eb42579d216041ba969e799e661",
+     "bytes": 25267
+    },
+    "config.json": {
+     "sha256": "b3d5b32f91e9311426e53a9600ebf322561198659fee0ff35d0174dd2257d46f",
+     "bytes": 851
+    },
+    "model.safetensors": {
+     "sha256": null,
+     "status": "pending: written by jobs/arc/staging.py convert in j0_build"
+    },
+    "special_tokens_map.json": {
+     "sha256": "4d6025468ad1902a29170ab995e005ad9ddb5e9cbf935dd0e40766a260d189c7",
+     "bytes": 17106
+    },
+    "spiece.model": {
+     "sha256": "e68450e36b02206134a087fb967e5d34c15863c54aed7f20e392134d3e148858",
+     "bytes": 1122415
+    },
+    "tokenizer.json": {
+     "sha256": "47f7446d9348e7de4ec55b343b5308f8e722453627b2e027b04c472bdaa8f289",
+     "bytes": 3811936
+    },
+    "tokenizer_config.json": {
+     "sha256": "87cc3cd7ce416a0cc8fd97e340b1c45a1cfbdbda6bc0663e4917d998b165fa39",
+     "bytes": 585
+    }
+   },
+   "hub_files": {
+    "pytorch_model.bin": {
+     "sha256": "ba6e4bae2cec695615ae89e73fdf7f930e962a4149021b6faf345661d9060371",
+     "bytes": 502283369
+    },
+    "added_tokens.json": {
+     "sha256": "544444fda677a4a054d8e25651b720bb91ba0eb42579d216041ba969e799e661",
+     "bytes": 25267
+    },
+    "config.json": {
+     "sha256": "b3d5b32f91e9311426e53a9600ebf322561198659fee0ff35d0174dd2257d46f",
+     "bytes": 851
+    },
+    "special_tokens_map.json": {
+     "sha256": "4d6025468ad1902a29170ab995e005ad9ddb5e9cbf935dd0e40766a260d189c7",
+     "bytes": 17106
+    },
+    "spiece.model": {
+     "sha256": "e68450e36b02206134a087fb967e5d34c15863c54aed7f20e392134d3e148858",
+     "bytes": 1122415
+    },
+    "tokenizer.json": {
+     "sha256": "47f7446d9348e7de4ec55b343b5308f8e722453627b2e027b04c472bdaa8f289",
+     "bytes": 3811936
+    },
+    "tokenizer_config.json": {
+     "sha256": "87cc3cd7ce416a0cc8fd97e340b1c45a1cfbdbda6bc0663e4917d998b165fa39",
+     "bytes": 585
+    }
+   },
+   "conversion": {
+    "dir_env": "INTRACT_MODELS",
+    "dir": "goldfish-models--eng_latn_1000mb--1467d2805d90dc26ba8821ecbfb724ef818ebb57",
+    "copy": [
+     "added_tokens.json",
+     "config.json",
+     "special_tokens_map.json",
+     "spiece.model",
+     "tokenizer.json",
+     "tokenizer_config.json"
+    ],
+    "function": "intract_features.features.surprisal.convert_pickled_checkpoint",
+    "map": {
+     "pytorch_model.bin": "model.safetensors"
+    },
+    "parameters": {
+     "file": "stages/surprisal_goldfish.toml",
+     "table": "loading",
+     "drop_key": "conversion_drop",
+     "tied_key": "conversion_tied"
+    }
+   }
+  },
+  "goldfish-models/eng_latn_100mb": {
+   "repo": "goldfish-models/eng_latn_100mb",
+   "revision": "7101f5bcbf4dd2c8b3e8a91efb6693648c7a854a",
+   "licence": "Apache-2.0",
+   "licence_source": "Hugging Face model card metadata at this revision (license: apache-2.0), read 3 November 2026",
+   "source": "https://huggingface.co/goldfish-models/eng_latn_100mb",
+   "role": "registered sensitivity refit, 100 MB tier",
+   "anchor": "supplementary.qmd S3, Table 3, Surprisal row; preregistration.qmd, Sensitivity analyses",
+   "files": {
+    "added_tokens.json": {
+     "sha256": "eb97333c20b9b0e072e78564ee8f10148ad783e48a835d9ce2115d3df3d47ffb",
+     "bytes": 25267
+    },
+    "config.json": {
+     "sha256": "b3d5b32f91e9311426e53a9600ebf322561198659fee0ff35d0174dd2257d46f",
+     "bytes": 851
+    },
+    "model.safetensors": {
+     "sha256": null,
+     "status": "pending: written by jobs/arc/staging.py convert in j0_build"
+    },
+    "special_tokens_map.json": {
+     "sha256": "4d6025468ad1902a29170ab995e005ad9ddb5e9cbf935dd0e40766a260d189c7",
+     "bytes": 17106
+    },
+    "spiece.model": {
+     "sha256": "e68450e36b02206134a087fb967e5d34c15863c54aed7f20e392134d3e148858",
+     "bytes": 1122415
+    },
+    "tokenizer.json": {
+     "sha256": "b7fb56df862055a891f5b72e0259b5241fc090e1d218e7bf35001ec2d6d84800",
+     "bytes": 3815058
+    },
+    "tokenizer_config.json": {
+     "sha256": "27364bd8318b34deae01184578ffbca2d9105cf27a6549195198cd84d8845b0a",
+     "bytes": 581
+    }
+   },
+   "hub_files": {
+    "pytorch_model.bin": {
+     "sha256": "e26610ede07030cd4f124bb30143aaca9cc9ded7be34012fbcc48b3092f26c3e",
+     "bytes": 502283369
+    },
+    "added_tokens.json": {
+     "sha256": "eb97333c20b9b0e072e78564ee8f10148ad783e48a835d9ce2115d3df3d47ffb",
+     "bytes": 25267
+    },
+    "config.json": {
+     "sha256": "b3d5b32f91e9311426e53a9600ebf322561198659fee0ff35d0174dd2257d46f",
+     "bytes": 851
+    },
+    "special_tokens_map.json": {
+     "sha256": "4d6025468ad1902a29170ab995e005ad9ddb5e9cbf935dd0e40766a260d189c7",
+     "bytes": 17106
+    },
+    "spiece.model": {
+     "sha256": "e68450e36b02206134a087fb967e5d34c15863c54aed7f20e392134d3e148858",
+     "bytes": 1122415
+    },
+    "tokenizer.json": {
+     "sha256": "b7fb56df862055a891f5b72e0259b5241fc090e1d218e7bf35001ec2d6d84800",
+     "bytes": 3815058
+    },
+    "tokenizer_config.json": {
+     "sha256": "27364bd8318b34deae01184578ffbca2d9105cf27a6549195198cd84d8845b0a",
+     "bytes": 581
+    }
+   },
+   "conversion": {
+    "dir_env": "INTRACT_MODELS",
+    "dir": "goldfish-models--eng_latn_100mb--7101f5bcbf4dd2c8b3e8a91efb6693648c7a854a",
+    "copy": [
+     "added_tokens.json",
+     "config.json",
+     "special_tokens_map.json",
+     "spiece.model",
+     "tokenizer.json",
+     "tokenizer_config.json"
+    ],
+    "function": "intract_features.features.surprisal.convert_pickled_checkpoint",
+    "map": {
+     "pytorch_model.bin": "model.safetensors"
+    },
+    "parameters": {
+     "file": "stages/surprisal_goldfish.toml",
+     "table": "loading",
+     "drop_key": "conversion_drop",
+     "tied_key": "conversion_tied"
+    }
+   }
+  },
+  "google-bert/bert-base-multilingual-cased": {
+   "repo": "google-bert/bert-base-multilingual-cased",
+   "revision": "3f076fdb1ab68d5b2880cb87a0886f315b8146f8",
+   "licence": "Apache-2.0",
+   "licence_source": "Hugging Face model card metadata at this revision (license: apache-2.0), read 3 November 2026",
+   "source": "https://huggingface.co/google-bert/bert-base-multilingual-cased",
+   "role": "SimAlign-style word aligner, layer 8 (names route B, projected coreference)",
+   "anchor": "config/stages/coref_corpipe.toml [aligner]; supplementary.qmd S3, names paragraph",
+   "files": {
+    "config.json": {
+     "sha256": "4d10c2021c6b5fbe8b70698abc6ccc6691dc28d1bae9732f7fa1087782feba7e",
+     "bytes": 625
+    },
+    "model.safetensors": {
+     "sha256": "876f584f15ebf14887dec17539c114bb99a032e96b9e72507a51c41e205337fc",
+     "bytes": 714290682
+    },
+    "tokenizer.json": {
+     "sha256": "f4a4d5bf7301717e261fafbe26e1eb967f6ba4cb3ae0ab7a29f4642ec229f386",
+     "bytes": 1961828
+    },
+    "tokenizer_config.json": {
+     "sha256": "0f6d13e6f4da6f9e24f22ada6bc3be571123d858d7c0c05a8a7cd55a9c23c2e8",
+     "bytes": 49
+    },
+    "vocab.txt": {
+     "sha256": "fe0fda7c425b48c516fc8f160d594c8022a0808447475c1a7c6d6479763f310c",
+     "bytes": 995526
+    }
+   }
+  },
+  "google-bert/bert-base-multilingual-uncased": {
+   "repo": "google-bert/bert-base-multilingual-uncased",
+   "revision": "7cbf9a625e29989f6b9c6c2fa68234c304f7e38f",
+   "cache_id": "bert-base-multilingual-uncased",
+   "licence": "Apache-2.0",
+   "licence_source": "Hugging Face model card metadata at this revision (license: apache-2.0), read 3 November 2026",
+   "source": "https://huggingface.co/google-bert/bert-base-multilingual-uncased",
+   "role": "UDPipe 2's word-embedding encoder, loaded by its legacy id through refs/main (TensorFlow weights)",
+   "anchor": "config/stages/parse_udpipe.toml (embedding_snapshot)",
+   "hub_ref_main": true,
+   "files": {
+    "config.json": {
+     "sha256": "fba5d4b0a351a43f6ccb7a6587301fd9f6876ca36aae62af762af67c8f18db1c",
+     "bytes": 625
+    },
+    "tf_model.h5": {
+     "sha256": "77d2ed6e37792d0e3224dddf5d4b509c65d0e9fb131b97339598b852ccd83921",
+     "bytes": 999358484
+    },
+    "tokenizer.json": {
+     "sha256": "41a9e8ccfd02a7bf5bb8426ed22eec3a5bd81d85d7c10ef4a5cbdbfa21faa21b",
+     "bytes": 1715180
+    },
+    "tokenizer_config.json": {
+     "sha256": "a025160ef0431f1a392f6f050c1310f4c5d9fb6f275932dbccba73c4d214bf10",
+     "bytes": 48
+    },
+    "vocab.txt": {
+     "sha256": "87b44292b452f6c05afa49b2e488e7eedf79ea4f4c39db6f2f4b37764228ef3f",
+     "bytes": 871891
+    }
+   }
+  },
+  "google-research/metricx": {
+   "repo": "google-research/metricx",
+   "revision": "fc4978eb064670f7cc33e93ea4f52d38396b8ae6",
+   "licence": "Apache-2.0",
+   "licence_source": "GitHub licence detection and LICENSE at this commit, read 3 November 2026",
+   "source": "https://github.com/google-research/metricx",
+   "checkout": {
+    "dir_env": "INTRACT_SRC",
+    "dir": "metricx"
+   },
+   "role": "official MetricX-24 code, run in envs/metricx for the validation of the port in reference/metricx_qe.py",
+   "anchor": "config/stages/qe_metricx.toml [model] official_code",
+   "files": {
+    "metricx24/__init__.py": {
+     "sha256": "47445072ddd61626d1eb8e17e5df200c5dd1d7ba09d56e44350e75786cad5304",
+     "bytes": 589
+    },
+    "metricx24/predict.py": {
+     "sha256": "88134e5863e641b4155873a634dd2bda8150211e6e33c8b23d0df289ff0e8dd0",
+     "bytes": 4798
+    },
+    "metricx24/models.py": {
+     "sha256": "774bb38ff18d821543519f1df47ca2b3668a8468a4f447fef6e961b825602a86",
+     "bytes": 7299
+    },
+    "requirements.txt": {
+     "sha256": "c8915fe28d7bb92de1c21dc973fc2b33f069b94143c2f039b72b2488953c9b83",
+     "bytes": 122
+    },
+    "LICENSE": {
+     "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+     "bytes": 11357
+    }
+   }
+  },
+  "google/metricx-24-hybrid-xl-v2p6": {
+   "repo": "google/metricx-24-hybrid-xl-v2p6",
+   "revision": "f6e7f99a655582f28cb998dd3e6ca86b4217430d",
+   "licence": "Apache-2.0",
+   "licence_source": "Hugging Face model card metadata at this revision (license: apache-2.0), read 3 November 2026",
+   "source": "https://huggingface.co/google/metricx-24-hybrid-xl-v2p6",
+   "role": "reference-free translation-quality estimates of page pairs",
+   "anchor": "preregistration.qmd, Sensitivity analyses (ninth family); supplementary.qmd S3",
+   "files": {
+    "config.json": {
+     "sha256": "47b47c4c4a892f2c7411a0e7711ad76f5bdcd13c176161e04f26b0dc681b4c42",
+     "bytes": 851
+    },
+    "pytorch_model-00001-of-00002.bin": {
+     "sha256": "f0481c16fa7171bbb1a724cce3b8598b8d78bb8e8209138fecf7fdedd5200327",
+     "bytes": 9977015092
+    },
+    "pytorch_model-00002-of-00002.bin": {
+     "sha256": "24978065a17c3d63617d92f093a1b4cdf3b94cb68b969ebd3c947c334d837cbc",
+     "bytes": 4993661116
+    },
+    "pytorch_model.bin.index.json": {
+     "sha256": "e00c00362f242bd766e84a3a30d820e80ba3be1c08eab2b9bf123535d5fe1c92",
+     "bytes": 50781
+    }
+   }
+  },
+  "google/metricx-24-hybrid-xl-v2p6@safetensors": {
+   "repo": "google/metricx-24-hybrid-xl-v2p6",
+   "revision": "f6e7f99a655582f28cb998dd3e6ca86b4217430d",
+   "licence": "Apache-2.0",
+   "licence_source": "Hugging Face model card metadata at this revision (license: apache-2.0), read 3 November 2026",
+   "source": "https://huggingface.co/google/metricx-24-hybrid-xl-v2p6",
+   "role": "MetricX-24 weights converted to safetensors (optional; the stage reads the hub shards)",
+   "optional": true,
+   "anchor": "preregistration.qmd, Sensitivity analyses (ninth family)",
+   "files": {
+    "config.json": {
+     "sha256": "47b47c4c4a892f2c7411a0e7711ad76f5bdcd13c176161e04f26b0dc681b4c42",
+     "bytes": 851
+    },
+    "model-00001-of-00002.safetensors": {
+     "sha256": null,
+     "status": "pending: written by jobs/arc/staging.py convert in j0_build"
+    },
+    "model-00002-of-00002.safetensors": {
+     "sha256": null,
+     "status": "pending: written by jobs/arc/staging.py convert in j0_build"
+    },
+    "model.safetensors.index.json": {
+     "sha256": null,
+     "status": "pending: written by jobs/arc/staging.py convert in j0_build"
+    }
+   },
+   "hub_files": {
+    "config.json": {
+     "sha256": "47b47c4c4a892f2c7411a0e7711ad76f5bdcd13c176161e04f26b0dc681b4c42",
+     "bytes": 851
+    },
+    "pytorch_model-00001-of-00002.bin": {
+     "sha256": "f0481c16fa7171bbb1a724cce3b8598b8d78bb8e8209138fecf7fdedd5200327",
+     "bytes": 9977015092
+    },
+    "pytorch_model-00002-of-00002.bin": {
+     "sha256": "24978065a17c3d63617d92f093a1b4cdf3b94cb68b969ebd3c947c334d837cbc",
+     "bytes": 4993661116
+    },
+    "pytorch_model.bin.index.json": {
+     "sha256": "e00c00362f242bd766e84a3a30d820e80ba3be1c08eab2b9bf123535d5fe1c92",
+     "bytes": 50781
+    }
+   },
+   "conversion": {
+    "dir_env": "INTRACT_MODELS",
+    "dir": "google--metricx-24-hybrid-xl-v2p6--f6e7f99a655582f28cb998dd3e6ca86b4217430d",
+    "copy": [
+     "config.json"
+    ],
+    "function": "intract_features.features.surprisal.convert_pickled_checkpoint, once per shard",
+    "map": {
+     "pytorch_model-00001-of-00002.bin": "model-00001-of-00002.safetensors",
+     "pytorch_model-00002-of-00002.bin": "model-00002-of-00002.safetensors"
+    },
+    "index": "model.safetensors.index.json",
+    "drop": [],
+    "tied": {
+     "encoder.embed_tokens.weight": "shared.weight",
+     "decoder.embed_tokens.weight": "shared.weight"
+    },
+    "why": "shared.weight, encoder.embed_tokens.weight and decoder.embed_tokens.weight share one tensor in shard 1 (pytorch_model.bin.index.json at this revision); T5 re-ties both embed_tokens to shared on loading"
+   }
+  },
+  "google/mt5-large": {
+   "repo": "google/mt5-large",
+   "revision": "50b7223e98fcd124b0cabb1ec81bc6324c7df107",
+   "licence": "Apache-2.0",
+   "licence_source": "Hugging Face model card metadata at this revision (license: apache-2.0), read 3 November 2026",
+   "source": "https://huggingface.co/google/mt5-large",
+   "role": "encoder configuration and tokeniser of CorPipe's large fallback model",
+   "anchor": "supplementary.qmd S3, referential overlap row",
+   "files": {
+    "config.json": {
+     "sha256": "8658be26e4a56c58268d60d7fb3ac6f62bcbbd6ee01cbc4153bceed257c3c869",
+     "bytes": 642
+    },
+    "special_tokens_map.json": {
+     "sha256": "09059cedc26bc46bc09a52f05b92d4922e11917e87f3b92059bb1a63a59ab2c4",
+     "bytes": 65
+    },
+    "spiece.model": {
+     "sha256": "ef78f86560d809067d12bac6c09f19a462cb3af3f54d2b8acbba26e1433125d6",
+     "bytes": 4309802
+    },
+    "tokenizer_config.json": {
+     "sha256": "3be4bbd24c65845b1dc86186f3c7d1d61ac2e29154cb0d71133753562f8d1959",
+     "bytes": 376
+    }
+   },
+   "hub_ref_main": true
+  },
+  "google/mt5-xl": {
+   "repo": "google/mt5-xl",
+   "revision": "63fc6450d80515b48e026b69ef2fbbd426433e84",
+   "licence": "Apache-2.0",
+   "licence_source": "Hugging Face model card metadata at this revision (license: apache-2.0), read 3 November 2026",
+   "source": "https://huggingface.co/google/mt5-xl",
+   "role": "MetricX-24 tokeniser (the developers' README runs every MetricX-24 model with --tokenizer google/mt5-xl); also the tokeniser CorPipe's large fallback loads by name (corpipe26_onestage.py main(): \"elif 'mt5' in args.encoder: tokenizer_name = 'google/mt5-xl'\")",
+   "anchor": "supplementary.qmd S3",
+   "files": {
+    "config.json": {
+     "sha256": "ab40135afd2da5bbb3ff182e7424db595b11ffee5dc81bebd8089f6288afb1df",
+     "bytes": 688
+    },
+    "special_tokens_map.json": {
+     "sha256": "09059cedc26bc46bc09a52f05b92d4922e11917e87f3b92059bb1a63a59ab2c4",
+     "bytes": 65
+    },
+    "spiece.model": {
+     "sha256": "ef78f86560d809067d12bac6c09f19a462cb3af3f54d2b8acbba26e1433125d6",
+     "bytes": 4309802
+    },
+    "tokenizer_config.json": {
+     "sha256": "3be4bbd24c65845b1dc86186f3c7d1d61ac2e29154cb0d71133753562f8d1959",
+     "bytes": 376
+    }
+   },
+   "hub_ref_main": true
+  },
+  "google/umt5-xl": {
+   "repo": "google/umt5-xl",
+   "revision": "e02ba7fcf3d6286215043111ee2fc83a9d1f18e2",
+   "licence": "Apache-2.0",
+   "licence_source": "Hugging Face model card metadata at this revision (license: apache-2.0), read 3 November 2026",
+   "source": "https://huggingface.co/google/umt5-xl",
+   "role": "encoder configuration and tokeniser that CorPipe's xl model loads by name (no weights are needed)",
+   "anchor": "supplementary.qmd S3, referential overlap row",
+   "files": {
+    "config.json": {
+     "sha256": "09832cce65e2d284eaaaff3dbb801f6da7e7772b64c5ba3240d590d1a89da220",
+     "bytes": 812
+    },
+    "special_tokens_map.json": {
+     "sha256": "14ef492a69e59396e918521a5f8394af1acf9f8dddd47273693b2b42570dfd12",
+     "bytes": 6623
+    },
+    "spiece.model": {
+     "sha256": "e3909a67b780650b35cf529ac782ad2b6b26e6d1f849d3fbb6a872905f452458",
+     "bytes": 4548313
+    },
+    "tokenizer.json": {
+     "sha256": "af904105ce1071b1202bba0059a841f4a7b85b48b6ec179c4948e3483476e0dd",
+     "bytes": 16853013
+    },
+    "tokenizer_config.json": {
+     "sha256": "616015e2b6c26f9a98ae3171634518d440a46260ebc1115c2596792d33827bdc",
+     "bytes": 6841
+    }
+   },
+   "hub_ref_main": true
+  },
+  "intfloat/multilingual-e5-large-instruct": {
+   "repo": "intfloat/multilingual-e5-large-instruct",
+   "revision": "274baa43b0e13e37fafa6428dbc7938e62e5c439",
+   "licence": "MIT",
+   "licence_source": "Hugging Face model card metadata at this revision (license: mit), read 3 November 2026",
+   "source": "https://huggingface.co/intfloat/multilingual-e5-large-instruct",
+   "role": "ReferentialContinuity anchor encoder",
+   "anchor": "supplementary.qmd S3, Table 3, adjacent-sentence similarity row",
+   "files": {
+    "1_Pooling/config.json": {
+     "sha256": "aa629215c1d83e73d9c51184e566f2c53456bc742f936984355a2990c8c8d046",
+     "bytes": 271
+    },
+    "config.json": {
+     "sha256": "d185df634c872f06fc6dcb3bad4375d3c447234baea8a6e548103f653b595a35",
+     "bytes": 690
+    },
+    "model.safetensors": {
+     "sha256": "dd6b6e4f52db0a7aff83a13d10e6c5342ef9f6ab799bad3221f4b35ef390fa85",
+     "bytes": 1119825680
+    },
+    "modules.json": {
+     "sha256": "84e40c8e006c9b1d6c122e02cba9b02458120b5fb0c87b746c41e0207cf642cf",
+     "bytes": 349
+    },
+    "sentencepiece.bpe.model": {
+     "sha256": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865",
+     "bytes": 5069051
+    },
+    "special_tokens_map.json": {
+     "sha256": "8c785abebea9ae3257b61681b4e6fd8365ceafde980c21970d001e834cf10835",
+     "bytes": 964
+    },
+    "tokenizer.json": {
+     "sha256": "f59925fcb90c92b894cb93e51bb9b4a6105c5c249fe54ce1c704420ac39b81af",
+     "bytes": 17082756
+    },
+    "tokenizer_config.json": {
+     "sha256": "49f06d15a18f81855c338f8ab6241ca2e502a65b62968be69b74f094489f8175",
+     "bytes": 1182
+    }
+   }
+  },
+  "segment-any-text/sat-12l-sm": {
+   "repo": "segment-any-text/sat-12l-sm",
+   "revision": "d70c72a9331b2d5a9e82baad00c64964a23a09bb",
+   "licence": "MIT",
+   "licence_source": "Hugging Face model card metadata at this revision (license: mit), read 3 November 2026",
+   "source": "https://huggingface.co/segment-any-text/sat-12l-sm",
+   "role": "registered English sentence segmenter (S1)",
+   "anchor": "supplementary.qmd S3, sentence segmentation paragraph",
+   "files": {
+    "config.json": {
+     "sha256": "ed9094a56926e0ca1302f6c7ca9b11cf2ea0eced84d0f330ad938cba0fcc6209",
+     "bytes": 967
+    },
+    "model.safetensors": {
+     "sha256": "95cb71fe2b4faf6f6cd8b2a47b8de0ae4ea33b4fe95e222e1c0d886ce3b08b7f",
+     "bytes": 1109839340
+    }
+   }
+  },
+  "stanza-1.15.0": {
+   "version": "1.15.0",
+   "resources_json_sha256": "18f5cc209b1d94eeaccda6931204fc4cd1a7af7e2a178663e4ca8ad00dccc995",
+   "resources_json_md5": "ff83376af8ab471947fd9aa971f51e3c",
+   "resources_json_bytes": 534550,
+   "resources_json_source": "the frozen copy staged by the pre-submission strands (intract_presub/cache/stanza/resources.json, identical to error_model/earlier/resources_1.15.0.frozen.json). Stanza's default source, stanza-resources@main resources_1.15.0.json, served a different file on 3 November 2026 (535,107 bytes, SHA-256 ed063848eb2cba2f64d2236145c7e68cb17d82c095713f83bd2f3ad24feab763), so resources.json is never downloaded again: stanza.download must run with download_json=False",
+   "models_repo": "stanfordnlp/stanza-en",
+   "models_ref_note": "models_revision is a commit on main of 20 October 2026. The tag v1.15.0 resolves to 625f71279643bcc931ff0febbd2b28fac86e4503 and main resolved to 431ffe4f54b98d8f85c6749be6c1a4e0b0ca09bd on 3 November 2026 (Hugging Face refs API); the pinned English files have the same LFS SHA-256 at all three commits",
+   "models_revision": "810dca30ddb25c30582c019dbaeb3a3e040fb958",
+   "licence": "Apache-2.0",
+   "licence_source": "Hugging Face model card metadata of stanfordnlp/stanza-en at this revision, read 3 November 2026",
+   "role": "registered Stanza parse, English GUM nocharlm packages (mwt gum)",
+   "anchor": "supplementary.qmd S3, parser paragraph",
+   "dir_env": "STANZA_RESOURCES_DIR",
+   "files": {
+    "en/tokenize/gum_nocharlm.pt": {
+     "sha256": "6e9f23be7f1bdb340644d3e26cc859f6150a6cea3a9d2de0e028c748c072a005",
+     "md5": "967be4681e0f9bd464a156869cc4d3df",
+     "bytes": 658306
+    },
+    "en/mwt/gum.pt": {
+     "sha256": "eac3f5c64015d8e07906a22a456e5835d2da8053e118c4b1deddecfff1be5b1f",
+     "md5": "85857cef3a7031b5d83b3e123ded0f27",
+     "bytes": 493026
+    },
+    "en/pos/gum_nocharlm.pt": {
+     "sha256": "dc9fe7d746aa3260277c77b5956293d87d6795ca6bd5ee1cd7485faee396aae7",
+     "md5": "7126837c00e6093fc28f84beb96fd92e",
+     "bytes": 22765637
+    },
+    "en/lemma/gum_nocharlm.pt": {
+     "sha256": "21f114c343fb6d37bd0ed92f08cf08d783e75af252569f84f714b43bc0f4e83e",
+     "md5": "b15b09576a8807c2b6e3d85fa9ab0c17",
+     "bytes": 2310589
+    },
+    "en/depparse/gum_nocharlm.pt": {
+     "sha256": "1d06e57558f60d60d731e19cce27de803ba9c5abedf68d7463ada3c565345977",
+     "md5": "6d105ef7f3d65d00b4ff80139eab2807",
+     "bytes": 106344202
+    },
+    "en/pretrain/conll17.pt": {
+     "sha256": "edde4c195f91ba45aab3f3a6254202011f284559da8a5ead5e62ce522f819c5e",
+     "md5": "c339580492002fb1f759537dfbc57fb2",
+     "bytes": 106701210
+    }
+   }
+  },
+  "udpipe-2.17": {
+   "source_repo": "https://github.com/ufal/udpipe",
+   "source_branch": "udpipe-2",
+   "source_commit": "223da86f482d2242a89998599cfa614e26fb483d",
+   "wembedding_service_commit": "364a28979591333733b561b62bc5b4c2df3e70c0",
+   "source_licence": "MPL-2.0 (LICENSE of the checkout)",
+   "archive": {
+    "name": "udpipe2-ud-2.17-251125.tar.gz",
+    "handle": "11234/1-6046",
+    "url": "https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/9c99c44d-b482-4099-897b-f5d3e54cd67d/content",
+    "bytes": 9469655042,
+    "md5": "07d911a1e22f4d5f0aae89622ebffa8f",
+    "sha256": "0ec341882b253de3edbb6ab2a7d5839bd712147fd4a076781085affb0efff5b2"
+   },
+   "archive_sha256": "0ec341882b253de3edbb6ab2a7d5839bd712147fd4a076781085affb0efff5b2",
+   "licence": "CC-BY-NC-SA-4.0",
+   "licence_source": "LICENSE and README.md of the 2.17 model archive",
+   "role": "registered UDPipe 2 parse with the 2.17 models",
+   "anchor": "supplementary.qmd S3, parser paragraph",
+   "source_files": {
+    "udpipe2_client.py": "d47eecd36a083662a767599cefd270000cd5b758e5892b2eb8765b06e9e67e30",
+    "udpipe2_dataset.py": "5f5970b8e76380da3e9b4f44c7206b48e1a244b0db2381627b66aa9914a4f068",
+    "udpipe2_eval.py": "745cb0b76092f1e20e9dc7f3275fa2545025d4fd242b6bfc927af9de0c8ba3f4",
+    "udpipe2.py": "572dc70433804680f64b323a1d3b29b57ad93a95e46569c48c81b7856dfa26cc",
+    "udpipe2_server.py": "185ef1e54139186b0c1b2afa05a136d877c2adc84c2c15ff1bf8d6746f05ae0b",
+    "models-pdtc1.0/strip_lemma_info.py": "f8e2d4bc2b6e83c092e08a6d73db3d40a29c36e6f1e7bd305b3f0db33ee96640",
+    "models-pdtc2.0/strip_lemma_info.py": "f8e2d4bc2b6e83c092e08a6d73db3d40a29c36e6f1e7bd305b3f0db33ee96640",
+    "pdtc-1.0/compose_deprel.py": "a590d0c95fd205cedab6752e12ec0be6095bfc8160c7bb8dcdd58f21b9ccfb17",
+    "pdtc-1.0/strip_lemma_info.py": "f8e2d4bc2b6e83c092e08a6d73db3d40a29c36e6f1e7bd305b3f0db33ee96640",
+    "pdtc-2.0/compose_deprel.py": "a590d0c95fd205cedab6752e12ec0be6095bfc8160c7bb8dcdd58f21b9ccfb17",
+    "pdtc-2.0/strip_lemma_info.py": "f8e2d4bc2b6e83c092e08a6d73db3d40a29c36e6f1e7bd305b3f0db33ee96640",
+    "scripts/frontend_rest_server.py": "cd434b94bfd9d55d7688fc8759bdb09be8f9499e4315acb82afad777030db834",
+    "scripts/gen_consistent_feats_tables.py": "e0c4705750c5dc62d37d55d9e2508a3ee71b199e2708865fb0caff4e29bcd81b",
+    "scripts/results_avg.py": "3deb51c8a1a4a59d82a65e3c27c259617e0deaace99604ca50c4db93859f4d3b",
+    "scripts/results_diff.py": "103fee02f3e7693bfcc1cb9323507bba630fd8ce9665d8577f7d88ccf0af4ab5",
+    "scripts/results_docs.py": "a02fc95ce49537fea8b05fe680f64029f140175b92ef944a6fadd6af728d1472",
+    "scripts/results_shared_compare_summary.py": "5173b7d5727e85834850d6843904c82f785e2f225575cb1039517e900b893047",
+    "ud-evalatin20/get_evalatin20_split.py": "e10fbc93e4b6c410bb77383ea4522ed3d695c1f59aaf2baafc9e142ad994b4d2",
+    "wembedding_service/compute_wembeddings.py": "afcb5f974ba5258e7415c8d0e0ba3ada8228e75770efb4c8ead22a7667aa5a09",
+    "wembedding_service/start_wembeddings_server.py": "ff85751385eba6fe8faad23b02a8dc680a3eaca3911e7ddd3ac6cd0a813b045f",
+    "wembedding_service/wembeddings/wembeddings.py": "53be9eed035c31d1083ee82d5ef07034fc02722b1763a71a5a1aac9da28c2aa7",
+    "wembedding_service/wembeddings/wembeddings_server.py": "5521fa5850ad2de09ebfed2419a595c835103a7bfef4bc86408e4a543bc23aaf"
+   },
+   "models_txt_sha256": "3ed27af985272654c9b75713ef9050b705873af28a4f731f897ab610d3188aca",
+   "model_files": {
+    "english-gum-ud-2.17-251125": {
+     "checkpoint": "10c68e19b9ee3362d19ad75f9c2549e6a6df8727525accb8601b1bc248546f7c",
+     "consistent_feats.table": "be0f3da9cff20ad18d7a2f3c8855a92dea12607a10cf0dbc793ef5651969014a",
+     "en_atis.tokenizer": "56bf9936caaa6c175da0c876b5ddfd77b392a90b2e90fccfcf91840dae548978",
+     "en_childes.tokenizer": "48d3fa340258d718bbb60351aa39a377a1efc9e294da2dd6f56744635046edfe",
+     "en_eslspok.tokenizer": "9323c607bb587185a302ac675ba62789a30b71ff9194ac32b23a1f2a7d77e14b",
+     "en_ewt.tokenizer": "1116fb90a7d74e4c1e9eb47c1ddfbcdc3832a99f1b57f619ba9dbe70cca334ad",
+     "en_gum.tokenizer": "b229ba85e616a5b0cf3aaf065dee1aa652a518f3b337940a2af17b5213b9d296",
+     "en_lines.tokenizer": "58912a56e691654993f7468c5b94af84fc637374ede1b72e77d83a740c18014d",
+     "en_partut.tokenizer": "0dc406f9393ddd9f6647b21249f464e38b09108535d89f6249b0d83b4c74a11e",
+     "log": "45d01a52cc31b0ca390aba3baeb1f5611df5447847c7fad85759fa109f1c3884",
+     "mappings.pickle": "12fbdad0fca34d334a2ad33122c1eff1c77ebff990b235436c82cc371a7af94f",
+     "options.json": "b54f05e350ccc676459d5c7eb5d4882195524c62f0e6e3a57933ac28b2768948",
+     "weights.data-00000-of-00001": "d7ce621a9290c213d0ae173fe131ae1ec3fd0868cf2568a9905e7f6630823c63",
+     "weights.index": "884c1241911d9bc3d2716e51db5a80a609a50a957c080ee3accfbf9ab9d7748a"
+    }
+   },
+   "embedding_snapshot": {
+    "repo": "bert-base-multilingual-uncased",
+    "commit": "7cbf9a625e29989f6b9c6c2fa68234c304f7e38f",
+    "files": {
+     "config.json": "fba5d4b0a351a43f6ccb7a6587301fd9f6876ca36aae62af762af67c8f18db1c",
+     "tf_model.h5": "77d2ed6e37792d0e3224dddf5d4b509c65d0e9fb131b97339598b852ccd83921",
+     "tokenizer.json": "41a9e8ccfd02a7bf5bb8426ed22eec3a5bd81d85d7c10ef4a5cbdbfa21faa21b",
+     "tokenizer_config.json": "a025160ef0431f1a392f6f050c1310f4c5d9fb6f275932dbccba73c4d214bf10",
+     "vocab.txt": "87b44292b452f6c05afa49b2e488e7eedf79ea4f4c39db6f2f4b37764228ef3f"
+    }
+   }
+  },
+  "ufal/corpipe26-onestage-corefud1.4-large-260702": {
+   "repo": "ufal/corpipe26-onestage-corefud1.4-large-260702",
+   "revision": "c2d4f6974da76bb8ae0fe5b0ac4febe27f67d2d2",
+   "licence": "CC-BY-NC-SA-4.0",
+   "licence_source": "Hugging Face model card metadata at this revision (license: cc-by-nc-sa-4.0), read 3 November 2026",
+   "source": "https://huggingface.co/ufal/corpipe26-onestage-corefud1.4-large-260702",
+   "role": "registered fallback (budget guard, second step)",
+   "anchor": "supplementary.qmd S3, referential overlap row; preregistration.qmd, Timeline (budget guard)",
+   "files": {
+    "LICENSE.txt": {
+     "sha256": "e66c269d4819aaab34b49ef5220c4ddab6756f21bb5180761a4eb8561f2b7bbd",
+     "bytes": 20850
+    },
+    "README.md": {
+     "sha256": "3662f6083b123fb16f49520bee1c5099006c24660de8463717edbd2e1cc57396",
+     "bytes": 6205
+    },
+    "model.pt": {
+     "sha256": "4194bb882c1a20fa3abe774d81b196cd8d7e05ecc20a954832ffea3d06aaef29",
+     "bytes": 2460608421
+    },
+    "options.json": {
+     "sha256": "57cb52c5467562006dfd89b63572c6a7cd5a87c6ef467320c9da82435cfcda89",
+     "bytes": 2201
+    },
+    "tags.txt": {
+     "sha256": "fae15032eeddb318ef97b8595d2a91f3e01b327196088fbcb870c7800d1578fa",
+     "bytes": 1483
+    },
+    "zdeprels.txt": {
+     "sha256": "aa76fb02ac9ff3392baea26c09ab1fec0511755784c3ee360113ede52ab1c71b",
+     "bytes": 229
+    }
+   },
+   "encoder": "google/mt5-large",
+   "encoder_source": "options.json at this revision names \"encoder\": \"google/mt5-large\"",
+   "weights_format": "pickled model.pt, read by the pinned CorPipe code through minnt's load_weights",
+   "deposit": {
+    "handle": "11234/1-6205",
+    "title": "CorPipe 26 Multilingual CorefUD 1.4 Model (260702)",
+    "licence": "CC BY-NC-SA 4.0 (dc.rights)",
+    "file": "corpipe26-onestage-corefud1.4-large-260702.zip",
+    "bytes": 2050346224,
+    "md5": "4e06d4801ca50cbbc5ed8ae1eab4a85a",
+    "bitstream": "06fbdcf5-d1e5-40c1-9004-fa3f85eb935f",
+    "note": "as for the xl model"
+   }
+  },
+  "ufal/corpipe26-onestage-corefud1.4-xl-260702": {
+   "repo": "ufal/corpipe26-onestage-corefud1.4-xl-260702",
+   "revision": "1235c0ee2f1e2954b6a92486d6d78709fb75d943",
+   "licence": "CC-BY-NC-SA-4.0",
+   "licence_source": "Hugging Face model card metadata at this revision (license: cc-by-nc-sa-4.0), read 3 November 2026",
+   "source": "https://huggingface.co/ufal/corpipe26-onestage-corefud1.4-xl-260702",
+   "role": "registered coreference reference on every English source",
+   "anchor": "supplementary.qmd S3, referential overlap row; preregistration.qmd, Timeline (budget guard)",
+   "files": {
+    "LICENSE.txt": {
+     "sha256": "e66c269d4819aaab34b49ef5220c4ddab6756f21bb5180761a4eb8561f2b7bbd",
+     "bytes": 20850
+    },
+    "README.md": {
+     "sha256": "0943ba1468face1c1f96989e5bd73e8aac337b565b5cfb0a71692aa92bed58fe",
+     "bytes": 6182
+    },
+    "model.pt": {
+     "sha256": "d299c678c6b6a89499e93fe5b86421b97febcf8d7f0da593c8fedad40b845a81",
+     "bytes": 7538913279
+    },
+    "options.json": {
+     "sha256": "5a69bb3df282375ad61bf9196b135ffdf1879b5b91d72110aebdb338319e9491",
+     "bytes": 2193
+    },
+    "tags.txt": {
+     "sha256": "fae15032eeddb318ef97b8595d2a91f3e01b327196088fbcb870c7800d1578fa",
+     "bytes": 1483
+    },
+    "zdeprels.txt": {
+     "sha256": "aa76fb02ac9ff3392baea26c09ab1fec0511755784c3ee360113ede52ab1c71b",
+     "bytes": 229
+    }
+   },
+   "encoder": "google/umt5-xl",
+   "encoder_source": "options.json at this revision names \"encoder\": \"google/umt5-xl\"",
+   "weights_format": "pickled model.pt, read by the pinned CorPipe code through minnt's load_weights",
+   "deposit": {
+    "handle": "11234/1-6205",
+    "title": "CorPipe 26 Multilingual CorefUD 1.4 Model (260702)",
+    "licence": "CC BY-NC-SA 4.0 (dc.rights)",
+    "file": "corpipe26-onestage-corefud1.4-xl-260702.zip",
+    "bytes": 6986739862,
+    "md5": "a456fae5647306390bb3e46a5973a4d6",
+    "bitstream": "8d19c156-b44f-4d9f-a81c-396ef2925e75",
+    "note": "the archival release of the same model; not downloaded (whether its model.pt equals the Hugging Face copy byte for byte is UNVERIFIED)"
+   }
+  },
+  "ufal/crac2026-corpipe": {
+   "repo": "ufal/crac2026-corpipe",
+   "revision": "ec853c3b2d97890f4ef04114b10af6a1ac01d78f",
+   "licence": "MPL-2.0",
+   "licence_source": "GitHub licence detection and LICENSE at this commit, read 3 November 2026",
+   "source": "https://github.com/ufal/crac2026-corpipe",
+   "role": "official CorPipe 26 code, run unchanged",
+   "checkout": {
+    "dir_env": "INTRACT_SRC",
+    "dir": "crac2026-corpipe"
+   },
+   "anchor": "config/stages/coref_corpipe.toml [model] code",
+   "files": {
+    "corpipe26_onestage.py": {
+     "sha256": "0dc86353a1c6a7246a296587a0c06577f42bcbecd66fb563e7d2827b8e9a0365",
+     "bytes": 42236
+    },
+    "requirements.txt": {
+     "sha256": "ce5a70a26093e668f6d7884413422be427ebd16e953923ce723282120871e2b6",
+     "bytes": 557
+    },
+    "LICENSE": {
+     "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+     "bytes": 16725
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,139 @@
+# Stage coref_corpipe: CorPipe 26 coreference on every English source (GPU, environment corpipe), and the word
+# aligner that projects English chains and names onto a translation (reference/corpipe_run.py, reference/align.py).
+# supplementary.qmd S3, referential overlap row: "CorPipe 26 [@strakaCorPipeCRAC20262026], with its umT5-xl one-stage
+# model, instead resolves coreference on every English source as a validation reference." preregistration.qmd,
+# Materials: "Its coreference chains, resolved in English and projected onto the translation by word alignment, mask a
+# sensitivity overlap anchor computed on the served text (Sensitivity analyses)." A value marked PENDING is the
+# scout's default behind a named switch, awaiting the Feature Specification.
+
+# S3: "Coreference is resolved in no translation"; the stage refuses every other locale.
+source_lang = "en-us"
+
+[model]
+# Which model runs. "xl" is the registered one (S3: "with its umT5-xl one-stage model"). "large" is the budget guard's
+# second step (preregistration.qmd, Timeline: "Second, the coreference resolver falls back to a smaller model"; S3:
+# "it scores 79.3, against 75.1 for its mT5-large fallback").
+variant = "xl"
+# The official code, ufal/crac2026-corpipe (MPL-2.0), run unchanged; the pin covers the script by SHA-256.
+code = "ufal/crac2026-corpipe"
+script = "corpipe26_onestage.py"
+# Environment variables naming the folders of the code and of the model; no path is written in code or config. When
+# the model's variable is unset, the Hugging Face cache's snapshot of the pinned revision is used.
+code_dir_env = "INTRACT_CORPIPE_SRC"
+model_dir_env = "INTRACT_CORPIPE_MODEL"
+
+[model.variants.xl]
+# Keys of the pins in config/models.lock.json (repository, revision, SHA-256 of every file, licence), verified before
+# anything loads (DESIGN.md, Configuration). The released model is ufal/corpipe26-onestage-corefud1.4-xl-260702
+# (CC BY-NC-SA 4.0; LINDAT hdl 11234/1-6205).
+corpipe = "ufal/corpipe26-onestage-corefud1.4-xl-260702"
+# The model's options.json must name this encoder, which is how the run confirms it is the umT5-xl model S3 names
+# (options.json at revision 1235c0ee: "encoder": "google/umt5-xl"; model card: "a `umT5-xl`-based multilingual
+# model"). The script loads this encoder's configuration by name from the Hugging Face cache.
+encoder = "google/umt5-xl"
+# The tokeniser the script loads by name for this encoder (main(): "elif 'umt5' in args.encoder: tokenizer_name =
+# 'google/umt5-xl'"); its snapshot is verified and the cache's refs/main must name the pinned revision.
+tokenizer = "google/umt5-xl"
+
+[model.variants.large]
+# ufal/corpipe26-onestage-corefud1.4-large-260702 (CC BY-NC-SA 4.0), whose options.json names "google/mt5-large".
+corpipe = "ufal/corpipe26-onestage-corefud1.4-large-260702"
+encoder = "google/mt5-large"
+# main(): "elif 'mt5' in args.encoder: tokenizer_name = 'google/mt5-xl'", so the large model reads the mT5-xl
+# tokeniser files (whose spiece.model has the same SHA-256 as mT5-large's).
+tokenizer = "google/mt5-xl"
+
+[versions]
+# The pinned code's requirements.txt: "minnt~=1.1", "torch~=2.10.0", "transformers~=5.2.0", "udapi~=0.5.1". The stage
+# checks each installed version against its prefix, so a run in the wrong environment stops at once.
+minnt = "1.1"
+torch = "2.10"
+transformers = "5.2"
+udapi = "0.5"
+
+[input]
+# PENDING the Feature Specification (gap G8: which CoNLL-U and which tokenisation CorPipe reads). The scout's default:
+# the Stanza English parse ("parses_stanza"), whose syntactic words and registered sentences CorPipe takes as given.
+# "parses_udpipe" is the alternative. CorPipe uses the tree only to pick each mention's head word.
+parse = "parses_stanza"
+# Not registered. A word the script's tokeniser encodes to no subword (umT5-xl: a form of U+0020, U+00A0, U+3000 or
+# U+2028 only) stops the official script ("assert len(subword) > 0"), so it is written as this placeholder, which the
+# stage checks encodes to at least one subword ("_" gives two under umT5-xl), and counted per document.
+empty_form_placeholder = "_"
+
+[call]
+# PENDING (not registered): CorPipe's context window in subword tokens. The model card: "segment size 2560 was used"
+# for every score it reports, 79.3 on en_fantasycoref among them, the figure S3 cites ("it scores 79.3"); options.json
+# keeps the training value, 512. 0 keeps options.json. A sentence of more than segment - 4 subwords would stop the
+# official script, so the stage leaves it out and records it (reference/corpipe_run.py).
+segment = 2560
+# Not registered. 0 keeps the model's own batch (options.json: 6 sentences). Each document is its own input file, so a
+# batch never holds two documents and a document's output does not depend on its shard (DESIGN.md, Determinism).
+batch_size = 0
+# Not registered: torch threads for CorPipe's CPU work (minnt.startup's "threads"; the script's default is 2).
+threads = 4
+
+[output]
+# PENDING the Feature Specification: whether a zero mention (an empty node CorPipe predicts) counts towards a sentence
+# pair's chain continuity. The English corpora CorPipe was trained on annotate no empty nodes, so they should be rare;
+# they are recorded either way.
+zero_mentions_in_continuity = false
+
+[runtime]
+# DESIGN.md, Determinism: "Language models and encoders run in fp32 with TF32 off. bf16 is used only where the budget
+# guard allows it". PENDING P08: "bfloat16" is the budget guard's first step, "16-bit (bf16) weights and 32-bit
+# log-probabilities" (preregistration.qmd, Timeline): the umT5 encoder is cast to bf16 after the script loads its
+# weights and hands float32 states to the heads, so the tag decoding and antecedent scores run in float32
+# (reference/corpipe_run.py, weights_hook). torch.autocast is not used: the unchanged script fails under it.
+dtype = "float32"
+# minnt.startup() turns TF32 on unless MINNT_ALLOW_TF32=0 (minnt 1.1.1, startup_impl.py); the launcher sets it from
+# this value and stops a run that ends with TF32 on.
+allow_tf32 = false
+deterministic_algorithms = true
+# Some kernels have no deterministic implementation; warn_only records them in the log instead of stopping the run.
+deterministic_warn_only = true
+cublas_workspace_config = ":4096:8"
+# Passed to minnt as MINNT_DEVICE ("auto" leaves minnt's own choice).
+device = "cuda"
+# Nothing is fetched at run time: HF_HUB_OFFLINE and TRANSFORMERS_OFFLINE are set.
+offline = true
+
+[bf16_check]
+# P08 (pending_benchmarks.md): "The bf16 step is taken only if text means agree with those at full precision at
+# r >= .995 on the public benchmark", for "the coreference resolver" among others. preregistration.qmd, Timeline:
+# "That step is taken only if their text means agree with those at full precision at $r \geq .995$".
+min_pearson = 0.995
+# PENDING the Feature Specification: the resolver's text mean. The registered text gives none; this is the mean of a
+# text's pair_continuity over the pairs with data, the English chain continuity S3 compares with overlap. Texts with no
+# such pair are left out.
+quantity = "pair_continuity_share"
+
+[aligner]
+# SimAlign-style word alignment (Jalili Sabet et al., 2020), promoted from the names benchmark
+# (nonnative/names-dialogue-freq/scripts/align.py) for the translation runs. S3, names paragraph: "The second route
+# projects the English source's names through word alignment with multilingual BERT
+# [@jalilisabetSimAlignHighQuality2020]"; S3, referential overlap row: "An overlap anchor masked by the English source's
+# coreference chains, projected through the word aligner". The rules built on it are chosen before submission (P06,
+# P53); these are the benchmark's settings.
+# The models.lock.json key of the encoder. The benchmark's pin, revision 3f076fdb, is the cased model.
+model = "google-bert/bert-base-multilingual-cased"
+model_dir_env = "INTRACT_MBERT"
+# align.py: "contextual embeddings from layer 8 of multilingual BERT"; the first eight encoder layers are kept, so the
+# last hidden state is exactly hidden_states[8].
+layer = 8
+# align.py: "the 'ArgMax' method (a pair is aligned when each word is the other's most similar word)".
+method = "argmax"
+# mBERT's position limit; a word beyond it keeps a zero vector and never aligns (align.py).
+max_length = 512
+batch_size = 16
+# Not registered. DESIGN.md, Determinism: "Batches have fixed shapes wherever padding could change a result." The
+# benchmark padded each batch to its longest sentence (fixed_shapes = false reproduces it); true pads every sentence
+# to the next multiple of pad_multiple subword tokens, so a sentence's vectors do not depend on its batch.
+fixed_shapes = true
+pad_multiple = 32
+# align.py: "Deterministic on CPU in fp32" with torch.use_deterministic_algorithms(True) and 4 threads by default.
+threads = 4
+device = "cpu"
+# align.py's compact(): keep only the embedding rows of subwords that occur ("the arithmetic is unchanged because every
+# used row is copied exactly"), a memory saving.
+compact = false
