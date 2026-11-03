@@ -1,0 +1,557 @@
+{
+ "version": 3,
+ "decision_rules": {
+  "version": 3,
+  "terms": {
+   "P": "Stanza 1.15.0 with its released models, the primary parser",
+   "U": "UDPipe 2.17, the second parser",
+   "X": "the third parser: Stanza 1.15.0 retrained by this strand with the XLM-RoBERTa-large encoder on each registered treebank (recipe.json)",
+   "P+U, P+U+X": "the mean of the two parsers' scores and the mean of the three parsers' scores",
+   "gold": "the hand-annotated sentences of a treebank (sentence boundaries, words and grammatical structure), against which the parsers are scored",
+   "held-out gold": "hand-annotated sentences that none of the three parsers was trained on",
+   "development set, test set": "the parts of a treebank kept for tuning and for evaluation",
+   "PUD": "the parallel treebanks: the same 1,000 sentences annotated in many languages",
+   "rho2": "a score's reliability: the share of its variance that is not measurement noise",
+   "C5": "the GrammaticalLoad composite of five grammatical features, as computed by error_model/scripts/gfeat.py",
+   "D(i)": "the third parser's full training, on one treebank per delivered language",
+   "R1 to R4": "the steps of the feasibility ladder, in order of preference: R1 before submission, R2 deferred until after in-principle acceptance, R3 within the 400 GPU-hour budget guard, R4 declined; a 'rung' is one of these steps",
+   "TP-5": "the job that benchmarks the third parser and applies these rules",
+   "EM-5 v2": "the error model's interim benchmark run of 3 November 2026"
+  },
+  "replaces": {
+   "version": 1,
+   "decision_rules_sha256": "170e6bbcc4f8c40b13f0158e9b1c723d5354b1b4269c85b1df4b97433386efec",
+   "frozen_utc": "2026-10-23T04:25:10Z",
+   "reason": "version 1 averaged the joining rule over Turkish, Simplified Chinese, Traditional Chinese and Thai on their test sets and PUD, and no Thai was delivered; version 3 decides on the development sets of all 18 delivered languages with held-out gold, with a margin on the mean and a Holm-adjusted harm veto, and keeps the test sets and PUD for X's error-model constants",
+   "version_2": {
+    "decision_rules_sha256": "4a0a8d8649311c5c7dabdaacb9b74a2f0a7aebfdeb9911dd9fc343c4ff35c017",
+    "status": "a draft of 3 November 2026 (decision_rules_v2_DRAFT.json), never frozen",
+    "what_it_changed": "removed Thai from the at-risk average and let only a delivered language veto; superseded by version 3 before it was frozen"
+   }
+  },
+  "gain": "delta rho2 = rho2(P+U+X) - rho2(P+U): the gain in the noise-only gold reliability of the GrammaticalLoad composite C5 (MSL, MDD, CPS, SUB, NPE; anchors from error_model/scripts/gfeat.py) with equal weights on the gold SDs, fixed at the point estimate (tp_bench.py, paired_deltas.PUX_minus_PU_rho2); computed with the gfeat.py whose SHA-256 the freeze record holds (re-recorded only while no TP-5 output exists): from TP-5 outputs that record another SHA-256, or none, no criterion on the gain can be evaluated; per condition, the point estimate on T = 100,000 synthetic texts of at least L = 413 gold words and B = 2,000 paired cluster-bootstrap replicates of Tb = 10,000 texts, with the long-unit rule at 100 words and the condition's seed, as benchmark_design gives (TP-5's sizes)",
+  "interval": "replicates come from the cluster bootstrap of each gold condition (documents, or 20-sentence blocks where a file has fewer than 10 documents), every system being scored on the same replicate; reported intervals are paired percentile 95% intervals (2.5th and 97.5th percentiles); the joining decision reads the 2.5th percentile of the mean over languages and one-sided bootstrap p-values from the same replicates",
+  "averaging": "Each delivered language with held-out gold has one decision condition, the development set of its registered treebank, so a language's gain is that condition's. The mean over languages weights every evaluable language equally, and its bootstrap distribution is the replicate-wise mean of the languages' replicates, paired by replicate index. Conditions on different sentences are resampled independently. zh_gsdsimp_dev and zh_gsd_dev hold the same 500 sentences in two scripts, so they share their resamples (shared_resamples), and the spread of the mean reflects that their gains are not independent.",
+  "delivered_languages": [
+   "ar",
+   "bg",
+   "de",
+   "el",
+   "en",
+   "es",
+   "fr",
+   "he",
+   "hu",
+   "it",
+   "kk",
+   "ko",
+   "nl",
+   "pl",
+   "pt",
+   "sr",
+   "tr",
+   "zh-Hans",
+   "zh-Hant"
+  ],
+  "excluded_languages": {
+   "kk": "no held-out gold: KTB has no dev file and a 31-sentence train file, so Stanza 1.15.0's data preparation trains on its test file, and on 3 November 2026 EM-0k showed that Stanza's released Kazakh models were trained on KTB's test file; UDPipe 2.17 has no Kazakh model"
+  },
+  "language_of_condition": "the decision_conditions and reported_conditions tables of joining_rule_full_benchmark; a benchmarked condition in neither (Kazakh, Thai or any language outside the delivered set) is reported apart and decides nothing",
+  "ci_level": 0.95,
+  "pilot_conditions": {
+   "tr": [
+    "tr_imst",
+    "tr_pud"
+   ],
+   "zh-Hans": [
+    "zh_gsdsimp",
+    "zhs_pud"
+   ]
+  },
+  "pilot_go_no_go": {
+   "applies_to": "the pilot: X trained on zh_gsdsimp and tr_imst, benchmarked on zh_gsdsimp, zhs_pud, tr_imst and tr_pud; it decides whether the full training on the treebanks of cost_projection_treebanks, one per delivered language (D(i)), goes ahead",
+   "go_if_all": [
+    "the pilot completes: POS and depparse training completed for both pilot treebanks, and TP-5 benchmarked all four pilot conditions",
+    "its determinism checks pass: X and X_rerun byte-identical, and X's sentence count equal to gold, in every pilot condition",
+    "the projected full-training cost (tp_project.py, central projection over every treebank in cost_projection_treebanks) is at most 150 L40S GPU-hours",
+    "the upper 95% limit of the gain averaged over the pilot's at-risk conditions (Simplified Chinese and Turkish, each averaged over its two conditions) is not below 0"
+   ],
+   "cost_cap_l40s_gpu_hours": 150.0,
+   "upper_limit_threshold": 0.0,
+   "otherwise": "no-go",
+   "cost_projection_treebanks": {
+    "ar": "UD_Arabic-PADT",
+    "bg": "UD_Bulgarian-BTB",
+    "de": "UD_German-HDT",
+    "el": "UD_Greek-GDT",
+    "en": "UD_English-GUM",
+    "es": "UD_Spanish-AnCora",
+    "fr": "UD_French-GSD",
+    "he": "UD_Hebrew-IAHLTwiki",
+    "hu": "UD_Hungarian-Szeged",
+    "it": "UD_Italian-ISDT",
+    "kk": "UD_Kazakh-KTB",
+    "ko": "UD_Korean-Kaist",
+    "nl": "UD_Dutch-Alpino",
+    "pl": "UD_Polish-PDB",
+    "pt": "UD_Portuguese-Porttinari",
+    "sr": "UD_Serbian-SET",
+    "tr": "UD_Turkish-IMST",
+    "zh-Hans": "UD_Chinese-GSDSimp",
+    "zh-Hant": "UD_Chinese-GSD"
+   },
+   "undetermined": "a criterion that cannot be evaluated gives no decision, unless another criterion fails (then no-go): the cost, when the projection lacks the stats.xml of some listed treebank and the treebanks it covers stay within 150 (beyond 150 the cost criterion fails); the gain criterion, when TP-5's outputs lack the bootstrap replicates or were not computed with the gfeat.py in force"
+  },
+  "frozen_before": "any gain of X is computed: the rules are frozen before TP-5 runs, and tp_freeze_rules.py refuses to freeze once any TP-5 output exists",
+  "code_after_freeze": "a strand file whose SHA-256 the freeze records and that changes afterwards is reported (code_matches_freeze) and decides nothing. Every such change is logged with its reason in the strand README",
+  "joining_rule_full_benchmark": {
+   "protocol_anchor": "preregistration.qmd, Methods, Design, Materials, paragraph 'For every text, we will compute features in four families', the third-parser passage beginning 'If a pilot of its own gives a go' (register row P05): its sentences from 'It joins the mean only in the languages' to the P05 comment. supplementary.qmd, Section S3, subsection 'The third parser', sets out the rules",
+   "registered_text": "It joins the mean only in the languages whose development sets are held out from the three parsers' training and fully benchmarked, and only if two conditions hold there. With paired cluster-bootstrap intervals, which resample whole documents or blocks of sentences, the lower 95 per cent limit of its gain in the reliability of GrammaticalLoad, averaged with equal weights over these languages, must exceed .002. In none of them may its gain fall significantly below -.02 after Holm's correction for multiple comparisons across languages. Every other language, Kazakh included, keeps its registered parse. If it joins, the measurement-error constants for the three-parser mean will be estimated on the test sets and on the parallel treebanks, the same sentences annotated in many languages, never on the development sets. Supplementary Section S3 sets out the pilot, the check that the development sets were held out of training, a guard at the reliability floor and fallbacks for delay or cost. Whatever remains of the training, the decision and the constants will follow after acceptance, under the same rules, if the pilot's verdict is not available by 20 November 2026 or the joining decision by 27 November 2026. The same applies if the parser joins but its constants would miss the error model's final run before submission. A deferred parser will be declined unless its joining decision is ready by the deposit made before the extract is transferred. A parser that joins, deferred or not, will be declined unless its constants and its parses of the catalogue are also ready by then.",
+   "registered_text_rendering": "the anchored sentences verbatim, with Pandoc citation keys ([@...]) and HTML comments removed",
+   "decision_data": "the development set of the registered UD 2.18 treebank of each delivered language with held-out gold (decision_conditions: 18 languages, one condition each), parsed by P, U and X; the Portuguese entry is the treebank registered when these rules are frozen (Porttinari on 3 November 2026); test sets and PUD are never decision data",
+   "held_out_basis": "UDPipe 2.17's README (udpipe2-ud-2.17-251125, Model Description) says: 'We used the original train-dev-test split, but for treebanks with only train and no dev data we used last 10% of the train data as dev data'. Every treebank of decision_conditions has a dev file of its own, which UDPipe 2.17 therefore used as dev data. Among these treebanks, error_model's split checks of EM-0 and EM-0x (out/check_manifest_em0.json and out/check_manifest_em0x.json, 'any_split_changed_vs_2.17 (train/dev included)') list only en_gum as having changed a train or dev split between UD 2.17 and UD 2.18, its training split having grown. A treebank whose comparison with r2.17 failed would not be listed either, so the held-out check reads the comparison itself in error_model's r2.18 manifest (data/ud218/MANIFEST_ud218.json, vs_2.17), which gives en_gum's development split the same 1,575 sentence ids in both releases. Stanza trains on the train set and selects its checkpoint on dev, and X follows Stanza's recipe. Stanza 1.15.0's nocharlm tier tracks UD release 2.18, as Supplementary Section S3 says, but the training files of its released models are not distributed and the UD snapshot they were made from is not recorded, so the check replays Stanza's data preparation on the registered UD 2.18 treebank. An overlap with Stanza's or UDPipe 2's training data that the check failed to detect would flatter their parses of the development sets and shrink X's gain, so it would bias the decision against X. The held-out check (held_out_check) verifies the premise language by language before the decision, and a language it does not show held out for all three parsers is excluded.",
+   "held_out_check": {
+    "script": "tp_heldout_check.py",
+    "record": "heldout_check.json",
+    "when": "before any development set is benchmarked: tp_bench_config.py configures a development set only once the record exists for these rules and copies that language's statuses into the benchmark's sources",
+    "key": "the sentence id (# sent_id), and the # text line only for a sentence that has no id",
+    "training_data": {
+     "P": "Stanza 1.15.0's prepared training files for its released models, where recoverable. They are Stanza's data preparation replayed on the registered UD 2.18 treebank (stanza_data/pos/<sn>.train.in.conllu and stanza_data/depparse/<sn>.train.gold.conllu), the files X's training also reads, so that for P the check verifies Stanza's preparation of that release, and any training file of the released models that is recovered and named with --p-train. The UD snapshot behind the released models is not recorded",
+     "U": "UDPipe 2.17's training split, through error_model's split checks of EM-0 and EM-0x (out/check_manifest_em0*.json) and the comparison with r2.17 that they summarise, recorded in data/ud218/MANIFEST_ud218.json (vs_2.17). A covered treebank that they do not flag ('any_split_changed_vs_2.17 (train/dev included)') is held out on that record if the manifest shows its comparison made without error, with split_changed false, a 2.17 development split of at least one sentence and a 2.18 one of as many sentences as the pinned file. A treebank they flag is held out on that record if the manifest gives its 2.18 development split, of as many sentences as the pinned file, no sentence id outside 2.17's. Any other covered treebank is compared with its r2.17 train files, held out only if none of its 2.18 development sentence ids occurs there, and not checked if those files cannot be read. A treebank they do not cover is not checked",
+     "X": "the files X's training reads: stanza_data/pos/<sn>.train.in.conllu and stanza_data/depparse/<sn>.train.in.conllu (its gold copy train.gold.conllu before the retagging)"
+    },
+    "statuses": [
+     "held_out",
+     "overlap",
+     "not_checked"
+    ],
+    "exclude_if": "any of P, U and X has a status other than held_out, that is an overlap or a check that could not be made",
+    "excluded_language": "left out of the mean, the veto and the count of complete languages, and keeps its registered parse",
+    "changed_after_configuration": "the rule cannot be evaluated if a benchmarked development set carries no held-out statuses, or statuses that differ from the record's"
+   },
+   "decision_conditions": {
+    "ar": {
+     "condition": "ar_padt_dev",
+     "repo": "UD_Arabic-PADT",
+     "file": "ar_padt-ud-dev.conllu",
+     "unit": "whitespace",
+     "sentences": 909,
+     "sha256": "0d95ee511cf2f26a64e229e86e5e9b37851555ebc8b53c5ebb261f2dfbc185e7"
+    },
+    "bg": {
+     "condition": "bg_btb_dev",
+     "repo": "UD_Bulgarian-BTB",
+     "file": "bg_btb-ud-dev.conllu",
+     "unit": "whitespace",
+     "sentences": 1115,
+     "sha256": "ea9c4ab3768c38c6419f7f9d5a98612babe3e5b56dd61df3411543000bacf0dc"
+    },
+    "de": {
+     "condition": "de_hdt_dev",
+     "repo": "UD_German-HDT",
+     "file": "de_hdt-ud-dev.conllu",
+     "unit": "whitespace",
+     "sentences": 18434,
+     "sha256": "bdc4475ccbaa5f976869ecf4e1e6dd3314fe69cb17eea5b16539597a2d8b6f9c"
+    },
+    "el": {
+     "condition": "el_gdt_dev",
+     "repo": "UD_Greek-GDT",
+     "file": "el_gdt-ud-dev.conllu",
+     "unit": "whitespace",
+     "sentences": 403,
+     "sha256": "53de54735051eecef04aa8c0f5f0fbf2466e0e0d4fd9dfd3d313560c394ddf41"
+    },
+    "en": {
+     "condition": "en_gum_dev",
+     "repo": "UD_English-GUM",
+     "file": "en_gum-ud-dev.conllu",
+     "unit": "whitespace",
+     "sentences": 1575,
+     "sha256": "61d02ce27a143e9749118b1b9c314ac3da40f64ec17a6aaff5fc7b42704f7910"
+    },
+    "es": {
+     "condition": "es_ancora_dev",
+     "repo": "UD_Spanish-AnCora",
+     "file": "es_ancora-ud-dev.conllu",
+     "unit": "whitespace",
+     "sentences": 1654,
+     "sha256": "1a132068062edf2654fb45b41cd4c59ba7e5c18e7c5f642ed5a9cc351fd9f0fe"
+    },
+    "fr": {
+     "condition": "fr_gsd_dev",
+     "repo": "UD_French-GSD",
+     "file": "fr_gsd-ud-dev.conllu",
+     "unit": "whitespace",
+     "sentences": 1476,
+     "sha256": "9221e5084cc6a1b1540671cfbd2fc0456efc223b2fe8dd2146c2bad921be02d4"
+    },
+    "he": {
+     "condition": "he_iahltwiki_dev",
+     "repo": "UD_Hebrew-IAHLTwiki",
+     "file": "he_iahltwiki-ud-dev.conllu",
+     "unit": "whitespace",
+     "sentences": 348,
+     "sha256": "88b1182a41a51bb34912782b1568c6f28d5290e41cab2dcf0cb001449c929ed8"
+    },
+    "hu": {
+     "condition": "hu_szeged_dev",
+     "repo": "UD_Hungarian-Szeged",
+     "file": "hu_szeged-ud-dev.conllu",
+     "unit": "whitespace",
+     "sentences": 441,
+     "sha256": "8cb5b630e09d5d938ce624b06fe3abe57a631533f5aef186ba533daca6e4ab5b"
+    },
+    "it": {
+     "condition": "it_isdt_dev",
+     "repo": "UD_Italian-ISDT",
+     "file": "it_isdt-ud-dev.conllu",
+     "unit": "whitespace",
+     "sentences": 564,
+     "sha256": "1bc7dda04c58a4d87e2e6607a0e612462b87e7da6dde56be610d3749521af744"
+    },
+    "ko": {
+     "condition": "ko_kaist_dev",
+     "repo": "UD_Korean-Kaist",
+     "file": "ko_kaist-ud-dev.conllu",
+     "unit": "whitespace",
+     "sentences": 2066,
+     "sha256": "a1ce2dceee65683c2df3b0cce96c83d01e5ff67756060b998fe01d8bc8ca4faa"
+    },
+    "nl": {
+     "condition": "nl_alpino_dev",
+     "repo": "UD_Dutch-Alpino",
+     "file": "nl_alpino-ud-dev.conllu",
+     "unit": "whitespace",
+     "sentences": 718,
+     "sha256": "0444fc2590d7f522b5f201473940a40f0f1790770fcb568450581f12bcbcffd9"
+    },
+    "pl": {
+     "condition": "pl_pdb_dev",
+     "repo": "UD_Polish-PDB",
+     "file": "pl_pdb-ud-dev.conllu",
+     "unit": "whitespace",
+     "sentences": 2215,
+     "sha256": "6cefae9603315282aca4d70f394d965040e67b462993cc7b8903e543a18046b4"
+    },
+    "pt": {
+     "condition": "pt_porttinari_dev",
+     "repo": "UD_Portuguese-Porttinari",
+     "file": "pt_porttinari-ud-dev.conllu",
+     "unit": "whitespace",
+     "sentences": 842,
+     "sha256": "208483e5f5a29a0f6b6e0fc1f6e6499a10a5f5cbde53fdad20b30bf146a9e316"
+    },
+    "sr": {
+     "condition": "sr_set_dev",
+     "repo": "UD_Serbian-SET",
+     "file": "sr_set-ud-dev.conllu",
+     "unit": "whitespace",
+     "sentences": 536,
+     "sha256": "5c38174a5c6e41d52673d80dbf01cd4516dc48c4cce12505a63f67d82cee9f5b"
+    },
+    "tr": {
+     "condition": "tr_imst_dev",
+     "repo": "UD_Turkish-IMST",
+     "file": "tr_imst-ud-dev.conllu",
+     "unit": "whitespace",
+     "sentences": 1100,
+     "sha256": "f58d60666d3a9a7fea843b36444da5d6a7849b1172a851b2223479682c53d0d4"
+    },
+    "zh-Hans": {
+     "condition": "zh_gsdsimp_dev",
+     "repo": "UD_Chinese-GSDSimp",
+     "file": "zh_gsdsimp-ud-dev.conllu",
+     "unit": "tokens",
+     "sentences": 500,
+     "sha256": "d03f1eeb93b16071bfbbe6c76b971554be87c9a2307b3f3a820dd7c07f73fb63"
+    },
+    "zh-Hant": {
+     "condition": "zh_gsd_dev",
+     "repo": "UD_Chinese-GSD",
+     "file": "zh_gsd-ud-dev.conllu",
+     "unit": "tokens",
+     "sentences": 500,
+     "sha256": "09374c8361400861a536ae94a1d7710e1cdd72285c32b9764d94d2d956b4ae02"
+    }
+   },
+   "shared_resamples": {
+    "zh_gsd_dev": "zh_gsdsimp_dev"
+   },
+   "benchmark_design": {
+    "T": 100000,
+    "TB": 10000,
+    "B": 2000,
+    "L": 413,
+    "long_unit_words": 100,
+    "base_seed": 20261026,
+    "seeds": {
+     "ar_padt_dev": 20261033,
+     "bg_btb_dev": 20261034,
+     "de_hdt_dev": 20261035,
+     "el_gdt_dev": 20261036,
+     "en_gum_dev": 20261037,
+     "es_ancora_dev": 20261038,
+     "fr_gsd_dev": 20261039,
+     "he_iahltwiki_dev": 20261040,
+     "hu_szeged_dev": 20261041,
+     "it_isdt_dev": 20261042,
+     "ko_kaist_dev": 20261043,
+     "nl_alpino_dev": 20261044,
+     "pl_pdb_dev": 20261045,
+     "pt_porttinari_dev": 20261046,
+     "sr_set_dev": 20261047,
+     "tr_imst_dev": 20261048,
+     "zh_gsdsimp_dev": 20261049,
+     "zh_gsd_dev": 20261049
+    }
+   },
+   "complete_when": "the condition was benchmarked by tp_bench.py from the gold file whose SHA-256 decision_conditions gives, with the T, Tb, B, L and long_unit_words of benchmark_design and the seed it gives the condition, and B finite replicates of the gain",
+   "join_if_all": [
+    "the 2.5th percentile of the replicate-wise equal-weight mean of the gain over the evaluable languages exceeds 0.002",
+    "no evaluable language is vetoed: for each, the one-sided bootstrap p-value of H0 gain_l >= -0.02, p_l = (1 + number of replicates with gain_l >= -0.02) / (B + 1), is not rejected by Holm's step-down procedure at familywise alpha 0.025 across the evaluable languages"
+   ],
+   "mean_percentile": 2.5,
+   "mean_margin": 0.002,
+   "harm_veto": {
+    "null_hypothesis": "gain_l >= -0.02",
+    "harm_threshold": -0.02,
+    "p_value": "(1 + number of replicates with gain_l >= -0.02) / (B + 1)",
+    "adjustment": "Holm's step-down procedure: with the p-values of the m evaluable languages in ascending order, the k-th is rejected while it is at most alpha / (m - k + 1), and the first that is not rejected stops the procedure",
+    "familywise_alpha": 0.025,
+    "family": "the evaluable languages",
+    "veto_if": "any null hypothesis is rejected"
+   },
+   "evaluable_when": {
+    "required_languages": [
+     "tr",
+     "zh-Hans",
+     "zh-Hant"
+    ],
+    "minimum_languages": 15,
+    "text": "the development benchmark is complete and held out for Turkish, Simplified Chinese and Traditional Chinese and for at least 15 of the 18 languages of decision_conditions, the rules are frozen and verify, the held-out check is recorded for them and unchanged since each benchmarked development set was configured, and every benchmarked decision condition was computed with the gfeat.py in force"
+   },
+   "incomplete_language": "reported, left out of the mean and the veto, and keeps its registered parse",
+   "coverage": {
+    "joins_in": "only the languages of decision_conditions whose development benchmark is complete and held out, the languages of the mean",
+    "registered_parse": {
+     "default": "the two-parser mean of Stanza and UDPipe 2",
+     "kk": "Stanza alone (UDPipe 2.17 has no Kazakh model)"
+    },
+    "every_other_language": "keeps its registered parse: a language whose development benchmark is incomplete, one the held-out check excludes, Kazakh and, after acceptance, a language the floor guard returns to the two-parser mean, among them any language whose Stanza parse then takes a rung of the accuracy ladder"
+   },
+   "floor_guard": {
+    "when": "after in-principle acceptance and before the deposit made before the extract is transferred, when the reliability floor of Outcome-neutral quality checks is applied to the served texts of the catalogue, once X's three-parser constants and its parses of the catalogue exist",
+    "rule": "a language that receives X keeps the two-parser mean if its GrammaticalLoad reliability with the three-parser mean would fall below the 0.50 floor while the two-parser mean's stays at or above it, the reliability being the point estimate of the conditional rho2 within cell that the floor uses. A language whose GrammaticalLoad falls below the floor with both means also returns to the two-parser mean, and only then does its Stanza parse take the next rung of the accuracy ladder under Materials. X never joins a rung of that ladder, for which no three-parser constants exist",
+    "floor": 0.5,
+    "outcome_free": "the floor is computed over the catalogue from the served texts' features and the error model's constants, and reads no outcome",
+    "computed_by": "the reliability floor's computation on the catalogue after acceptance; tp_post.py reports the guard as computed later"
+   },
+   "otherwise": "X does not join the mean in any language",
+   "constants_if_joined": {
+    "estimated_on": "the test sets and PUD of reported_conditions",
+    "never_on": "the development sets of decision_conditions",
+    "text": "if X joins, its three-parser error-model constants are estimated on the test sets and PUD, never on the development sets"
+   },
+   "reported_conditions": {
+    "ar": [
+     "ar_padt",
+     "ar_pud"
+    ],
+    "bg": [
+     "bg_btb"
+    ],
+    "de": [
+     "de_hdt",
+     "de_pud"
+    ],
+    "el": [
+     "el_gdt"
+    ],
+    "en": [
+     "en_gum",
+     "en_pud"
+    ],
+    "es": [
+     "es_ancora",
+     "es_pud"
+    ],
+    "fr": [
+     "fr_gsd",
+     "fr_pud"
+    ],
+    "he": [
+     "he_iahltwiki"
+    ],
+    "hu": [
+     "hu_szeged"
+    ],
+    "it": [
+     "it_isdt",
+     "it_pud"
+    ],
+    "ko": [
+     "ko_kaist",
+     "ko_pud"
+    ],
+    "nl": [
+     "nl_alpino"
+    ],
+    "pl": [
+     "pl_pdb",
+     "pl_pud"
+    ],
+    "pt": [
+     "pt_porttinari",
+     "pt_pud"
+    ],
+    "sr": [
+     "sr_set"
+    ],
+    "tr": [
+     "tr_imst",
+     "tr_pud"
+    ],
+    "zh-Hans": [
+     "zh_gsdsimp",
+     "zhs_pud"
+    ],
+    "zh-Hant": [
+     "zh_gsd",
+     "zht_pud"
+    ]
+   },
+   "reported_deciding_nothing": [
+    "each language's gain on its development set and on its test sets (and PUD)",
+    "the pairwise error correlations of P, U and X (total error and noise of C5) in every benchmarked condition",
+    "how many languages X moves across the 0.50 reliability floor when the floor is applied to the catalogue after acceptance (computed then, not from the benchmark; the floor guard acts on them)"
+   ]
+  },
+  "feasibility_ladder": {
+   "principle": "each rung is triggered by time, cost or the outcome-free rules above, never by a result that favours a hypothesis, and the rules above apply unchanged on every rung",
+   "checkpoints": {
+    "pilot_verdict_by": "2026-11-20",
+    "joining_decision_by": "2026-11-27"
+   },
+   "not_available": "a pilot verdict of 'no decision' counts as not available, and so does a joining rule that cannot yet be evaluated",
+   "R1": "preferred: before submission, the pilot's verdict is available by 20 November 2026 and, after a go, the full training and the joining decision on the development sets by 27 November 2026. If X joins, its constants from the test sets and PUD are ready in time for the error model's final run",
+   "R2": "deferred: R2 applies if the pilot's verdict is not available by 20 November 2026, if the joining decision is not available by 27 November 2026, or if X joins and its constants would miss the error model's final run before submission. The remaining steps then follow after in-principle acceptance under these frozen rules",
+   "R2_end_point": "under R2, the joining decision must be ready by the deposit of the frozen feature inventory, component solution and calibration inputs made before the extract is transferred, and on any rung an X that joins must also have its constants and its parses of the catalogue ready by then. Otherwise, X is declined (R4). The floor guard is applied before that deposit, and the inventory, the solution and the calibration inputs are never recomputed or deposited again after the transfer",
+   "stage1_precision_analysis": "on every rung, the Stage 1 precision analysis rests on the two-parser constants, which are deposited in every case, and if X joins under R1 the figures with its three-parser constants are reported beside them. That is conservative for reliability averaged over languages, since X joins only if it raises that average and no language shows a loss significantly beyond 0.02, and it stays so if R3 later declines X or the floor guard returns a language to the two-parser mean",
+   "R3": "budget: after acceptance, X's training under R2 and its inference count against the registered budget guard of 400 L40S GPU-hours. If the projection exceeds 400, X's inference joins the guard's first step (bf16 weights, only if its text means agree with full precision at r >= .995, as registered for the other models). X is declined only if the projection still exceeds 400 after the guard's existing steps, the replacement of the XGLM-4.5B surprisal contrast included, because XGLM-4.5B is a sensitivity contrast and X improves a primary feature",
+   "R4": "declined: each language keeps its registered parse whenever the pilot gives a no-go, the joining rule is not met, R3 declines X, or R2's end point passes without the joining decision (a rule that still cannot be evaluated included) or, if X joins, without its constants and its parses of the catalogue"
+  }
+ },
+ "decision_rules_sha256": "6eac12739a2b9283bb07b5ed792d92cbad0d8f9cead61c584e84fc1f1f27525f",
+ "frozen_utc": "2026-11-03T21:51:44Z",
+ "decision": "PI decision of 2026-11-03: adopt version 3 of the third parser's decision rules with the four changes proposed that day: the joining decision on the development sets, with the error-model constants estimated on the test sets and parallel treebanks; an equal-weight mean over all delivered languages; a smallest-gain margin on that mean; and a harm veto adjusted by Holm's procedure. The PI delegated the thresholds and the fallbacks for delay or cost to the main session, to balance precision against feasibility, and chose deferral until after acceptance over declining. The thresholds, the rulings of that evening and the plain-language wording were set by the main session under that delegation; the PI did not review them one by one.",
+ "replaces": {
+  "version": 1,
+  "decision_rules_sha256": "170e6bbcc4f8c40b13f0158e9b1c723d5354b1b4269c85b1df4b97433386efec",
+  "frozen_utc": "2026-10-23T04:25:10Z",
+  "kept_in": "recipe.json (unchanged)"
+ },
+ "registered_treebanks": {
+  "ar": [
+   "UD_Arabic-PADT",
+   15.5
+  ],
+  "bg": [
+   "UD_Bulgarian-BTB",
+   16.8
+  ],
+  "nl": [
+   "UD_Dutch-Alpino",
+   18.2
+  ],
+  "en": [
+   "UD_English-GUM",
+   17.3
+  ],
+  "fr": [
+   "UD_French-GSD",
+   20.3
+  ],
+  "de": [
+   "UD_German-HDT",
+   17.2
+  ],
+  "el": [
+   "UD_Greek-GDT",
+   18.9
+  ],
+  "he": [
+   "UD_Hebrew-IAHLTwiki",
+   13.7
+  ],
+  "hu": [
+   "UD_Hungarian-Szeged",
+   14.8
+  ],
+  "it": [
+   "UD_Italian-ISDT",
+   19.2
+  ],
+  "kk": [
+   "UD_Kazakh-KTB",
+   13.6
+  ],
+  "ko": [
+   "UD_Korean-Kaist",
+   12.2
+  ],
+  "pl": [
+   "UD_Polish-PDB",
+   15.4
+  ],
+  "pt": [
+   "UD_Portuguese-Porttinari",
+   18.5
+  ],
+  "sr": [
+   "UD_Serbian-SET",
+   16.3
+  ],
+  "zh-Hans": [
+   "UD_Chinese-GSDSimp",
+   20.6
+  ],
+  "es": [
+   "UD_Spanish-AnCora",
+   20.6
+  ],
+  "zh-Hant": [
+   "UD_Chinese-GSD",
+   19.9
+  ],
+  "tr": [
+   "UD_Turkish-IMST",
+   13.9
+  ]
+ },
+ "sha256_at_freeze": {
+  "recipe.json": "519d2f36be922d50bc96a69177263ac262044f7840daa6e7c8992aa1253bfe7e",
+  "decision_rules_v3_DRAFT.json": "f807206c5bbb974ac968ec5f382243e80287ffd91bb01c4e91e120f92b855cd2",
+  "tp_recipe.py": "d512d313c1beffb03363d9526969b853d35898c6740f71d247ca9bb1d94b9b71",
+  "tp_project.py": "437f8dca3ac429975f8b3c3bb293963b29af4482317158dd6d5b9ef601e783f0",
+  "tp_post.py": "be0f5ea78a45ba0040d9a453377b804ef2628e287d07ce7b4fdf0f02393651e2",
+  "tp_bench_config.py": "37300c51ba8b4b066fdca20d940a130b4ee988ec9461480126ac6e0f67c3c01a",
+  "tp_bench.py": "3b84ee8243cd20372f65220da508e27fd7362f10f5428a08105f5f646c1e90de",
+  "tp5_bench.sbatch": "8c7b72f0b7ed4be6804e77518edab66740fc444caeb2ce042c1e99f9d216cba0",
+  "tp6_bench_dev.sbatch": "8018496e12a2cda2107a6204d8c02bdceda6a802c0d582cd2dde46b5c42fe746",
+  "tp_heldout_check.py": "947820b56e7d048e5b326ce5a04cefd637bb42db7eba99594a4adce9cf9b5cf3",
+  "error_model/scripts/gfeat.py": "5c4f4d9cef754eadece856c9d0b04fbebc5bd4cf063b105b3fe3c333354c4d01"
+ },
+ "version_2": {
+  "decision_rules_sha256": "4a0a8d8649311c5c7dabdaacb9b74a2f0a7aebfdeb9911dd9fc343c4ff35c017",
+  "status": "draft, never frozen",
+  "draft_file": "decision_rules_v2_DRAFT.json",
+  "draft_sha256": "e833fc823f50cd60a90794fc4edf4284d7dbbe479a7da735d6be46c6ef129957"
+ },
+ "gfeat_pinned": {
+  "path": "gfeat_frozen/gfeat.py",
+  "sha256": "5c4f4d9cef754eadece856c9d0b04fbebc5bd4cf063b105b3fe3c333354c4d01",
+  "copied_from": "error_model/scripts/gfeat.py",
+  "utc": "2026-11-03T21:51:44Z"
+ }
+}

@@ -8,6 +8,125 @@ date and rationale.
 
 ## [Unreleased]
 
+### 3 November 2026 (evening): plain language, the frozen rules and their deposit
+
+No registered rule, threshold, number or citation changes.
+
+- At the PI's request, the protocol, the supplement, the cover letter and the pending register
+  describe the methods in plain words. "Gold" becomes hand-annotated text, the "keyed sample" a
+  fixed sample of story versions, the ladders and rungs the fallback parse or the fallbacks for
+  delay or cost, and "credibly" (in a bootstrap test) "significantly". Terms that recur are defined
+  at first use: parser, treebank, development and test sets, the parallel treebanks, the paired
+  bootstrap and Holm's correction. The supplement gains a short glossary. The sentences that
+  `features/SPECIFICATION.md` quotes are updated there, and its anchor test passes on the working
+  copy. Two corrections came out of the checks: attachment score is defined as the share of words
+  whose grammatical relation the parser gets right, and the parallel treebanks' 1,000 sentences are
+  described as 750 written in English and 250 in German, French, Italian or Spanish, translated into
+  the other languages through English, as the treebank's README says.
+- Version 3 of the third parser's decision rules took the protocol's reworded joining passage as
+  its registered text, gained a `terms` entry that defines its shorthand (P, U and X for the three
+  parsers, "gold", R1 to R4), and was frozen on ARC at 21:51:44 UTC (rules SHA-256 6eac1273...),
+  before any of the parser's gains was computed. The record and the training recipe are deposited
+  in `preregistration/third_parser/` with their checksums, as Supplementary Section S3 states.
+- `pending_benchmarks.md`: P05 records the freeze; P43 records the domain factors of the error
+  model's rerun, which await the PI's wording; P82 records the Serbian evidence, which favours
+  parsing a Latin transliteration, and leaves the choice of route to the PI.
+
+### 3 November 2026 (later): the third parser's joining rule and its fallbacks for delay or cost
+
+No reported number changes. Version 3 of the third parser's decision rules, whose thresholds were
+set from interim benchmark outputs, is registered with fallbacks, fixed in advance, for the case in
+which the preferred route proves infeasible. The PI approved its first draft, and it was amended
+the same day, before any freeze.
+
+- Materials: if its pilot gives a go, the third parser will be trained on the registered
+  treebanks of the 18 delivered languages with hand-annotated text held out from every parser's
+  training, every delivered language but
+  Kazakh, whose released Stanza models were trained on KTB's test file. It joins the two-parser
+  mean only in the languages whose development sets are held out from the three parsers'
+  training and fully benchmarked. It joins there only if the lower 95 per cent limit of its gain
+  in GrammaticalLoad's reliability, averaged with equal weights over those languages, exceeds
+  .002, and Holm's procedure at a familywise .025 finds none whose gain falls significantly below
+  -.02. Every other language, Kazakh included, keeps its registered parse. Version 1 averaged
+  the gain over Turkish, both Chinese scripts and Thai and vetoed on any upper limit below zero.
+  Version 2, never frozen, removed Thai. The passage no longer names Thai, so it leaves P81. It
+  also states the triggers for deferring the parser (a pilot verdict missing on 20 November, a joining
+  decision missing on 27 November or constants that would miss the error model's final run) and
+  its end point. A deferred parser is declined unless its decision is ready by the deposit made
+  before the extract is transferred, and a parser that joins on any route is declined unless its
+  constants and its parses of the catalogue are also ready by then.
+- If the parser joins, its three-parser constants come from the test sets and PUD, never from the
+  development sets that decided its admission.
+- A new subsection of Supplementary Section S3, The third parser, placed after Measurement error
+  and calibration so that the quantities it uses are defined first, sets out the rule in full.
+  It names the parser in words, because *X* already denotes the error-free score there. It gives the
+  pilot's go/no-go (version 2's, unchanged), the parser's tokens, lemmas and long-unit rule, the
+  disagreement variance of the three-parser error model, the held-out check, the gain with its
+  design, the margin, the harm threshold and Holm's adjustment with their rationale and
+  resolution, the evaluability rule and coverage, a floor guard, the reports that decide nothing
+  and four fallbacks for delay or cost. The rules are frozen before any of the parser's gains
+  is computed, a later change to the code that applies them is logged with its reason, and the
+  frozen rules and the parser's training recipe are deposited with their SHA-256 checksums. The
+  rationale's figures are interim (P46) and come from the sentence-unit design that the gain
+  uses, with ρ² itself and the root mean square of the per-file standard errors. The 37 per cent
+  figure belongs to the veto of the unfrozen version 2, for an exactly neutral parser over 18
+  independent languages. The parsing paragraph of S3 points to the subsection.
+- The held-out check runs before any development set is benchmarked. It looks up each
+  development sentence by its identifier, or by its text where the identifier is missing, in the
+  training data of all three parsers. These are the files of Stanza's data preparation replayed
+  on UD 2.18 with any recoverable training file of its released models, UDPipe 2's UD 2.17
+  splits through the error model's split checks, and the third parser's own training files. A
+  language that overlaps, or cannot be checked, is excluded and keeps the two-parser mean. The
+  error model's record settles UDPipe 2's split only where it shows the comparison with UD 2.17
+  made, and the UD 2.17 training files settle it otherwise. An overlap with the training data of
+  Stanza or UDPipe 2 that the check missed would bias the decision against the third parser.
+- Materials, first rule: a third parser that joins in some languages only, and a fallback to
+  another Stanza package, are admitted as departures from one training procedure because they
+  change only a language's random parse error, which the error model measures. A language whose
+  Stanza parse falls back to another package leaves the third parser out of its mean. The floor paragraph of
+  Outcome-neutral quality checks applies the floor guard before that fallback, and the error-model
+  paragraph says that a parser joining after acceptance has its three-parser κ_U inputs
+  estimated then.
+- The design that binds the gain includes, beside the numbers of texts and replicates, the
+  synthetic text length of at least 413 hand-annotated words, the long-unit rule at 100 words and each
+  development set's seed, and the two Chinese development sets share their resamples. A
+  development set benchmarked otherwise is incomplete. With 18 languages, a veto at Holm's first
+  step allows at most one of a language's 2,000 replicates at or above -.02.
+- The parser joins only where the development benchmark is complete and held out, and each
+  other language keeps its registered parse, the two-parser mean or, in Kazakh, Stanza alone.
+  After acceptance and before the deposit made before transfer, a floor guard, applied with the
+  reliability floor on the catalogue, returns a language to the two-parser mean if the
+  three-parser mean would put its GrammaticalLoad reliability below .50 while the two-parser mean
+  keeps it at or above that floor. A language below the floor with both means also returns to
+  the two-parser mean before its Stanza parse falls back to another package, a fallback the
+  third parser never joins. A row for the guard joins the table of validation checks in S3.
+- On the second route, deferral, the remaining steps move to after acceptance under the same frozen
+  rules, and a pilot without a verdict counts as not available. They must be ready by the
+  deposit made before transfer, or the parser is declined, and nothing in that deposit is
+  recomputed afterwards. On any route, a parser that joins must also have its constants and its
+  parses of the catalogue ready by that deposit. This replaces the earlier plan to decline the
+  parser if it was late. On every route, the Stage 1 precision analysis rests on the two-parser
+  constants, with the three-parser figures beside them if the parser joins before submission.
+  Under the budget guard, the parser is declined only after XGLM-4.5B is replaced, because
+  XGLM-4.5B is a sensitivity contrast and the parser improves a primary feature.
+- Timeline: the third parser's inference joins the budget guard's bf16 step on the same
+  *r* ≥ .995 condition, and the parser is declined if the projection still exceeds 400 GPU-hours
+  after every existing step. A deferred parser runs its remaining steps in the same period as
+  feature computation, under the same end point. Data availability adds its constants to that
+  deposit if it joins. The sentence on the bf16 agreement check is split in two.
+- Outcome-neutral quality checks: the method-of-triads flag is described as resting on three
+  parses of the served texts, as Supplementary Section S3 defines it, so that it is not read as
+  the three-parser mean.
+- `features/SPECIFICATION.md`: the anchors of PRS-08, LEX-14 and DSC-10 quote only text that the
+  edited and the committed protocol share, and PRS-08 describes the rule of version 3.
+- Bibliography: Claeskens et al. (2016), Dror et al. (2017), Holm (1979), Kriegeskorte et al.
+  (2009) and Lakens, Scheel and Isager (2018) are added and were checked against Crossref. Holm
+  (1979) has no registered DOI and carries its JSTOR address.
+- `pending_benchmarks.md`: P05 and P46 are rewritten for version 3, its fallbacks and the new
+  subsection, including the coverage, the held-out check, the floor guard, the deferral's
+  end point and the catalogue parses that a joining parser needs by then. P08 adds the third parser's bf16 check and P81 drops the third-parser
+  passage. The comments for P82 and P86 go into the two passages this change edited.
+
 ### 3 November 2026: the counts made on the story texts, corrected citations and an evidence map
 
 No number from the design analysis changes. Estimates cited in the Introduction change where a
