@@ -31,6 +31,8 @@ the earlier strands. Caches that are not content-addressed stay in `$FEAT/cache`
 ## Prerequisites (by hand, before the first submission)
 
 1. Sync this folder to `$FEAT/code` (for instance with `rsync -a --exclude __pycache__ --exclude '*.egg-info'`).
+   From Windows, build the copy with `git -c core.autocrlf=false archive --prefix=code/ HEAD:preregistration/features`:
+   with `core.autocrlf` on, `git archive` writes CRLF line ends, and bash then stops at `set -o pipefail`.
    When the code root has no `.git`, `env.sh` records a SHA-256 of its files as `INTRACT_CODE_COMMIT`, and
    every timing record carries it.
 2. Copy `preregistration/story_texts/data/manifest.json` and `extraction_record.json` to

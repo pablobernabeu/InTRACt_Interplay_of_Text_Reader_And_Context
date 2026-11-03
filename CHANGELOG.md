@@ -45,6 +45,10 @@ before in-principle acceptance.
   the revised schedule.
 - `story_texts/extract_story_texts.py`: a comment that named the wrong tail of the compression
   ratios is corrected. No output changes.
+- `preregistration/features/` is the first version of the feature pipeline (ec56b2e), with the
+  catalogue lock, the public stand-in for the English dry run and the ARC jobs that time every
+  stage. `.github/workflows/features.yml` runs its unit tests and ruff. The dry run was submitted
+  on ARC from that commit; its records go to `preregistration/features/records/`.
 
 ### 27 October 2026: the protocol's languages follow the delivery
 

@@ -440,6 +440,18 @@ as a deviation at Stage 2, whether or not extraction rows exist by then, and any
 will be recorded here with a new checksum. Both triggers are stricter than the file's own §7. The pipeline's timestamped output is deposited here before the extract is
 transferred.
 
+## features/
+
+The pipeline that computes the registered text features, the Python package `intract-features`.
+Its own `README.md` explains how to run it, `DESIGN.md` fixes the contracts every stage follows,
+and `SPECIFICATION.md` maps each registered quantity to the code that computes it, with the
+defaults that await the Feature Specification. Before in-principle acceptance it runs on public
+data only: a stand-in built from SimpleStories and matched to the English catalogue's page and
+token counts (`standin/`), FLORES-200 and public gold. Its catalogue lock refuses the story texts
+until the record of acceptance is committed. `jobs/arc/` holds the jobs of the dry run on ARC,
+which times every stage on the stand-in, and the run records are copied to `records/`.
+`.github/workflows/features.yml` runs its unit tests and ruff.
+
 ## Bibliography maintenance
 
 `InTRACt references.bib` began as a Zotero export but is now repo-maintained. Two things in it
