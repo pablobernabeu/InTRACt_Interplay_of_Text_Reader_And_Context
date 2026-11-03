@@ -2,6 +2,10 @@
 # (preregistration/README.md), so keep them LF in every checkout.
 preregistration/priors/prior_derivation.md text eol=lf
 
+# The third parser's frozen rules and recipe are cited by their SHA-256 (third_parser/SHA256SUMS), so
+# keep them LF in every checkout.
+preregistration/third_parser/* text eol=lf
+
 # Git hooks run under sh, which reads a carriage return as part of a command, so
 # they stay LF even in a Windows checkout.
 .githooks/* text eol=lf
