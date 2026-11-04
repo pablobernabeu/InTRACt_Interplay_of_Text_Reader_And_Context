@@ -456,7 +456,7 @@ freezes, checks and applies the rules runs on ARC and is not in this repository.
 after the freeze is logged with its reason and decides nothing, since the rules are fixed by
 their checksum. The pilot benchmark runs before submission. The full training, the check that
 the development sets were held out of training, and the joining decision follow after
-acceptance unless more GPU-hours are authorised before 27 November 2026 (`pending_benchmarks.md`,
+acceptance unless more GPU-hours are authorised before 27 November 2026. The pilot gave a go on 4 November 2026, and since deferral would likely end in a decline under the budget guard, training before submission is recommended (`pending_benchmarks.md`,
 P05).
 
 ## features/
