@@ -105,7 +105,7 @@ is version-controlled at
 submission, including the machine-readable theory, the design specifications, the precision analysis,
 the feature-validation benchmarks with their measurement-error constants, both versions
 of the count script, the frozen rules for deriving the priors and those for admitting a third
-parser. The story texts in all 21
+parser, and the scripts behind every count made on the story texts before acceptance. The story texts in all 21
 languages delivered are public there too, under CC BY-NC 4.0 with the agreement of their rights
 holders, Ferrero International and Gameloft. One restriction applies
 for legal reasons: the session-level extract is governed by a data-sharing agreement between

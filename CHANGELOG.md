@@ -23,6 +23,18 @@ date and rationale.
   and MetricX's compute is scaled by its measured batch fill, with the padded projection kept as
   an upper bound (FP-13). The smoke run then projects MetricX at about 82 GPU-hours over the 18
   translations instead of none, and the run at about 145 GPU-hours instead of 62.
+- Plan decisions taken on the evidence under the PI's delegation: the zlib rule for repeated loops
+  is registered in Supplementary Section S3, disclosed as set on the delivered texts, with the
+  anomaly battery running before parsing (b); Stanza's parser batch is capped at 1,000 words, after
+  the capped reparse of a looping shard proved byte-identical (l); the scripts behind the
+  pre-acceptance counts are deposited in `preregistration/story_texts/counts/` and named under Code
+  availability, with the third parser's frozen rules (c); Figure 2's caption is cut to its title,
+  the key to its lines and the reason for estimating within reading level (n); the frequency-list
+  coverage gate is to be fixed before any list is built (i, P84); Czech and Slovak are descriptive
+  only (j, P81); the quotation-mark term is admitted under its stated rule (k, FS-24); Turkish
+  casing is on for the error model's final run (o); the benchmark scripts are to be published
+  before submission (q, FP-14); the Bulgarian genre contrast stays closed (r). Decisions (e), (h)
+  and (m) stay open; P85 notes how (h) meets the frozen Porttinari choice.
 - The Serbian transliteration is ported into the feature package (`text/sr_translit.py`), with
   the CLDR 47 rule file kept byte-exact and 21 unit tests; it is wired into the stages when the
   Serbian locale is added (FP-11).
