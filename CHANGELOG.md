@@ -12,7 +12,8 @@ date and rationale.
 
 - The third parser's pilot benchmark gave a go after the rules were frozen: gain .020 (.016 to
   .025), .017 in Turkish and .023 in Simplified Chinese, full training projected at 98 L40S
-  GPU-hours. Supplementary Section S3 reports it. P05 is revised: deferred, the training would
+
+
   count against the 400 GPU-hour guard, whose high scenario would decline the parser, so training
   before submission is recommended, which needs about 100 more authorised GPU-hours.
 - The error model's 40-condition aggregation reproduced the genre factors exactly and adds
