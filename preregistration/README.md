@@ -85,7 +85,7 @@ write, apart from the Scopus step, which queries the API.
 | 4c | `Rscript design_analysis/run_variance_sensitivity.R` | `tier1_developmental.json`, `tier1_narration.json`, `sweeps/dev_texts.csv`, `narr_texts.csv` | `sweeps/sens_text{05,13,20}_{dev,narr}_texts.csv`, `variance_sensitivity.csv`, `session_info_variance_sensitivity.txt` |
 | 5 | `Rscript design_analysis/run_ordinal_analysis.R` | `tier1_reported_difficulty.json` | `sweeps/ordinal_<texts>.csv`, `session_info_ordinal.txt`, then runs step 6 |
 | 6 | `Rscript design_analysis/summarise_ordinal.R` | `sweeps/ordinal_<texts>.csv` | `sweeps/ordinal_texts.csv` and `minimum_texts_ordinal.csv`, with the projection columns |
-| 7 | `Rscript figures/make_precision_figure.R` | `design_analysis/precision_sweep.csv` | `figures/fig_precision.{png,pdf}`, `fig_precision_supplement.{png,pdf}` |
+| 7 | `Rscript figures/make_precision_figure.R` | `design_analysis/precision_sweep.csv`, `design_analysis/minimum_texts_bf10.csv` | `figures/fig_precision.{png,pdf}`, `fig_precision_supplement.{png,pdf}` |
 | 8 | `Rscript --no-save --no-restore literature/scopus_gap_analysis.R` | the Scopus API | `literature/scopus_gap_sizes.csv`, `scopus_topic_trends.csv`, `scopus_search_record.md`, `scopus_run_stamp.txt`, then runs step 9 |
 | 9 | `Rscript literature/replot_scopus_figures.R` | the two Scopus CSVs | `literature/scopus_gap_intersections.{png,pdf}`, `scopus_topic_trends.{png,pdf}` |
 | 9b | `Rscript literature/make_evidence_figure.R` | `literature/evidence_map.csv` | `literature/evidence_map.{png,pdf}` |
@@ -233,7 +233,7 @@ transferred, as the Code availability statement commits.
 | File | What it is |
 |---|---|
 | `nomological_net.{gv,svg,png,pdf}` | Figure 2 of the manuscript, generated from the theory object by `theory/make_nomological_net.R`. The `_styled.gv` beside it is the restyled layout actually rendered. |
-| `make_precision_figure.R` | Builds Figure 3 from `design_analysis/precision_sweep.csv`, and the supplementary narration and within-child panels. |
+| `make_precision_figure.R` | Builds Figure 3 from `design_analysis/precision_sweep.csv`, with vertical lines where the Bayes-factor criterion reaches the 0.90 target (`minimum_texts_bf10.csv`), and the supplementary narration and within-child panels. Run under the R 4.6.1 environment of `renv.lock`: other R versions render the anti-aliasing slightly differently. |
 | `fig_precision.{png,pdf}`, `fig_precision_supplement.{png,pdf}` | Figure 3 and the supplementary panels. |
 
 The manuscript embeds the PDFs, so figure text stays selectable, and neither document uses the

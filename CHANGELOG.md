@@ -12,10 +12,10 @@ date and rationale.
 
 - The third parser's pilot benchmark gave a go after the rules were frozen: gain .020 (.016 to
   .025), .017 in Turkish and .023 in Simplified Chinese, full training projected at 98 L40S
-
-
+  GPU-hours. Supplementary Section S3 reports it. P05 is revised: deferred, the training would
   count against the 400 GPU-hour guard, whose high scenario would decline the parser, so training
-  before submission is recommended, which needs about 100 more authorised GPU-hours.
+  before submission was recommended. The PI authorised about 100 GPU-hours, and the full training
+  of sixteen treebanks was submitted the same day, with the development-set parses it needs.
 - The error model's 40-condition aggregation reproduced the genre factors exactly and adds
   Serbian's disagreement-to-noise factor (0.805), so the forecast at the calibration bounds now
   covers 16 of 18 languages. P81 records the progress on the delivered language set.
@@ -35,6 +35,27 @@ date and rationale.
   casing is on for the error model's final run (o); the benchmark scripts are to be published
   before submission (q, FP-14); the Bulgarian genre contrast stays closed (r). Decisions (e), (h)
   and (m) stay open; P85 notes how (h) meets the frozen Porttinari choice.
+- The last open plan decisions, taken on the evidence at the PI's request:
+  - (h) The delivered Portuguese is European: the European progressive outnumbers the Brazilian
+    78,614 to 374, and the provider's machine translation targets pt-pt. Bosque, 55 per cent
+    European, becomes the registered Portuguese treebank (both parsers have models for it, and
+    CINTIL, wholly European, parses about seven points worse); the frequency list samples European
+    files, and MECO's Brazilian sample stands in. The third parser, frozen with Porttinari, does not
+    join the Portuguese mean. The count is recorded in S7 and its script deposited. P85 settled.
+  - (e) ReferentialContinuity's two parsers share their errors, so its noise is carried to the
+    served texts as a share of variance from its reliability against hand annotation, with its own
+    genre factor; a constant needs at most 5 per cent imputed bootstrap replicates (P42).
+  - (m) Figure 3 gains vertical lines where the Bayes-factor criterion reaches the 0.90 target
+    (about 930 to 940 texts for a main effect, 1,470 to 1,480 for an age-band interaction), with
+    its caption and README rows; the figure was rendered in the environment that reproduces the
+    committed figures exactly, and the supplementary figure is unchanged.
+- Documentation and comments describe the work as research, not as a production process: the
+  internal name for the planning reviews is replaced throughout the feature package, and the
+  remaining narration of how passes were run is rewritten. The bibliography loses its 288 Zotero
+  `file` fields, which named a local path and which nothing reads; the poster's frozen copy keeps
+  them. Repairs: `LICENCES.md` had lost its wordfreq row and the feature README half a line when
+  the CLDR entry was added, which broke a unit test, and this entry had lost a line; all three are
+  restored.
 - The Serbian transliteration is ported into the feature package (`text/sr_translit.py`), with
   the CLDR 47 rule file kept byte-exact and 21 unit tests; it is wired into the stages when the
   Serbian locale is added (FP-11).
@@ -61,7 +82,7 @@ No registered rule, threshold, number or citation changes.
   in `preregistration/third_parser/` with their checksums, as Supplementary Section S3 states.
 - `pending_benchmarks.md`: P05 records the freeze; P43 records the domain factors of the error
   model's rerun; P82 records the Serbian evidence, which favours parsing a Latin transliteration.
-- Rulings made later that evening by the main session, under the PI's delegation to decide on
+- Rulings made later that evening, under the PI's delegation to decide on
   the evidence, prioritising rigour within feasible bounds:
   - Serbian (P82, settled): each Serbian text is transliterated to Latin by the CLDR 47
     Serbian-Latin-BGN transform, and parsing, frequency lookups and connective induction run on
@@ -593,7 +614,7 @@ tokens of the `.qmd` sources, the protocol fell from 29,804 to 28,926 and the su
 to 8,978. The share of main-text sentences over 35 words fell from 25.5 to 3.5 per cent (mean
 26.4 to 21.2 words).
 
-- Engineering and Claude-dialect register removed. Criteria no longer "bind", diagnostics no
+- Engineering register removed. Criteria no longer "bind", diagnostics no
   longer "fire" and simulations no longer "price" a coefficient; "carries" (65 uses), "beside"
   (41), "gate" (18) and "The first is ..." scaffolding (32) are gone or rare. The interpretive
   sense of "reading" is now "interpretation", as in Table 1's column head. "The recording" is
@@ -942,7 +963,7 @@ number changed. The findings that would change a reported number await sign-off 
 - `ISSUES.md`, the register of that audit's findings, each with its severity, its HIGH-RISK
   status and whether it was resolved or deferred.
 - A root `.gitignore` for R and Python session files, `.Renviron`, `node_modules/`, local
-  Claude Code state, Quarto's undated render outputs and the count script's deliverables. It
+  local tool state, Quarto's undated render outputs and the count script's deliverables. It
   untracks nothing already committed.
 - `CHANGELOG.md`.
 

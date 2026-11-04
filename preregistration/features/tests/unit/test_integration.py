@@ -1,6 +1,6 @@
 """How the parts of the pipeline fit together: stage names, artefacts, configuration, environments and documents.
 
-Each builder tested its own modules; these tests hold the contracts between them, so that a change to one part
+Each module has its own tests; these tests hold the contracts between modules, so that a change to one part
 that breaks another fails here. They read only the package's source, its configuration, the environment locks and
 the documentation files; no model, resource or story text is opened.
 """

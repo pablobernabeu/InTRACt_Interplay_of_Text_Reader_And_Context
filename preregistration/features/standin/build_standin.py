@@ -11,7 +11,7 @@ pages at nearly its page lengths. Its inputs are the catalogue's structure table
 (catalogue_structure.py), which holds identifiers and counts and no text, and the
 SimpleStories train split, pinned by revision and by the SHA-256 of each parquet shard.
 
-The design is the English-pipeline scout's of 2-3 November 2026 (section 5, "scout s5"
+The design is the English-pipeline planning review's of 2-3 November 2026 (section 5, "planning review s5"
 below). README.md in this folder sets it out, and config/stages/standin.toml holds every
 constant beside the words of the design it implements.
 
@@ -406,12 +406,13 @@ class InMemorySource:
 
 
 def candidate_lines(story: str) -> list[str]:
-    """A story's stripped, non-empty lines (scout s5 step 1: "Strip the lines of each story and drop empty ones")."""
+    """A story's stripped, non-empty lines (planning review s5 step 1: "Strip the lines of each story and drop
+    empty ones")."""
     return [line.strip() for line in story.splitlines() if line.strip()]
 
 
 def candidate_key(generation_id: str, prefix: str) -> bytes:
-    """k = SHA-256(prefix + generation_id), the candidate's key (scout s5 step 1)."""
+    """k = SHA-256(prefix + generation_id), the candidate's key (planning review s5 step 1)."""
     return hashlib.sha256((prefix + generation_id).encode("utf-8")).digest()
 
 
@@ -429,7 +430,7 @@ class CandidatePool:
     """Unused candidates grouped by token count n, each group in ascending key order.
 
     Selection always takes, among candidates of one token count, the unused one with the
-    smallest key (scout s5 step 3: "ties broken by the smallest k"), so a group is used
+    smallest key (planning review s5 step 3: "ties broken by the smallest k"), so a group is used
     from its head and a pointer replaces deletion. An entry is the 32-byte key followed by
     the shard (2 bytes) and the row (4 bytes), so sorting entries sorts by key, and the
     train split's 2.1 million stories fit in about 0.2 GB.
@@ -487,7 +488,7 @@ class CandidatePool:
     def select(self, aim: Fraction, tolerance: Fraction | None) -> Pick | None:
         """Take the unused candidate nearest to `aim` tokens, ties to the smallest key, or return None.
 
-        With a tolerance, only candidates with |n - aim| <= tolerance * aim qualify (scout
+        With a tolerance, only candidates with |n - aim| <= tolerance * aim qualify (planning review
         s5 step 3); without one, the nearest unused n of any length does. Token counts are
         visited outwards from the aim in order of distance, in exact integer arithmetic.
         """
@@ -520,7 +521,7 @@ class CandidatePool:
 
 
 def within_tolerance(n: int, total: int, tolerance: Fraction) -> bool:
-    """|n - T| <= tolerance * T, in integers (scout s5 step 3)."""
+    """|n - T| <= tolerance * T, in integers (planning review s5 step 3)."""
     return abs(n - total) * tolerance.denominator <= tolerance.numerator * total
 
 
@@ -539,7 +540,7 @@ class Selection:
 
 
 def select_for(pool: CandidatePool, total: int, settings: Settings) -> Selection:
-    """Choose the stand-in text for a target of `total` tokens (scout s5 step 3).
+    """Choose the stand-in text for a target of `total` tokens (planning review s5 step 3).
 
     A single candidate within the tolerance if one exists. Otherwise m = ceil(T/500)
     pieces: each but the last aimed at T/m, the last at the remainder, each chosen by the
@@ -582,7 +583,7 @@ def _round_ratio(a: int, b: int, rounding: str) -> int:
 
 def page_cuts(n_tokens: int, tokens_per_page: Sequence[int], final: Sequence[bool], window: int,
               rounding: str = "half_up") -> list[int]:
-    """The token after which each page but the last ends, counting tokens from 1 (scout s5 step 4).
+    """The token after which each page but the last ends, counting tokens from 1 (planning review s5 step 4).
 
     Page j's ideal end is round(N * (t_1 + ... + t_j) / T). It snaps to the nearest token
     within `window` of that end whose `final` flag is set, ties going to the earlier token,
@@ -636,7 +637,7 @@ def make_title(topic: str | None) -> str:
 
 
 def target_key(target: Target, settings: Settings) -> bytes:
-    """K = SHA-256(prefix + story id + "|" + level), the target's key (scout s5 step 2)."""
+    """K = SHA-256(prefix + story id + "|" + level), the target's key (planning review s5 step 2)."""
     text = settings.target_key + target.story_id + settings.target_separator + target.level
     return hashlib.sha256(text.encode("utf-8")).digest()
 
@@ -650,7 +651,7 @@ def rank_targets(targets: Sequence[Target], settings: Settings) -> list[Target]:
 def story_keys(ranked: Sequence[Target], prefix: str) -> dict[str, str]:
     """One synthetic story key per combination, numbered by its first text in ascending K.
 
-    The versions of one story share it (scout s5 step 5: "The three versions of each
+    The versions of one story share it (planning review s5 step 5: "The three versions of each
     combination share a synthetic story key"). It is computed over every target, so a
     smoke build gives each row the key the full build gives it.
     """
@@ -912,7 +913,7 @@ def _pyarrow_version() -> str | None:
 
 
 def quantile(sorted_values: Sequence[float], q: float) -> float | None:
-    """Type-7 quantile (linear interpolation, numpy's default), as the scout's length profile computed."""
+    """Type-7 quantile (linear interpolation, numpy's default), as the planning review's length profile computed."""
     if not sorted_values:
         return None
     h = (len(sorted_values) - 1) * q / 100
@@ -934,7 +935,7 @@ def _compare(catalogue: list[int], standin: list[int], quantiles: Sequence[float
 
 
 def acceptance(rows: Sequence[BuiltRow], settings: Settings) -> dict:
-    """Scout s5 step 7: pages per text identical; per group, tokens-per-text quantiles within
+    """Planning review s5 step 7: pages per text identical; per group, tokens-per-text quantiles within
     3 per cent and tokens-per-page quantiles within 10 per cent of the catalogue's."""
     groups: dict[str, tuple[list, list, list, list]] = defaultdict(lambda: ([], [], [], []))
     identical = True
@@ -981,7 +982,7 @@ def selection_summary(rows: Sequence[BuiltRow], settings: Settings) -> dict:
 
 
 def projection(rows: Sequence[BuiltRow]) -> dict:
-    """Scout s5 step 8: the catalogue-to-stand-in ratio of characters (pages joined with one space)
+    """Planning review s5 step 8: the catalogue-to-stand-in ratio of characters (pages joined with one space)
     by group, which scales the character- and subword-driven stages measured on the stand-in."""
     acc: dict[str, list] = defaultdict(lambda: [0, 0, 0, 0, True])
     for r in rows:

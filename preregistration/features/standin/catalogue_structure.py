@@ -14,11 +14,11 @@ and characters. It prints no text and writes none, and its output holds identifi
 numbers only. It must not be extended to compute anything else on the story texts, and it
 is tested on synthetic tables only. Running it on a published table is still a computation
 on the story texts, so it needs the PI's go-ahead, recorded in the lab log and in the
-sequestration disclosure, before it is run; the dry run uses the scout's table of
+sequestration disclosure, before it is run; the dry run uses the planning review's table of
 2 November 2026 as it is (jobs/arc/README.md, Prerequisites).
 
 The table it writes reproduces, column for column and byte for byte, the structure table
-that the English-pipeline scout wrote on 2 November 2026 (en_per_text_structure.tsv):
+that the English-pipeline planning review wrote on 2 November 2026 (en_per_text_structure.tsv):
 
     id  kind  level  pages  tokens  chars_joined  tokens_per_page  chars_per_page
 
@@ -36,16 +36,16 @@ With --with-combination a ninth column, `combination`, gives every text the id o
 first text (in table order) that shares its story: the same five attributes for a
 generated text, the same tale for a classic. The builder uses it so that the young, mid
 and old versions of one story share one synthetic story key. It adds a grouping of ids
-already in the table and nothing else, and without it the table matches the scout's.
+already in the table and nothing else, and without it the table matches the planning review's.
 
-Usage (the main session runs it, once authorised; the tests use synthetic tables only):
+Usage (run once the PI authorises it; the tests use synthetic tables only):
 
     python -m standin.catalogue_structure STORIES.csv.xz OUT.tsv --authorisation TEXT [--with-combination]
 
 --authorisation is required, as it is for lock_build.py: one line naming the PI's recorded
 go-ahead (the lab-log entry). The command refuses to run without it, prints it, and writes it
 with the source file's SHA-256 and the checks into OUT.tsv.authorisation.json beside the table,
-which keeps the table itself byte-identical to the scout's.
+which keeps the table itself byte-identical to the planning review's.
 """
 
 from __future__ import annotations
@@ -73,7 +73,7 @@ LINE_BREAK = "\\n"
 # extract_story_texts.py: PD_AGE_RE, the age suffix of a classic's folder name, so that the
 # young and old versions of one tale group together.
 PD_AGE_RE = re.compile(r"[\s_]*(old|young)(\s+current)?$", re.IGNORECASE)
-# The scout's table writes an empty level as this label (length_profile.py).
+# The planning review's table writes an empty level as this label (length_profile.py).
 BLANK_LEVEL = "(blank)"
 
 STRUCTURE_COLS = ["id", "kind", "level", "pages", "tokens", "chars_joined", "tokens_per_page", "chars_per_page"]

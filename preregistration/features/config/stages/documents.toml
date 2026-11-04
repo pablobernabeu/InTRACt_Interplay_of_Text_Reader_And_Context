@@ -1,6 +1,6 @@
 # Constants of the documents stage (src/intract_features/stages/documents.py). Each value names its
 # anchor: a section of preregistration.qmd, or S3 of supplementary.qmd. A value marked PENDING is the
-# scout's recommended default behind a named switch, awaiting the Feature Specification.
+# planning review's recommended default behind a named switch, awaiting the Feature Specification.
 
 [normalise]
 # S3: "Before any stage runs, each text is normalised once to Unicode normalisation form NFC and
@@ -13,7 +13,7 @@ form = "NFC"
 # equal text/normalise.py's FORMAT_CHARACTER_RANGES (tests/unit/test_text.py checks it).
 delete_ranges = [[0x200B, 0x200F], [0x202A, 0x202E], [0x2060, 0x2069], [0x061C, 0x061C], [0xFEFF, 0xFEFF]]
 # PENDING (feature plan v3: whitespace is "the Unicode White_Space property of the frozen Unicode
-# version"; the scout: "the Unicode version comes with Python 3.12 and should be pinned"). The
+# version"; the planning review: "the Unicode version comes with Python 3.12 and should be pinned"). The
 # Unicode Character Database the run is expected to use. Python 3.12 ships 15.0.0, 3.13 ships 15.1.0.
 unicode_version = "15.0.0"
 # What a different version does: "warn" records it and continues, "refuse" stops the run.
@@ -21,7 +21,7 @@ on_unicode_mismatch = "warn"
 
 [catalogue]
 # Materials: "the reading level served". The values a row's age field may hold, lower-cased; an
-# empty age (one classic in the English catalogue, by the scout's structure-only profile) is kept as
+# empty age (one classic in the English catalogue, by the planning review's structure-only profile) is kept as
 # an empty level and counted.
 levels = ["young", "mid", "old"]
 
@@ -44,7 +44,7 @@ terminal_marks = [".", "!", "?", "…", "．", "！", "？", "؟"]
 page_rule = "multiline"
 # PENDING the PI (gap G1b, SPECIFICATION.md). "exclude": a page title leaves the page text, and so the
 # outcome's denominator, and is kept in the document's meta; "mark": it is recorded and the page kept.
-# The scout's recommendation to exclude covered the delivered title line (G1a) only.
+# The planning review's recommendation to exclude covered the delivered title line (G1a) only.
 action = "exclude"
 # PENDING. "anywhere": a line holding any sentence-final mark is no title (the literal reading);
 # "line_end": only a line ending with one, closing quotation marks and brackets skipped.
@@ -97,7 +97,7 @@ min_variant_tokens = 20
 ipa_checksum = "ipa_record.sha256"
 # The record itself ("" for none); the environment variable INTRACT_IPA_RECORD takes precedence.
 ipa_record = ""
-# Scout critique, item 12: "Verify the record of in-principle acceptance against a committed tag or
+# Planning review critique, item 12: "Verify the record of in-principle acceptance against a committed tag or
 # hash." "git": the checksum counts only while git tracks ipa_record.sha256 with no change since
 # HEAD, so an uncommitted local file cannot unlock, and a copy of the code without .git stays locked.
 # "none" skips the check, a choice the run manifest records.

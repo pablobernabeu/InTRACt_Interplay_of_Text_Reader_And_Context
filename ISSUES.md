@@ -183,7 +183,7 @@ A strong-codebase pass at the author's request, to reduce clutter by grouping re
 
 ## Feature pipeline, 3 November 2026
 
-The first version of `preregistration/features/` was written by ten builders, each reviewed adversarially and corrected, then integrated and checked by an independent final reviewer, who re-ran the unit suite (722 to 765 tests passing across four environments), ruff, 187 checks of the model and resource pins against their primary sources and a search for any reader of the story texts. Its findings and their outcome are below. The commit cited is the one that holds the fix.
+The first version of `preregistration/features/` was written module by module, each module reviewed and corrected, then integrated and checked in a final review, which re-ran the unit suite (722 to 765 tests passing across four environments), ruff, 187 checks of the model and resource pins against their primary sources and a search for any reader of the story texts. Its findings and their outcome are below. The commit cited is the one that holds the fix.
 
 | ID | Severity | Location | Finding | HIGH-RISK | Status |
 |---|---|---|---|---|---|
@@ -440,7 +440,7 @@ Findings are ordered by severity, then by area. Details follow the table for eve
 | RS-24 | Repository structure | `preregistration/check_reported_numbers.R:1` | Checker and render hook sit at the preregistration root, apart from the other scripts |  | Deferred: moving the scripts changes every documented command. |
 | RS-25 | Repository structure | `CITATION.cff:1` | No CITATION.cff |  | Deferred: CITATION.cff needs author metadata (co-authors, ORCIDs). |
 | RS-26 | Repository structure | `.gitattributes:1` | No .gitattributes; working-tree line endings are mixed |  | Deferred: a .gitattributes line-ending policy renormalises tracked files, end products included. |
-| RS-27 | Repository structure | `.claude/worktrees/goofy-chandrasekhar-cae89e:1` | A second git worktree lives inside the repository tree, hidden only by a local exclude |  | Deferred: the worktree under .claude/worktrees is local state that only its owner should remove. |
+| RS-27 | Repository structure | `.claude/worktrees/<worktree>:1` | A second git worktree lives inside the repository tree, hidden only by a local exclude |  | Deferred: the worktree under .claude/worktrees is local state that only its owner should remove. |
 | RS-28 | Repository structure | `preregistration/theory/build_theory.R:5` | build_theory.R header lists a file it never writes, and a second nomological-net SVG sits beside Figure 2 |  | Resolved: see TH-10. |
 | RP-15 | Reproducibility | `preregistration/design_analysis/session_info.txt:1` | No output records the version or checksum of the inputs it came from, and the working-tree theory YAML and bib differ from HEAD with their regenerated outputs uncommitted |  | Deferred: a checksum manifest of inputs should be taken once the working-tree edits are committed, so it describes a committed state. |
 | RP-17 | Reproducibility | `preregistration/count_script/HOW_TO_RUN.md:7` | The count script's 'Python 3.8 or later' requirement has been checked statically but never at run time |  | Deferred: no Python 3.8 interpreter is available here to test the stated minimum. |
@@ -2026,7 +2026,7 @@ Status: Deferred: a .gitattributes line-ending policy renormalises tracked files
 
 <details><summary><b>RS-27</b> (MINOR): A second git worktree lives inside the repository tree, hidden only by a local exclude</summary>
 
-Location: `.claude/worktrees/goofy-chandrasekhar-cae89e:1`. Verifier's verdict: confirmed.
+Location: `.claude/worktrees/<worktree>:1`. Verifier's verdict: confirmed.
 
 Impact: Recursive tools (grep, IDE search, OneDrive sync) see a second, older copy of the protocol sources, risking edits to or quotations from the wrong file, and any other clone would show .claude/ as untracked.
 

@@ -4,7 +4,7 @@
 # [...] so that costs can be projected per unit." None of these values is a registered rule: the stage measures what
 # the pipeline costs, for the plan's budget and the protocol's budget guard (preregistration.qmd, Timeline: "A pilot
 # on 1 per cent of the catalogue times every GPU step and projects the total"); it computes no feature.
-# "Scout" is the English-pipeline scout report of 2-3 November 2026.
+# "Planning review" is the English-pipeline planning review of 2-3 November 2026.
 
 [scope]
 # The language folders of the run that are read: "all", or a list of locales. qe_metricx is timed under de-de, on
@@ -14,7 +14,7 @@ langs = "all"
 exclude_stages = ["aggregate_timing"]
 
 [catalogue]
-# Scout, section 4, the structure-only profile of the English table: "The table holds 40,559 texts and 733,441
+# Planning review, section 4, the structure-only profile of the English table: "The table holds 40,559 texts and 733,441
 # pages, with 17,309,915 tokens and 101,672,026 characters." Tokens are whitespace tokens ("the `words` column equals
 # the whitespace-token count in every text"); characters are counted on the pages joined with single spaces, titles
 # excluded. These are structural counts the editorial office allowed before acceptance; no feature was computed on
@@ -28,14 +28,14 @@ characters = 101672026
 translations = 18
 
 [catalogue.levels]
-# Scout, section 4: texts and mean whitespace tokens per text by level ("Young (13,500) ... 357.2", "Mid (13,500)
+# Planning review, section 4: texts and mean whitespace tokens per text by level ("Young (13,500) ... 357.2", "Mid (13,500)
 # ... 409.2", "Old (13,500) ... 513.5", "Classics (59) ... 535.9"); section 5, step 8: "Scale the character- and
 # subword-driven stages (SaT, LMs, e5, CorPipe, MetricX) by the catalogue-to-stand-in character ratio: 1.045
 # (young), 1.072 (mid) and 1.088 (old)."
 young = { texts = 13500, mean_tokens = 357.2, char_ratio = 1.045 }
 mid = { texts = 13500, mean_tokens = 409.2, char_ratio = 1.072 }
 old = { texts = 13500, mean_tokens = 513.5, char_ratio = 1.088 }
-# The 59 classics have no measured ratio (scout, section 5: 45 of 59 matched by single stories); they take the
+# The 59 classics have no measured ratio (planning review, section 5: 45 of 59 matched by single stories); they take the
 # token-weighted mean ratio of the three levels, at 0.2 per cent of the catalogue's tokens. PENDING the dry run.
 classic = { texts = 59, mean_tokens = 535.9 }
 
@@ -46,14 +46,14 @@ classic = { texts = 59, mean_tokens = 535.9 }
 #   "characters":        catalogue characters / characters the stage processed
 #   "documents":         catalogue texts / documents the stage processed
 #   "level_ratios":      the whitespace-token factor times the token-weighted character ratio of [catalogue.levels],
-#                        the scout's rule for character- and subword-driven stages on a stand-in matched in tokens
+#                        the planning review's rule for character- and subword-driven stages on a stand-in matched in tokens
 # A stage scaled by characters reports the other character rule beside its primary one.
 character_method = "level_ratios"
 # Unit for a stage not named in [projection.units].
 default_unit = "whitespace_tokens"
 # Stages whose counts stand in for a stage that does not count a unit, in order of preference. A count is borrowed
 # only when both stages recorded the same number of documents for the same shard. sat and the parse stages count
-# whitespace tokens with str.split, the rule behind the catalogue's own count (scout, section 4).
+# whitespace tokens with str.split, the rule behind the catalogue's own count (planning review, section 4).
 reference_stages = ["sat", "parse_stanza", "documents"]
 # With no whitespace-token count of its own or borrowed, a stage falls back to its `words`, and the row and the
 # totals mark the projection approximate. PENDING the Feature Specification of the timing record (cli.py).
@@ -122,7 +122,7 @@ coref_corpipe = ["seconds_predict"]
 qe_metricx = ["seconds_score"]
 
 [split.fixed_keys]
-# parse_udpipe.py reports the server's start (185 s on L40S in TU-4u, scout section 3).
+# parse_udpipe.py reports the server's start (185 s on L40S in TU-4u, planning review section 3).
 parse_udpipe = ["udpipe.server.startup_seconds"]
 
 [probe]

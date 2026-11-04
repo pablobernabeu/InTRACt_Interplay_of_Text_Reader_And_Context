@@ -12,6 +12,7 @@ The scripts behind the counts that Supplementary Section S7 ("Counts made on the
 | `story_sizes.py` | 3 November 2026 | Texts, pages and whitespace tokens per language, summed from the published tables' columns | S7 (sizing for Bulgarian, Hungarian, Kazakh and Serbian) |
 | `versions_check.py` | 3 November 2026 | Attribute combinations of the English table and reading levels per combination, from the metadata columns only | S7 |
 | `match_sim.py` | 3 November 2026 | Whether single public SimpleStories stories can match the catalogue's text lengths within 3 per cent, from the per-text counts | S7 (the stand-in's design) |
+| `portuguese_variety.py` | 4 November 2026 | Markers that separate European from Brazilian Portuguese (the progressive, accents before m or n, hyphenated enclitics, vocabulary pairs) in the delivered Portuguese texts, at the PI's request | S7, and the choice of Portuguese treebank (S3) |
 
 Two scripts were made portable for this deposit and are otherwise as they ran: `endings_en.py` and `repetition_scan.py` took absolute paths on the analysing machine, and `repetition_scan.py` read the delivery's extracted tables, which are byte-identical to the published `../data/<locale>/stories.csv.xz` (SHA-256 of all 21 compared on 4 November 2026). `story_sizes.py` gained a docstring.
 

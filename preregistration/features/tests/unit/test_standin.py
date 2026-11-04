@@ -125,7 +125,7 @@ def test_config_pins_the_revision_and_seven_train_shards(si, settings):
     assert settings.licence == "MIT" and "MIT License" in settings.notice and REVISION in settings.notice
 
 
-def test_config_constants_follow_the_scout_design(si, settings):
+def test_config_constants_follow_the_planned_design(si, settings):
     assert settings.candidate_key == "intract-standin|v1|cand|"
     assert settings.target_key == "intract-standin|v1|target|"
     assert settings.min_tokens == 50
@@ -510,7 +510,7 @@ def synthetic_story_rows():
     ]
 
 
-def test_structure_table_matches_the_scout_format(si, tmp_path):
+def test_structure_table_matches_the_planned_format(si, tmp_path):
     stories = write_story_table(si, tmp_path / "stories.csv.xz", synthetic_story_rows())
     checks = si.cs.write_structure(stories, tmp_path / "s.tsv")
     expected = (
@@ -574,7 +574,7 @@ def test_read_structure_refuses_story_tables_and_bad_rows(si, tmp_path):
         si.cs.read_structure(dup)
 
 
-def test_read_structure_reads_xz_and_the_scout_columns(si, tmp_path):
+def test_read_structure_reads_xz_and_the_planned_columns(si, tmp_path):
     path = tmp_path / "s.tsv.xz"
     body = "\t".join(si.cs.STRUCTURE_COLS) + "\n" + "9\tclassic\t(blank)\t2\t3\t12\t1 2\t4 7\n"
     with lzma.open(path, "wt", encoding="utf-8", newline="") as fh:

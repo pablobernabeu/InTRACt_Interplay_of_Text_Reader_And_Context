@@ -4,8 +4,8 @@ The catalogue's title is its own first line. In the zip delivery of 26 October 2
 of a file is the story's title and each further line is one page" (story_texts/extract_story_texts.py),
 and io.catalogue.split_lines() separates it exactly as the extraction does. The title line is kept in
 Document.title and read by no feature, and the extraction's `words` column already leaves it out.
-That is the scout's recommended default for the title line (SPECIFICATION.md, gap G1a), PENDING the
-Feature Specification. The scout's recommendation covered the title line only, not the page titles
+That is the planning review's recommended default for the title line (SPECIFICATION.md, gap G1a), PENDING the
+Feature Specification. The planning review's recommendation covered the title line only, not the page titles
 below (gap G1b), whose default is the PI's to decide.
 
 S3 also registers a rule for titles inside a text: "A title is the first line of a text or page if it
@@ -27,7 +27,7 @@ PENDING the Feature Specification (gaps G1b and G9):
 - action. "exclude" (the default) moves a page title out of the page into Document.meta["page_titles"],
   so its words leave the text as served; "mark" records it there and leaves the page as served. Which
   of the two applies changes a registered quantity, the outcome's denominator, so it is the PI's
-  decision (gap G1b); the scout's recommendation covered only the title line.
+  decision (gap G1b); the planning review's recommendation covered only the title line.
 - final_mark_test. "anywhere" (the default, the literal reading of "no sentence-final mark") refuses a
   line holding any sentence-final mark. "line_end" refuses only a line that ends with one, closing
   quotation marks and brackets skipped.

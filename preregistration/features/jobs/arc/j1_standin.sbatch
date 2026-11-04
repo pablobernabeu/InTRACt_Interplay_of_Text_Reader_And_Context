@@ -12,7 +12,7 @@
 # the smoke set with "smoke") and the English-German pairs on which qe_metricx is timed (staging.py qe-pairs).
 # Usage: sbatch j1_standin.sbatch <smoke|full> [<qe pairs limit>]
 # The structure table, $INTRACT_INPUTS/en-us/structure.tsv, is a structural count of the English catalogue
-# (identifiers and numbers, no text) that the PI copies to ARC: the scout's table of 2 November serves as it is,
+# (identifiers and numbers, no text) that the PI copies to ARC: the planning review's table of 2 November serves as it is,
 # since standin/catalogue_structure.py reads the combination column as optional (jobs/arc/README.md,
 # Prerequisites). This job never reads the story texts. A failed acceptance check is printed and recorded in
 # _input/standin_manifest.json; it stops the chain (exit 3) only when standin.toml [acceptance] enforce is true,

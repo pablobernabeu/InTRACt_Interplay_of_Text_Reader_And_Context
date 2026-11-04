@@ -39,7 +39,7 @@ the earlier strands. Caches that are not content-addressed stay in `$FEAT/cache`
    `$FEAT/story_texts/data/`. They hold checksums only. The lock resolves them against the code's own `config/`
    (`../../story_texts/data/`) and refuses to run without either (`documents.toml`, `on_missing_manifest`), so
    `submit_chain.sh` checks for both before it submits anything.
-3. Copy the structure table to `$FEAT/inputs/en-us/structure.tsv`. The scout's table of 2 November serves as it
+3. Copy the structure table to `$FEAT/inputs/en-us/structure.tsv`. The planning review's table of 2 November serves as it
    is: its eight columns are the builder's required ones, and `standin/catalogue_structure.py` reads the ninth,
    `combination`, as optional, giving each story id its own combination when it is absent. Writing the table again
    with `python -m standin.catalogue_structure <stories.csv.xz> structure.tsv --with-combination --authorisation

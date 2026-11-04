@@ -106,5 +106,5 @@ a lock is the reproducible record and an `.in` file only states the intent. Rebu
   requirements, and the j0 import check covers the packages.
 - That the official MetricX-24 `predict.py` runs end to end in the metricx environment. `j0_metricx` checks only
   that `metricx24.models` imports.
-- Containers. Apptainer was not found on the login node, and no build host is named (scout critique, item 11),
+- Containers. Apptainer was not found on the login node, and no build host is named (plan critique, item 11),
   so the uv environments are the primary route.

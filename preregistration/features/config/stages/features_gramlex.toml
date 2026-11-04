@@ -44,7 +44,7 @@ empirical_logit_offset = 0.5
 # because they double as apostrophes. "none" gives the counts of rounds 1 to 4. "detector_spans" is the
 # replacement: a word is in direct speech when its token's first letter or digit lies inside the spans of the
 # registered dialogue detector (features.dialogue), configured by the [dialogue] table of the stage named below.
-# Switching rule changes the error-model counts, so EM-5 and EM-6 must be rerun (scout report, gap G6).
+# Switching rule changes the error-model counts, so EM-5 and EM-6 must be rerun (planning review, gap G6).
 rule = "quote_marks"
 detector_config_stage = "features_discourse"
 # gfeat.py: "a ccomp or csubj head inside direct speech counts as a main clause, not a subordinate one (parataxis

@@ -4,7 +4,7 @@ Data provenance, sequestration and outcome blindness (preregistration.qmd): "No 
 registered here has been computed on the story texts, and none will be before in-principle
 acceptance." The lock enforces that commitment in code. A whole-file checksum alone is bypassed by any
 decompressed, subset or re-encoded copy, and a flag file that anyone can create is no record of
-acceptance (scout critique, item 12), so until it is unlocked the lock refuses:
+acceptance (plan critique, item 12), so until it is unlocked the lock refuses:
 
 (a) an input file that lies inside a protected directory (story_texts/data and the git-ignored
     delivery, Oxford-40k-stories), or whose SHA-256, as stored or decompressed, is any checksum that

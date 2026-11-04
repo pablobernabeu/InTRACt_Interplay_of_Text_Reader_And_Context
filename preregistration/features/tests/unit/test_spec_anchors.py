@@ -57,7 +57,7 @@ TRANSLATION_OUTPUTS = 14
 
 ROW_ID = re.compile(r"\b[A-Z]{3}-\d{2}\b")
 ROW_RANGE = re.compile(r"\b([A-Z]{3})-(\d{2}) to \1-(\d{2})\b")
-# The scout's gaps G1 to G9; a gap split in two takes a letter (G1a, G1b).
+# The planning review's gaps G1 to G9; a gap split in two takes a letter (G1a, G1b).
 GAP_ID = re.compile(r"G[1-9][a-z]?")
 OPEN_ID = re.compile(r"FS-\d{2}")
 CONFLICT_ID = re.compile(r"CF-\d{2}")
@@ -611,8 +611,8 @@ def test_stage_map_lists_the_rows_each_stage_writes():
 
 
 def test_checklist_accounts_for_every_row():
-    # Section 7 maps the scout's inventory onto the rows, or lists a row as one the scout missed, so a new row has
-    # to be placed there too.
+    # Section 7 maps the planning review's inventory onto the rows, or lists a row as one the planning review missed,
+    # so a new row has to be placed there too.
     spec = spec_text()
     start = spec.find("\n## 7.")
     assert start >= 0, "SPECIFICATION.md has no section 7"

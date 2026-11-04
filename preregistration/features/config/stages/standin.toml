@@ -6,12 +6,12 @@
 # in-principle acceptance" (preregistration.qmd, Data provenance, sequestration and
 # outcome blindness), so the
 # dry run that measures each stage's cost reads public stories matched to the English
-# catalogue's structure instead. The design is the English-pipeline scout's of 2-3
-# November 2026, section 5, quoted below as "scout s5". Values the scout left open are
-# marked "Not in scout s5" and await the Feature Specification.
+# catalogue's structure instead. The design is the English-pipeline planning review's of 2-3
+# November 2026, section 5, quoted below as "planning review s5". Values the planning review left open are
+# marked "Not in planning review s5" and await the Feature Specification.
 
 [source]
-# scout s5: "the SimpleStories train split at revision
+# planning review s5: "the SimpleStories train split at revision
 # e63b8adc3b1a1bdc7cac5b500d150b71346b0628 (seven parquet shards, each SHA-256 recorded)".
 # Sizes and SHA-256 below are the LFS records that the Hugging Face tree API gives for this
 # revision (https://huggingface.co/api/datasets/SimpleStories/SimpleStories/tree/<revision>),
@@ -62,56 +62,56 @@ path = "data/train-00006-of-00007.parquet"
 size = 237678067
 sha256 = "fe8aa328bfbcbf05f6953c6e9086635a840fe703bf36709a3a4d17806de89998"
 
-# The test split, used by the tests only (the scout measured lengths on it).
+# The test split, used by the tests only (the planning review measured lengths on it).
 [[source.splits.test]]
 path = "data/test-00000-of-00001.parquet"
 size = 16838557
 sha256 = "24a513732fd6c1158e33a6130e3977749ae13d583948e5a2198ed53235e29bec"
 
 [keys]
-# scout s5 step 1: "Key each candidate with k = SHA-256("intract-standin|v1|cand|" + generation_id)".
+# planning review s5 step 1: "Key each candidate with k = SHA-256("intract-standin|v1|cand|" + generation_id)".
 candidate = "intract-standin|v1|cand|"
-# scout s5 step 2: "Key each target with K = SHA-256("intract-standin|v1|target|" + story id + "|" + level)".
+# planning review s5 step 2: "Key each target with K = SHA-256("intract-standin|v1|target|" + story id + "|" + level)".
 target = "intract-standin|v1|target|"
 target_separator = "|"
 # An empty level enters K as the empty string, as the published table stores it; the
 # structure table writes it as "(blank)" (catalogue_structure.BLANK_LEVEL).
 
 [candidates]
-# scout s5 step 1: "Strip the lines of each story and drop empty ones. Set n = the number
+# planning review s5 step 1: "Strip the lines of each story and drop empty ones. Set n = the number
 # of whitespace tokens and drop candidates with n < 50."
 min_tokens = 50
-# Not in scout s5. The delivery format reserves the backslash for its in-page line-break
+# Not in planning review s5. The delivery format reserves the backslash for its in-page line-break
 # escape (story_texts/extract_story_texts.py: split_lines() decodes the two characters
 # backslash-n, and any other backslash is listed as an anomaly), so a candidate holding a
 # backslash is dropped. The test split holds none.
 drop_backslash = true
-# Not in scout s5, which records generation_id as unique in the test split only ("generation_id
+# Not in planning review s5, which records generation_id as unique in the test split only ("generation_id
 # is unique in the test split"). Two candidates with one generation_id would share a key.
 # "keep_first" keeps the first in shard and row order and counts the others in the manifest;
 # "fail" stops the build.
 duplicate_ids = "keep_first"
 
 [selection]
-# scout s5 step 3: "From the unused candidates with |n − T| ≤ 0.03T, take the one with the
+# planning review s5 step 3: "From the unused candidates with |n − T| ≤ 0.03T, take the one with the
 # smallest |n − T|, ties broken by the smallest k." Read as the exact fraction 3/100. A
 # piece of a join applies the same tolerance to its own aim.
 tolerance = 0.03
-# scout s5 step 3: "If none qualifies, join m = ceil(T/500) pieces. Each piece aims at T/m,
+# planning review s5 step 3: "If none qualifies, join m = ceil(T/500) pieces. Each piece aims at T/m,
 # and the last at the remainder."
 join_unit = 500
 
 [paging]
-# scout s5 step 4: "Snap each cut to the nearest token within ±6 that ends in . ! ? or …
+# planning review s5 step 4: "Snap each cut to the nearest token within ±6 that ends in . ! ? or …
 # (closing quotes and brackets skipped), keeping cuts increasing and pages non-empty, with
 # ties going to the earlier token."
 snap_window = 6
 terminal_marks = [".", "!", "?", "…"]
 closers = ['"', "'", ")", "]", "}", "”", "’", "»", "›"]
-# scout s5 step 4: "Cut after token b_j = round(N·Σ_{i≤j} t_i/T)". Not in scout s5: which
+# planning review s5 step 4: "Cut after token b_j = round(N·Σ_{i≤j} t_i/T)". Not in planning review s5: which
 # way a half rounds. "half_up" rounds it up; "half_even" rounds it to the even token.
 rounding = "half_up"
-# scout s5 step 4: "Pages are joined by spaces inside". "escape" instead keeps a paragraph
+# planning review s5 step 4: "Pages are joined by spaces inside". "escape" instead keeps a paragraph
 # break that falls inside a page as the delivery's two-character line-break escape, which
 # exercises in-page line breaks. Their frequency in the catalogue is gap G9, though the
 # delivery format already provides for them (critique item 21). Pending the Feature
@@ -119,31 +119,31 @@ rounding = "half_up"
 line_breaks = "space"
 
 [output]
-# scout s5 step 5: "Write the published schema (STORY_COLS): id "SI" + the rank of K, hero
+# planning review s5 step 5: "Write the published schema (STORY_COLS): id "SI" + the rank of K, hero
 # "Public domain" for classic targets, age = level, lang en-us. The three versions of each
 # combination share a synthetic story key." The story key is "SK" + the combination's
 # number in order of first appearance among the targets in ascending K (SK1, SK2, ...).
 id_prefix = "SI"
 story_key_prefix = "SK"
 lang = "en-us"
-# Not in scout s5: whether the text ends with a line break after its last page.
+# Not in planning review s5: whether the text ends with a line break after its last page.
 # split_lines() reads either form.
 trailing_newline = false
 
 [sizes]
-# scout s5 step 6: "The 1 per cent smoke is the 406 smallest K." 1 per cent of 40,559,
+# planning review s5 step 6: "The 1 per cent smoke is the 406 smallest K." 1 per cent of 40,559,
 # rounded up, is 406.
 smoke_fraction = 0.01
 
 [acceptance]
-# scout s5 step 7: "Tokens-per-text quantiles must lie within ±3 per cent per level and
-# tokens-per-page quantiles within ±10 per cent." Not in scout s5: which quantiles. These
-# are those of the scout's length profile, without the minimum and maximum, which are
+# planning review s5 step 7: "Tokens-per-text quantiles must lie within ±3 per cent per level and
+# tokens-per-page quantiles within ±10 per cent." Not in planning review s5: which quantiles. These
+# are those of the planning review's length profile, without the minimum and maximum, which are
 # reported beside them.
 quantiles = [1, 5, 25, 50, 75, 95, 99]
 text_tolerance = 0.03
 page_tolerance = 0.10
-# Not in scout s5. Whether a failed check stops the dry run. With the scout's snap window of 6
+# Not in planning review s5. Whether a failed check stops the dry run. With the planning review's snap window of 6
 # the tokens-per-page check misses its 1st and 5th percentiles (standin/README.md, What the
 # acceptance check shows), so a strict check would stop every ARC chain at J1. false: the build
 # exits 0, prints the failure and records it in the manifest (acceptance.passed, enforced);
@@ -167,7 +167,7 @@ batch_size = 4096
 
 [licence]
 # Written beside the stand-in table as NOTICE-SimpleStories.txt, because MIT requires the
-# notice in every copy and scout s5 step 9 asks that a deposited table "carry the MIT
+# notice in every copy and planning review s5 step 9 asks that a deposited table "carry the MIT
 # notice". The card names no copyright holder, so the line names the dataset's authors as
 # its card cites them.
 notice = '''The stand-in table in this folder is derived from SimpleStories, revision

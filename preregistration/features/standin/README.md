@@ -11,10 +11,10 @@ lengths follow the catalogue's with a somewhat wider spread. Every stage thus me
 catalogue's volume of text and its page structure. What the stand-in does not match is
 listed under Limits below.
 
-The stand-in is not a registered rule. Its design is the English-pipeline scout's of 2-3
+The stand-in is not a registered rule. Its design is the English-pipeline planning review's of 2-3
 November 2026 (section 5 of that report), recommended there for the dry run, and
 `../config/stages/standin.toml` holds every constant beside the words of the design it
-implements. Where the scout left a detail open, the builder takes a default behind a named
+implements. Where the planning review left a detail open, the builder takes a default behind a named
 switch, listed under Switches below, until the Feature Specification settles it.
 
 | File | What it does |
@@ -33,7 +33,7 @@ characters. `catalogue_structure.py` writes it from the published English table
 each text into pages and count whitespace tokens and characters, and writes identifiers
 and numbers only. That is still a computation on the story texts, so running it needs the
 PI's go-ahead, recorded in the lab log and in the sequestration disclosure; the dry run
-uses the scout's table of 2 November 2026 as it is. The module reproduces the scout's
+uses the planning review's table of 2 November 2026 as it is. The module reproduces the planning review's
 `length_profile.py`, which wrote that table: on a synthetic table with line-break escapes,
 CRLF line ends, empty pages and blank levels, the two give byte-identical output. With
 `--with-combination` it adds a column that groups the young, mid and old versions of one
@@ -109,7 +109,7 @@ tests. Every shard is verified by size and SHA-256 before anything reads it.
    to the stand-in's, pages joined with one space. It scales the stages whose cost follows
    characters or subword tokens (SaT, the language models, e5, CorPipe, MetricX). On the
    first 2,000 targets matched against the test split it came to 1.044 (young), 1.073
-   (mid) and 1.092 (old), close to the scout's estimates of 1.045, 1.072 and 1.088.
+   (mid) and 1.092 (old), close to the planning review's estimates of 1.045, 1.072 and 1.088.
 9. **Manifest.** `standin_manifest.json` records the builder's version and file hashes,
    every setting, each shard's pin and verification, the counts of rows read and dropped,
    the selection, the acceptance checks, the projection, the typography replacements, the
@@ -143,13 +143,13 @@ other variant, and the manifest counts every replacement.
 | Switch (`standin.toml`) | Default | Status |
 |---|---|---|
 | `typography.enabled` and its four rules | on | The critique's item 8 asked for it |
-| `paging.line_breaks` | `space` | The scout's rule. `escape` keeps a paragraph break inside a page as the delivery's two-character escape, to exercise in-page line breaks (gap G9; critique item 21). Pending the Feature Specification |
-| `paging.rounding` | `half_up` | Not in the scout's design: which way a half rounds. Pending |
-| `candidates.duplicate_ids` | `keep_first` | Not in the scout's design, which found generation_id unique in the test split only. Pending |
-| `candidates.drop_backslash` | `true` | Not in the scout's design: the delivery format reserves the backslash for its line-break escape. The test split holds none. Pending |
-| `output.trailing_newline` | `false` | Not in the scout's design; `split_lines()` reads either form. Pending |
-| `acceptance.quantiles` | 1, 5, 25, 50, 75, 95, 99 | Not in the scout's design, which names no quantiles. Pending, see the next section |
-| `acceptance.enforce` | `false` | Not in the scout's design: whether a failed check sets exit status 3, which stops an afterok chain on ARC. With `false` the failure is printed and recorded in the manifest and the build exits 0. Pending the PI, see the next section |
+| `paging.line_breaks` | `space` | The planning review's rule. `escape` keeps a paragraph break inside a page as the delivery's two-character escape, to exercise in-page line breaks (gap G9; critique item 21). Pending the Feature Specification |
+| `paging.rounding` | `half_up` | Not in the planning review's design: which way a half rounds. Pending |
+| `candidates.duplicate_ids` | `keep_first` | Not in the planning review's design, which found generation_id unique in the test split only. Pending |
+| `candidates.drop_backslash` | `true` | Not in the planning review's design: the delivery format reserves the backslash for its line-break escape. The test split holds none. Pending |
+| `output.trailing_newline` | `false` | Not in the planning review's design; `split_lines()` reads either form. Pending |
+| `acceptance.quantiles` | 1, 5, 25, 50, 75, 95, 99 | Not in the planning review's design, which names no quantiles. Pending, see the next section |
+| `acceptance.enforce` | `false` | Not in the planning review's design: whether a failed check sets exit status 3, which stops an afterok chain on ARC. With `false` the failure is printed and recorded in the manifest and the build exits 0. Pending the PI, see the next section |
 
 `--typography on|off` and `--line-breaks space|escape` override the file for one build.
 
@@ -209,7 +209,7 @@ directory:
 ```bash
 cd preregistration/features
 # The structure table: a structural count of the published English table. Only with the PI's
-# recorded go-ahead (see Inputs); the dry run uses the scout's table of 2 November 2026.
+# recorded go-ahead (see Inputs); the dry run uses the planning review's table of 2 November 2026.
 python -m standin.catalogue_structure ../story_texts/data/en-us/stories.csv.xz WORK/structure.tsv \
     --with-combination --authorisation "<lab-log entry of the PI's go-ahead>"
 # The pinned shards, about 1.7 GB, each verified before it is kept.

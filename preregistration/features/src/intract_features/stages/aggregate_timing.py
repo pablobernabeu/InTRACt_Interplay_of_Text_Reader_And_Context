@@ -12,7 +12,7 @@ those records (cli.run_stage names them <stage>-shard-<i>-of-<n>.json), sums the
   stage is scaled by one of these. The amount comes from the stage's own counts or, for a stage that does not count
   that unit, from a reference stage that processed the same documents of the same shard. A stage's `words` are never
   set against whitespace tokens unless no other count exists, and then the row says so: the parse stages and CorPipe
-  count syntactic words, 1.14 to 1.27 per whitespace token (scout report, section 3).
+  count syntactic words, 1.14 to 1.27 per whitespace token (planning review, section 3).
 * Fixed costs. Only the time that grows with the text is scaled. Imports, pin verification, weight loading and server
   starts are paid once per process, so they are carried to the catalogue run once per process of that run. The split
   comes, in the configured order, from one-document probes that jobs/arc/run_stage.sh runs before and after a stage's
@@ -347,7 +347,7 @@ def probe_split(shards: list[Mapping], warm: Mapping, cold: Mapping | None, iter
     A probe is the stage run on one document, so its wall time is the fixed cost of a process plus one document's
     compute. The warm probe runs after the shards, with the job's files in the page cache; the cold probe runs
     first, so it also pays the job's cold start, the 3-7 minute imports from the network file system that the
-    pre-submission jobs met (scout report, section 3). A shard that started cold pays that excess too. The
+    pre-submission jobs met (planning review, section 3). A shard that started cold pays that excess too. The
     per-document compute rate and the fixed costs are solved together by fixed-point iteration, which converges
     because one document is a small share of a shard.
     """
@@ -450,8 +450,8 @@ def projection_factor(amounts: Mapping[str, float | None], method: str, catalogu
     """The factor that scales measured compute to the catalogue under one rule; None if the amount is missing.
 
     "whitespace_tokens", "characters" and "documents" divide the catalogue's total by the same unit's measured
-    amount. "level_ratios" is the whitespace-token factor times the catalogue-to-stand-in character ratio (scout
-    report, section 5, step 8), for stages whose cost follows characters on a stand-in matched in tokens.
+    amount. "level_ratios" is the whitespace-token factor times the catalogue-to-stand-in character ratio (planning
+    review, section 5, step 8), for stages whose cost follows characters on a stand-in matched in tokens.
     """
     if method not in METHODS:
         raise ValueError(f"unknown projection method {method!r}; one of {METHODS}")

@@ -1,10 +1,11 @@
 # InTRACt Stage 1: the design-analysis figure and its supplementary companion.
 #
-# Run from the preregistration directory, after run_design_analysis.R:
+# Run from the preregistration directory, after run_design_analysis.R and
+# solve_at_bf10.R:
 #   Rscript figures/make_precision_figure.R
-# Reads design_analysis/precision_sweep.csv. Writes figures/fig_precision.{png,pdf}
-# (Figure 3) and figures/fig_precision_supplement.{png,pdf}, the narration and
-# within-child curves.
+# Reads design_analysis/precision_sweep.csv, and minimum_texts_bf10.csv for the
+# markers in the left panel. Writes figures/fig_precision.{png,pdf} (Figure 3) and
+# figures/fig_precision_supplement.{png,pdf}, the narration and within-child curves.
 #
 # Two panels answering two different questions. The left panel varies the number
 # of distinct texts, which is what the text coefficients are identified from and
@@ -89,6 +90,10 @@ prep <- function(d, xcol, what) {
 
 BASE_SIZE <- 14
 
+# The registered assurance level, drawn as the dashed line in every panel and the
+# level at which the left panel's markers are read.
+TARGET <- 0.90
+
 # The package's default qualitative palette put a light orange on white, which
 # check_figure() rejected at 2.25:1 against a threshold of 3. The four series use
 # Okabe-Ito blue (#0072b2) and vermilion (#d55e00), a near-black (#333333) in
@@ -101,13 +106,23 @@ SERIES_COLOURS <- c("Lexical difficulty"     = "#0072b2",
                     "Referential continuity" = "#333333",
                     "Accumulated reading"    = "#8e2c6b")
 
-curve_panel <- function(d, x_lab, subtitle) {
+# Vertical lines at the requirements in `marks` (columns term and value), drawn under
+# the data in the grey of the target line. They take the curves' line types, so the
+# key that names the curves names them too. With no marks, NULL adds nothing.
+requirement_lines <- function(marks) {
+  if (is.null(marks)) return(NULL)
+  geom_vline(data = marks, aes(xintercept = value, linetype = term), linewidth = 0.5,
+             colour = "grey40", inherit.aes = FALSE, show.legend = FALSE)
+}
+
+curve_panel <- function(d, x_lab, subtitle, marks = NULL) {
   d$construct <- droplevels(d$construct)
   d$term <- droplevels(d$term)
   ggplot(d, aes(x = x, y = power, colour = construct, fill = construct,
                 linetype = term, shape = term)) +
-    geom_hline(yintercept = 0.90, linetype = "dashed", linewidth = 0.5,
+    geom_hline(yintercept = TARGET, linetype = "dashed", linewidth = 0.5,
                colour = "grey40") +
+    requirement_lines(marks) +
     geom_ribbon(aes(ymin = lower, ymax = upper, group = interaction(construct, term)),
                 alpha = 0.12, colour = NA, show.legend = FALSE) +
     geom_line(linewidth = 0.8) +
@@ -143,8 +158,42 @@ dev_texts <- prep(held_at(rows_of("developmental", "texts", ALT), "per_text", 12
 dev_read  <- prep(held_at(rows_of("developmental", "readings"), "texts", 250,
                           "readings sweep"), "per_text", "readings sweep")
 
+# The curves count a verdict as determinate when the 95 per cent interval lies wholly
+# outside the region. A non-negligible verdict also needs an interval Bayes factor of
+# at least 10, which is stricter and so sets the requirement Table 1 states.
+# solve_at_bf10.R prices it from the same sweeps, and the left panel marks where it
+# reaches the target, one line for the main effects and one for the interactions.
+# Each line stands at the largest requirement of its kind, the number of texts at
+# which every coefficient of that kind has reached the target. At the print width,
+# a ratio of BF_SPREAD between two requirements of one kind spans about 0.8 mm of
+# the axis, a few line widths. A wider spread would need more than one line, so it
+# stops the script, as does a coefficient whose requirement was not solved.
+BF_SPREAD <- 1.05
+read_bf_marks <- function(params) {
+  bf <- utils::read.csv("design_analysis/minimum_texts_bf10.csv", stringsAsFactors = FALSE)
+  bf <- bf[which(bf$model == "developmental" & bf$axis == "texts" & bf$target == TARGET &
+                   bf$param %in% params), , drop = FALSE]
+  if (anyDuplicated(bf$param))
+    stop("minimum_texts_bf10.csv has more than one ", TARGET, " requirement for a coefficient",
+         call. = FALSE)
+  unsolved <- setdiff(params, bf$param[!is.na(bf$value)])
+  if (length(unsolved))
+    stop("minimum_texts_bf10.csv has no ", TARGET, " requirement for ",
+         paste(unsolved, collapse = ", "), call. = FALSE)
+  term <- factor(unname(term_of[bf$param]), levels = c("Main effect", "Interaction"))
+  lo <- tapply(bf$value, term, min)
+  hi <- tapply(bf$value, term, max)
+  kinds <- names(hi)[!is.na(hi)]
+  wide <- kinds[hi[kinds] / lo[kinds] > BF_SPREAD]
+  if (length(wide))
+    stop("the Bayes-factor requirements of the ", paste(tolower(wide), collapse = " and "),
+         " terms differ by more than one marker can show", call. = FALSE)
+  data.frame(term = factor(kinds, levels = levels(term)), value = unname(hi[kinds]))
+}
+bf_marks <- read_bf_marks(unique(rows_of("developmental", "texts", ALT)$param))
+
 pa <- curve_panel(dev_texts, "Distinct texts (log scale)",
-                  "Twelve readings per text on average")
+                  "Twelve readings per text on average", marks = bf_marks)
 pb <- curve_panel(dev_read, "Readings per text (log scale)",
                   "250 distinct texts throughout")
 

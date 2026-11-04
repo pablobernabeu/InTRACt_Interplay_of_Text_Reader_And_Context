@@ -606,7 +606,7 @@ mistake an absence for an oversight.
   nominalisations, cut "which is why" to "so", and split three-claim sentences that were
   shorter as two.
 
-Two restorations were made against the cutting agents' proposals. MacDonald and Christiansen
+Two restorations were made against the proposed cuts. MacDonald and Christiansen
 (2002) was reinstated in the Hypothesis 2 rationale, because the experience-based account is
 a rival that a registered outcome is written to support and it had been left with only one
 correlational child study behind it. Siegelman et al. (2025) was reinstated so that the

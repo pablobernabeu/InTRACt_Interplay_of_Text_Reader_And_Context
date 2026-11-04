@@ -49,7 +49,7 @@ normalise = true
 logit_index = 250089
 clip = [0.0, 25.0]
 # PENDING the Feature Specification (not registered): the weight of a page in "the word-weighted mean over its pages".
-# "translation_words" (the scout's default) counts the registered words of the translated page, or takes a row's
+# "translation_words" (the planning review's default) counts the registered words of the translated page, or takes a row's
 # "words"; a page the translation left empty then weighs nothing. "source_words" counts the registered words of the
 # English page, so every page of the source weighs the same in every language.
 page_weight = "translation_words"

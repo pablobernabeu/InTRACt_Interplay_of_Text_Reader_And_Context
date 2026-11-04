@@ -26,10 +26,10 @@ linguistic feature (Data provenance, sequestration and outcome blindness: "No li
 registered here has been computed on the story texts, and none will be before in-principle
 acceptance"), but the run is a computation on the texts. It therefore needs the PI's go-ahead,
 recorded in the lab log and in the sequestration disclosure, before it runs. --authorisation names
-that record, and every file written carries it. Builders and tests run the command only on synthetic
+that record, and every file written carries it. Development and tests run the command only on synthetic
 tables. Every path is required, so nothing runs on a default location by accident.
 
-For the published tables, the main session runs, once authorised:
+For the published tables, once the PI authorises it, the analyst runs:
 
     python -m intract_features.lock_build fingerprints --tables preregistration/story_texts/data \\
         --out preregistration/features/config --authorisation "<lab-log entry>"

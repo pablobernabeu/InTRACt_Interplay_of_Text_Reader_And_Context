@@ -22,7 +22,7 @@ __pycache__/
 # npm ci, so the installed copy is never tracked.
 node_modules/
 
-# Local Claude Code state
+# Local tool state
 .claude/worktrees/
 .claude/settings.local.json
 

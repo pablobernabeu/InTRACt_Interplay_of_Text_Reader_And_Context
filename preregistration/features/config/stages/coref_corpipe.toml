@@ -4,7 +4,7 @@
 # model, instead resolves coreference on every English source as a validation reference." preregistration.qmd,
 # Materials: "Its coreference chains, resolved in English and projected onto the translation by word alignment, mask a
 # sensitivity overlap anchor computed on the served text (Sensitivity analyses)." A value marked PENDING is the
-# scout's default behind a named switch, awaiting the Feature Specification.
+# planning review's default behind a named switch, awaiting the Feature Specification.
 
 # S3: "Coreference is resolved in no translation"; the stage refuses every other locale.
 source_lang = "en-us"
@@ -52,7 +52,7 @@ transformers = "5.2"
 udapi = "0.5"
 
 [input]
-# PENDING the Feature Specification (gap G8: which CoNLL-U and which tokenisation CorPipe reads). The scout's default:
+# PENDING the Feature Specification (gap G8: which CoNLL-U and which tokenisation CorPipe reads). The planning review's default:
 # the Stanza English parse ("parses_stanza"), whose syntactic words and registered sentences CorPipe takes as given.
 # "parses_udpipe" is the alternative. CorPipe uses the tree only to pick each mention's head word.
 parse = "parses_stanza"

@@ -85,7 +85,7 @@ semicolon_terminal_langs = ["el-gr", "el", "ell_Grek"]
 closing_marks = ["\"", "'", "”", "’", "»", "›", "」", "』", ")", "]", "）"]
 # Not a weight: keeps logit(p') finite (union_lib.EPS).
 eps = 1e-6
-# PENDING a decision by the PI (scout critique, item 3): plan v3 excludes the quotation-mark
+# PENDING a decision by the PI (plan critique, item 3): plan v3 excludes the quotation-mark
 # term "unless before submission it passes a test on a keyed held-out half of the 2,000-story
 # MADLAD-400 benchmark". Off, as in the benchmark, until that decision is recorded. The weight
 # is TU-3's log(0.95 / 0.05), and the anchors are double quotation marks and corner brackets.
