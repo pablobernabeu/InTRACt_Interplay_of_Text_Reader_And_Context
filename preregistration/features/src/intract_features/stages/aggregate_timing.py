@@ -53,8 +53,8 @@ COLUMNS = ("lang", "stage", "device", "env", "env_active", "shards_found", "nsha
            "whitespace_tokens_per_second", "characters_per_second", "tokens_per_second", "words_per_cpu_second",
            "split", "fixed_seconds", "compute_seconds", "cold_starts", "unit", "unit_source", "method", "factor",
            "target_processes", "projected_fixed_hours", "projected_compute_hours", "projected_wall_hours",
-           "unsplit_projected_wall_hours", "alternative_method", "alternative_projected_wall_hours",
-           "projected_core_hours", "notes")
+           "unsplit_projected_wall_hours", "batch_fill", "projected_wall_hours_as_measured", "alternative_method",
+           "alternative_projected_wall_hours", "projected_core_hours", "notes")
 
 
 # ------------------------------------------------------------------------------------------------- reading
@@ -386,6 +386,13 @@ def split_row(row: Mapping, probes: Mapping[str, Mapping] | None, scfg: Mapping)
                 notes.append("the probe is too large beside the shards to separate fixed from compute time")
                 continue
             p = probe_split(shards, probes["warm"], probes.get("cold"))
+            if p["rate_per_document"] <= 0:
+                # A stage that pads every batch to a fixed size (qe_metricx) costs as much on one document as on a
+                # shard, so the probe finds no per-document cost and would put every second into fixed time
+                # (ISSUES.md FP-13, smoke run of 4 November 2026).
+                notes.append("the probe finds no per-document cost, as in a stage that pads every batch to a fixed "
+                             "size; the next source is used")
+                continue
             unknown = sum(1 for s in shards if s.get("cold") is None)
             if not p["cold_probe"]:
                 notes.append("no cold probe: a cold start stays in the compute time")
@@ -512,12 +519,30 @@ def project(row: dict, cfg: Mapping, target_shards: int, probes: Mapping[tuple[s
     else:
         projected_fixed = fixed / n * target if n else 0.0
         cold_starts = None
+    # A stage that pads its batches ([projection.overrides] fill = [real, padded] count keys) spends its compute on
+    # padded positions. A smoke run fills its batches mostly with padding, while the catalogue fills them, so the
+    # compute is scaled by the measured fill before it is projected; the projection with batches as measured is
+    # kept beside it as an upper bound.
+    fill, fill_keys = None, override.get("fill")
+    if fill_keys:
+        real = sum(_number(dotted(s["counts"], fill_keys[0])) for s in row["_shards"])
+        padded = sum(_number(dotted(s["counts"], fill_keys[1])) for s in row["_shards"])
+        if real > 0 and padded > 0:
+            fill = min(1.0, real / padded)
+            notes.append(f"compute scaled to full batches: {real:.0f} of {padded:.0f} positions held text "
+                         f"(fill {fill:.3f}); projected_wall_hours_as_measured keeps the padding")
+        else:
+            notes.append(f"no {fill_keys[0]} and {fill_keys[1]} counts: compute not scaled to full batches")
+    compute_projected = compute * fill if fill is not None else compute
     row.update({"split": split["split"], "fixed_seconds": fixed, "compute_seconds": compute,
                 "cold_starts": cold_starts, "unit": unit, "unit_source": source, "method": method, "factor": factor,
                 "target_processes": target,
                 "projected_fixed_hours": projected_fixed / 3600 if factor is not None else None,
-                "projected_compute_hours": compute * factor / 3600 if factor is not None else None,
+                "projected_compute_hours": compute_projected * factor / 3600 if factor is not None else None,
                 "unsplit_projected_wall_hours": wall * factor / 3600 if factor is not None else None,
+                "batch_fill": fill,
+                "projected_wall_hours_as_measured": ((projected_fixed + compute * factor) / 3600
+                                                     if fill is not None and factor is not None else None),
                 "alternative_method": alternative, "alternative_projected_wall_hours": None})
     row["projected_wall_hours"] = (row["projected_fixed_hours"] + row["projected_compute_hours"]
                                    if factor is not None else None)

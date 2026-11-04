@@ -41,7 +41,7 @@ features/
     cli.py  config.py  records.py         command line, configuration, document model and artefact storage
     lock.py  lock_build.py                the catalogue lock and the tool that fingerprints the published tables
     io/catalogue.py                       the published table schema (also read for the stand-in)
-    text/                                 normalisation, the registered word function, titles, keyed samples
+    text/                                 normalisation, the registered word function, titles, keyed samples,
     segment/                              the SaT call, the union segmenter, the frozen rules, the diagnostics
     parse/                                the parser units, the CoNLL-U artefacts, Stanza and UDPipe 2
     features/                             grammatical, lexical, diversity, discourse, surprisal and similarity features

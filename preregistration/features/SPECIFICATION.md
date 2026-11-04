@@ -545,12 +545,15 @@ Notes.
 - Output 14. The order is the same in every language, because the hash reads only the story identifier, but a
   language's sample of n is the first n stories of its own set, so samples coincide only where story sets do
   (REF-01).
-- Two translation-side rules registered on 3 November 2026 are not built yet (`ISSUES.md` FP-11). Serbian is
+- Two translation-side rules were registered on 3 November 2026 (`ISSUES.md` FP-11). Serbian is
   transliterated to Latin by the CLDR 47 Serbian-Latin-BGN transform after NFC, and its parse, frequency lookups and
   connective induction read the transliteration, with each token mapped back to the served text by character
   offsets (supp § S3, the fifth script rule). The Serbian frequency lists are built from subtitles transliterated the
   same way. In Kazakh, every component is treated as below the reliability floor, because its reliability cannot be
   estimated (qmd § Outcome-neutral quality checks), so Kazakh's scores feed only the partial-inclusion adjustment.
+  The transliteration is built and tested (`text/sr_translit.py`, against `config/cldr/cldr47_Serbian-Latin-BGN.xml`)
+  and is wired into the stages when the sr-rs locale joins `languages.toml`. The Kazakh rule acts in the
+  calibration run after acceptance, which applies the floor, so this package only computes Kazakh's scores.
 
 ## 6. Stage map
 

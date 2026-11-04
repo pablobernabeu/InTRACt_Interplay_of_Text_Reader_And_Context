@@ -87,8 +87,10 @@ qe_metricx = { unit = "characters" }
 # ratios do not apply. On the catalogue every translated page is scored with its English page, so its characters
 # are taken as the English characters twice (source and candidate, assuming translations as long as their source)
 # in each of the 18 translations: multiplier = per_translation x translations. Each translation is its own run, so
-# its fixed costs recur 18 times. PENDING the dry run.
-qe_metricx = { method = "characters", per_translation = 2 }
+# its fixed costs recur 18 times. PENDING the dry run. Its batches are padded to a fixed size, and a smoke run's
+# batches are mostly padding (1,290 to 1,502 real positions of 16,384 on 4 November 2026), so its compute is scaled
+# by the measured fill (positions_real of positions) before projection (ISSUES.md FP-13).
+qe_metricx = { method = "characters", per_translation = 2, fill = ["positions_real", "positions"] }
 
 [projection.cores]
 # CPUs allocated per task (the --cpus-per-task of each stage's sbatch template), used only where run_stage.sh left

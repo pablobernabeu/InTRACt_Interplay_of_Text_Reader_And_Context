@@ -8,6 +8,24 @@ date and rationale.
 
 ## [Unreleased]
 
+### 4 November 2026: the pilot's go, the timing fix and the Serbian transliteration
+
+- The third parser's pilot benchmark gave a go after the rules were frozen: gain .020 (.016 to
+  .025), .017 in Turkish and .023 in Simplified Chinese, full training projected at 98 L40S
+  GPU-hours. Supplementary Section S3 reports it. P05 is revised: deferred, the training would
+  count against the 400 GPU-hour guard, whose high scenario would decline the parser, so training
+  before submission is recommended, which needs about 100 more authorised GPU-hours.
+- The error model's 40-condition aggregation reproduced the genre factors exactly and adds
+  Serbian's disagreement-to-noise factor (0.805), so the forecast at the calibration bounds now
+  covers 16 of 18 languages. P81 records the progress on the delivered language set.
+- `aggregate_timing`: a probe that finds no per-document cost gives way to the stage's timers,
+  and MetricX's compute is scaled by its measured batch fill, with the padded projection kept as
+  an upper bound (FP-13). The smoke run then projects MetricX at about 82 GPU-hours over the 18
+  translations instead of none, and the run at about 145 GPU-hours instead of 62.
+- The Serbian transliteration is ported into the feature package (`text/sr_translit.py`), with
+  the CLDR 47 rule file kept byte-exact and 21 unit tests; it is wired into the stages when the
+  Serbian locale is added (FP-11).
+
 ### 3 November 2026 (evening): plain language, the frozen rules and their deposit
 
 No registered rule, threshold, number or citation changes.

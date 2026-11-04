@@ -166,6 +166,43 @@ def test_qe_metricx_scales_by_characters_over_every_translation(tmp_path, cfg):
     assert qe["target_processes"] == 4 * 18
 
 
+def padded_metricx_run(work, *, positions=True):
+    """The smoke run of 4 November 2026 in miniature: every shard scores one padded batch of 16,384 positions, so a
+    one-document probe costs as much as a shard (ISSUES.md FP-13)."""
+    for s, (wall, real) in enumerate([(23.4, 1290), (25.3, 1502), (22.9, 1457), (22.6, 1334)]):
+        counts = {"documents": 100, "words": 260, "characters": 2500, "tokens": real, "seconds_score": 2.3}
+        if positions:
+            counts.update({"positions": 16_384, "positions_real": real})
+        write_record(work, "de-de", "qe_metricx", s, 4, device="gpu", wall=wall, counts=counts)
+    write_probe(work, "warm", "qe_metricx", "de-de", 4, wall=25.8, characters=12)
+
+
+def test_a_probe_without_a_per_document_cost_gives_way_to_the_timers(tmp_path, cfg):
+    padded_metricx_run(tmp_path)
+    qe = rows_for(tmp_path, cfg, target=4)["qe_metricx"]
+    assert qe["split"] == "timers" and "finds no per-document cost" in qe["notes"]
+    assert qe["compute_seconds"] == pytest.approx(4 * 2.3)
+
+
+def test_padded_batches_are_projected_at_their_measured_fill(tmp_path, cfg):
+    padded_metricx_run(tmp_path)
+    qe = rows_for(tmp_path, cfg, target=4)["qe_metricx"]
+    fill = (1290 + 1502 + 1457 + 1334) / (4 * 16_384)
+    assert qe["batch_fill"] == pytest.approx(fill)
+    assert qe["projected_compute_hours"] == pytest.approx(4 * 2.3 * fill * qe["factor"] / 3600)
+    as_measured = qe["projected_fixed_hours"] + 4 * 2.3 * qe["factor"] / 3600
+    assert qe["projected_wall_hours_as_measured"] == pytest.approx(as_measured)
+    assert qe["projected_wall_hours"] < qe["projected_wall_hours_as_measured"]
+
+
+def test_without_position_counts_the_fill_is_left_alone(tmp_path, cfg):
+    padded_metricx_run(tmp_path, positions=False)
+    qe = rows_for(tmp_path, cfg, target=4)["qe_metricx"]
+    assert qe["batch_fill"] is None and qe["projected_wall_hours_as_measured"] is None
+    assert "compute not scaled to full batches" in qe["notes"]
+    assert qe["projected_compute_hours"] == pytest.approx(4 * 2.3 * qe["factor"] / 3600)
+
+
 def test_unknown_stage_takes_the_default_unit(tmp_path, cfg, stage_cfg):
     write_record(tmp_path, "en-us", "new_stage", 0, 1, counts={"documents": 1, "whitespace_tokens": 10})
     assert rows_for(tmp_path, cfg)["new_stage"]["unit"] == stage_cfg["projection"]["default_unit"]

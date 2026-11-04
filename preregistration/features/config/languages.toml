@@ -1,6 +1,8 @@
 # One table per served locale. The dry run on the public stand-in covers English;
 # the other delivered locales are added before the FLORES-200 run in all 19
-# languages. Package and model names follow supplementary.qmd S3; every file they
+# languages. Serbian (sr-rs), when added, routes its parse, frequency lookups and
+# connective induction through text/sr_translit.py (supplementary.qmd S3, the fifth
+# script rule; ISSUES.md FP-11). Package and model names follow supplementary.qmd S3; every file they
 # name is pinned by revision and SHA-256 in models.lock.json.
 
 [en-us]
