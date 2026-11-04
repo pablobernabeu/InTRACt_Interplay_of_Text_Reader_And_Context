@@ -549,7 +549,7 @@ Notes.
   transliterated to Latin by the CLDR 47 Serbian-Latin-BGN transform after NFC, and its parse, frequency lookups and
   connective induction read the transliteration, with each token mapped back to the served text by character
   offsets (supp § S3, the fifth script rule). The Serbian frequency lists are built from subtitles transliterated the
-  same way. In Kazakh, every component is treated as below the reliability floor, because its reliability cannot be
+  same way, and everything else reads the served Cyrillic. In Kazakh, every component is treated as below the reliability floor, because its reliability cannot be
   estimated (qmd § Outcome-neutral quality checks), so Kazakh's scores feed only the partial-inclusion adjustment.
   The transliteration is built and tested (`text/sr_translit.py`, against `config/cldr/cldr47_Serbian-Latin-BGN.xml`)
   and is wired into the stages when the sr-rs locale joins `languages.toml`. The Kazakh rule acts in the
